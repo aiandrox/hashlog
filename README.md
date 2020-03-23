@@ -7,6 +7,9 @@
 
 [画面遷移図](https://xd.adobe.com/view/9e47355b-8dec-4d95-5979-fcd175de74e9-e876/)
 
+[ER図](https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing)
+![ER図](./erd.png)
+
 ## 登場人物
 - エンドユーザー
   - 自分の記録を残したいTwitterユーザー<br>
