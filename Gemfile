@@ -19,6 +19,8 @@ group :development, :test do
   gem 'rails_best_practices', '~> 1.20'
   gem 'better_errors', '~> 2.6'
   gem 'binding_of_caller', '~> 0.8.0'
+  gem 'rspec-rails', '~> 3.9', '>= 3.9.1'
+  gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
 end
 
 group :development do
@@ -28,6 +30,10 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'bullet', '~> 6.1'
   # gem 'capistrano-rails'
+end
+
+group :test do
+  gem 'capybara', '~> 3.31'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
