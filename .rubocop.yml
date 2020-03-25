@@ -1,0 +1,32 @@
+# This file overrides https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'bin/**/*'
+    - 'spec/**/*'
+    - 'node_modules/**/*'
+  DisplayCopNames: true
+
+# 日本語でのコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# frozen_string_literal: trueはなくていい
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# コントローラのメソッド名に「set_」「get_」を許可
+Naming/AccessorMethodName:
+  Exclude:
+    - "app/controllers/**/*"
+
+# クラスにコメントを残さない
+Style/Documentation:
+  Enabled: false
+
+# コメントは一行の長さを制限しない
+Metrics/LineLength:
+  IgnoredPatterns: ['\A#']
