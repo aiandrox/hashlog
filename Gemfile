@@ -14,6 +14,7 @@ gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 
 # ビュー
+gem 'rails-i18n'
 gem 'slim'
 
 group :development, :test do

@@ -1,0 +1,10 @@
+ja:
+  enums:
+    user:
+      role:
+        admin: 管理者
+        general: 一般
+  activerecord:
+    models:
+
+    attributes:
