@@ -2,7 +2,7 @@
 html
   head
     title
-      | Hashlog
+      = full_title(yield(:title))
 
     = csrf_meta_tags
     = csp_meta_tag
