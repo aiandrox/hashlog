@@ -1,0 +1,10 @@
+ja:
+  users:
+    new:
+      title: ユーザー登録
+      to_login: ログインページへ
+  user_sessions:
+    new:
+      title: ログイン
+      submit: ログイン
+      to_signup: 登録ページへ
