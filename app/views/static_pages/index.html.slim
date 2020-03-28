@@ -6,4 +6,4 @@ p
   | Find me in app/views/static_pages/index.html.erb
 
 - unless logged_in?
-  = link_to 'ログイン', '#'
+  = link_to 'Login with Twitter', auth_at_provider_path(provider: :twitter)
