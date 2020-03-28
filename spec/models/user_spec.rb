@@ -9,9 +9,8 @@ RSpec.describe User, type: :model do
     end
     it { is_expected.to validate_presence_of(:twitter_id) }
     it { is_expected.to validate_uniqueness_of(:twitter_id).case_insensitive }
-    it { is_expected.to validate_presence_of(:screen_name) }
-    it { is_expected.to validate_length_of(:screen_name).is_at_most(30) }
-    it { is_expected.to validate_uniqueness_of(:email) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_length_of(:name).is_at_most(30) }
     it { is_expected.to validate_length_of(:description).is_at_most(300) }
   end
 

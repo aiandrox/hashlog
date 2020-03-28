@@ -6,8 +6,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :authentications
 
   validates :twitter_id, presence: true, uniqueness: true
-  validates :screen_name, presence: true, length: { maximum: 30 }
-  validates :email, uniqueness: true # Twitterではメールアドレスは必須ではない
+  validates :name, presence: true, length: { maximum: 30 }
   validates :description, length: { maximum: 300 }
   validates :privacy, presence: true
   validates :role, presence: true

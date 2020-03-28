@@ -23,18 +23,15 @@ ActiveRecord::Schema.define(version: 2020_03_28_054653) do
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "email"
-    t.string "crypted_password"
-    t.string "salt"
     t.string "twitter_id", null: false
     t.string "uuid", null: false
-    t.string "screen_name", null: false
+    t.string "name", null: false
     t.text "description"
     t.integer "privacy", default: 0, null: false
     t.integer "role", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["twitter_id"], name: "index_users_on_twitter_id", unique: true
   end
 
 end
