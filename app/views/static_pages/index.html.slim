@@ -4,3 +4,6 @@ h1
   | StaticPages#index
 p
   | Find me in app/views/static_pages/index.html.erb
+
+- unless logged_in?
+  = link_to 'ログイン', '#'
