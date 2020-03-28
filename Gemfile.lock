@@ -235,6 +235,10 @@ GEM
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
+    slim-rails (3.2.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      slim (>= 3.0, < 5.0)
     sorcery (0.14.0)
       bcrypt (~> 3.1)
       oauth (~> 0.4, >= 0.4.4)
@@ -297,7 +301,7 @@ DEPENDENCIES
   rubocop (~> 0.80.1)
   sass-rails (~> 5.0)
   shoulda-matchers
-  slim
+  slim-rails
   sorcery
   spring
   spring-watcher-listen (~> 2.0.0)

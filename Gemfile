@@ -16,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # ビュー
 gem 'rails-i18n'
-gem 'slim'
+gem 'slim-rails'
 
 # ログイン機能
 gem 'sorcery'

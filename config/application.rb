@@ -35,6 +35,7 @@ module Hashlog
     # generateで作成するファイルの制限
     config.generators do |g|
       g.assets false
+      g.template_engine = :slim
       g.skip_routes true
       g.helper false
       g.test_framework :rspec,
