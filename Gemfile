@@ -11,11 +11,15 @@ gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'
 
 # ビュー
 gem 'rails-i18n'
-gem 'slim'
+gem 'slim-rails'
+
+# ログイン機能
+gem 'sorcery'
 
 group :development, :test do
   gem 'better_errors', '~> 2.6'
@@ -39,6 +43,5 @@ end
 
 group :test do
   gem 'capybara', '~> 3.31'
+  gem 'shoulda-matchers'
 end
-
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
