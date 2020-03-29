@@ -50,6 +50,7 @@ jobs:
 
       # Database setup
       - run: cp -v config/database.yml config/database.ci.yml
+      - run: ps aux | grep mysqld
       - run: bundle exec rails db:create
       - run: bundle exec rails db:schema:load
 
