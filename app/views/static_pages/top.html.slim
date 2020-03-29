@@ -7,3 +7,6 @@ p
 
 - unless logged_in?
   = link_to 'Login with Twitter', auth_at_provider_path(provider: :twitter)
+- else
+  = link_to 'Logout', logout_path, method: :delete
+  = link_to 'ユーザー削除', user_path(current_user), method: :delete
