@@ -49,7 +49,7 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
-      - run: cp -v config/database.ci.yml config/database.yml
+      - run: cp -v config/database.yml config/database.ci.yml
       - run: bundle exec rails db:create
       - run: bundle exec rails db:schema:load
 
