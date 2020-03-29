@@ -12,14 +12,7 @@ class OauthsController < ApplicationController
     if (@user = login_from(provider))
       redirect_to root_path, notice: "#{provider.titleize}でログインしました"
     else
-      begin
-        @user = create_from(provider)
-        reset_session
-        auto_login(@user)
-        redirect_to root_path, notice: "#{provider.titleize}でログインしました"
-      rescue StandardError
-        redirect_to root_path, alert: "#{provider.titleize}でのログインに失敗しました"
-      end
+      create_user_from(provider)
     end
   end
 
@@ -27,5 +20,14 @@ class OauthsController < ApplicationController
 
   def auth_params
     params.permit(:code, :provider, :denied)
+  end
+
+  def create_user_from(provider)
+    @user = create_from(provider)
+    reset_session
+    auto_login(@user)
+    redirect_to root_path, notice: "#{provider.titleize}でログインしました"
+  rescue StandardError
+    redirect_to root_path, alert: "#{provider.titleize}でのログインに失敗しました"
   end
 end
