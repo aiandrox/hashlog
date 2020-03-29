@@ -3,6 +3,8 @@ class UsersController < ApplicationController
 
   def edit; end
 
+  def update; end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy!
