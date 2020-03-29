@@ -4,12 +4,62 @@ orbs:
 
 jobs:
   build:
+    working_directory: ~/circleci-demo-ruby-rails
     docker:
-      - image: circleci/ruby:2.6.3-stretch-node
-    executor: ruby/default
+      - image: circleci/ruby:2.5.3-node-browsers-legacy
+        environment:
+          DB_HOST: 127.0.0.1
+          RAILS_ENV: test
+      - image: circleci/mysql:8.0.19-ram
+        environment:
+          MYSQL_USER: root
+          MYSQL_DB: hashlog_test
+
     steps:
       - checkout
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - rails-demo-{{ checksum "Gemfile.lock" }}
+            - rails-demo-
+
       - run:
           name: Which bundler?
           command: bundle -v
-      - ruby/bundle-install
+
+      - run:
+          name: bundle install
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      # Store bundle cache
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # Database setup
+      - run: cp -v config/database.ci.yml config/database.yml
+      - run: bundle exec rails db:create
+      - run: bundle exec rails db:schema:load
+
+      # RSpec
+      - run:
+          name: run rspec
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+      - store_artifacts:
+          path: tmp/screenshots
+          destination: test-screenshots

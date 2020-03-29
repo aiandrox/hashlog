@@ -1,0 +1,11 @@
+{
+  "name": "hashlog",
+  "private": true,
+  "dependencies": {},
+  "version": "1.0.0",
+  "description": "Twitterのハッシュタグ学習をログにするよ",
+  "main": "index.js",
+  "repository": "git@github.com:Aiandrox/hashlog.git",
+  "author": "Aiandrox <aiandrox7@gmail.com>",
+  "license": "MIT"
+}
