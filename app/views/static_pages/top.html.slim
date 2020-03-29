@@ -1,0 +1,12 @@
+- content_for :title
+
+h1
+  | StaticPages#index
+p
+  | Find me in app/views/static_pages/index.html.erb
+
+- unless logged_in?
+  = link_to 'Login with Twitter', auth_at_provider_path(provider: :twitter)
+- else
+  = link_to 'Logout', logout_path, method: :delete
+  = link_to 'ユーザー削除', user_path(current_user), method: :delete
