@@ -1,7 +1,5 @@
 class Hashtag < ApplicationRecord
-  has_many :users, through: :user_hashtags
-  has_many :user_hashtags
-  accepts_nested_attributes_for :user_hashtags
+  has_and_belongs_to_many :users
 
   validates :name, presence: true, uniqueness: true
 end

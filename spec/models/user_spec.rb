@@ -1,5 +1,7 @@
 RSpec.describe User, type: :model do
   context 'associations' do
+    it { is_expected.to belong_to(:user_hashtags).class_name('UserHashtag') }
+    it { is_expected.to have_many(:authentications) }
   end
 
   context 'validations' do
