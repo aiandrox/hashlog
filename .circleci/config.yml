@@ -65,6 +65,7 @@ jobs:
       - run:
           name: run rspec
           command: |
+            gem install rspec_junit_formatter
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
                               --out test_results/rspec.xml \
