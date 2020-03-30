@@ -44,4 +44,5 @@ end
 group :test do
   gem 'capybara', '~> 3.31'
   gem 'shoulda-matchers'
+  gem 'rspec_junit_formatter'
 end
