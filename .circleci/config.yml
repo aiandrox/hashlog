@@ -50,8 +50,9 @@ jobs:
 
       # Database setup
       - run: cp -v config/database.yml config/database.ci.yml
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run: mysql_config --socket
+      - run: bundle exec rails db:create
+      - run: bundle exec rails db:schema:load
 
       # RSpec
       - run:
