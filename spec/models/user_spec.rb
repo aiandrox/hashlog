@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
     it 'roleがgeneralである' do
       expect(user.general?).to be_truthy
     end
-    it '9字のuuidが生成されている' do
+    it '12字のuuidが生成されている' do
       expect(user.uuid.length).to eq 12
     end
   end
