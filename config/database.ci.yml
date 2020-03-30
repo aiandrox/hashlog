@@ -1,0 +1,14 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_general_ci
+  pool: 5
+  host: 127.0.0.1
+  port: 3306
+  username: root
+  password:
+
+test:
+  <<: *default
+  database: circle_test
