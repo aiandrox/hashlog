@@ -1,3 +1,3 @@
 class HashtagsUsers< ApplicationRecord
-  belongs_to :log
+  belongs_to :hashtag_log
 end

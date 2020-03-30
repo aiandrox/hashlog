@@ -1,4 +1,4 @@
-class Log < ApplicationRecord
+class HashtagLog < ApplicationRecord
   has_one :hashtags_users, dependent: :destroy
   belongs_to :user
   has_one :hashtag, through: :hashtags_users

@@ -2,7 +2,7 @@ RSpec.describe User, type: :model do
   context 'associations' do
     it { is_expected.to have_many(:authentications).dependent(:destroy) }
     it { is_expected.to have_and_belong_to_many(:hashtags) }
-    it { is_expected.to have_many(:logs).dependent(:destroy) }
+    it { is_expected.to have_many(:hashtag_logs).dependent(:destroy) }
   end
 
   context 'validations' do
