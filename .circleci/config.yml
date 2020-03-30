@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2 
+  ruby: circleci/ruby@0.1.2
 
 jobs:
   build:
@@ -57,9 +57,10 @@ jobs:
           name: setup database
           command: |
             cp -v config/database.ci.yml config/database.yml
-            mysql_config --socket
-            bundle exec rails db:create
-            bundle exec rails db:schema:load
+      
+      - run: mysql_config --socket
+      - run: bundle exec rails db:create
+      - run: bundle exec rails db:schema:load
 
       - run:
           name: run rspec
