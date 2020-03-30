@@ -12,12 +12,17 @@ jobs:
           RAILS_ENV: test
           BUNDLER_VERSION: 2.1.4
       - image: circleci/mysql:8.0.19-ram
+        command: [--default-authentication-plugin=mysql_native_password]
         environment:
           MYSQL_USER: root
           MYSQL_DB: circle_test
 
     steps:
       - checkout
+
+      - run:
+          name: wait for database
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 3m
 
       # Restore bundle cache
       - restore_cache:
