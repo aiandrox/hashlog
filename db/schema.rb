@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2020_03_30_070919) do
   create_table "hashtags_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "hashtag_id"
     t.bigint "user_id"
-    t.bigint "logs_id", null: false
+    t.bigint "logs_id"
     t.index ["hashtag_id"], name: "index_hashtags_users_on_hashtag_id"
     t.index ["logs_id"], name: "index_hashtags_users_on_logs_id"
     t.index ["user_id"], name: "index_hashtags_users_on_user_id"
