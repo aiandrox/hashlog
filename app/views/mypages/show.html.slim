@@ -20,6 +20,6 @@ p
 
   div
     | hashtag:
-    = @user.hashtags.all
+    = @user.tags.all
   div
-    = link_to '新しいHastagを登録する', new_mypage_hashtag_path
+    = link_to '新しいHastagを登録する', new_mypage_tag_path

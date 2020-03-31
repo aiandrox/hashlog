@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
   # マイページ
   resource :mypage, only: %i[show edit update destroy] do
-    resources :hashtags, only: %i[new create]
-    resources :hashtag_logs, only: %i[show edit update destroy], shallow: true
+    resources :tags, only: %i[new create]
+    resources :tag_logs, only: %i[show edit update destroy], shallow: true
   end
 
   resources :users, param: :uuid, only: :show do
-    resources :hashtag_logs, only: :show
+    resources :tag_logs, only: :show
   end
 end
