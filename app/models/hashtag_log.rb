@@ -1,7 +1,7 @@
 class HashtagLog < ApplicationRecord
-  has_one :hashtags_users, dependent: :destroy
   belongs_to :user
-  has_one :hashtag, through: :hashtags_users
+  has_one :hashtag_users, dependent: :destroy
+  has_one :hashtag, through: :hashtag_users
 
   validates :tweeted_day_count, presence: true
   validates :privacy, presence: true

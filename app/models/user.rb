@@ -4,7 +4,8 @@ class User < ApplicationRecord
   authenticates_with_sorcery!
   has_many :authentications, dependent: :destroy
   accepts_nested_attributes_for :authentications
-  has_and_belongs_to_many :hashtags
+  has_many :hashtag_users, dependent: :destroy
+  has_many :hashtags, through: :hashtag_users
   has_many :hashtag_logs, dependent: :destroy
 
   validates :twitter_id, presence: true, uniqueness: true

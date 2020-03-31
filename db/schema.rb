@@ -33,19 +33,21 @@ ActiveRecord::Schema.define(version: 2020_03_30_070919) do
     t.index ["user_id"], name: "index_hashtag_logs_on_user_id"
   end
 
+  create_table "hashtag_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "hashtag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "hashtag_logs_id"
+    t.index ["hashtag_id"], name: "index_hashtag_users_on_hashtag_id"
+    t.index ["hashtag_logs_id"], name: "index_hashtag_users_on_hashtag_logs_id"
+    t.index ["user_id"], name: "index_hashtag_users_on_user_id"
+  end
+
   create_table "hashtags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "hashtags_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "hashtag_id"
-    t.bigint "user_id"
-    t.bigint "hashtag_logs_id"
-    t.index ["hashtag_id"], name: "index_hashtags_users_on_hashtag_id"
-    t.index ["hashtag_logs_id"], name: "index_hashtags_users_on_hashtag_logs_id"
-    t.index ["user_id"], name: "index_hashtags_users_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -61,5 +63,7 @@ ActiveRecord::Schema.define(version: 2020_03_30_070919) do
   end
 
   add_foreign_key "hashtag_logs", "users"
-  add_foreign_key "hashtags_users", "hashtag_logs", column: "hashtag_logs_id"
+  add_foreign_key "hashtag_users", "hashtag_logs", column: "hashtag_logs_id"
+  add_foreign_key "hashtag_users", "hashtags"
+  add_foreign_key "hashtag_users", "users"
 end
