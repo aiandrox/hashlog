@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :hashtag_log do
+  factory :tag_log do
     tweeted_day_count { 0 }
     privacy { 0 }
     remind_day { 0 }
