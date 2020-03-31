@@ -1,3 +1,5 @@
 RSpec.describe Authentication, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context 'associations' do
+    it { is_expected.to belong_to(:user).class_name('User') }
+  end
 end
