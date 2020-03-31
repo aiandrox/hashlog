@@ -1,6 +1,6 @@
 - content_for :title, @user.name
 
-h1 ユーザーページ
+h1 マイページ
 p
   div
     | name: 
@@ -21,3 +21,5 @@ p
   div
     | hashtag:
     = @user.hashtags.all
+  div
+    = link_to '新しいHastagを登録する', new_mypage_hashtag_path
