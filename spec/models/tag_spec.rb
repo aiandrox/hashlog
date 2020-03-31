@@ -1,7 +1,6 @@
 RSpec.describe Tag, type: :model do
   context 'associations' do
-    it { is_expected.to have_many(:tag_users) }
-    it { is_expected.to have_many(:users).through(:tag_users) }
+    it { is_expected.to have_many(:registered_tags) }
   end
 
   context 'validations' do
