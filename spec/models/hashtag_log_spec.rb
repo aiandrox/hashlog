@@ -1,7 +1,7 @@
 RSpec.describe HashtagLog, type: :model do
   context 'associations' do
     it { is_expected.to belong_to(:user) }
-    it { is_expected.to have_one(:hashtag_users).dependent(:destroy) }
+    it { is_expected.to have_one(:hashtag_user).dependent(:destroy) }
     it { is_expected.to have_one(:hashtag).through(:hashtag_users) }
     # it { is_expected.to have_many(:tweets) }
   end
