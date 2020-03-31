@@ -1,0 +1,6 @@
+= content_for :title, '新しいHashtagを登録する'
+
+=  form_with model: @hashtag, url: mypage_hashtags_url, method: :post, local: true do |f|
+  = f.label :name
+  = f.text_field :name
+  = f.submit
