@@ -1,9 +1,8 @@
 RSpec.describe User, type: :model do
   context 'associations' do
     it { is_expected.to have_many(:authentications).dependent(:destroy) }
-    it { is_expected.to have_many(:tag_users).dependent(:destroy) }
-    it { is_expected.to have_many(:tags).through(:tag_users) }
-    it { is_expected.to have_many(:tag_logs).dependent(:destroy) }
+    it { is_expected.to have_many(:registered_tags).dependent(:destroy) }
+    it { is_expected.to have_many(:tags).through(:registered_tags) }
   end
 
   context 'validations' do
