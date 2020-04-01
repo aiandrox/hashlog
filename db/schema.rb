@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_121136) do
+ActiveRecord::Schema.define(version: 2020_03_28_054653) do
 
   create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -20,26 +20,6 @@ ActiveRecord::Schema.define(version: 2020_03_31_121136) do
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid"
     t.index ["user_id"], name: "index_authentications_on_user_id"
-  end
-
-  create_table "registered_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "tweeted_day_count", default: 0, null: false
-    t.integer "privacy", default: 0, null: false
-    t.integer "remind_day", default: 0, null: false
-    t.datetime "first_tweeted_at"
-    t.datetime "last_tweeted_at"
-    t.index ["tag_id"], name: "index_registered_tags_on_tag_id"
-    t.index ["user_id"], name: "index_registered_tags_on_user_id"
-  end
-
-  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -54,6 +34,4 @@ ActiveRecord::Schema.define(version: 2020_03_31_121136) do
     t.index ["twitter_id"], name: "index_users_on_twitter_id", unique: true
   end
 
-  add_foreign_key "registered_tags", "tags"
-  add_foreign_key "registered_tags", "users"
 end
