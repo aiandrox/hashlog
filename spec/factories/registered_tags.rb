@@ -1,9 +1,10 @@
 FactoryBot.define do
-  factory :hashtag_log do
+  factory :registered_tag do
     tweeted_day_count { 0 }
     privacy { 0 }
     remind_day { 0 }
     user
+    tag
   end
 
   trait :remind do
