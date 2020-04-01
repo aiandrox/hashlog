@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   # マイページ
   resource :mypage, only: %i[show edit update destroy] do
     resources :tags, only: %i[new create]
-    resources :tag_logs, only: %i[show edit update destroy], shallow: true
+    resources :registered_tags, only: %i[show edit update destroy], shallow: true
   end
 
   resources :users, param: :uuid, only: :show do
-    resources :tag_logs, only: :show
+    resources :registered_tags, only: :show
   end
 end
