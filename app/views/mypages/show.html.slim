@@ -17,9 +17,8 @@ p
   div
     | role:
     = @user.role
-
-  div
-    | hashtag:
-    = @user.tags.all
+  - if @registered_tags.any?
+    div
+    = render @registered_tags
   div
     = link_to '新しいHastagを登録する', new_mypage_tag_path

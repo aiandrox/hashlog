@@ -2,6 +2,7 @@ class MypagesController < ApplicationController
   before_action :set_user
 
   def show
+    @registered_tags = @user.registered_tags.includes(:tag)
   end
 
   def edit
