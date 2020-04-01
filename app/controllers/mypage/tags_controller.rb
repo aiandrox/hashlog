@@ -1,11 +1,11 @@
-class TagsController < ApplicationController
+class Mypage::TagsController < ApplicationController
   def new
     @tag = current_user.tags.new
   end
 
   def create
-    if (@tag = current_user.tags.create(name: tag_params[:name]))
-      @tag.tag_logs.create!(user_id: current_user)
+    if (@tag = current_user.tags.find_or_create_by(tag_params))
+      current_user.registered_tags.create!(tag_id: @tag.id)
       redirect_to mypage_path(current_user.uuid)
     else
       flash.now[:alert] = '登録できませんでした'
