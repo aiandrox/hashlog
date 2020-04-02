@@ -14,6 +14,10 @@ AllCops:
 Style/AsciiComments:
   Enabled: false
 
+# Admin::BaseControllerのような書き方を許可
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 # frozen_string_literal: trueはなくていい
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -26,14 +30,14 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
+# クラスにコメントを残さない
+Style/Documentation:
+  Enabled: false
+
 # コントローラのメソッド名に「set_」「get_」を許可
 Naming/AccessorMethodName:
   Exclude:
     - "app/controllers/**/*"
-
-# クラスにコメントを残さない
-Style/Documentation:
-  Enabled: false
 
 # コメントは一行の長さを制限しない
 Metrics/LineLength:
