@@ -1,11 +1,9 @@
 class Mypage::RegisteredTagsController < ApplicationController
   before_action :set_tag, only: %i[show edit update destroy]
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @tag.update(tag_params)

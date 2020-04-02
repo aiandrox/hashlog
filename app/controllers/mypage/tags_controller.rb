@@ -21,7 +21,7 @@ class Mypage::TagsController < ApplicationController
       @registered_tag = current_user.registered_tags.create!(tag_id: @tag.id)
     rescue ActiveRecord::RecordInvalid
       false
-    rescue
+    rescue StandardError
       render status: 500
     end
   end

@@ -5,8 +5,7 @@ class MypagesController < ApplicationController
     @registered_tags = @user.registered_tags.includes(:tag)
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @user.update(user_params)
