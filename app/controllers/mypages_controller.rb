@@ -9,6 +9,12 @@ class MypagesController < ApplicationController
   end
 
   def update
+    if @user.update(user_params)
+      redirect_to mypage_path, notice: '更新しました'
+    else
+      flash.now[:alert] = '更新できませんでした'
+      render :edit
+    end
   end
 
   def destroy

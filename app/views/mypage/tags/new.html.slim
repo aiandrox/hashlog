@@ -1,4 +1,4 @@
-= content_for :title, '新しいHashtagを登録する'
+- content_for :title, '新しいHashtagを登録する'
 
 =  form_with model: [@registered_tag, @tag], url: mypage_tags_url, method: :post, local: true do |f|
   = render 'shared/error_messages', object: f.object
