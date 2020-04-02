@@ -1,4 +1,4 @@
-class Mypage::RegisteredTagsController < ApplicationController
+class Mypage::RegisteredTagsController < Mypage::BaseController
   before_action :set_tag, only: %i[show edit update destroy]
 
   def show; end

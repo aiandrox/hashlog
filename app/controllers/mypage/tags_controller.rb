@@ -1,4 +1,4 @@
-class Mypage::TagsController < ApplicationController
+class Mypage::TagsController < Mypage::BaseController
   def new
     @tag = current_user.tags.new
     @registered_tag = current_user.registered_tags.new
