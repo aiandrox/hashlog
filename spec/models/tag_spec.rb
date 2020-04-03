@@ -1,6 +1,6 @@
 RSpec.describe Tag, type: :model do
   context 'associations' do
-    it { is_expected.to have_many(:registered_tags) }
+    it { is_expected.to have_many(:registered_tags).dependent(:restrict_with_error) }
   end
 
   context 'validations' do
