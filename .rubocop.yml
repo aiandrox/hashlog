@@ -42,3 +42,8 @@ Naming/AccessorMethodName:
 # コメントは一行の長さを制限しない
 Metrics/LineLength:
   IgnoredPatterns: ['\A#']
+
+# メソッドの行数を20行までにする
+Metrics/MethodLength:
+  CountComments: false
+  Max: 20
