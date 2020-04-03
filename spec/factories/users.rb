@@ -1,7 +1,11 @@
 FactoryBot.define do
   factory :user do
-    twitter_id { '1242379749650907137' }
+    twitter_id { rand(10 ** 19).to_s }
     sequence(:name) { |n| "user_#{n}" }
+
+    after(:create) do |user|
+      create_list(:tag, 3, users: [user])
+    end
   end
 
   trait :guest do

@@ -1,7 +1,9 @@
 class Mypage::RegisteredTagsController < Mypage::BaseController
   before_action :set_tag, only: %i[show edit update destroy]
 
-  def show; end
+  def show
+    @user = current_user
+  end
 
   def edit; end
 
