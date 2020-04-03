@@ -1,6 +1,6 @@
 class Mypage::TagsController < Mypage::BaseController
   def new
-    @tag = current_user.tags.new
+    @tag = Tag.new
   end
 
   def create
