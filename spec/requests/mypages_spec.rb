@@ -1,7 +1,6 @@
 describe 'Mypages', type: :request do
   let(:user) { create(:user) }
   let(:tag) { user.tags.first }
-  let(:registered_tag) { create(:registered_tag, user: user, tag: tag) }
   before { login_as(user) }
 
   context "GET /mypage" do
@@ -23,7 +22,7 @@ describe 'Mypages', type: :request do
   context 'PATCH /mypage' do
     it '正しく更新される' do
       expect do
-        patch mypage_path, params: { id: user.id, user: { name: '変更後の名前' } }
+        patch mypage_path, params: { user: { name: '変更後の名前' } }
         expect(response.status).to eq 302
       end.to change { User.find(user.id).name }.from(user.name).to('変更後の名前')
     end
