@@ -1,4 +1,5 @@
 class RegisteredTag < ApplicationRecord
+  has_many :tweets, dependent: :destroy
   belongs_to :user
   belongs_to :tag
 

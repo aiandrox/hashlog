@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_121136) do
+ActiveRecord::Schema.define(version: 2020_04_03_132538) do
 
   create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(version: 2020_03_31_121136) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "content", null: false
+    t.string "media_url"
+    t.bigint "registered_tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["registered_tag_id"], name: "index_tweets_on_registered_tag_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "twitter_id", null: false
     t.string "uuid", null: false
@@ -56,4 +65,5 @@ ActiveRecord::Schema.define(version: 2020_03_31_121136) do
 
   add_foreign_key "registered_tags", "tags"
   add_foreign_key "registered_tags", "users"
+  add_foreign_key "tweets", "registered_tags"
 end
