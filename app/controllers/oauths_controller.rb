@@ -10,7 +10,7 @@ class OauthsController < ApplicationController
       return
     end
     if (@user = login_from(provider))
-      redirect_to root_path, notice: "#{provider.titleize}でログインしました"
+      redirect_to mypage_path, notice: "#{provider.titleize}でログインしました"
     else
       create_user_from(provider)
     end
@@ -26,7 +26,7 @@ class OauthsController < ApplicationController
     @user = create_from(provider)
     reset_session
     auto_login(@user)
-    redirect_to root_path, notice: "#{provider.titleize}でログインしました"
+    redirect_to mypage_path, notice: "#{provider.titleize}でログインしました"
   rescue StandardError
     redirect_to root_path, alert: "#{provider.titleize}でのログインに失敗しました"
   end

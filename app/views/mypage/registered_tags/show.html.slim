@@ -1,0 +1,4 @@
+- content_for :title, "#{current_user.name}の#{@tag.tag.name}"
+
+= link_to '編集', edit_mypage_registered_tag_path(@tag)
+= link_to '削除', mypage_registered_tag_path(@tag), method: :delete

@@ -5,8 +5,8 @@ FactoryBot.define do
   end
 
   trait :guest do
-    role { :guest }
     name { 'ゲストユーザー' }
+    role { :guest }
   end
 
   trait :admin do

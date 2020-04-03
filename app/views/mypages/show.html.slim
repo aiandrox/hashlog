@@ -1,6 +1,6 @@
 - content_for :title, @user.name
 
-h1 ユーザーページ
+h1 マイページ
 p
   div
     | name: 
@@ -17,7 +17,9 @@ p
   div
     | role:
     = @user.role
-
+  - if @registered_tags.any?
+    div
+    = render @registered_tags
   div
-    | hashtag:
-    = @user.tags.all
+    = link_to 'ユーザー情報編集', edit_mypage_path
+    = link_to '新しいHastagを登録する', new_mypage_tag_path
