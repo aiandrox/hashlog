@@ -18,7 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'rails-i18n'
 gem 'slim-rails'
 
-# ログイン機能
+# 機能
 gem 'sorcery'
 
 group :development, :test do
