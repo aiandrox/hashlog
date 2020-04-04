@@ -16,6 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # ビュー
 gem 'rails-i18n'
+gem 'enum_help'
 gem 'slim-rails'
 
 # ログイン機能

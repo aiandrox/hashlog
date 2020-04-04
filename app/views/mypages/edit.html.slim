@@ -5,8 +5,11 @@ h1= t '.title'
   = render 'shared/error_messages', object: f.object
   = f.label :name
   = f.text_field :name
+  br
   = f.label :description
   = f.text_area :description
+  br
   = f.label :privacy
-  = f.select :privacy, User.privacies_i18n.map { |k, v| [v, k] }
+  = f.select :privacy, User.privacies_i18n.invert
+  br
   = f.submit

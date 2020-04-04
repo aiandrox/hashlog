@@ -7,5 +7,5 @@ h1= t '.title'
   = f.label :remind_day
   = f.text_field :remind_day
   = f.label :privacy
-  = f.select :privacy, RegisteredTag.privacies_i18n.map { |k, v| [v, k] }
+  = f.select :privacy, RegisteredTag.privacies_i18n.invert
   = f.submit
