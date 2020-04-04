@@ -1,0 +1,17 @@
+ja:
+  login: ログイン
+  logout: ログアウト
+  mypage:
+    tags:
+      new:
+        title: 新しいハッシュタグを登録する
+    registered_tags:
+      edit:
+        title: ログの設定
+      show:
+        title: ツイート一覧
+  mypages:
+    edit:
+      title: ユーザー設定
+    show:
+      title: マイページ

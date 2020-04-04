@@ -1,6 +1,6 @@
-- content_for :title, 'ユーザー情報編集'
+- content_for :title, t('.title')
 
-
+h1= t '.title'
 = form_with model: @user, url: mypage_path, method: :patch, local: true do |f|
   = render 'shared/error_messages', object: f.object
   = f.label :name
@@ -8,5 +8,5 @@
   = f.label :description
   = f.text_area :description
   = f.label :privacy
-  / = f.select :privacy, User.privacy
+  = f.select :privacy, User.privacies_i18n.map { |k, v| [v, k] }
   = f.submit
