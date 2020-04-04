@@ -20,6 +20,7 @@ gem 'slim-rails'
 
 # 機能
 gem 'sorcery'
+gem 'twitter'
 
 group :development, :test do
   gem 'better_errors', '~> 2.6'
