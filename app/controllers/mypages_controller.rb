@@ -9,22 +9,23 @@ class MypagesController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to mypage_path, notice: '更新しました'
+      redirect_to mypage_path, notice: t('messsges.updated', item: @user_i18n)
     else
-      flash.now[:alert] = '更新できませんでした'
+      flash.now[:alert] = t('messages.not_updated', item: @user_i18n)
       render :edit
     end
   end
 
   def destroy
     @user.destroy!
-    redirect_to root_path, notice: 'ユーザーを削除しました'
+    redirect_to root_path, notice: t('messages.deleted', item: @user_i18n)
   end
 
   private
 
   def set_user
     @user = current_user
+    @user_i18n = @user.model_name.human
   end
 
   def user_params

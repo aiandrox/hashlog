@@ -2,8 +2,8 @@ ja:
   activerecord:
     # User.model_name.human
     models:
-      user: ユーザー
-      registered_tag: 登録したハッシュタグ
+      user: ユーザー情報
+      registered_tag: ハッシュタグの設定
       tag: ハッシュタグ
     # User.human_attributes_name(:name)
     attributes:
