@@ -1,0 +1,42 @@
+ja:
+  activerecord:
+    # User.model_name.human
+    models:
+      user: ユーザー情報
+      registered_tag: ハッシュタグの設定
+      tag: ハッシュタグ
+    # User.human_attributes_name(:name)
+    attributes:
+      id: ID
+      created_at: 作成日時
+      updated_at: 更新日時
+      user:
+        twitter_id: Twitter ID
+        name: 名前
+        description: 自己紹介
+        role: 権限
+        privacy: 公開設定
+      registered_tag:
+        tweeted_day_count: 累計ツイート日数
+        remind_day: リマインダー日数
+        privacy: 公開設定
+        first_tweeted_at: 初ツイート日時
+        last_tweeted_at: 最終ツイート日時
+      tag:
+        name: 名前
+      tweet: ツイート
+
+  enums:
+    user:
+      privacy:
+        published: 公開
+        closed: 非公開
+      role:
+        admin: 管理ユーザー
+        general: 一般ユーザー
+        guest: ゲストユーザー
+    registered_tag:
+      privacy:
+        published: 公開
+        closed: 非公開
+        limited: 限定公開
