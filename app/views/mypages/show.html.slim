@@ -13,10 +13,10 @@ p
     = @user.description
   div
     | privacy:
-    = @user.privacy
+    = @user.privacy_i18n
   div
     | role:
-    = @user.role
+    = @user.role_i18n
   - if @registered_tags.any?
     div
     = render @registered_tags, user: @user
