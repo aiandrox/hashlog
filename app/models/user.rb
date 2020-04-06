@@ -29,9 +29,7 @@ class User < ApplicationRecord
       registered_tag = registered_tags.build(tag_id: tag.id)
       registered_tag.save!
     rescue ActiveRecord::RecordInvalid
-      if registered_tag&.invalid?
-        tag.errors.messages.merge!(registered_tag.errors.messages)
-      end
+      tag.errors.messages.merge!(registered_tag.errors.messages) if registered_tag&.invalid?
       false
     rescue StandardError
       render status: 500
