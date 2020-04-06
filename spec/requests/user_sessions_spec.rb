@@ -1,4 +1,4 @@
-fdescribe 'UserSessions', type: :request do
+describe 'UserSessions', type: :request do
   let(:user) { create(:user) }
   let!(:guest) { create(:user, :guest) }
 
