@@ -4,9 +4,11 @@ module UserSessionsHelper
     expect(logged_in?).to be_truthy
   end
 
-  def logged_in? # TODO sessionに値が入っていないとNoMethodErrorになるのでゴリ押しでfalseを返している
-    !!session[:user_id]
-  rescue StandardError
-    false
+  def logged_in?
+    !!current_user
+  end
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 end
