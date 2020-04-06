@@ -10,16 +10,16 @@ class Mypage::RegisteredTagsController < Mypage::BaseController
   def update
     if @tag.update(tag_params)
       redirect_to mypage_registered_tag_path,
-                  notice: t('messages.updated', item: @tag_i18n)
+                  notice: t('messages.updated', item: "#{@tag_i18n}の設定")
     else
-      flash.now[:alert] = t('messages.not_updated', item: @tag_i18n)
+      flash.now[:alert] = t('messages.not_updated', item: "#{@tag_i18n}の設定")
       render :edit
     end
   end
 
   def destroy
     @tag.destroy!
-    redirect_to mypage_path, notice: t('messages.updated', item: @tag_i18n)
+    redirect_to mypage_path, notice: t('messages.deleted', item: @tag_i18n)
   end
 
   private
