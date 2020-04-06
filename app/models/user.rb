@@ -22,4 +22,17 @@ class User < ApplicationRecord
       break random_token unless self.class.exists?(uuid: random_token)
     end
   end
+
+  def create_registered_tag(tag)
+    ActiveRecord::Base.transaction do
+      tag.save!
+      registered_tag = registered_tags.build(tag_id: tag.id)
+      registered_tag.save!
+    rescue ActiveRecord::RecordInvalid
+      tag.errors.messages.merge!(registered_tag.errors.messages) if registered_tag&.invalid?
+      false
+    rescue StandardError
+      render status: 500
+    end
+  end
 end

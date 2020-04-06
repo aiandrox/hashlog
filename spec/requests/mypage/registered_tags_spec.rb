@@ -8,8 +8,6 @@ describe 'Mypage::RegisteredTags', type: :request do
     it 'current_userのタグページを表示する' do
       get mypage_registered_tag_path(registered_tag)
       expect(response.status).to eq 200
-      expect(response.body).to include user.name
-      expect(response.body).to include tag.name
     end
   end
 

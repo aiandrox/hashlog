@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'oauth/callback', to: 'oauths#callback'
   get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
   delete 'logout', to: 'user_sessions#destroy'
+  # ゲストユーザーログイン
+  get 'guest_login', to: 'user_sessions#guest_login'
 
   # マイページ
   resource :mypage, only: %i[show edit update destroy]

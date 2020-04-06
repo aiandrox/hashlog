@@ -1,10 +1,11 @@
-- content_for :title, 'ユーザー情報編集'
+- content_for :title, t('.title')
 
+h1= t '.title'
 
 = form_with model: @tag, url: mypage_registered_tag_path, method: :patch, local: true do |f|
   = render 'shared/error_messages', object: f.object
   = f.label :remind_day
   = f.text_field :remind_day
   = f.label :privacy
-  / = f.select :privacy
+  = f.select :privacy, RegisteredTag.privacies_i18n.invert
   = f.submit
