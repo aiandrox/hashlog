@@ -1,6 +1,7 @@
 class Mypage::TagsController < Mypage::BaseController
   def new
     @tag = Tag.new
+    binding.pry
   end
 
   def create
@@ -25,48 +26,27 @@ class Mypage::TagsController < Mypage::BaseController
     params.require(:tag).permit(:name)
   end
 
-  def access_token
+  # curl -X POST "https://api.twitter.com/1.1/tweets/search/30day/dev.json"\
+  # -d '{"query":"#自炊 from:aiandrox","maxResults":"100"}'\
+  # -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAOYRDQEAAAAAqOj4OL9iYGT0oYU5gk16giPvUe4%3DZ83FP6MTMJrYI8McD0SEbwkMMys8IKgyud9M4ExUADj8KgOJGU"
+  def get_json
     api_key = Rails.application.credentials.twitter[:key]
     api_secret = Rails.application.credentials.twitter[:secret_key]
-    @base64_token = Base64.strict_encode64("#{api_key}:#{api_secret}")
-    @access_token ||= get_access_token
-  end
-
-  # curl --request 'POST' 'https://api.twitter.com/oauth2/token'\
-  # --header 'Authorization: Basic base64_token'\
-  # --header 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8'\
-  # --data "grant_type=client_credentials" --verbose
-  def get_access_token
-    uri = URI.parse("https://api.twitter.com/oauth2/token")
-    request = Net::HTTP::Post.new(uri)
-    request.content_type = "application/x-www-form-urlencoded;charset=UTF-8"
-    request["Authorization"] = "Basic #{@base64_token}"
-    request.set_form_data("grant_type": "client_credentials")
-    req_options = { use_ssl: uri.scheme == "https" }
-    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
-      http.request(request)
+    token = Rails.application.credentials.twitter[:access_token]
+    token_secret = Rails.application.credentials.twitter[:access_token_secret]
+    url = 'https://api.twitter.com/1.1/tweets/search/30day/dev.json'
+    connection = Faraday.new(url) do |faraday|
+      faraday.request :url_encoded
+      faraday.request :oauth, { consumer_key: api_key,
+                                consumer_secret: api_secret,
+                                token: token,
+                                token_secret: token_secret }
+      faraday.adapter Faraday.default_adapter
     end
-    body = JSON.load(response.body)
-    @access_token = body['access_token']
-  end
-  
-  def res
-    binding.pry
-    uri = URI.parse("https://api.twitter.com/1.1/tweets/search/30day/dev.json")
-    request = Net::HTTP::Post.new(uri)
-    request["Authorization"] = "Bearer #{Rails.application.credentials.twitter[:bearer_access_token]}"
-    request.body = JSON.dump({
-      "query" => "#自炊 from:aiandrox",
-      "maxResults" => "100"
-    })
-
-    req_options = {
-      use_ssl: uri.scheme == "https",
-    }
-
-    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
-      http.request(request)
+    res = connection.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = { query: "#自炊 from:aiandrox", maxResults: '100' }.to_json
     end
-    response
+    body = JSON.parse res.body
   end
 end

@@ -21,7 +21,10 @@ gem 'slim-rails'
 
 # 機能
 gem 'sorcery'
-gem 'twitter'
+# api
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'simple_oauth'
 
 group :development, :test do
   gem 'better_errors', '~> 2.6'
