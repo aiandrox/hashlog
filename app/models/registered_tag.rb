@@ -17,7 +17,8 @@ class RegisteredTag < ApplicationRecord
       config.access_token        = Rails.application.credentials.twitter[:access_token]
       config.access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
     end
-    client.search("##{tag.name} from:#{user.screen_name}", result_type: "recent").take(100).collect do |date|
+    client.search("##{tag.name} from:#{user.screen_name}",
+                  result_type: 'recent').take(100).collect do |date|
       tweet = Tweet.new(registered_tag_id: id) # TODO　アソシエーションがだめ。tweet = tweets.buildがダメだった
       tweet.content = date.text
       tweet.created_at = date.created_at
@@ -31,7 +32,9 @@ class RegisteredTag < ApplicationRecord
       config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
       config.dev_environment     = 'dev'
     end
-    client.premium_search("##{tag.name} from:#{user.screen_name}", { maxResults: 100 }, { product: '30day' }).take(100).collect do |date|
+    client.premium_search("##{tag.name} from:#{user.screen_name}",
+                          { maxResults: 100 },
+                          { product: '30day' }).take(100).collect do |date|
       tweet = Tweet.new(registered_tag_id: id) # TODO　アソシエーションがだめ。tweet = tweets.buildがダメだった
       tweet.content = date.text
       tweet.created_at = date.created_at
