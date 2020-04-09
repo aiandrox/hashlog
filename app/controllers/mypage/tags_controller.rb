@@ -1,7 +1,6 @@
 class Mypage::TagsController < Mypage::BaseController
   def new
     @tag = Tag.new
-    binding.pry
   end
 
   def create
@@ -49,4 +48,61 @@ class Mypage::TagsController < Mypage::BaseController
     end
     body = JSON.parse res.body
   end
+
+  def standard
+    oauth_consumer_key = Rails.application.credentials.twitter[:key]
+    api_secret = Rails.application.credentials.twitter[:secret_key]
+    token = Rails.application.credentials.twitter[:access_token]
+    token_secret = Rails.application.credentials.twitter[:access_token_secret]
+    oauth_nonce = 
+    oauth_signature_method = 	"HMAC-SHA1"
+    oauth_timestamp = 
+    oauth_version = "1.0"
+    url = 'https://api.twitter.com/1.1/search/tweets.json?q=from%3aiandrox&result_type=recent'
+    connection = Faraday.new(url) do |faraday|
+      faraday.request :url_encoded
+      faraday.request :oauth, { consumer_key: api_key,
+                                consumer_secret: api_secret,
+                                token: token,
+                                token_secret: token_secret }
+      faraday.adapter Faraday.default_adapter
+    end
+    res = connection.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = { query: "#自炊 from:aiandrox", maxResults: '100' }.to_json
+    end
+    body = JSON.parse res.body
+  end
+
+  def bearer_token
+    uri = URI.parse("https://api.twitter.com/oauth2/token")
+    request = Net::HTTP::Post.new(uri)
+    request.content_type = "application/x-www-form-urlencoded;charset=UTF-8"
+    request["Authorization"] = "Basic #{@base64_token}"
+    request.set_form_data("grant_type": "client_credentials")
+    req_options = { use_ssl: uri.scheme == "https" }
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+      http.request(request)
+    end
+    body = JSON.load(response.body)
+    @access_token = body['access_token']
+  end
+
+
+  def create_tweet(tag)
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = Rails.application.credentials.twitter[:key]
+      config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
+      config.access_token        = Rails.application.credentials.twitter[:access_token]
+      config.access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
+    end
+    client.search("##{tag} from:aiandrox", result_type: "recent").take(3).collect do |tweet|
+      @tweet = @registered_tag.tweets.build
+      @tweet.content = tweet.text
+      @tweet.created_at = tweet.created_at
+      @tweet.save!
+    end
+  end
+
+# client.premium_search("#自炊 from:aiandrox", { maxResults: 100 }, { product: '30day' })
 end
