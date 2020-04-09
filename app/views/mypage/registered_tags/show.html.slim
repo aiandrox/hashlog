@@ -1,6 +1,9 @@
-- content_for :title, t('.title')
+- content_for :title, @tag.name
 
-h1= t '.title'
+= render @tweets
 
-= link_to '編集', edit_mypage_registered_tag_path(@tag)
-= link_to '削除', mypage_registered_tag_path(@tag), method: :delete
+h1= @tag.name
+
+= link_to '設定', edit_mypage_registered_tag_path(@tag)
+
+累計

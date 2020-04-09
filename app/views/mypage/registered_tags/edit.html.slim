@@ -9,3 +9,5 @@ h1= t '.title'
   = f.label :privacy
   = f.select :privacy, RegisteredTag.privacies_i18n.invert
   = f.submit
+
+= link_to '削除', mypage_registered_tag_path(@tag), method: :delete
