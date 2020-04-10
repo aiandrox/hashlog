@@ -1,6 +1,5 @@
 describe 'Mypage::Tags', type: :request do
   let(:user) { create(:user) }
-  let(:registered_tag) { user.registered_tags.first }
   before { login_as(user) }
 
   context 'GET /mypage/tags/new' do
@@ -10,21 +9,16 @@ describe 'Mypage::Tags', type: :request do
     end
   end
 
-  context 'PATCH /mypage/registered_tags/:id' do
-    it '正しく更新される' do
+  context 'POST /mypage/tags/' do
+    xit 'RegisteredTagが作成される' do
+      twitter_client_mock = double('Twitter client')
+      allow(twitter_client_mock).to receive(:search, :premium_search, :oembeds)
+      allow(twitter_client).to receive(:twitter_client).and_return(twitter_client_mock)
+      # https://qiita.com/jnchito/items/640f17e124ab263a54dd
       expect do
-        patch mypage_registered_tag_path(registered_tag), params: { registered_tag: { privacy: :closed } }
+        post mypage_tags_path, params: { tag: { name: '今日の積み上げ' } }
         expect(response.status).to eq 302
-      end.to change { RegisteredTag.find(registered_tag.id).privacy }.from('published').to('closed')
-    end
-  end
-
-  context 'DELETE /mypage/registered_tags/:id' do
-    it 'registered_tagを削除する' do
-      expect do
-        delete mypage_registered_tag_path(registered_tag)
-      end.to change(RegisteredTag, :count).by(-1)
-      expect(response.status).to eq 302
+      end.to change(RegisteredTag, :count).by(1)
     end
   end
 end
