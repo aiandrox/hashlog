@@ -1,5 +1,5 @@
 describe 'Mypages', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :with_tags) }
   let(:tag) { user.tags.first }
   before { login_as(user) }
 
