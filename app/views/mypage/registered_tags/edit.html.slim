@@ -2,7 +2,7 @@
 
 h1= t '.title'
 
-= form_with model: @tag, url: mypage_registered_tag_path, method: :patch, local: true do |f|
+= form_with model: @registered_tag, url: mypage_registered_tag_path, method: :patch, local: true do |f|
   = render 'shared/error_messages', object: f.object
   = f.label :remind_day
   = f.text_field :remind_day
@@ -10,4 +10,4 @@ h1= t '.title'
   = f.select :privacy, RegisteredTag.privacies_i18n.invert
   = f.submit
 
-= link_to '削除', mypage_registered_tag_path(@tag), method: :delete
+= link_to '削除', mypage_registered_tag_path(@registered_tag), method: :delete
