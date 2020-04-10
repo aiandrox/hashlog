@@ -1,5 +1,5 @@
 describe 'Users', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :with_tags) }
   let(:tag) { user.tags.first }
 
   context 'GET /users/:uuid' do
