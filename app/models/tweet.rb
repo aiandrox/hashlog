@@ -11,6 +11,7 @@ class Tweet < ApplicationRecord
   #   end
   # end
 
+  # この以下3つのメソッドはtwitter_client関係として切り分けたい。
   # def tweet_results
   #   @tweet_ids = []
   #   @tweeted_ats = []
