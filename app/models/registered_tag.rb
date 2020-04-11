@@ -11,14 +11,20 @@ class RegisteredTag < ApplicationRecord
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
   def get_tweets
+    tweet_results.each do |oembed, tweeted_at|
+      tweets.create!(oembed: oembed, tweeted_at: tweeted_at)
+    end
+  end
+
+  def tweet_results
     @tweet_ids = []
     @tweeted_ats = []
+    @tweet_oembeds = []
     search_tweet('standard')
     twitter_client.oembeds(@tweet_ids, omit_script: true).take(100).collect do |oembed|
-      n = 0
-      tweets.create!(oembed: oembed.html, tweeted_at: @tweeted_ats.delete_at(n))
-      n += 1
+      @tweet_oembeds << oembed.html
     end
+    @tweet_oembeds.zip(@tweeted_ats)
   end
 
   def search_tweet(type)
