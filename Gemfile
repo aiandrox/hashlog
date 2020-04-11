@@ -22,9 +22,6 @@ gem 'slim-rails'
 # 機能
 gem 'sorcery'
 # api
-gem 'faraday'
-gem 'faraday_middleware'
-gem 'simple_oauth'
 gem 'twitter'
 
 group :development, :test do
