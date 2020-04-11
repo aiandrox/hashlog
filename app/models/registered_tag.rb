@@ -24,14 +24,14 @@ class RegisteredTag < ApplicationRecord
   def search_tweet(type)
     if type == 'standard'
       twitter_client.search("##{tag.name} from:#{user.screen_name}",
-                    result_type: 'recent').take(100).collect do |result|
+                            result_type: 'recent').take(100).collect do |result|
         @tweeted_ats << result.created_at
         @tweet_ids << result.id
       end
     elsif type == '30day'
       twitter_client.premium_search("##{tag.name} from:#{user.screen_name}",
-                            { maxResults: 100 },
-                            { product: '30day' }).take(100).collect do |rwsult|
+                                    { maxResults: 100 },
+                                    { product: '30day' }).take(100).collect do |_rwsult|
         @tweeted_ats << result.created_at
         @tweet_ids << result.id
       end
