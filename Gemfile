@@ -16,6 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # ビュー
 gem 'enum_help'
+gem 'pagy'
 gem 'rails-i18n'
 gem 'slim-rails'
 
