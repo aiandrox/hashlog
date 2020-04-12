@@ -1,3 +1,5 @@
-header
-  = link_to t('login'), auth_at_provider_path(provider: :twitter)
-  = link_to "ゲストユーザーとして#{t('login')}", guest_login_path 
+nav
+  ul
+    li= link_to t('login'), auth_at_provider_path(provider: :twitter)
+
+    li= link_to "ゲストユーザーとして#{t('login')}", guest_login_path 
