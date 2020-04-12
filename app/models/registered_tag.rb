@@ -21,7 +21,10 @@ class RegisteredTag < ApplicationRecord
     @tweeted_ats = []
     @tweet_oembeds = []
     search_tweet('standard')
-    twitter_client.oembeds(@tweet_ids, omit_script: true).take(100).collect do |oembed|
+    twitter_client.oembeds(@tweet_ids,
+                           omit_script: true,
+                           hide_thread: true,
+                           lang: :ja).take(100).collect do |oembed|
       @tweet_oembeds << oembed.html
     end
     @tweet_oembeds.zip(@tweeted_ats)
