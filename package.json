@@ -1,11 +1,16 @@
 {
   "name": "hashlog",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@rails/webpacker": "5.0.1"
+  },
   "version": "1.0.0",
   "description": "Twitterのハッシュタグ学習をログにするよ",
   "main": "index.js",
   "repository": "git@github.com:Aiandrox/hashlog.git",
   "author": "Aiandrox <aiandrox7@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.3"
+  }
 }

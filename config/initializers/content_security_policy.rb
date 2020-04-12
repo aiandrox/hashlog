@@ -11,7 +11,7 @@
 #   policy.object_src  :none
 #   policy.script_src  :self, :https
 #   policy.style_src   :self, :https
-
+#   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development? 追加しろと言われたやつ
 #   # Specify URI for violation reports
 #   # policy.report_uri "/csp-violation-report-endpoint"
 # end
