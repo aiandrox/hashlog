@@ -1,14 +1,9 @@
 <template>
-  <header>
-    <router-link :to="{ name: 'top' }">top</router-link>|
-    <router-link :to="{ name: 'mypage'} ">マイページ</router-link>
-    <nav>
-      <ul>
-        <li>Twitterログイン</li>
-        <li>ゲストユーザーとしてログイン</li>
-      </ul>
-    </nav>
-  </header>
+  <v-app-bar app>
+    <v-toolbar-title>Hashlog</v-toolbar-title>
+    <router-link to="/mypage">Twitterログイン</router-link>
+    <div>ゲストユーザーとしてログイン</div>
+  </v-app-bar>
 </template>
 
 <script>

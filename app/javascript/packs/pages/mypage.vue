@@ -1,1 +1,3 @@
-<template></template>
+<template>
+  <v-btn>Vuetifyのボタン</v-btn>
+</template>

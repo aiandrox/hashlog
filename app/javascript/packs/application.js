@@ -18,19 +18,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+import Vuetify from 'vuetify'
 
 import App from '../app.vue'
 // import store from './store1.js'
 import router from './router'
+import "vuetify/dist/vuetify.min.css"
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(Vuetify)
 Vue.config.productionTip = false
+const vuetify = new Vuetify()
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: '#app',
     router,
+    vuetify,
     // store: store,
     render: (h) => h(App)
   })
