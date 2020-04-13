@@ -4,11 +4,10 @@ class Mypage::TagsController < Mypage::BaseController
   end
 
   def create
-    @tag = Tag.find_or_initialize_by(tag_params)
-    if current_user.create_registered_tag(@tag)
-      redirect_to mypage_path, notice: t('messages.created', item: @tag.model_name.human)
+    if current_user.create_registered_tag(tag_params[:name])
+      redirect_to mypage_path, notice: t('messages.created', item: Tag.model_name.human)
     else
-      flash.now[:alert] = t('messages.not_created', item: @tag.model_name.human)
+      flash.now[:alert] = t('messages.not_created', item: Tag.model_name.human)
       render :new
     end
   end
