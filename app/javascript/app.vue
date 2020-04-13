@@ -2,15 +2,13 @@
   <div id="app">
     <v-app>
       <Header />
-      <flash-message />
       <v-content>
         <v-container>
+          <flash-message />
           <router-view />
         </v-container>
       </v-content>
-      <v-footer app>
-        <Footer />
-      </v-footer>
+      <Footer />
     </v-app>
   </div>
 </template>
@@ -39,6 +37,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

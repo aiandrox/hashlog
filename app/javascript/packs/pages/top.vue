@@ -8,7 +8,9 @@
       <br />スタイルシートのスコープなんてきにしなくてへいき。
       <br />
     </div>
-    <router-link to="/mypage">マイページ</router-link>
+    <v-btn roading>
+      <router-link to="/mypage">マイページ</router-link>
+    </v-btn>
   </div>
 </template>
 

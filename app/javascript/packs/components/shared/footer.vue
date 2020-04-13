@@ -1,7 +1,5 @@
 <template>
-  <div class="footer">
-    <!-- <h1>{{ msg }}</h1> -->
-  </div>
+  <v-footer app>フッター</v-footer>
 </template>
 
 <script>
@@ -14,7 +12,4 @@ export default {
 </script>
 
 <style scoped>
-#header {
-  background: aliceblue;
-}
 </style>
