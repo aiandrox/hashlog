@@ -4,7 +4,7 @@ class Mypage::TagsController < Mypage::BaseController
   end
 
   def create
-    if current_user.create_registered_tag(tag_params[:name])
+    if current_user.register_tag(tag_params[:name])
       redirect_to mypage_path, notice: t('messages.created', item: Tag.model_name.human)
     else
       flash.now[:alert] = t('messages.not_created', item: Tag.model_name.human)

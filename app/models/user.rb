@@ -31,7 +31,7 @@ class User < ApplicationRecord
     end
   end
 
-  def create_registered_tag(tag_name)
+  def register_tag(tag_name)
     ActiveRecord::Base.transaction do
       tags << tag = Tag.find_or_initialize_by(name: tag_name)
       save!
