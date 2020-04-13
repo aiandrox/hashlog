@@ -15,4 +15,23 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Hello World from Webpacker')
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Vuex from 'vuex'
+
+import App from '../app.vue'
+// import store from './store1.js'
+import router from './router'
+
+Vue.use(VueRouter)
+Vue.use(Vuex)
+Vue.config.productionTip = false
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Vue({
+    el: '#app',
+    router,
+    // store: store,
+    render: (h) => h(App)
+  })
+})

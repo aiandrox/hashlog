@@ -1,22 +1,33 @@
 <template>
   <div id="app">
-    <p>{{ message }}</p>
+    <Header />>
+    <router-view />
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from "./packs/components/shared/header.vue";
+import Footer from "./packs/components/shared/footer.vue";
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
+  name: "MyApp",
+  props: {
+    msg: String
+  },
+  components: {
+    Header,
+    Footer
   }
-}
+};
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
+<style>
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
