@@ -5,6 +5,7 @@ module TwitterAPI
 
   # return [[oembed, tweeted_at],[oembed, tweeted_at],...]
   def tweets_data(tweet_oembeds = [])
+    binding.pry
     tweet_ids = search_result('standard')[:tweet_ids]
     tweeted_ats = search_result('standard')[:tweeted_ats]
     client.oembeds(tweet_ids,
