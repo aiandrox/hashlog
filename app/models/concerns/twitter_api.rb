@@ -5,7 +5,6 @@ module TwitterAPI
 
   # return [[oembed, tweeted_at],[oembed, tweeted_at],...]
   def tweets_data(tweet_oembeds = [])
-    binding.pry
     tweet_ids = search_result('standard')[:tweet_ids]
     tweeted_ats = search_result('standard')[:tweeted_ats]
     client.oembeds(tweet_ids,
@@ -16,8 +15,6 @@ module TwitterAPI
     end
     tweet_oembeds.zip(tweeted_ats)
   end
-
-  private
 
   # return
   # {:tweeted_ats=>[2020-04-14 00:05:51 UTC, 2020-04-12 23:36:38 UTC, 2020-04-12 09:03:19 UTC],
