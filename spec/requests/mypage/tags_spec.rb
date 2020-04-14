@@ -18,5 +18,11 @@ describe 'Mypage::Tags', type: :request do
         expect(response.status).to eq 302
       end.to change(RegisteredTag, :count).by(1)
     end
+    it 'Tweetが作成される' do
+      expect do
+        post mypage_tags_path, params: { tag: { name: 'テスト' } }
+        expect(response.status).to eq 302
+      end.to change(Tweet, :count).by(3)
+    end
   end
 end
