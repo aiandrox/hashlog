@@ -1,7 +1,7 @@
 require 'support/vcr_helper'
 
 describe 'Mypage::Tags', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, screen_name: 'screen_name') } # screen_nameは固定
   before { login_as(user) }
 
   context 'GET /mypage/tags/new' do
