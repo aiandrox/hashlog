@@ -36,8 +36,6 @@ class User < ApplicationRecord
       tags << tag = Tag.find_or_initialize_by(name: tag_name)
       save!
       registered_tag(tag: tag).create_tweets
-      # 上の行の代わりに
-      # registered_tag.tweets.auto_save!
     rescue ActiveRecord::RecordInvalid
       if registered_tag(tag_name: tag_name).&invalid?
         tag.errors.messages.merge!(registered_tag.errors.messages)

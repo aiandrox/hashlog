@@ -50,3 +50,7 @@ Metrics/LineLength:
 Metrics/MethodLength:
   CountComments: false
   Max: 20
+
+# ABC sizeは緩めにする
+Metrics/AbcSize:
+  Max: 30 # default 15
