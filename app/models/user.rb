@@ -32,17 +32,17 @@ class User < ApplicationRecord
   end
 
   def register_tag(tag_name)
-    ActiveRecord::Base.transaction do
+    # ActiveRecord::Base.transaction do
       tags << tag = Tag.find_or_initialize_by(name: tag_name)
       save!
       registered_tag(tag: tag).create_tweets
-    rescue ActiveRecord::RecordInvalid
-      if registered_tag(tag_name: tag_name).&invalid?
-        tag.errors.messages.merge!(registered_tag.errors.messages)
-      end
-      false
-    rescue StandardError
-      render status: 500
+    # rescue ActiveRecord::RecordInvalid
+    #   if registered_tag(tag_name: tag_name).&invalid?
+    #     tag.errors.messages.merge!(registered_tag.errors.messages)
+    #   end
+    #   false
+    # rescue StandardError
+    #   render status: 500
       # TODO: twitterAPIリクエスト上限によるエラーの処理（ここで処理するものではないが）
     end
   end

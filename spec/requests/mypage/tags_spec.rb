@@ -11,7 +11,7 @@ describe 'Mypage::Tags', type: :request do
     end
   end
 
-  context 'POST /mypage/tags/', vcr: true do
+  fcontext 'POST /mypage/tags/', vcr: true do
     it 'RegisteredTagが作成される' do
       expect do
         post mypage_tags_path, params: { tag: { name: 'テスト' } }
