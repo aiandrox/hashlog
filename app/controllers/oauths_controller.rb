@@ -29,6 +29,6 @@ class OauthsController < ApplicationController
     redirect_to mypage_path, notice: t('messages.logged_in')
   rescue StandardError
     redirect_to root_path, alert: t('messages.not_logged_in')
-    # TODO エラー発生時は通知を送る
+    # TODO: エラー発生時は通知を送る
   end
 end

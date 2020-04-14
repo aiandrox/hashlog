@@ -45,7 +45,7 @@ class User < ApplicationRecord
       false
     rescue StandardError
       render status: 500
-      # TODO twitterAPIリクエスト上限によるエラーの処理（ここで処理するものではないが）
+      # TODO: twitterAPIリクエスト上限によるエラーの処理（ここで処理するものではないが）
     end
   end
 end
