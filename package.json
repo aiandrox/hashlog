@@ -19,6 +19,7 @@
   "author": "Aiandrox <aiandrox7@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@mdi/font": "^5.0.45",
     "webpack-dev-server": "^3.10.3"
   }
 }

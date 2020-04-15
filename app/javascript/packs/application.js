@@ -7,7 +7,6 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -15,28 +14,29 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Vuex from 'vuex'
-import Vuetify from 'vuetify'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Vuex from "vuex";
+import Vuetify from "vuetify";
+import "@mdi/font/css/materialdesignicons.css";
 
-import App from '../app.vue'
+import App from "../app.vue";
 // import store from './store1.js'
-import router from './router'
-import "vuetify/dist/vuetify.min.css"
+import router from "./router";
+import "vuetify/dist/vuetify.min.css";
 
-Vue.use(VueRouter)
-Vue.use(Vuex)
-Vue.use(Vuetify)
-Vue.config.productionTip = false
-const vuetify = new Vuetify()
+Vue.use(VueRouter);
+Vue.use(Vuex);
+Vue.use(Vuetify);
+Vue.config.productionTip = false;
+const vuetify = new Vuetify();
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   new Vue({
-    el: '#app',
+    el: "#app",
     router,
     vuetify,
     // store: store,
-    render: (h) => h(App)
-  })
-})
+    render: (h) => h(App),
+  });
+});
