@@ -14,16 +14,16 @@ html
     / = javascript_include_tag 'application'
 
   body
+    header
+      - if logged_in?
+        = render 'shared/logged_in_header'
+      - else
+        = render 'shared/header'
+    main
+      = render 'shared/flash_message'
+      = yield
+    footer
+      = render 'shared/footer'
     #app
-      header
-        - if logged_in?
-          = render 'shared/logged_in_header'
-        - else
-          = render 'shared/header'
-      main
-        = render 'shared/flash_message'
-        = yield
-      footer
-        = render 'shared/footer'
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application'

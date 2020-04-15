@@ -1,12 +1,42 @@
 <template>
   <div>
     <h1>マイページ</h1>
-    <div>
-      <div class="float-left">Float left on all viewport sizes</div>
-      <br />
-      <div class="float-right">Float right on all viewport sizes</div>
-      <br />
-      <div class="float-none">Don't float on all viewport sizes</div>
-    </div>
+    <profile :user="user"></profile>
+    <tweets :tags="tags"></tweets>
   </div>
 </template>
+<script>
+import Axios from "axios";
+
+import Profile from "../components/profile.vue";
+import Tweets from "../components/tweets.vue";
+
+export default {
+  components: {
+    profile: Profile,
+    tweets: Tweets,
+  },
+
+  data: function() {
+    return {
+      user: {},
+      tags: [],
+    };
+  },
+
+  created: function() {
+    this.updateContents();
+  },
+
+  methods: {
+    updateContents() {
+      Axios.get("/api/v1/mypage.json").then((response) => {
+        const responseData = response.data;
+        console.log(responseData);
+        this.user = responseData.user;
+        this.tags = responseData.tags;
+      });
+    },
+  },
+};
+</script>
