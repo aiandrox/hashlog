@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   root 'static_pages#top'
 
+  namespace :api do
+    namespace :v1 do
+      resource :mypage, only: [:show]
+    end
+  end
+
   # ログイン、ログアウト
   post 'oauth/callback', to: 'oauths#callback'
   get 'oauth/callback', to: 'oauths#callback'
