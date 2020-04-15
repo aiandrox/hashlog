@@ -1,8 +1,12 @@
 <template>
   <div>
-    <h1>マイページ</h1>
-    <profile :user="user"></profile>
-    <registered-tags :registered_tags="registered_tags"></registered-tags>
+    <v-expand-transition>
+      <profile :user="user" v-if="show_profile" />
+    </v-expand-transition>
+    <registered-tags
+      :registered_tags="registered_tags"
+      @click-tab="removeProfile"
+    />
   </div>
 </template>
 <script>
@@ -19,6 +23,7 @@ export default {
 
   data: function() {
     return {
+      show_profile: true,
       user: {},
       registered_tags: [],
     };
@@ -36,6 +41,9 @@ export default {
         this.user = responseData.user;
         this.registered_tags = responseData.registered_tags;
       });
+    },
+    removeProfile() {
+      this.show_profile = false;
     },
   },
 };
