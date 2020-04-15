@@ -14,22 +14,27 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Vuex from "vuex";
-import Vuetify from "vuetify";
-import "@mdi/font/css/materialdesignicons.css";
-
 import App from "../app.vue";
-// import store from './store1.js'
-import router from "./router";
-import "vuetify/dist/vuetify.min.css";
+import Vue from "vue";
 
+import VueRouter from "vue-router";
+import router from "./router";
 Vue.use(VueRouter);
+
+import Vuex from "vuex";
+// import store from './store1.js'
 Vue.use(Vuex);
+
+import Vuetify from "vuetify";
+import "vuetify/dist/vuetify.min.css";
+import "@mdi/font/css/materialdesignicons.css";
 Vue.use(Vuetify);
 Vue.config.productionTip = false;
-const vuetify = new Vuetify();
+const vuetify = new Vuetify({
+  icons: {
+    iconfont: "mdi", // default - only for display purposes
+  },
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   new Vue({
