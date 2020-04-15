@@ -1,19 +1,27 @@
 <template>
-  <div>
-    <v-tabs color="indigo">
-      <v-tab v-for="tag in this.tags" :key="tag.name">
-        {{ tag.name }}
-      </v-tab>
-    </v-tabs>
-  </div>
+  <div>aaa</div>
 </template>
 <style scoped></style>
 <script>
 export default {
-  props: {
-    tags: {
-      type: Array,
-      default: () => {},
+  data: function() {
+    return {
+      tag: {},
+      tweets: [],
+    };
+  },
+
+  created: function() {
+    this.fetchData();
+  },
+
+  methods: {
+    fetchData() {
+      Axios.get("/api/v1/mypage/tweets.json").then((response) => {
+        const responseData = response.data;
+        this.user = responseData.user;
+        this.tags = responseData.tags;
+      });
     },
   },
 };

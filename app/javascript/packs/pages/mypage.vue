@@ -2,25 +2,25 @@
   <div>
     <h1>マイページ</h1>
     <profile :user="user"></profile>
-    <tweets :tags="tags"></tweets>
+    <registered-tags :registered_tags="registered_tags"></registered-tags>
   </div>
 </template>
 <script>
 import Axios from "axios";
 
 import Profile from "../components/profile.vue";
-import Tweets from "../components/tweets.vue";
+import RegisteredTags from "../components/registered_tags.vue";
 
 export default {
   components: {
     profile: Profile,
-    tweets: Tweets,
+    "registered-tags": RegisteredTags,
   },
 
   data: function() {
     return {
       user: {},
-      tags: [],
+      registered_tags: [],
     };
   },
 
@@ -34,7 +34,7 @@ export default {
         const responseData = response.data;
         console.log(responseData);
         this.user = responseData.user;
-        this.tags = responseData.tags;
+        this.registered_tags = responseData.registered_tags;
       });
     },
   },
