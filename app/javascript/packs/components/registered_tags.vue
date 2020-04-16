@@ -7,9 +7,7 @@
         :key="tag.name"
         :to="{ path: `/mypage/tags/${tag.id}` }"
         @click="clickTab"
-      >
-        {{ tag.name }}
-      </v-tab>
+      >{{ tag.name }}</v-tab>
     </v-tabs>
     <router-view @created-tweets-page="clickTab"></router-view>
   </div>
@@ -20,13 +18,13 @@ export default {
   methods: {
     clickTab() {
       this.$emit("click-tab");
-    },
+    }
   },
   props: {
     registered_tags: {
       type: Array,
-      default: () => {},
-    },
-  },
+      default: () => {}
+    }
+  }
 };
 </script>

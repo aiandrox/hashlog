@@ -3,10 +3,7 @@
     <v-expand-transition>
       <profile :user="user" v-if="show_profile" />
     </v-expand-transition>
-    <registered-tags
-      :registered_tags="registered_tags"
-      @click-tab="removeProfile"
-    />
+    <registered-tags :registered_tags="registered_tags" @click-tab="removeProfile" />
   </div>
 </template>
 <script>
@@ -18,14 +15,14 @@ import RegisteredTags from "../components/registered_tags.vue";
 export default {
   components: {
     profile: Profile,
-    "registered-tags": RegisteredTags,
+    "registered-tags": RegisteredTags
   },
 
   data: function() {
     return {
       show_profile: true,
       user: {},
-      registered_tags: [],
+      registered_tags: []
     };
   },
 
@@ -33,8 +30,10 @@ export default {
     $route(to, from) {
       if (to.name == "mypage") {
         this.showProfile();
+      } else if (to.name == "mypage_registered_tags") {
+        this.removeProfile();
       }
-    },
+    }
   },
 
   created: function() {
@@ -43,7 +42,7 @@ export default {
 
   methods: {
     updateContents() {
-      Axios.get("/api/v1/mypage.json").then((response) => {
+      Axios.get("/api/v1/mypage.json").then(response => {
         const responseData = response.data;
         this.user = responseData.user;
         this.registered_tags = responseData.registered_tags;
@@ -54,7 +53,7 @@ export default {
     },
     showProfile() {
       this.show_profile = true;
-    },
-  },
+    }
+  }
 };
 </script>

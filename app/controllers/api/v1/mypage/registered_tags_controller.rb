@@ -1,8 +1,10 @@
 class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseController
   def show
-    registered_tag = current_user.registered_tags.find(params[:id])
+    user = current_user
+    registered_tag = user.registered_tags.find(params[:id])
     tweets = registered_tag.tweets
     result_values = {
+      user: user,
       registered_tags: registered_tag,
       tweets: tweets
     }
