@@ -22,9 +22,6 @@ gem 'slim-rails'
 # 機能
 gem 'sorcery'
 # api
-gem 'faraday'
-gem 'faraday_middleware'
-gem 'simple_oauth'
 gem 'twitter'
 
 group :development, :test do
@@ -51,4 +48,7 @@ group :test do
   gem 'capybara', '~> 3.31'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
+  # モック
+  gem 'vcr', require: false
+  gem 'webmock', require: false
 end

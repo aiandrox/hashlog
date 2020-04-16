@@ -10,7 +10,7 @@ class MypagesController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to mypage_path, notice: t('messges.updated', item: @user_i18n)
+      redirect_to mypage_path, notice: t('messages.updated', item: @user_i18n)
     else
       flash.now[:alert] = t('messages.not_updated', item: @user_i18n)
       render :edit
