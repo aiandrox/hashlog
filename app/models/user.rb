@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :tags, through: :registered_tags
 
   validates :twitter_id, presence: true, uniqueness: true
+  validates :screen_name, presence: true
   validates :name, presence: true, length: { maximum: 30 }
   validates :description, length: { maximum: 300 }
   validates :privacy, presence: true
@@ -16,6 +17,13 @@ class User < ApplicationRecord
   enum privacy: { published: 0, closed: 1 }
   enum role: { admin: 0, general: 1, guest: 2 }
 
+  def registered_tag(tag: nil, tag_name: nil)
+    @registered_tag ||= begin
+      tag = Tag.find_by(name: tag_name) if tag_name
+      @registered_tag = registered_tags.find_by(tag_id: tag.id)
+    end
+  end
+
   def set_uuid
     self.uuid = loop do
       random_token = SecureRandom.urlsafe_base64(9)
@@ -23,13 +31,15 @@ class User < ApplicationRecord
     end
   end
 
-  def create_registered_tag(tag)
+  def register_tag(tag_name)
     ActiveRecord::Base.transaction do
-      tag.save!
-      registered_tag = registered_tags.build(tag_id: tag.id)
-      registered_tag.save!
+      tags << tag = Tag.find_or_initialize_by(name: tag_name)
+      save!
+      registered_tag(tag: tag).create_tweets
     rescue ActiveRecord::RecordInvalid
-      tag.errors.messages.merge!(registered_tag.errors.messages) if registered_tag&.invalid?
+      if registered_tag(tag_name: tag_name).&invalid?
+        tag.errors.messages.merge!(registered_tag.errors.messages)
+      end
       false
     rescue StandardError
       render status: 500

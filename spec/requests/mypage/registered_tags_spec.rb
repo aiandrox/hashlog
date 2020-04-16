@@ -1,5 +1,5 @@
 describe 'Mypage::RegisteredTags', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :with_tags) }
   let(:tag) { user.tags.first }
   let(:registered_tag) { user.registered_tags.find_by(tag_id: tag.id) }
   before { login_as(user) }
@@ -22,8 +22,8 @@ describe 'Mypage::RegisteredTags', type: :request do
     it '正しく更新される' do
       expect do
         patch mypage_registered_tag_path(registered_tag), params: { id: registered_tag.id, registered_tag: { privacy: :closed } }
-        expect(response.status).to eq 302
       end.to change { RegisteredTag.find(registered_tag.id).privacy }.from('published').to('closed')
+      expect(response.status).to eq 302
     end
   end
 

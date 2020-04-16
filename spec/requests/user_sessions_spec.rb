@@ -20,5 +20,4 @@ describe 'UserSessions', type: :request do
       expect(current_user.role).to eq 'guest'
     end
   end
-  
 end

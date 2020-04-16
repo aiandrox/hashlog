@@ -1,6 +1,5 @@
 describe 'Mypage::Tags', type: :request do
-  let(:user) { create(:user) }
-  let(:registered_tag) { user.registered_tags.first }
+  let(:user) { create(:user, screen_name: 'screen_name') } # screen_nameは固定
   before { login_as(user) }
 
   context 'GET /mypage/tags/new' do
@@ -10,21 +9,17 @@ describe 'Mypage::Tags', type: :request do
     end
   end
 
-  context 'PATCH /mypage/registered_tags/:id' do
-    it '正しく更新される' do
+  context 'POST /mypage/tags', vcr: true do
+    it 'RegisteredTagが作成される' do
       expect do
-        patch mypage_registered_tag_path(registered_tag), params: { registered_tag: { privacy: :closed } }
-        expect(response.status).to eq 302
-      end.to change { RegisteredTag.find(registered_tag.id).privacy }.from('published').to('closed')
-    end
-  end
-
-  context 'DELETE /mypage/registered_tags/:id' do
-    it 'registered_tagを削除する' do
-      expect do
-        delete mypage_registered_tag_path(registered_tag)
-      end.to change(RegisteredTag, :count).by(-1)
+        post mypage_tags_path, params: { tag: { name: 'テスト' } }
+      end.to change(RegisteredTag, :count).by(1)
       expect(response.status).to eq 302
+    end
+    it 'Tweetが作成される' do
+      expect do
+        post mypage_tags_path, params: { tag: { name: 'テスト' } }
+      end.to change(Tweet, :count).by(3)
     end
   end
 end

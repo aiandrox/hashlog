@@ -112,6 +112,7 @@ Rails.application.config.sorcery.configure do |config|
   config.twitter.callback_url = 'http://127.0.0.1:3000/oauth/callback?provider=twitter'
   config.twitter.user_info_mapping = {
     twitter_id: 'id',
+    screen_name: 'screen_name',
     name: 'name',
     description: 'description'
   } # カラム名: twitterのparams

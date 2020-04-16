@@ -3,7 +3,7 @@ ja:
     # User.model_name.human
     models:
       user: ユーザー情報
-      registered_tag: ハッシュタグの設定
+      registered_tag: ハッシュタグ
       tag: ハッシュタグ
     # User.human_attributes_name(:name)
     attributes:
