@@ -11,7 +11,7 @@
         {{ tag.name }}
       </v-tab>
     </v-tabs>
-    <router-view />
+    <router-view @created-tweets-page="clickTab"></router-view>
   </div>
 </template>
 <style scoped></style>

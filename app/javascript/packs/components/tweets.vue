@@ -22,6 +22,7 @@ export default {
 
   created: function() {
     this.fetchData();
+    this.createdTweetsPage();
   },
 
   methods: {
@@ -31,6 +32,9 @@ export default {
         this.tag = responseData.registered_tag;
         this.tweets = responseData.tweets;
       });
+    },
+    createdTweetsPage: function() {
+      this.$emit("created-tweets-page");
     },
   },
 };
