@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :mypage, only: [:show]
+      namespace :mypage do
+        resources :registered_tags, only: [:show]
+      end
     end
   end
 
