@@ -24,4 +24,4 @@ const routes = [
   },
 ];
 
-export default new VueRouter({ routes });
+export default new VueRouter({ mode: "history", routes });
