@@ -21,12 +21,15 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.fetchData();
+      this.fetchTweetsData();
       this.createdTweetsPage();
     },
   },
+  created: function() {
+    this.fetchTweetsData();
+  },
   methods: {
-    fetchData() {
+    fetchTweetsData() {
       Axios.get(this.apiEndPoint).then((response) => {
         const responseData = response.data;
         this.tag = responseData.registered_tag;
