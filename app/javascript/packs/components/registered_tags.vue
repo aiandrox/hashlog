@@ -18,7 +18,7 @@
 <script>
 export default {
   methods: {
-    clickTab: function() {
+    clickTab() {
       this.$emit("click-tab");
     },
   },

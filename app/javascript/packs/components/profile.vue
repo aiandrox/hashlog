@@ -29,7 +29,7 @@
 <script>
 export default {
   computed: {
-    twitter_url: function() {
+    twitter_url() {
       return `https://twitter.com/${this.user.screen_name}`;
     },
   },
