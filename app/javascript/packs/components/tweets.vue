@@ -19,12 +19,12 @@ export default {
       return `/api/v1/mypage/registered_tags/${id}.json`;
     },
   },
-
-  created: function() {
-    this.fetchData();
-    this.createdTweetsPage();
+  watch: {
+    $route(to, from) {
+      this.fetchData();
+      this.createdTweetsPage();
+    },
   },
-
   methods: {
     fetchData() {
       Axios.get(this.apiEndPoint).then((response) => {
@@ -33,7 +33,7 @@ export default {
         this.tweets = responseData.tweets;
       });
     },
-    createdTweetsPage: function() {
+    createdTweetsPage() {
       this.$emit("created-tweets-page");
     },
   },
