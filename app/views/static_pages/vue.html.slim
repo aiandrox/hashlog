@@ -12,15 +12,6 @@ html
     meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
 
   body
-    header
-      - if logged_in?
-        = render 'shared/logged_in_header'
-      - else
-        = render 'shared/header'
-    main
-      = render 'shared/flash_message'
-      = yield
-    footer
-      = render 'shared/footer'
+    #app
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application'
