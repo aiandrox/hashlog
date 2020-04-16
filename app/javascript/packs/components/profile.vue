@@ -20,6 +20,9 @@
           <v-btn class="ma-2" outlined color="success">
             <v-icon left>mdi-pencil</v-icon> 編集
           </v-btn>
+          <v-btn class="ma-2" outlined color="success">
+            <v-icon left>mdi-pencil</v-icon> タグの作成
+          </v-btn>
         </v-card-actions>
       </v-container>
     </v-card>

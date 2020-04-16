@@ -1,7 +1,15 @@
 <template>
   <v-alert text dismissible type="success">
-    I'm a dense alert with the
-    <strong>text</strong> prop and a
-    <strong>type</strong> of success
+    {{ this.message }}
   </v-alert>
 </template>
+
+<script>
+export default {
+  data: function() {
+    return {
+      message: "flash message",
+    };
+  },
+};
+</script>
