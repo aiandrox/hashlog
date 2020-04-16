@@ -37,7 +37,6 @@ export default {
     updateContents() {
       Axios.get("/api/v1/mypage.json").then((response) => {
         const responseData = response.data;
-        console.log(responseData);
         this.user = responseData.user;
         this.registered_tags = responseData.registered_tags;
       });

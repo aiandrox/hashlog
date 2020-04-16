@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- タブ -->
     <v-tabs color="indigo" optional>
       <v-tab
         v-for="tag in registered_tags"
@@ -10,7 +11,7 @@
         {{ tag.name }}
       </v-tab>
     </v-tabs>
-    <router-view />>
+    <router-view />
   </div>
 </template>
 <style scoped></style>
