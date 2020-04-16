@@ -29,6 +29,14 @@ export default {
     };
   },
 
+  watch: {
+    $route(to, from) {
+      if (to.name == "mypage") {
+        this.showProfile();
+      }
+    },
+  },
+
   created: function() {
     this.updateContents();
   },
@@ -43,6 +51,9 @@ export default {
     },
     removeProfile() {
       this.show_profile = false;
+    },
+    showProfile() {
+      this.show_profile = true;
     },
   },
 };
