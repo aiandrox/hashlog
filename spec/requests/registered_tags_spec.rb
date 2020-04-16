@@ -1,5 +1,5 @@
 describe 'RegisteredTags', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :with_tags) }
   let(:tag) { user.tags.first }
   let(:registered_tag) { user.registered_tags.find_by(tag_id: tag.id) }
 

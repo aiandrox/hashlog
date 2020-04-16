@@ -2,7 +2,7 @@ RSpec.describe RegisteredTag, type: :model do
   context 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:tag) }
-    # it { is_expected.to have_many(:tweets).dependent(:destroy) }
+    it { is_expected.to have_many(:tweets).dependent(:destroy) }
   end
 
   context 'validations' do

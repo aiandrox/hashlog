@@ -19,8 +19,10 @@ gem 'enum_help'
 gem 'rails-i18n'
 gem 'slim-rails'
 
-# ログイン機能
+# 機能
 gem 'sorcery'
+# api
+gem 'twitter'
 
 group :development, :test do
   gem 'better_errors', '~> 2.6'
@@ -46,4 +48,7 @@ group :test do
   gem 'capybara', '~> 3.31'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
+  # モック
+  gem 'vcr', require: false
+  gem 'webmock', require: false
 end
