@@ -17,7 +17,7 @@ const routes = [
     children: [
       {
         path: "tags/:id",
-        name: "mypage_registerd_tags",
+        name: "mypage_registered_tags",
         component: Tweets,
       },
     ],
