@@ -9,8 +9,8 @@
 <script>
 import Axios from "axios";
 
-import Profile from "../components/profile.vue";
-import RegisteredTags from "../components/registered_tags.vue";
+import Profile from "../components/shared/Profile.vue";
+import RegisteredTags from "../components/RegisteredTags.vue";
 
 export default {
   components: {

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'static_pages#top'
   get 'vue', to: 'static_pages#vue'
-  # get 'mypage', to: 'static_pages#vue'
-  # get 'mypage/tags/:id', to: 'static_pages#vue'
+  get 'mypage', to: 'static_pages#vue'
+  get 'mypage/tags/:id', to: 'static_pages#vue'
   namespace :api do
     namespace :v1 do
       resource :mypage, only: [:show]

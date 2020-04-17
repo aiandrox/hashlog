@@ -5,7 +5,7 @@
 </template>
 <style scoped></style>
 <script>
-import Tweet from "./tweet";
+import Tweet from "./RegisteredTagsTweetsTweet";
 import Axios from "axios";
 export default {
   components: {

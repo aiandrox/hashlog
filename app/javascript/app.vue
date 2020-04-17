@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import Header from "./packs/components/shared/header.vue";
-import Footer from "./packs/components/shared/footer.vue";
-import FlashMessage from "./packs/components/shared/flash-message.vue";
+import Header from "./packs/components/shared/TheHeader.vue";
+import Footer from "./packs/components/shared/TheFooter.vue";
+import FlashMessage from "./packs/components/shared/TheFlashMessage.vue";
 
 export default {
   name: "MyApp",

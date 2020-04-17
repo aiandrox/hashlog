@@ -15,20 +15,7 @@
 </template>
 
 <script>
-export default {
-  name: "global_footer",
-  props: {
-    msg: "ページ1"
-  },
-  methods: {
-    testAJAX(id) {
-      axios.get(`api/books/${id}.json`).then(res => {
-        this.bookInfo = res.data;
-        this.bookInfoBool = true;
-      });
-    }
-  }
-};
+export default {};
 </script>
 
 <style scoped lang="scss">

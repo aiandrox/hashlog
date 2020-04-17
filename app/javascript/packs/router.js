@@ -1,8 +1,8 @@
 import VueRouter from "vue-router";
 
-import Top from "./pages/top.vue";
-import Mypage from "./pages/mypage.vue";
-import Tweets from "./components/tweets.vue";
+import Top from "./pages/Top.vue";
+import Mypage from "./pages/Mypage.vue";
+import Tweets from "./components/RegisteredTagsTweets.vue";
 
 const routes = [
   {
