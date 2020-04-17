@@ -21,7 +21,7 @@ export default {
   computed: {
     apiEndPoint: function() {
       const id = this.$route.params["id"];
-      return `/api/v1/mypage/registered_tags/${id}.json`;
+      return `/api/v1/mypage/tags/${id}.json`;
     }
   },
   watch: {
