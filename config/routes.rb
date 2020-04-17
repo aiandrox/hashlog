@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :mypage, only: [:show]
       namespace :mypage do
-        resources :registered_tags, only: [:show]
+        resources :registered_tags, only: %i[show create], path: :tags
       end
     end
   end
