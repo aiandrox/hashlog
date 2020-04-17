@@ -12,9 +12,9 @@
             <v-list-item-content>
               <v-list-item-title class="title">
                 {{ user.name }}
-                <a target="blank" :href="twitter_url">
-                  <v-icon color="blue">mdi-twitter</v-icon>
-                </a>
+                <v-btn icon color="blue" :href="twitter_url">
+                  <v-icon>mdi-twitter</v-icon>
+                </v-btn>
               </v-list-item-title>
               <v-list-item-subtitle>@{{ user.screen_name }}</v-list-item-subtitle>
             </v-list-item-content>
@@ -31,44 +31,17 @@
             </v-btn>
           </v-card-actions>
         </div>
-        <!-- ステータス -->
-        <v-card class="mx-auto" max-width="300" flat>
-          <v-list disabled>
-            <v-subheader>STATUS</v-subheader>
-            <v-list-item-group color="primary">
-              <v-list-item>
-                <v-list-item-icon>
-                  <v-icon>mdi-account</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>{{ user.role }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon>
-                  <v-icon>mdi-earth</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>{{ user.privacy }}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
+        <status :role="user.role" :privacy="user.privacy"></status>
       </v-container>
     </v-card>
   </div>
 </template>
 
 <script>
+import Status from "./ProfileStatus";
 export default {
-  data: function() {
-    return {
-      status: [
-        { role: { icon: "account", state: this.user.role } },
-        { privacy: { icon: "earth", state: this.user.privacy } }
-      ]
-    };
+  components: {
+    Status
   },
   computed: {
     twitter_url() {

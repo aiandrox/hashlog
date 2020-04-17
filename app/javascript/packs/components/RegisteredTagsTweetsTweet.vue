@@ -21,13 +21,14 @@
     <v-card-text class="text--primary" v-html="tweet.oembed"></v-card-text>
 
     <v-card-actions>
-      <v-btn icon :href="this.replyUrl">
+      <!-- TODO: v-forを使う -->
+      <v-btn icon :href="this.replyUrl" color="gray">
         <v-icon>mdi-chat-outline</v-icon>
       </v-btn>
-      <v-btn icon :href="this.retweetUrl">
+      <v-btn icon :href="this.retweetUrl" color="green">
         <v-icon>mdi-twitter-retweet</v-icon>
       </v-btn>
-      <v-btn icon :href="this.likeUrl">
+      <v-btn icon :href="this.likeUrl" color="pink">
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
