@@ -26,10 +26,11 @@
             <v-btn class="ma-2" outlined color="success">
               <v-icon left>mdi-pencil</v-icon>編集
             </v-btn>
-            <v-btn class="ma-2" outlined color="success">
-              <v-icon left>mdi-pencil</v-icon>タグの作成
+            <v-btn class="ma-2" outlined color="success" @click="showDialog()">
+              <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
             </v-btn>
           </v-card-actions>
+          <tag-dialog ref="dialog"></tag-dialog>
         </div>
         <status :role="user.role" :privacy="user.privacy"></status>
       </v-container>
@@ -39,13 +40,20 @@
 
 <script>
 import Status from "./ProfileStatus";
+import TagDialog from "./ProfileRegisterTagDialog";
 export default {
   components: {
-    Status
+    Status,
+    TagDialog
   },
   computed: {
     twitter_url() {
       return `https://twitter.com/${this.user.screen_name}`;
+    }
+  },
+  methods: {
+    showDialog() {
+      this.$refs.dialog.open();
     }
   },
   props: {
