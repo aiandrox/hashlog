@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       dialog: false,
-      tagName: "自炊"
+      tagName: ""
     };
   },
   methods: {
