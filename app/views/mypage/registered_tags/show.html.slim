@@ -1,6 +1,11 @@
-- content_for :title, t('.title')
+- content_for :title, @registered_tag.tag.name
 
-h1= t '.title'
+h1= @registered_tag.tag.name
 
-= link_to '編集', edit_mypage_registered_tag_path(@tag)
-= link_to '削除', mypage_registered_tag_path(@tag), method: :delete
+= render partial: 'tweets/tweet', collection: @tweets
+
+= link_to '設定', edit_mypage_registered_tag_path(@registered_tag)
+
+累計
+
+= javascript_include_tag '//platform.twitter.com/widgets.js'

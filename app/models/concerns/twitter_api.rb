@@ -3,7 +3,8 @@ require 'twitter'
 module TwitterAPI
   extend ActiveSupport::Concern
 
-  # return [[oembed, tweeted_at],[oembed, tweeted_at],...]
+  # return [["<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-13 07:13:39 UTC, 1249596597479956481],
+  #         ["あ<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-12 01:54:07 UTC, 1249153794946011137]]
   def tweets_data(tweet_oembeds = [])
     tweet_ids = search_result('standard')[:tweet_ids]
     tweeted_ats = search_result('standard')[:tweeted_ats]
@@ -11,9 +12,10 @@ module TwitterAPI
                    omit_script: true,
                    hide_thread: true,
                    lang: :ja).take(100).map do |oembed|
-      tweet_oembeds << oembed.html
+      oembed.html =~ /\" dir=\"ltr\">(.+)<\/p>/
+      tweet_oembeds << $+
     end
-    tweet_oembeds.zip(tweeted_ats)
+    tweet_oembeds.zip(tweeted_ats, tweet_ids)
     # TODO: twitterAPIリクエスト上限によるエラーの処理
   end
 
