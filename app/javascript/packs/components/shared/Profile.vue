@@ -26,11 +26,11 @@
             <v-btn class="ma-2" outlined color="success">
               <v-icon left>mdi-pencil</v-icon>編集
             </v-btn>
-            <v-btn class="ma-2" outlined color="success" @click="showDialog()">
+            <v-btn class="ma-2" outlined color="success" @click="showDialog">
               <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
             </v-btn>
           </v-card-actions>
-          <tag-dialog ref="dialog"></tag-dialog>
+          <tag-dialog ref="dialog" @push-register="sendTagName"></tag-dialog>
         </div>
         <status :role="user.role" :privacy="user.privacy"></status>
       </v-container>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import Axios from "axios";
 import Status from "./ProfileStatus";
 import TagDialog from "./ProfileRegisterTagDialog";
 export default {
@@ -54,6 +55,16 @@ export default {
   methods: {
     showDialog() {
       this.$refs.dialog.open();
+    },
+    sendTagName(tagName) {
+      Axios.post("/api/v1/mypage/tags", {
+        user: this.user,
+        tag: {
+          name: tagName
+        }
+      }).then(response => {
+        console.log(response.data); // TODO: 返り値の処理
+      });
     }
   },
   props: {

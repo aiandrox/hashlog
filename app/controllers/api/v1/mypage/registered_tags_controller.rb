@@ -12,8 +12,8 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
   end
 
   def create
-    binding.pry
-    result_values = if current_user.register_tag(tag_params[:name])
+    user = User.find(user_params[:id]) # TODO: current_userがとってこれないので突貫
+    result_values = if user.register_tag(tag_params[:name])
                       {
                         flash: {
                           type: 'notice',
@@ -32,6 +32,10 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:id)
+  end
 
   def tag_params
     params.require(:tag).permit(:privacy, :remind_day, :name)

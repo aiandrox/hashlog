@@ -18,8 +18,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="close()">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="sendTagName(), close()">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="close()">キャンセル</v-btn>
+          <v-btn color="blue darken-1" text @click="pushRegister(), close()">登録する</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import Axios from "axios";
 export default {
   data() {
     return {
@@ -42,14 +41,8 @@ export default {
     close() {
       this.dialog = false;
     },
-    sendTagName() {
-      Axios.post("/api/v1/mypage/tags", {
-        tag: {
-          name: this.tagName
-        }
-      }).then(response => {
-        console.log(response.data);
-      });
+    pushRegister() {
+      this.$emit("push-register", this.tagName);
     }
   }
 };
