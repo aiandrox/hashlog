@@ -21,15 +21,14 @@
     <v-card-text class="text--primary" v-html="tweet.oembed" />
 
     <v-card-actions>
-      <!-- TODO: v-forを使う -->
-      <v-btn icon :href="replyUrl" color="gray">
-        <v-icon>mdi-chat-outline</v-icon>
-      </v-btn>
-      <v-btn icon :href="retweetUrl" color="green">
-        <v-icon>mdi-twitter-retweet</v-icon>
-      </v-btn>
-      <v-btn icon :href="likeUrl" color="pink">
-        <v-icon>mdi-heart-outline</v-icon>
+      <v-btn
+        v-for="button in buttons"
+        :key="button.icon"
+        :href="button.url"
+        :color="button.color"
+        icon
+      >
+        <v-icon>{{ button.icon }}</v-icon>
       </v-btn>
       <v-spacer />
       <span class="body-2">{{ tweet.tweeted_at }}</span>
@@ -69,6 +68,13 @@ export default {
     },
     likeUrl() {
       return `https://twitter.com/intent/like?tweet_id=${this.tweet.tweet_id}`
+    },
+    buttons() {
+      return [
+        { url: this.replyUrl, color: "gray", icon: "mdi-chat-outline" },
+        { url: this.retweetUrl, color: "green", icon: "mdi-twitter-retweet" },
+        { url: this.likeUrl, color: "pink", icon: "mdi-heart-outline" }
+      ]
     }
   }
 }
