@@ -17,14 +17,14 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
                       {
                         flash: {
                           type: 'notice',
-                          message: "ハッシュタグを登録しました"
+                          message: 'ハッシュタグを登録しました'
                         }
                       }
                     else
                       {
                         flash: {
                           type: 'alert',
-                          message: "ハッシュタグを登録できませんでした"
+                          message: 'ハッシュタグを登録できませんでした'
                         }
                       }
                     end
