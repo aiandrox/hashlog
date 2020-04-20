@@ -6,7 +6,6 @@
 </template>
 <script>
 import Axios from "axios"
-
 import Profile from "../components/shared/Profile"
 import TagsTab from "../components/TagsTab"
 

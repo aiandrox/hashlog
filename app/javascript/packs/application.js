@@ -18,16 +18,20 @@
  * const imagePath = (name) => images(name, true)
  */
 
-import App from "../App.vue"
 import Vue from "vue"
+import App from "../App.vue"
 
 import VueRouter from "vue-router"
 import router from "./router"
 Vue.use(VueRouter)
 
 import Vuex from "vuex"
-// Import store from './store1.js'
+// Import store from './store.js'
 Vue.use(Vuex)
+
+import Axios from "axios"
+import VueAxiosPlugin from "./plugins/vue-axios"
+Vue.use(VueAxiosPlugin, { axios: Axios })
 
 import Vuetify from "vuetify"
 import "vuetify/dist/vuetify.min.css"

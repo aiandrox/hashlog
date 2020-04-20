@@ -1,10 +1,9 @@
 class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseController
   def show
-    user = current_user
-    registered_tag = user.registered_tags.find(params[:id])
+    registered_tag = current_user.registered_tags.find(params[:id])
     tweets = registered_tag.tweets
     result_values = {
-      user: user,
+      user: current_user,
       registered_tags: registered_tag,
       tweets: tweets
     }
@@ -12,18 +11,17 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
   end
 
   def create
-    user = User.find(user_params[:id]) # TODO: current_userがとってこれないので突貫
-    result_values = if user.register_tag(tag_params[:name])
+    result_values = if current_user.register_tag(tag_params[:name])
                       {
                         flash: {
-                          type: 'notice',
+                          type: 'success',
                           message: 'ハッシュタグを登録しました'
                         }
                       }
                     else
                       {
                         flash: {
-                          type: 'alert',
+                          type: 'error',
                           message: 'ハッシュタグを登録できませんでした'
                         }
                       }
