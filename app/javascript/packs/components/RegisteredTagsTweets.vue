@@ -10,30 +10,30 @@
 </template>
 <style scoped></style>
 <script>
-import Tweet from './RegisteredTagsTweetsTweet'
-import Axios from 'axios'
+import Tweet from "./RegisteredTagsTweetsTweet"
+import Axios from "axios"
 export default {
   components: {
-    Tweet,
+    Tweet
   },
   data() {
     return {
       user: {},
       tag: {},
-      tweets: [],
+      tweets: []
     }
   },
   computed: {
     apiEndPoint() {
       const {id} = this.$route.params
       return `/api/v1/mypage/tags/${id}.json`
-    },
+    }
   },
   watch: {
-    $route(to, from) {
+    $route() {
       this.fetchTweetsData()
       this.createdTweetsPage()
-    },
+    }
   },
   created() {
     this.fetchTweetsData()
@@ -49,8 +49,8 @@ export default {
       })
     },
     createdTweetsPage() {
-      this.$emit('created-tweets-page')
-    },
-  },
+      this.$emit("created-tweets-page")
+    }
+  }
 }
 </script>

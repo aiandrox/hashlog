@@ -18,34 +18,35 @@
  * const imagePath = (name) => images(name, true)
  */
 
-import App from '../App.vue'
-import Vue from 'vue'
+import App from "../App.vue"
+import Vue from "vue"
 
-import VueRouter from 'vue-router'
-import router from './router'
+import VueRouter from "vue-router"
+import router from "./router"
 Vue.use(VueRouter)
 
-import Vuex from 'vuex'
+import Vuex from "vuex"
 // Import store from './store1.js'
 Vue.use(Vuex)
 
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
-import '@mdi/font/css/materialdesignicons.css'
+import Vuetify from "vuetify"
+import "vuetify/dist/vuetify.min.css"
+import "@mdi/font/css/materialdesignicons.css"
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 const vuetify = new Vuetify({
   icons: {
-    iconfont: 'mdi', // Default - only for display purposes
+    iconfont: "mdi",
   },
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-  new Vue({
-    el: '#app',
+document.addEventListener("DOMContentLoaded", () => {
+  const app = new Vue({
+    el: "#app",
     router,
     vuetify,
     // Store: store,
     render: h => h(App),
   })
+  app.$mount("#app")
 })

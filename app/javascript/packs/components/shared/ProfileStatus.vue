@@ -27,8 +27,6 @@
       </v-list-item-group>
     </v-list>
   </v-card>
-  </v-container>
-  </v-card>
 </template>
 
 <script>
@@ -36,11 +34,11 @@ export default {
   props: {
     role: {
       type: String,
-      default: ''
+      default: ""
     },
     privacy: {
       type: String,
-      default: ''
+      default: ""
     }
   }
 }

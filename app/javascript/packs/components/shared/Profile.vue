@@ -21,7 +21,7 @@
                 <v-btn
                   icon
                   color="blue"
-                  :href="twitter_url"
+                  :href="twitterUrl"
                 >
                   <v-icon>mdi-twitter</v-icon>
                 </v-btn>
@@ -70,9 +70,9 @@
 </template>
 
 <script>
-import Axios from 'axios'
-import Status from './ProfileStatus'
-import TagDialog from './ProfileRegisterTagDialog'
+import Axios from "axios"
+import Status from "./ProfileStatus"
+import TagDialog from "./ProfileRegisterTagDialog"
 export default {
   components: {
     Status,
@@ -85,7 +85,7 @@ export default {
     }
   },
   computed: {
-    twitter_url() {
+    twitterUrl() {
       return `https://twitter.com/${this.user.screen_name}`
     }
   },
@@ -94,7 +94,7 @@ export default {
       this.$refs.dialog.open()
     },
     sendTagName(tagName) {
-      Axios.post('/api/v1/mypage/tags', {
+      Axios.post("/api/v1/mypage/tags", {
         user: this.user,
         tag: {
           name: tagName

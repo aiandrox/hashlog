@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       dialog: false,
-      tagName: ''
+      tagName: ""
     }
   },
   methods: {
@@ -61,7 +61,7 @@ export default {
       this.dialog = false
     },
     pushRegister() {
-      this.$emit('push-register', this.tagName)
+      this.$emit("push-register", this.tagName)
     }
   }
 }

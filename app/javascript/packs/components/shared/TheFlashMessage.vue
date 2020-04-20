@@ -12,7 +12,7 @@
 export default {
   data() {
     return {
-      message: 'flash message',
+      message: "flash message",
     }
   },
 }

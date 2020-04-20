@@ -1,18 +1,12 @@
 <template>
   <div>
-    <!-- タブ -->
-    <v-tabs
-      color="indigo"
-      optional
-    >
+    <v-tabs color="indigo" optional>
       <v-tab
-        v-for="tag in registered_tags"
+        v-for="tag in registeredTags"
         :key="tag.name"
         :to="{ path: `/mypage/tags/${tag.id}` }"
         @click="clickTab"
-      >
-        {{ tag.name }}
-      </v-tab>
+      >{{ tag.name }}</v-tab>
     </v-tabs>
     <router-view @created-tweets-page="clickTab" />
   </div>
@@ -21,15 +15,14 @@
 <script>
 export default {
   props: {
-    registered_tags: {
-      type: Array,
-      default: () => {},
-    },
+    registeredTags: {
+      type: Array
+    }
   },
   methods: {
     clickTab() {
-      this.$emit('click-tab')
-    },
-  },
+      this.$emit("click-tab")
+    }
+  }
 }
 </script>
