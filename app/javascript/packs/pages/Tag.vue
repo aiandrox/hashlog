@@ -27,16 +27,17 @@ export default {
       return `/api/v1/mypage/tags/${id}.json`
     }
   },
-  created() {
-    this.fetchUserData()
-    this.fetchTweetsData()
-  },
   watch: {
     $route() {
       this.fetchTweetsData()
     }
   },
+  created() {
+    this.fetchUserData()
+    this.fetchTweetsData()
+  },
   methods: {
+    // TODO: リクエスト
     fetchUserData() {
       Axios.get("/api/v1/mypage.json").then(response => {
         const responseData = response.data

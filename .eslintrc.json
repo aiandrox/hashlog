@@ -18,6 +18,15 @@
     "sourceType": "module"
   },
   "rules": {
+    // Vueの設定
+    "vue/max-attributes-per-line": [
+      "warn",
+      {
+        "singleline": 4
+      }
+    ],
+    "vue/multiline-html-element-content-newline": "off",
+    "vue/singleline-html-element-content-newline": "off",
     // Possible Errors
     "for-direction": "error",
     "getter-return": [
@@ -126,9 +135,7 @@
         "allowElseIf": false
       }
     ],
-    "no-empty-function": [
-      "warn"
-    ],
+    "no-empty-function": "off",
     "no-empty-pattern": "error",
     "no-eq-null": "error",
     "no-eval": [
