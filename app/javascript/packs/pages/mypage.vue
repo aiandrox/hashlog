@@ -1,58 +1,36 @@
 <template>
   <div>
-    <v-expand-transition>
-      <profile v-if="showProfile" :user="user" />
-    </v-expand-transition>
-    <registered-tags :registered-tags="registeredTags" @click-tab="removeProfile" />
+    <profile :user="user" />
+    <tags-tab :registered-tags="registeredTags" />
   </div>
 </template>
 <script>
 import Axios from "axios"
 
-import Profile from "../components/shared/Profile.vue"
-import RegisteredTags from "../components/RegisteredTags.vue"
+import Profile from "../components/shared/Profile"
+import TagsTab from "../components/TagsTab"
 
 export default {
   components: {
-    profile: Profile,
-    "registered-tags": RegisteredTags
+    Profile,
+    TagsTab
   },
-
   data() {
     return {
-      profileShow: true,
       user: {},
       registeredTags: []
     }
   },
-
-  watch: {
-    $route(to) {
-      if (to.name === "mypage") {
-        this.showProfile()
-      } else if (to.name === "mypage_registered_tags") {
-        this.removeProfile()
-      }
-    }
-  },
-
   created() {
-    this.updateContents()
+    this.fetchUserData()
   },
-
   methods: {
-    updateContents() {
+    fetchUserData() {
       Axios.get("/api/v1/mypage.json").then(response => {
         const responseData = response.data
         this.user = responseData.user
-        this.registered_tags = responseData.registered_tags
+        this.registeredTags = responseData.registered_tags
       })
-    },
-    removeProfile() {
-      this.show_profile = false
-    },
-    showProfile() {
-      this.profileShow = true
     }
   }
 }

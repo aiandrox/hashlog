@@ -1,55 +1,22 @@
 <template>
   <div>
-    <tweet
-      v-for="tweet in tweets"
-      :key="tweet.tweet_id"
-      :tweet="tweet"
-      :user="user"
-    />
+    <tweet v-for="tweet in tweets" :key="tweet.tweet_id" :tweet="tweet" :user="user" />
   </div>
 </template>
-<style scoped></style>
 <script>
 import Tweet from "./RegisteredTagsTweetsTweet"
-import Axios from "axios"
 export default {
   components: {
     Tweet
   },
-  data() {
-    return {
-      user: {},
-      tag: {},
-      tweets: []
-    }
-  },
-  computed: {
-    apiEndPoint() {
-      const {id} = this.$route.params
-      return `/api/v1/mypage/tags/${id}.json`
-    }
-  },
-  watch: {
-    $route() {
-      this.fetchTweetsData()
-      this.createdTweetsPage()
-    }
-  },
-  created() {
-    this.fetchTweetsData()
-    this.createdTweetsPage()
-  },
-  methods: {
-    fetchTweetsData() {
-      Axios.get(this.apiEndPoint).then(response => {
-        const responseData = response.data
-        this.user = responseData.user
-        this.tag = responseData.registered_tag
-        this.tweets = responseData.tweets
-      })
+  props: {
+    user: {
+      type: Object,
+      default: () => {}
     },
-    createdTweetsPage() {
-      this.$emit("created-tweets-page")
+    tweets: {
+      type: Array,
+      default: () => []
     }
   }
 }

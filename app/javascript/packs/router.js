@@ -2,7 +2,7 @@ import VueRouter from "vue-router"
 
 import Top from "./pages/Top.vue"
 import Mypage from "./pages/Mypage.vue"
-import Tweets from "./components/RegisteredTagsTweets.vue"
+import Tag from "./pages/Tag.vue"
 
 const routes = [
   {
@@ -14,14 +14,12 @@ const routes = [
     path: "/mypage",
     name: "mypage",
     component: Mypage,
-    children: [
-      {
-        path: "tags/:id",
-        name: "mypage_registered_tags",
-        component: Tweets,
-      },
-    ],
+  },
+  {
+    path: "/mypage/tags/:id",
+    name: "tag",
+    component: Tag,
   },
 ]
 
-export default new VueRouter({mode: "history", routes})
+export default new VueRouter({ mode: "history", routes })
