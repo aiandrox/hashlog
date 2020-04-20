@@ -1,15 +1,19 @@
 <template>
-  <v-alert text dismissible type="success">
+  <v-alert
+    text
+    dismissible
+    type="success"
+  >
     {{ this.message }}
   </v-alert>
 </template>
 
 <script>
 export default {
-  data: function() {
+  data() {
     return {
-      message: "flash message",
-    };
+      message: 'flash message',
+    }
   },
-};
+}
 </script>
