@@ -32,7 +32,7 @@ export default {
       this.fetchTweetsData()
     }
   },
-  created() {
+  mounted() {
     this.fetchUserData()
     this.fetchTweetsData()
   },

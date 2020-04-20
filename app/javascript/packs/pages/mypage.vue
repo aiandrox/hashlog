@@ -20,7 +20,7 @@ export default {
       registeredTags: []
     }
   },
-  created() {
+  mounted() {
     this.fetchUserData()
   },
   methods: {
