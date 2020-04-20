@@ -1,4 +1,4 @@
-class Api::V1::MypagesController < ApplicationController
+class Api::V1::MypagesController < Api::V1::BaseController
   def show
     user = current_user
     registered_tag_params = 'registered_tags.id, name, tweeted_day_count,
