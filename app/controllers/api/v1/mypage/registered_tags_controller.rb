@@ -11,12 +11,15 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
   end
 
   def create
-    result_values = if current_user.register_tag(tag_params[:name])
-                      {
+    tag = Tag.find_or_initialize_by(name: tag_params[:name])
+    if current_user.register_tag(tag: tag)
+      registered_tag = current_user.registered_tag(tag)
+      result_values =  {
                         flash: {
                           type: 'success',
                           message: 'ハッシュタグを登録しました'
-                        }
+                        },
+                        tag_id: registered_tag.id
                       }
                     else
                       {
