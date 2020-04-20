@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.3'
+ruby '2.6.6'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'jbuilder', '~> 2.5'
@@ -15,7 +15,6 @@ gem 'webpacker'
 
 # ビュー
 gem 'enum_help'
-gem 'pagy'
 gem 'rails-i18n'
 gem 'slim-rails'
 
