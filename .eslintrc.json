@@ -1,0 +1,8 @@
+{
+  "extends": ["eslint:recommended", "plugin:vue/recommended"],
+  "rules": {
+    "semi": "error",
+    "indent": ["error", 2],
+    "quotes": ["error", "single"]
+  }
+}
