@@ -12,7 +12,7 @@ module TwitterAPI
                    omit_script: true,
                    hide_thread: true,
                    lang: :ja).take(100).map do |oembed|
-      oembed.html =~ /\" dir=\"ltr\">(.+)<\/p>/
+      oembed.html =~ %r{\" dir=\"ltr\">(.+)</p>}
       tweet_oembeds << $+
     end
     tweet_oembeds.zip(tweeted_ats, tweet_ids)

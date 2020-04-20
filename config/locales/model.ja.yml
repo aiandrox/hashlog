@@ -22,6 +22,7 @@ ja:
         privacy: 公開設定
         first_tweeted_at: 初ツイート日時
         last_tweeted_at: 最終ツイート日時
+        tag_id: ハッシュタグ
       tag:
         name: 名前
       tweet: ツイート

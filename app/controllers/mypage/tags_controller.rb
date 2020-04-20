@@ -4,7 +4,8 @@ class Mypage::TagsController < Mypage::BaseController
   end
 
   def create
-    if current_user.register_tag(tag_params[:name])
+    @tag = Tag.find_or_initialize_by(name: tag_params[:name]) # tag = が重複しているが、今後捨てる予定なので気にしない
+    if current_user.register_tag(@tag.name)
       redirect_to mypage_path, notice: t('messages.created', item: Tag.model_name.human)
     else
       flash.now[:alert] = t('messages.not_created', item: Tag.model_name.human)
