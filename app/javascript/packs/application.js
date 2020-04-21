@@ -30,7 +30,7 @@ import Vuex from "vuex"
 Vue.use(Vuex)
 
 import Axios from "axios"
-import VueAxiosPlugin from "./plugins/vue-axios"
+import VueAxiosPlugin from "../plugins/vue-axios"
 Vue.use(VueAxiosPlugin, { axios: Axios })
 
 import Vuetify from "vuetify"
@@ -40,8 +40,8 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 const vuetify = new Vuetify({
   icons: {
-    iconfont: "mdi",
-  },
+    iconfont: "mdi"
+  }
 })
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     router,
     vuetify,
     // Store: store,
-    render: h => h(App),
+    render: h => h(App)
   })
   app.$mount("#app")
 })
