@@ -1,34 +1,11 @@
 <template>
-  <v-app-bar
-    app
-    flat
-  >
-    <v-card
-      class="d-flex mb-6"
-      color="grey lighten-2"
-      flat
-      tile
-    >
-      <v-toolbar-title>Hashlog</v-toolbar-title>
-      <v-card
-        class="pa-2"
-        outlined
-        tile
-      >
-        <router-link to="/mypage">
-          マイページ
-        </router-link>
-      </v-card>
-      <v-card
-        class="pa-2"
-        outlined
-        tile
-      >
-        <router-link to="/">
-          トップページ
-        </router-link>
-      </v-card>
-    </v-card>
+  <v-app-bar app flat dark src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
+    <v-toolbar-title>Hashlog</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items>
+      <v-btn text to="/mypage">マイページ</v-btn>
+      <v-btn text>ログアウト</v-btn>
+    </v-toolbar-items>
   </v-app-bar>
 </template>
 

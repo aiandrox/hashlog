@@ -32,6 +32,8 @@
           </v-card-actions>
           <tag-dialog ref="dialog" @push-register="sendTagName" />
         </div>
+        <v-spacer />
+        <!-- ステータス -->
         <status :role="user.role" :privacy="user.privacy" />
       </v-container>
     </v-card>
