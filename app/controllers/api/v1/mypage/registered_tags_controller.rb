@@ -1,10 +1,16 @@
 class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseController
   def show
+    registered_tag_params = 'registered_tags.id, name, tweeted_day_count,
+                             privacy, remind_day, first_tweeted_at, last_tweeted_at'
+    registered_tags = current_user.registered_tags
+                                  .joins(:tag)
+                                  .select(registered_tag_params)
     registered_tag = current_user.registered_tags.find(params[:id])
     tweets = registered_tag.tweets
     result_values = {
       user: current_user,
-      registered_tags: registered_tag,
+      registered_tags: registered_tags,
+      registered_tag: registered_tag,
       tweets: tweets
     }
     render json: result_values
@@ -33,10 +39,6 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
   end
 
   private
-
-  def user_params
-    params.require(:user).permit(:id)
-  end
 
   def tag_params
     params.require(:tag).permit(:privacy, :remind_day, :name)
