@@ -16,4 +16,10 @@ class RegisteredTag < ApplicationRecord
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
   end
+
+  def fetch_data
+    self.first_tweeted_at = tweets.last.tweeted_at
+    self.last_tweeted_at = tweets.first.tweeted_at
+    # TODO: self.tweeted_day_count = tweets.tweeted_day_count
+  end
 end
