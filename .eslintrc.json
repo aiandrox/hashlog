@@ -249,7 +249,7 @@
     "func-name-matching": ["warn"],
     "func-names": ["off"],
     "func-style": ["error", "expression"],
-    "function-paren-newline": ["error", "multiline"],
+    "function-paren-newline": ["off"],
     "id-blacklist": ["warn"],
     "id-length": ["off"],
     "id-match": ["off"],
