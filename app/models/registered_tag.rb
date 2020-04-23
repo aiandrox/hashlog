@@ -20,6 +20,6 @@ class RegisteredTag < ApplicationRecord
   def fetch_data
     self.first_tweeted_at = tweets.last.tweeted_at
     self.last_tweeted_at = tweets.first.tweeted_at
-    # TODO: self.tweeted_day_count = tweets.tweeted_day_count
+    self.tweeted_day_count = tweets.group_by{ |tweet| tweet.tweeted_at.to_date }.count # TODO: スコープにしたい
   end
 end
