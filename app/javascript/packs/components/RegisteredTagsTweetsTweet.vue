@@ -9,7 +9,9 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ user.name }}</v-list-item-title>
-          <v-list-item-subtitle class="font-weight-light">@{{ user.screen_name }}</v-list-item-subtitle>
+          <v-list-item-subtitle class="font-weight-light"
+            >@{{ user.screen_name }}</v-list-item-subtitle
+          >
         </v-list-item-content>
         <v-list-item-action>
           <v-icon color="blue">mdi-twitter</v-icon>
@@ -30,13 +32,12 @@
         <v-icon>{{ button.icon }}</v-icon>
       </v-btn>
       <v-spacer />
-      <span class="body-2 font-weight-light">{{ tweet.tweeted_at }}</span>
+      <span class="body-2 font-weight-light">{{ tweeted_at }}</span>
     </v-card-actions>
   </v-card>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <style scoped>
 .v-card {
@@ -44,6 +45,10 @@
 }
 </style>
 <script>
+import moment from "moment"
+import "moment/locale/ja"
+moment.locale("ja")
+
 export default {
   props: {
     tweet: {
@@ -77,6 +82,9 @@ export default {
         { url: this.retweetUrl, color: "green", icon: "mdi-twitter-retweet" },
         { url: this.likeUrl, color: "pink", icon: "mdi-heart-outline" }
       ]
+    },
+    tweeted_at() {
+      return moment(this.tweet.tweeted_at).format("YYYY年M月D日(dd)H時m分")
     }
   }
 }
