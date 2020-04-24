@@ -9,13 +9,20 @@
     <v-spacer />
     <v-toolbar-items>
       <v-btn text to="/mypage">マイページ</v-btn>
-      <v-btn text>ログアウト</v-btn>
+      <v-btn text @click="logout">ログアウト</v-btn>
     </v-toolbar-items>
   </v-app-bar>
 </template>
 
-<style scoped></style>
-
 <script>
-export default {}
+import Axios from "axios"
+export default {
+  methods: {
+    logout() {
+      Axios.delete("/api/v1/logout", {}).then(response => {
+        this.$router.push({ path: "/" })
+      })
+    }
+  }
+}
 </script>

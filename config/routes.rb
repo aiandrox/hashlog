@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       namespace :mypage do
         resources :registered_tags, only: %i[show create], path: :tags
       end
+      delete 'logout', to: 'user_sessions#destroy'
     end
   end
 
