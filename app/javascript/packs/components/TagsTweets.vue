@@ -1,10 +1,15 @@
 <template>
   <div>
-    <tweet v-for="tweet in tweets" :key="tweet.tweet_id" :tweet="tweet" :user="user" />
+    <tweet
+      v-for="tweet in tweets"
+      :key="tweet.tweet_id"
+      :tweet="tweet"
+      :user="user"
+    />
   </div>
 </template>
 <script>
-import Tweet from "./RegisteredTagsTweetsTweet"
+import Tweet from "./TagsTweetsTweet"
 export default {
   components: {
     Tweet
