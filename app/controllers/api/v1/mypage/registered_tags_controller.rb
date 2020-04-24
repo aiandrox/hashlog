@@ -27,14 +27,14 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
                         },
                         tag_id: registered_tag.id
                       }
-                    else
-                      {
+    else
+      result_values =  {
                         flash: {
                           type: 'error',
                           message: 'ハッシュタグを登録できませんでした'
                         }
                       }
-                    end
+    end
     render json: result_values
   end
 
