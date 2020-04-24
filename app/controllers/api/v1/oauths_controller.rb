@@ -1,4 +1,4 @@
-class OauthsController < ApplicationController
+class Api::V1::OauthsController < Api::V1::BaseController
   def oauth
     login_at(auth_params[:provider])
   end

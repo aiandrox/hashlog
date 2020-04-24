@@ -8,6 +8,7 @@
     <v-toolbar-title>Hashlog</v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
+      <v-btn text href="api/v1/oauth/twitter">ログイン</v-btn>
       <v-btn text to="/mypage">マイページ</v-btn>
       <v-btn text @click="logout">ログアウト</v-btn>
     </v-toolbar-items>
