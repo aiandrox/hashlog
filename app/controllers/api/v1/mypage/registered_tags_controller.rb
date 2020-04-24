@@ -30,7 +30,7 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
     else
       result_values = {
         flash: {
-          type: 'error',
+          type: 'fail',
           message: 'ハッシュタグを登録できませんでした'
         }
       }

@@ -65,11 +65,14 @@ export default {
       })
         .then(response => {
           const tagId = response.data.tag_id
+          const successOrFailure = response.data.flash.type
           this.$router.push({ path: `/mypage/tags/${tagId}` })
+          if (successOrFailure === "success") {
+            this.close()
+          }
         })
         .finally(() => {
           this.loading = false
-          this.close()
         })
     }
   }
