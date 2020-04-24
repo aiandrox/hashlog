@@ -21,19 +21,19 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
     if current_user.register_tag(tag)
       registered_tag = current_user.registered_tag(tag: tag)
       result_values =  {
-                        flash: {
-                          type: 'success',
-                          message: 'ハッシュタグを登録しました'
-                        },
-                        tag_id: registered_tag.id
-                      }
+        flash: {
+          type: 'success',
+          message: 'ハッシュタグを登録しました'
+        },
+        tag_id: registered_tag.id
+      }
     else
-      result_values =  {
-                        flash: {
-                          type: 'error',
-                          message: 'ハッシュタグを登録できませんでした'
-                        }
-                      }
+      result_values = {
+        flash: {
+          type: 'error',
+          message: 'ハッシュタグを登録できませんでした'
+        }
+      }
     end
     render json: result_values
   end

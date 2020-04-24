@@ -1,5 +1,11 @@
 <template>
-  <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
+  <v-card
+    flat
+    outlined
+    max-width="500"
+    class="mt-3"
+    :href="tweetUrl"
+  >
     <v-card-title>
       <v-list-item :href="userUrl">
         <v-list-item-avatar color="grey" size="40">
@@ -9,9 +15,9 @@
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ user.name }}</v-list-item-title>
-          <v-list-item-subtitle class="font-weight-light"
-            >@{{ user.screen_name }}</v-list-item-subtitle
-          >
+          <v-list-item-subtitle
+            class="font-weight-light"
+          >@{{ user.screen_name }}</v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
           <v-icon color="blue">mdi-twitter</v-icon>
