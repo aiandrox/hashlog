@@ -17,13 +17,6 @@ class User < ApplicationRecord
   enum privacy: { published: 0, closed: 1 }
   enum role: { admin: 0, general: 1, guest: 2 }
 
-  def registered_tag(tag: nil, tag_name: nil)
-    @registered_tag ||= begin
-      tag = Tag.find_by(name: tag_name) if tag_name
-      @registered_tag = registered_tags.find_by(tag_id: tag.id)
-    end
-  end
-
   def set_uuid
     self.uuid = loop do
       random_token = SecureRandom.urlsafe_base64(9)
@@ -31,15 +24,24 @@ class User < ApplicationRecord
     end
   end
 
-  def register_tag(tag_name)
+  # 登録済みのregistered_tag
+  def registered_tag(tag: nil, tag_name: nil)
+    return nil if tag.invalid?
+
+    @registered_tag ||= begin
+      tag = Tag.find_by(name: tag_name) if tag_name
+      @registered_tag = registered_tags.find_by(tag_id: tag.id)
+    end
+  end
+
+  def register_tag(tag)
     ActiveRecord::Base.transaction do
-      tags << tag = Tag.find_or_initialize_by(name: tag_name)
-      save!
+      tag.save!
+      registered_tag = registered_tags.build(tag_id: tag.id)
+      registered_tag.save!
       registered_tag(tag: tag).create_tweets
     rescue ActiveRecord::RecordInvalid
-      if registered_tag(tag_name: tag_name).&invalid?
-        tag.errors.messages.merge!(registered_tag.errors.messages)
-      end
+      tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?
       false
     rescue StandardError
       render status: 500

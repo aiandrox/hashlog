@@ -1,0 +1,56 @@
+<template>
+  <div>
+    <tab :registered-tags="tags" />
+    <tweets :tweets="tweets" :user="user" />
+  </div>
+</template>
+
+<script>
+import Axios from "axios"
+import Tab from "../components/TagsTab"
+import Tweets from "../components/RegisteredTagsTweets"
+export default {
+  components: {
+    Tab,
+    Tweets
+  },
+  data() {
+    return {
+      user: {},
+      tags: [],
+      tweets: []
+    }
+  },
+  computed: {
+    apiEndPoint() {
+      const { id } = this.$route.params
+      return `/api/v1/mypage/tags/${id}.json`
+    }
+  },
+  watch: {
+    $route() {
+      this.fetchTweetsData()
+    }
+  },
+  mounted() {
+    this.fetchUserData()
+    this.fetchTweetsData()
+  },
+  methods: {
+    // TODO: リクエスト
+    fetchUserData() {
+      Axios.get("/api/v1/mypage.json").then(response => {
+        const responseData = response.data
+        this.user = responseData.user
+        this.tags = responseData.registered_tags
+      })
+    },
+    fetchTweetsData() {
+      Axios.get(this.apiEndPoint).then(response => {
+        const responseData = response.data
+        this.tweets = responseData.tweets
+      })
+    }
+  }
+}
+</script>

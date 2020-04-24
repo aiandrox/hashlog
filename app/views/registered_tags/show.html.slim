@@ -1,3 +1,7 @@
-- content_for :title, "#{@user.name}の#{@tag.tag.name}"
+- content_for :title, "#{@user.name}の#{@registered_tag.tag.name}"
 
-h1= "#{@user.name}の#{@tag.tag.name}"
+h1= "#{@user.name}の#{@registered_tag.tag.name}"
+
+= render @tweets
+
+= javascript_include_tag '//platform.twitter.com/widgets.js'

@@ -5,5 +5,6 @@ RSpec.describe Tweet, type: :model do
 
   context 'validations' do
     it { is_expected.to validate_presence_of(:oembed) }
+    it { is_expected.to validate_presence_of(:tweet_id) }
   end
 end
