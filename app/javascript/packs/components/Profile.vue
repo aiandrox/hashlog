@@ -33,8 +33,7 @@
             </v-btn>
           </v-card-actions>
           <!-- ダイアログ -->
-          <tag-dialog ref="dialog" @push-register="sendTagName" />
-          <loading v-show="loading" />
+          <tag-dialog ref="dialog" />
         </div>
         <v-spacer />
         <!-- ステータス -->
@@ -45,7 +44,6 @@
 </template>
 
 <script>
-import Axios from "axios"
 import Status from "./ProfileStatus"
 import TagDialog from "./ProfileRegisterTagDialog"
 export default {
@@ -70,18 +68,6 @@ export default {
   methods: {
     showDialog() {
       this.$refs.dialog.open()
-    },
-    sendTagName(tagName) {
-      Axios.post("/api/v1/mypage/tags", {
-        user: this.user,
-        tag: {
-          name: tagName
-        }
-      }).then(response => {
-        const responseData = response.data
-        this.loading = false
-        console.log(responseData)
-      })
     }
   }
 }
