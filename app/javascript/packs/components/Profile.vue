@@ -16,7 +16,9 @@
                   <v-icon>mdi-twitter</v-icon>
                 </v-btn>
               </v-list-item-title>
-              <v-list-item-subtitle>@{{ user.screen_name }}</v-list-item-subtitle>
+              <v-list-item-subtitle
+                >@{{ user.screen_name }}</v-list-item-subtitle
+              >
             </v-list-item-content>
           </v-list-item>
           <v-card-text>
@@ -30,7 +32,8 @@
               <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
             </v-btn>
           </v-card-actions>
-          <tag-dialog ref="dialog" @push-register="sendTagName" />
+          <!-- ダイアログ -->
+          <tag-dialog ref="dialog" />
         </div>
         <v-spacer />
         <!-- ステータス -->
@@ -41,10 +44,12 @@
 </template>
 
 <script>
-import Axios from "axios"
 import Status from "./ProfileStatus"
 import TagDialog from "./ProfileRegisterTagDialog"
 export default {
+  data() {
+    return { loading: false }
+  },
   components: {
     Status,
     TagDialog
@@ -63,18 +68,6 @@ export default {
   methods: {
     showDialog() {
       this.$refs.dialog.open()
-    },
-    sendTagName(tagName) {
-      Axios.post("/api/v1/mypage/tags", {
-        user: this.user,
-        tag: {
-          name: tagName
-        }
-      }).then(response => {
-        const responseData = response.data
-
-        console.log(responseData)
-      })
     }
   }
 }

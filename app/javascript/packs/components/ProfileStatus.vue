@@ -18,6 +18,16 @@
 
 <script>
 export default {
+  props: {
+    role: {
+      type: String,
+      default: ""
+    },
+    privacy: {
+      type: String,
+      default: ""
+    }
+  },
   computed: {
     statusArray() {
       return [
@@ -32,16 +42,6 @@ export default {
           text: this.privacy
         }
       ]
-    }
-  },
-  props: {
-    role: {
-      type: String,
-      default: ""
-    },
-    privacy: {
-      type: String,
-      default: ""
     }
   }
 }

@@ -9,16 +9,21 @@ Rails.application.routes.draw do
       namespace :mypage do
         resources :registered_tags, only: %i[show create], path: :tags
       end
+      # ログイン、ログアウト
+      post 'oauth/callback', to: 'oauths#callback'
+      get 'oauth/callback', to: 'oauths#callback'
+      get 'oauth/:provider', to: 'oauths#oauth'
+      delete 'logout', to: 'user_sessions#destroy'
     end
   end
 
-  # ログイン、ログアウト
-  post 'oauth/callback', to: 'oauths#callback'
-  get 'oauth/callback', to: 'oauths#callback'
-  get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
-  delete 'logout', to: 'user_sessions#destroy'
-  # ゲストユーザーログイン
-  get 'guest_login', to: 'user_sessions#guest_login'
+  # # ログイン、ログアウト
+  # post 'oauth/callback', to: 'oauths#callback'
+  # get 'oauth/callback', to: 'oauths#callback'
+  # get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
+  # delete 'logout', to: 'user_sessions#destroy'
+  # # ゲストユーザーログイン
+  # get 'guest_login', to: 'user_sessions#guest_login'
 
   # マイページ
   resource :mypage, only: %i[show edit update destroy]
