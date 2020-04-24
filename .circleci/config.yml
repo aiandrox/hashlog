@@ -27,7 +27,7 @@ jobs:
       # Restore bundle cache
       - restore_cache:
           keys:
-            - rails-demo-{{ checksum "Gemfile.lock" }}
+            - rails-demo-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
             - rails-demo-
 
       - run:
@@ -47,20 +47,28 @@ jobs:
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
 
+      - run:
+          name: yarn
+          command: yarn
+
       # Store bundle cache
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
 
       - run:
           name: setup database
           command: |
             cp -v config/database.ci.yml config/database.yml
-      
+
       - run: mysql_config --socket
       - run: bundle exec rails db:create
       - run: bundle exec rails db:schema:load
+
+      # Build JavaScript files
+      - run: bundle exec bin/webpack
 
       - run:
           name: run rspec
