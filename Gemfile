@@ -20,6 +20,7 @@ gem 'slim-rails'
 
 # 機能
 gem 'sorcery'
+gem 'whenever', require: false
 # api
 gem 'twitter'
 
