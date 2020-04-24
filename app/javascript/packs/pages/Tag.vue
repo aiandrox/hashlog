@@ -8,7 +8,7 @@
 <script>
 import Axios from "axios"
 import Tab from "../components/TagsTab"
-import Tweets from "../components/RegisteredTagsTweets"
+import Tweets from "../components/TagsTweets"
 export default {
   components: {
     Tab,
