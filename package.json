@@ -4,6 +4,8 @@
   "dependencies": {
     "@rails/webpacker": "5.0.1",
     "axios": "^0.19.2",
+    "moment": "^2.24.0",
+    "moment-locales-webpack-plugin": "^1.2.0",
     "vue": "^2.6.11",
     "vue-eslint-parser": "^7.0.0",
     "vue-loader": "^15.9.1",
@@ -23,6 +25,7 @@
     "eslint": "^6.8.0",
     "eslint-loader": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vue-libs": "^4.0.0",
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {

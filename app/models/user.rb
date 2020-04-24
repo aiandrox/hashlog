@@ -39,12 +39,15 @@ class User < ApplicationRecord
       tag.save!
       registered_tag = registered_tags.build(tag_id: tag.id)
       registered_tag.save!
-      registered_tag(tag: tag).create_tweets
+      registered_tag.create_tweets
+      if registered_tag.tweets.any?
+        registered_tag.fetch_data
+        registered_tag.save! # 一回のsave!でどうにかしたい
+      end
+      true
     rescue ActiveRecord::RecordInvalid
       tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?
       false
-    rescue StandardError
-      render status: 500
     end
   end
 end
