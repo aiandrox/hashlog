@@ -6,7 +6,7 @@ class Api::V1::Mypage::RegisteredTagsController < Api::V1::Mypage::BaseControlle
                                   .joins(:tag)
                                   .select(registered_tag_params)
     registered_tag = current_user.registered_tags.find(params[:id])
-    tweets = registered_tag.tweets
+    tweets = registered_tag.tweets.desc
     result_values = {
       user: current_user,
       registered_tags: registered_tags,
