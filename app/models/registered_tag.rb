@@ -1,5 +1,4 @@
 class RegisteredTag < ApplicationRecord
-  include TwitterAPI
   has_many :tweets, dependent: :destroy
   belongs_to :user
   belongs_to :tag
@@ -12,7 +11,8 @@ class RegisteredTag < ApplicationRecord
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
   def create_tweets
-    tweets_data.each do |oembed, tweeted_at, tweet_id|
+    client = TwitterAPI::Client.new(user, tag.name)
+    client.tweets_data.each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
   end
