@@ -29,25 +29,20 @@ export default {
   },
   watch: {
     $route() {
-      this.fetchTweetsData()
+      this.fetchData()
     }
   },
   mounted() {
-    this.fetchUserData()
-    this.fetchTweetsData()
+    this.fetchData()
   },
   methods: {
-    // TODO: リクエスト
-    fetchUserData() {
-      Axios.get("/api/v1/mypage.json").then(response => {
+    // TODO: リクエストTweet.idが2大きくなる
+    fetchData() {
+      Axios.get(this.apiEndPoint).then(response => {
         const responseData = response.data
         this.user = responseData.user
         this.tags = responseData.registered_tags
-      })
-    },
-    fetchTweetsData() {
-      Axios.get(this.apiEndPoint).then(response => {
-        const responseData = response.data
+        this.tag = responseData.registered_tag
         this.tweets = responseData.tweets
       })
     }
