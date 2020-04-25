@@ -3,4 +3,5 @@ class Tweet < ApplicationRecord
 
   validates :oembed, presence: true
   validates :tweet_id, presence: true
+  validates :tweet_id, uniqueness: { scope: :registered_tag_id }
 end
