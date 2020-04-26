@@ -1,24 +1,21 @@
 <template>
-  <v-card
-    flat
-    outlined
-    max-width="500"
-    class="mt-3"
-    :href="tweetUrl"
-  >
+  <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
     <v-card-title>
-      <v-list-item :href="userUrl">
-        <v-list-item-avatar color="grey" size="40">
-          <v-img
-            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-          />
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title>{{ user.name }}</v-list-item-title>
-          <v-list-item-subtitle
-            class="font-weight-light"
-          >@{{ user.screen_name }}</v-list-item-subtitle>
-        </v-list-item-content>
+      <v-list-item class="pl-0">
+        <v-list-item :href="userUrl">
+          <v-list-item-avatar color="grey" size="40">
+            <v-img
+              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+            />
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>{{ user.name }}</v-list-item-title>
+            <v-list-item-subtitle class="font-weight-light"
+              >@{{ user.screen_name }}</v-list-item-subtitle
+            >
+          </v-list-item-content>
+        </v-list-item>
+        <v-spacer />
         <v-list-item-action>
           <v-icon color="blue">mdi-twitter</v-icon>
         </v-list-item-action>
