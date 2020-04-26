@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-btn class="ma-2" outlined color="success" @click="deleteTag">
+      <v-icon left>mdi-delete</v-icon>削除
+    </v-btn>
+    <v-btn class="ma-2" outlined color="success">
+      <v-icon left>mdi-cog</v-icon>設定
+    </v-btn>
     <tab :registered-tags="tags" />
     <tweets :tweets="tweets" :user="user" />
   </div>
@@ -22,9 +28,14 @@ export default {
     }
   },
   computed: {
-    apiEndPoint() {
+    // TODO: 多分、registered_tagリソースは同じURLになる
+    getUrl() {
       const { id } = this.$route.params
       return `/api/v1/mypage/tags/${id}.json`
+    },
+    deleteUrl() {
+      const { id } = this.$route.params
+      return `/api/v1/registered_tags/${id}.json`
     }
   },
   watch: {
@@ -36,14 +47,19 @@ export default {
     this.fetchData()
   },
   methods: {
-    // TODO: リクエストTweet.idが2大きくなる
     fetchData() {
-      Axios.get(this.apiEndPoint).then(response => {
+      Axios.get(this.getUrl).then(response => {
         const responseData = response.data
         this.user = responseData.user
         this.tags = responseData.registered_tags
         this.tag = responseData.registered_tag
         this.tweets = responseData.tweets
+      })
+    },
+    deleteTag() {
+      Axios.delete(this.deleteUrl).then(response => {
+        const responseData = response.data
+        this.$router.push({ path: "/mypage" })
       })
     }
   }

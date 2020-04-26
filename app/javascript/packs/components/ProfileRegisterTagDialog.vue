@@ -58,7 +58,7 @@ export default {
     },
     sendTagName() {
       this.loading = true
-      Axios.post("/api/v1/mypage/tags", {
+      Axios.post("/api/v1/registered_tags", {
         tag: {
           name: this.tagName
         }
