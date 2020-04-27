@@ -42,7 +42,7 @@ class User < ApplicationRecord
       registered_tag.create_tweets
       if registered_tag.tweets.any?
         registered_tag.fetch_data
-        registered_tag.save! # 一回のsave!でどうにかしたい
+        registered_tag.save! # TODO: 一回のsave!でどうにかしたい
       end
       true
     rescue ActiveRecord::RecordInvalid
