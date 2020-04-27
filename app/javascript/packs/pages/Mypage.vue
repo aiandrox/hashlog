@@ -25,11 +25,15 @@ export default {
   },
   methods: {
     fetchUserData() {
-      Axios.get("/api/v1/mypage.json").then(response => {
-        const responseData = response.data
-        this.user = responseData.user
-        this.registeredTags = responseData.registered_tags
-      })
+      Axios.get("/api/v1/mypage.json")
+        .then(response => {
+          const responseData = response.data
+          this.user = responseData.user
+          this.registeredTags = responseData.registered_tags
+        })
+        .catch(response => {
+          console.log(response)
+        })
     }
   }
 }

@@ -48,19 +48,27 @@ export default {
   },
   methods: {
     fetchData() {
-      Axios.get(this.getUrl).then(response => {
-        const responseData = response.data
-        this.user = responseData.user
-        this.tags = responseData.registered_tags
-        this.tag = responseData.registered_tag
-        this.tweets = responseData.tweets
-      })
+      Axios.get(this.getUrl)
+        .then(response => {
+          const responseData = response.data
+          this.user = responseData.user
+          this.tags = responseData.registered_tags
+          this.tag = responseData.registered_tag
+          this.tweets = responseData.tweets
+        })
+        .catch(response => {
+          console.log(response)
+        })
     },
     deleteTag() {
-      Axios.delete(this.deleteUrl).then(response => {
-        const responseData = response.data
-        this.$router.push({ path: "/mypage" })
-      })
+      Axios.delete(this.deleteUrl)
+        .then(response => {
+          const responseData = response.data
+          this.$router.push({ path: "/mypage" })
+        })
+        .catch(response => {
+          console.log(response)
+        })
     }
   }
 }
