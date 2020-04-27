@@ -19,6 +19,7 @@ gem 'rails-i18n'
 gem 'slim-rails'
 
 # 機能
+gem 'delayed_job_active_record'
 gem 'sorcery'
 gem 'whenever', require: false
 # api
