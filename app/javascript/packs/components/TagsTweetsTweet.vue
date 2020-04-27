@@ -1,43 +1,48 @@
 <template>
-  <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
-    <v-card-title>
-      <v-list-item class="pl-0">
-        <v-list-item :href="userUrl">
-          <v-list-item-avatar color="grey" size="40">
-            <v-img
-              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-            />
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>{{ user.name }}</v-list-item-title>
-            <v-list-item-subtitle class="font-weight-light"
-              >@{{ user.screen_name }}</v-list-item-subtitle
-            >
-          </v-list-item-content>
+  <div>
+    <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
+      <v-card-title>
+        <v-list-item class="pl-0">
+          <v-list-item :href="userUrl">
+            <v-list-item-avatar color="grey" size="40">
+              <v-img
+                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+              />
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>{{ user.name }}</v-list-item-title>
+              <v-list-item-subtitle class="font-weight-light"
+                >@{{ user.screen_name }}</v-list-item-subtitle
+              >
+            </v-list-item-content>
+          </v-list-item>
+          <v-spacer />
+          <v-list-item-action>
+            <v-icon color="blue">mdi-twitter</v-icon>
+          </v-list-item-action>
         </v-list-item>
+      </v-card-title>
+
+      <v-card-text class="text--primary" v-html="tweet.oembed" />
+      <v-card-actions>
+        <v-btn
+          v-for="button in buttons"
+          :key="button.icon"
+          :href="button.url"
+          :color="button.color"
+          icon
+        >
+          <v-icon>{{ button.icon }}</v-icon>
+        </v-btn>
         <v-spacer />
-        <v-list-item-action>
-          <v-icon color="blue">mdi-twitter</v-icon>
-        </v-list-item-action>
-      </v-list-item>
-    </v-card-title>
-
-    <v-card-text class="text--primary" v-html="tweet.oembed" />
-
-    <v-card-actions>
-      <v-btn
-        v-for="button in buttons"
-        :key="button.icon"
-        :href="button.url"
-        :color="button.color"
-        icon
-      >
-        <v-icon>{{ button.icon }}</v-icon>
-      </v-btn>
-      <v-spacer />
-      <span class="body-2 font-weight-light">{{ tweeted_at }}</span>
-    </v-card-actions>
-  </v-card>
+        <span class="body-2 font-weight-light">{{ tweeted_at }}</span>
+      </v-card-actions>
+    </v-card>
+    <!-- 開発用削除ボタン -->
+    <v-btn class="ma-2" outlined color="success" @click="deleteTweet">
+      <v-icon left>mdi-delete</v-icon>削除
+    </v-btn>
+  </div>
 </template>
 
 <style scoped></style>
@@ -48,6 +53,7 @@
 }
 </style>
 <script>
+import Axios from "axios"
 import moment from "moment"
 import "moment/locale/ja"
 moment.locale("ja")
@@ -88,6 +94,15 @@ export default {
     },
     tweeted_at() {
       return moment(this.tweet.tweeted_at).format("YYYY年M月D日(dd)H時m分")
+    },
+    deleteUrl() {
+      const id = this.tweet.id
+      return `/api/v1/tweets/${id}`
+    }
+  },
+  methods: {
+    deleteTweet() {
+      Axios.delete(this.deleteUrl).then(response => {})
     }
   }
 }

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         resources :registered_tags, only: %i[show create], path: :tags
       end
       resources :registered_tags, only: %i[create destroy]
+      resources :tweets, only: :destroy
       # ログイン、ログアウト
       post 'oauth/callback', to: 'oauths#callback'
       get 'oauth/callback', to: 'oauths#callback'

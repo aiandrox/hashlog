@@ -31,11 +31,11 @@ export default {
     // TODO: 多分、registered_tagリソースは同じURLになる
     getUrl() {
       const { id } = this.$route.params
-      return `/api/v1/mypage/tags/${id}.json`
+      return `/api/v1/mypage/tags/${id}`
     },
     deleteUrl() {
       const { id } = this.$route.params
-      return `/api/v1/registered_tags/${id}.json`
+      return `/api/v1/registered_tags/${id}`
     }
   },
   watch: {
