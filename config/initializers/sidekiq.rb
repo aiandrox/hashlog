@@ -16,6 +16,6 @@ Sidekiq.configure_client do |config|
                  when 'staging'
                    { url: 'redis://stg.redis-example.com:6379', namespace: 'sidekiq' }
                  else
-                    url: 'redis://127.0.0.1:6379', namespace: 'sidekiq' }
+                   { url: 'redis://127.0.0.1:6379', namespace: 'sidekiq' }
                  end
 end
