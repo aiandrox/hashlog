@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'vue', to: 'static_pages#vue'
   get 'mypage', to: 'static_pages#vue'
   get 'mypage/tags/:id', to: 'static_pages#vue'
+
   namespace :api do
     namespace :v1 do
       resource :mypage, only: [:show]
@@ -18,6 +19,10 @@ Rails.application.routes.draw do
       delete 'logout', to: 'user_sessions#destroy'
     end
   end
+
+  # sidekiq
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 
   # ログイン、ログアウト
   post 'oauth/callback', to: 'oauths#callback'

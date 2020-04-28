@@ -1,5 +1,4 @@
 require 'rails_helper'
-
-RSpec.describe AddTweetsJob, type: :job do
+RSpec.describe AddTweetsWorker, type: :worker do
   pending "add some examples to (or delete) #{__FILE__}"
 end
