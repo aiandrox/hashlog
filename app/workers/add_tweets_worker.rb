@@ -3,7 +3,7 @@ class AddTweetsWorker
   include Sidekiq::Worker
   sidekiq_options backtrace: 20
 
-  sidekiq_retry_in do |count, exception|
+  sidekiq_retry_in do |_count, exception|
     case exception
     when Twitter::Error::TooManyRequests
       930

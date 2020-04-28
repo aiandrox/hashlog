@@ -19,8 +19,8 @@ gem 'rails-i18n'
 gem 'slim-rails'
 
 # 機能
-gem 'sidekiq', '~> 5.0'
 gem 'redis-namespace'
+gem 'sidekiq', '~> 5.0'
 gem 'sorcery'
 gem 'whenever', require: false
 # api
