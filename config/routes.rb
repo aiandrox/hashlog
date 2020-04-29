@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'static_pages#top'
-  get 'mypage', to: 'static_pages#top'
+  get 'mypage/dashboard', to: 'static_pages#top'
   get 'mypage/tags/:id', to: 'static_pages#top'
 
   namespace :api do

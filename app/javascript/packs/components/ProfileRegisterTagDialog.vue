@@ -19,7 +19,9 @@
         <v-card-actions>
           <v-spacer />
           <v-btn color="blue darken-1" text @click="close()">キャンセル</v-btn>
-          <v-btn color="blue darken-1" text @click="sendTagName()">登録する</v-btn>
+          <v-btn color="blue darken-1" text @click="sendTagName()"
+            >登録する</v-btn
+          >
         </v-card-actions>
       </v-card>
       <loading v-show="loading" />
@@ -60,7 +62,7 @@ export default {
           const successOrFailure = response.data.flash.type
           if (successOrFailure === "success") {
             this.close()
-            this.$router.push({ path: `/mypage/tags/${tagId}` })
+            this.$router.push({ name: "tag", params: { id: tagId } })
           }
         })
         .catch(response => {

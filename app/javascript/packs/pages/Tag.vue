@@ -64,7 +64,7 @@ export default {
       Axios.delete(this.deleteUrl)
         .then(response => {
           const responseData = response.data
-          this.$router.push({ path: "/mypage" })
+          this.$router.push({ name: "/mypage" })
         })
         .catch(response => {
           console.log(response)

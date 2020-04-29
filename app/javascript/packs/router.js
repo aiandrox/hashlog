@@ -8,18 +8,18 @@ const routes = [
   {
     path: "/",
     name: "top",
-    component: Top,
+    component: Top
   },
   {
-    path: "/mypage",
+    path: "/mypage/dashboard",
     name: "mypage",
-    component: Mypage,
+    component: Mypage
   },
   {
     path: "/mypage/tags/:id",
     name: "tag",
-    component: Tag,
-  },
+    component: Tag
+  }
 ]
 
 export default new VueRouter({ mode: "history", routes })
