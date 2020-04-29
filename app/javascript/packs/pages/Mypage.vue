@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     fetchUserData() {
-      Axios.get("/api/v1/mypage.json")
+      Axios.get("/api/v1/mypage")
         .then(response => {
           const responseData = response.data
           this.user = responseData.user

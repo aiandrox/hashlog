@@ -10,6 +10,8 @@ class RegisteredTag < ApplicationRecord
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
+  scope :desc, -> { order(created_at: :desc) }
+
   def create_tweets(type = 'standard')
     client = TwitterAPI::Client.new(user, tag.name)
     client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
