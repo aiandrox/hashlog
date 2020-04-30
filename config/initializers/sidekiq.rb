@@ -1,21 +1,7 @@
 Sidekiq.configure_server do |config|
-  config.redis = case Rails.env
-                 when 'production'
-                   { url: 'redis://prd.redis-example.com:6379', namespace: 'sidekiq' }
-                 when 'staging'
-                   { url: 'redis://stg.redis-example.com:6379', namespace: 'sidekiq' }
-                 else
-                   { url: 'redis://127.0.0.1:6379', namespace: 'sidekiq' }
-                 end
+  config.redis = { url: Settings[:sidekiq][:url], namespace: 'sidekiq' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = case Rails.env
-                 when 'production'
-                   { url: 'redis://prd.redis-example.com:6379', namespace: 'sidekiq' }
-                 when 'staging'
-                   { url: 'redis://stg.redis-example.com:6379', namespace: 'sidekiq' }
-                 else
-                   { url: 'redis://127.0.0.1:6379', namespace: 'sidekiq' }
-                 end
+  config.redis = { url: Settings[:sidekiq][:url], namespace: 'sidekiq' }
 end

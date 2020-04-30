@@ -18,6 +18,7 @@ gem 'enum_help'
 gem 'rails-i18n'
 
 # 機能
+gem 'config'
 gem 'redis-namespace'
 gem 'sidekiq', '~> 5.0'
 gem 'sorcery'
