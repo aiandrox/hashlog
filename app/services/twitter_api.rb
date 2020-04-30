@@ -9,7 +9,6 @@ module TwitterAPI
       @user = user
       @tag_name = tag_name
       @since_id = since_id
-      client
     end
 
     # return [["<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-13 07:13:39 UTC, 1249596597479956481],
