@@ -1,11 +1,11 @@
 RSpec.describe User, type: :model do
-  context 'associations' do
+  describe 'associations' do
     it { is_expected.to have_many(:authentications).dependent(:destroy) }
     it { is_expected.to have_many(:registered_tags).dependent(:destroy) }
     it { is_expected.to have_many(:tags).through(:registered_tags) }
   end
 
-  context 'validations' do
+  describe 'validations' do
     before do
       create(:user)
       build(:user)
@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:description).is_at_most(300) }
   end
 
-  context 'default_value' do
+  describe 'default value' do
     let(:user) { create(:user) }
     it 'privacyがpublishedである' do
       expect(user.published?).to be_truthy
@@ -31,6 +31,22 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'method' do
+  fdescribe 'methods' do
+    let(:user) { create(:user, :with_tags) }
+    let(:registered_tag) { user.registered_tags.take }
+    let(:user_tag) { registered_tag.tag }
+    let(:other_tag) { create(:tag) }
+    describe 'registered_tag(tag)' do
+      context '登録しているtagを渡すとき' do
+        it '該当するregistered_tagを返す' do
+          expect(user.registered_tag(user_tag)).to eq registered_tag
+        end
+      end
+      context '登録していないtagを渡すとき' do
+        it 'nilを返す' do
+          expect(user.registered_tag(other_tag)).to eq nil
+        end
+      end
+    end
   end
 end
