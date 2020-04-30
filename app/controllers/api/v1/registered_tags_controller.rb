@@ -24,7 +24,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   end
 
   def destroy
-    registered_tag = RegisteredTag.find(params[:id])
+    registered_tag = current_user.registered_tags.find(params[:id])
     registered_tag.destroy!
     result_values = {
       flash: {
