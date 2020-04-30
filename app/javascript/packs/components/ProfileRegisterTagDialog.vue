@@ -19,7 +19,7 @@
         <v-card-actions>
           <v-spacer />
           <v-btn color="blue darken-1" text @click="dialog = false">キャンセル</v-btn>
-          <v-btn color="blue darken-1" text @click="sendTagName()">登録する</v-btn>
+          <v-btn color="blue darken-1" text @click="sendTagName">登録する</v-btn>
         </v-card-actions>
       </v-card>
       <loading v-show="loading" />
@@ -47,11 +47,12 @@ export default {
     },
     sendTagName() {
       this.loading = true
-      Axios.post("/api/v1/registered_tags", {
-        tag: {
-          name: this.tagName
-        }
-      })
+      axios
+        .post("/api/v1/registered_tags", {
+          tag: {
+            name: this.tagName
+          }
+        })
         .then(response => {
           const tagId = response.data.tag_id
           const successOrFailure = response.data.flash.type
