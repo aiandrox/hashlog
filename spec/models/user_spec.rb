@@ -31,8 +31,8 @@ RSpec.describe User, type: :model do
     end
   end
 
-  fdescribe 'methods' do
-    let(:user) { create(:user, :with_tags) }
+  describe 'methods' do
+    let!(:user) { create(:user, :with_tags) }
     let(:registered_tag) { user.registered_tags.take }
     let(:user_tag) { registered_tag.tag }
     let(:other_tag) { create(:tag) }
@@ -45,6 +45,27 @@ RSpec.describe User, type: :model do
       context '登録していないtagを渡すとき' do
         it 'nilを返す' do
           expect(user.registered_tag(other_tag)).to eq nil
+        end
+      end
+    end
+
+    describe 'register_tag(tag)' do
+      xcontext 'tagが有効なとき' do # TODO: モックの修正
+        let(:valid_tag) { build(:tag) }
+        it 'trueを返す' do
+          expect(user.register_tag(valid_tag)).to eq true
+        end
+        it 'user.registered_tagが作成される' do
+          expect { user.register_tag(valid_tag) }.to change(RegisteredTag, :count).by(1)
+        end
+      end
+      context 'tagが無効なとき' do
+        let(:invalid_tag) { build(:tag, :invalid) }
+        it 'falseを返す' do
+          expect(user.register_tag(invalid_tag)).to eq false
+        end
+        it 'user.registered_tagが作成されない' do
+          expect { user.register_tag(invalid_tag) }.not_to change(RegisteredTag, :count)
         end
       end
     end
