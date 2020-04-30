@@ -22,6 +22,7 @@
           <v-btn color="blue darken-1" text @click="sendTagName">登録する</v-btn>
         </v-card-actions>
       </v-card>
+      <!-- ローディング -->
       <loading v-show="loading" />
     </v-dialog>
   </v-row>
@@ -29,7 +30,7 @@
 
 <script>
 import Axios from "axios"
-import Loading from "./shared/Loading"
+import Loading from "./shared/TheLoading"
 export default {
   data() {
     return {
@@ -47,12 +48,11 @@ export default {
     },
     sendTagName() {
       this.loading = true
-      axios
-        .post("/api/v1/registered_tags", {
-          tag: {
-            name: this.tagName
-          }
-        })
+      Axios.post("/api/v1/registered_tags", {
+        tag: {
+          name: this.tagName
+        }
+      })
         .then(response => {
           const tagId = response.data.tag_id
           const successOrFailure = response.data.flash.type

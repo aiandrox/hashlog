@@ -1,8 +1,8 @@
 import VueRouter from "vue-router"
 
-import Top from "./pages/Top.vue"
-import Mypage from "./pages/Mypage.vue"
-import Tag from "./pages/Tag.vue"
+import Top from "../pages/Top.vue"
+import Mypage from "../pages/Mypage.vue"
+import Tag from "../pages/Tag.vue"
 
 const routes = [
   {
