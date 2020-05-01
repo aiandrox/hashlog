@@ -67,16 +67,15 @@ RSpec.describe RegisteredTag, type: :model do
     end
 
     describe '#add_tweets' do
-      context '正常系' do
-        let(:registered_tag) do
-          create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
+      let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
+      let(:registered_tag) { user.registered_tag(tag) }
+      before 'タグ登録時にツイートを取得' do
+        VCR.use_cassette('twitter_api/standard_search') do
+          user.register_tag(tag)
         end
-        before do
-          VCR.use_cassette('twitter_api/standard_search') do
-            registered_tag.create_tweets # 以前のツイートを取得する
-          end
-          registered_tag.fetch_data
-        end
+      end
+
+      context '正常系 前日のツイートを取得したとき' do
         it '取得したツイートを保存する' do
           expect do
             VCR.use_cassette('twitter_api/everyday_search') do
@@ -98,27 +97,8 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
 
-      context 'ハッシュタグのツイートが1件も保存されていなかったとき' do
-        let(:registered_tag) do
-          create(:registered_tag, user: user, tag: create(:tag))
-        end
-        fit 'create_tweetsメソッドを実行する' do
-          expect(registered_tag).to receive(:create_tweets).once
-          VCR.use_cassette('twitter_api/standard_search') do
-            registered_tag.add_tweets
-          end
-        end
-      end
-
-      context '最終ツイート日が昨日以降のとき' do
-        let(:registered_tag) do
-          create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
-        end
-        before do
-          VCR.use_cassette('twitter_api/standard_search') do
-            registered_tag.create_tweets
-          end
-        end
+      context '既に前日のツイートを取得しているとき' do
+        before { create(:tweet, :tweeted_yesterday, registered_tag: registered_tag) }
         it 'Twitter::Client#tweets_dataメソッドを実行しない' do
           client_mock = double('client mock')
           allow(client_mock).to receive(:tweets_data)
@@ -130,19 +110,23 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
 
-      context '昨日のツイートを1件も取得できなかったとき' do
-        let(:registered_tag) do
-          create(:registered_tag, user: user, tag: create(:tag, name: 'テスト'))
-        end
-        before do
-          VCR.use_cassette('twitter_api/standard_search_test') do
-            registered_tag.create_tweets # 以前のツイートを取得する
-          end
-          registered_tag.fetch_data
-        end
+      context '前日のツイートがなかったとき' do
         it 'fetch_dataメソッドを実行しない' do
           expect(registered_tag).not_to receive(:fetch_data)
-          VCR.use_cassette('twitter_api/everyday_search_test') do
+          VCR.use_cassette('twitter_api/everyday_search_none') do
+            registered_tag.add_tweets
+          end
+        end
+      end
+      context 'ハッシュタグのツイートが1件も保存されていなかったとき' do
+        before do
+          registered_tag.tweets.each do |tweet|
+            tweet.destroy
+          end
+        end
+        it 'create_tweetsメソッドを実行する' do
+          expect(registered_tag).to receive(:create_tweets).once
+          VCR.use_cassette('twitter_api/standard_search') do
             registered_tag.add_tweets
           end
         end
