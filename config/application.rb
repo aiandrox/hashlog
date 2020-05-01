@@ -33,6 +33,9 @@ module Hashlog
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # ActiveJobのアダプター設定
+    config.active_job.queue_adapter = :sidekiq
+
     # generateで作成するファイルの制限
     config.generators do |g|
       g.assets false

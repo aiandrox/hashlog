@@ -1,0 +1,2 @@
+sidekiq:
+  url: 'redis://prd.redis-example.com:6379'
