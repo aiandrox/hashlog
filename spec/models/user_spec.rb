@@ -29,11 +29,11 @@ RSpec.describe User, type: :model do
   end
 
   describe 'methods' do
-    let!(:user) { create(:user, :with_tags) }
-    let(:registered_tag) { user.registered_tags.take }
-    let(:user_tag) { registered_tag.tag }
-    let(:other_tag) { create(:tag) }
     describe 'registered_tag(tag)' do
+      let!(:user) { create(:user, :with_tags) }
+      let(:registered_tag) { user.registered_tags.take }
+      let(:user_tag) { registered_tag.tag }
+      let(:other_tag) { create(:tag) }
       context '登録しているtagを渡すとき' do
         it '該当するregistered_tagを返す' do
           expect(user.registered_tag(user_tag)).to eq registered_tag
@@ -47,8 +47,9 @@ RSpec.describe User, type: :model do
     end
 
     describe 'register_tag(tag)' do
-      xcontext 'tagが有効なとき' do # TODO: モックの修正
-        let(:valid_tag) { build(:tag) }
+      let(:user) { create(:user, :real_value) }
+      context 'tagが有効なとき' do # TODO: モックの修正
+        let(:valid_tag) { build(:tag, name: 'ポートフォリオ進捗') }
         it 'trueを返す' do
           expect(user.register_tag(valid_tag)).to eq true
         end
