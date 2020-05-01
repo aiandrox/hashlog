@@ -7,7 +7,7 @@ FactoryBot.define do
   end
 
   trait :tweeted_yesterday do
-    tweeted_at { Date.yesterday }
+    tweeted_at { DateTime.now.ago(5.hour) }
   end
 
   trait :tweeted_7days_ago do
