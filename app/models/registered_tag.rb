@@ -11,15 +11,36 @@ class RegisteredTag < ApplicationRecord
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
-  def create_tweets
-    tweets_data.each do |oembed, tweeted_at, tweet_id|
+  scope :desc, -> { order(created_at: :desc) }
+
+  def create_tweets(type = 'standard')
+    client = TwitterAPI::Client.new(user, tag.name)
+    client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
   end
 
-  def fetch_data
-    self.first_tweeted_at = tweets.oldest.tweeted_at
+  # cron処理用
+  def add_tweets
+    last_tweet = tweets.oldest
+    return create_tweets unless last_tweet
+
+    return if last_tweet.tweeted_at > Date.yesterday
+
+    since_id = last_tweet.tweet_id.to_i
+    client = TwitterAPI::Client.new(user, tag.name, since_id)
+    client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
+      tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
+    end
+    return if client.tweets_data('everyday').empty?
+
+    fetch_data('add')
+    Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
+  end
+
+  def fetch_data(type = 'new')
+    self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
     self.last_tweeted_at = tweets.latest.tweeted_at
-    self.tweeted_day_count = tweets.group_by { |tweet| tweet.tweeted_at.to_date }.count # TODO: スコープにしたい
+    self.tweeted_day_count = tweets.tweeted_day_count
   end
 end
