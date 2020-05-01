@@ -6,10 +6,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validations' do
-    before do
-      create(:user)
-      build(:user)
-    end
+    before { create(:user) }
     it { is_expected.to validate_presence_of(:twitter_id) }
     it { is_expected.to validate_uniqueness_of(:twitter_id).case_insensitive }
     it { is_expected.to validate_presence_of(:screen_name) }
