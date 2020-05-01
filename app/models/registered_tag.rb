@@ -1,5 +1,4 @@
 class RegisteredTag < ApplicationRecord
-  include TwitterAPI
   has_many :tweets, dependent: :destroy
   belongs_to :user
   belongs_to :tag
@@ -11,10 +10,31 @@ class RegisteredTag < ApplicationRecord
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
-  def create_tweets
-    tweets_data.each do |oembed, tweeted_at, tweet_id|
+  scope :desc, -> { order(created_at: :desc) }
+
+  def create_tweets(type = 'standard')
+    client = TwitterAPI::Client.new(user, tag.name)
+    client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
+  end
+
+  # cron処理用
+  def add_tweets
+    last_tweet = tweets.desc.first
+    return create_tweets unless last_tweet
+
+    return if last_tweet.tweeted_at > Date.yesterday
+
+    since_id = last_tweet.tweet_id.to_i
+    client = TwitterAPI::Client.new(user, tag.name, since_id)
+    client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
+      tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
+    end
+    return if client.tweets_data('everyday').empty?
+
+    fetch_data
+    Rails.logger.info("#{user.screen_name}の#{tag.name}にツイートを追加")
   end
 
   def fetch_data

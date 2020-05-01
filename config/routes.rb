@@ -3,12 +3,15 @@ Rails.application.routes.draw do
   get 'vue', to: 'static_pages#vue'
   get 'mypage', to: 'static_pages#vue'
   get 'mypage/tags/:id', to: 'static_pages#vue'
+
   namespace :api do
     namespace :v1 do
       resource :mypage, only: [:show]
       namespace :mypage do
         resources :registered_tags, only: %i[show create], path: :tags
       end
+      resources :registered_tags, only: %i[create destroy]
+      resources :tweets, only: :destroy
       # ログイン、ログアウト
       post 'oauth/callback', to: 'oauths#callback'
       get 'oauth/callback', to: 'oauths#callback'
@@ -17,13 +20,17 @@ Rails.application.routes.draw do
     end
   end
 
-  # # ログイン、ログアウト
-  # post 'oauth/callback', to: 'oauths#callback'
-  # get 'oauth/callback', to: 'oauths#callback'
-  # get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
-  # delete 'logout', to: 'user_sessions#destroy'
-  # # ゲストユーザーログイン
-  # get 'guest_login', to: 'user_sessions#guest_login'
+  # sidekiq
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
+  # ログイン、ログアウト
+  post 'oauth/callback', to: 'oauths#callback'
+  get 'oauth/callback', to: 'oauths#callback'
+  get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
+  delete 'logout', to: 'user_sessions#destroy'
+  # ゲストユーザーログイン
+  get 'guest_login', to: 'user_sessions#guest_login'
 
   # マイページ
   resource :mypage, only: %i[show edit update destroy]

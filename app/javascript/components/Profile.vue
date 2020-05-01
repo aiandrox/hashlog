@@ -16,9 +16,7 @@
                   <v-icon>mdi-twitter</v-icon>
                 </v-btn>
               </v-list-item-title>
-              <v-list-item-subtitle
-                >@{{ user.screen_name }}</v-list-item-subtitle
-              >
+              <v-list-item-subtitle>@{{ user.screen_name }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-card-text>
@@ -33,26 +31,26 @@
             </v-btn>
           </v-card-actions>
           <!-- ダイアログ -->
-          <tag-dialog ref="dialog" />
+          <register-tag-dialog ref="dialog" />
         </div>
         <v-spacer />
         <!-- ステータス -->
-        <status :role="user.role" :privacy="user.privacy" />
+        <profile-status :role="user.role" :privacy="user.privacy" />
       </v-container>
     </v-card>
   </div>
 </template>
 
 <script>
-import Status from "./ProfileStatus"
-import TagDialog from "./ProfileRegisterTagDialog"
+import ProfileStatus from "./ProfileStatus"
+import RegisterTagDialog from "./TheRegisterTagDialog"
 export default {
   data() {
     return { loading: false }
   },
   components: {
-    Status,
-    TagDialog
+    ProfileStatus,
+    RegisterTagDialog
   },
   props: {
     user: {
