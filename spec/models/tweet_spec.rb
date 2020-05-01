@@ -4,8 +4,14 @@ RSpec.describe Tweet, type: :model do
   end
 
   describe 'validations' do
+    before { create(:registered_tag, :with_tweets) }
     it { is_expected.to validate_presence_of(:oembed) }
     it { is_expected.to validate_presence_of(:tweet_id) }
+    it do
+      is_expected.to(validate_uniqueness_of(:tweet_id)
+                    .scoped_to(:registered_tag_id)
+                    .case_insensitive)
+    end
   end
 
   describe 'scopes' do
@@ -18,7 +24,7 @@ RSpec.describe Tweet, type: :model do
       end
     end
     describe 'tweeted_day_count' do
-      before { create(:tweet, tweeted_at: DateTime.now.ago(7.day))}
+      before { create(:tweet, :tweeted_7days_ago)}
       it 'tweetが存在する日数を返す' do
         expect(Tweet.tweeted_day_count).to eq 3
       end
@@ -26,8 +32,8 @@ RSpec.describe Tweet, type: :model do
   end
 
   describe 'methods' do
-    let!(:latest_tweet) { create(:tweet, tweeted_at: DateTime.now) }
-    let!(:oldest_tweet) { create(:tweet, tweeted_at: DateTime.yesterday) }
+    let!(:latest_tweet) { create(:tweet) }
+    let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago) }
     describe 'self.latest' do
       it 'tweeted_atを基準に最も新しいツイートを返す' do
         expect(Tweet.latest).to eq latest_tweet

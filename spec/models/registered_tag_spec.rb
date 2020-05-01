@@ -6,12 +6,15 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'validations' do
-    before do
-      build(:registered_tag)
-    end
+    before { create(:registered_tag) }
     it { is_expected.to validate_presence_of(:tweeted_day_count) }
     it { is_expected.to validate_presence_of(:privacy) }
     it { is_expected.to validate_presence_of(:remind_day) }
+    it do
+      is_expected.to(validate_uniqueness_of(:tag_id)
+                    .scoped_to(:user_id)
+                    .with_message('を既に登録しています'))
+    end
   end
 
   describe 'default value' do
@@ -27,10 +30,10 @@ RSpec.describe RegisteredTag, type: :model do
     end
   end
 
-  fdescribe 'scopes' do
+  describe 'scopes' do
     describe 'desc' do
-      let!(:latest_tag) { create(:registered_tag, created_at: DateTime.now) }
-      let!(:oldest_tag) { create(:registered_tag, created_at: DateTime.yesterday) }
+      let!(:latest_tag) { create(:registered_tag) }
+      let!(:oldest_tag) { create(:registered_tag, :created_yesterday) }
       it 'create_atを基準に昇順に並ぶこと' do
         expect(RegisteredTag.desc.first).to eq latest_tag
         expect(RegisteredTag.desc.last).to eq oldest_tag
@@ -43,7 +46,7 @@ RSpec.describe RegisteredTag, type: :model do
     let(:registered_tag) { user.registered_tags.take }
     let(:tag) { registered_tag.tag }
     describe 'add_tweets' do
-
+      it '保留'
     end
 
     describe 'fetch_data' do

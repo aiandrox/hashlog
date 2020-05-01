@@ -21,4 +21,8 @@ FactoryBot.define do
   trait :closed do
     privacy { :closed }
   end
+
+  trait :created_yesterday do
+    created_at { DateTime.yesterday }
+  end
 end
