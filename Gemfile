@@ -19,7 +19,11 @@ gem 'rails-i18n'
 gem 'slim-rails'
 
 # 機能
+gem 'config'
+gem 'redis-namespace'
+gem 'sidekiq', '~> 5.0'
 gem 'sorcery'
+gem 'whenever', require: false
 # api
 gem 'twitter'
 
@@ -28,6 +32,7 @@ group :development, :test do
   gem 'binding_of_caller', '~> 0.8.0'
   gem 'bullet', '~> 6.1'
   gem 'pry-byebug', '~> 3.9'
+  gem 'pry-rails'
   gem 'rails_best_practices', '~> 1.20'
   gem 'rubocop', '~> 0.80.1', require: false
   # RSpec
