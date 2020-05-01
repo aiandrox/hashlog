@@ -5,4 +5,12 @@ FactoryBot.define do
     tweet_id { rand(10 ** 19).to_s }
     registered_tag
   end
+
+  trait :tweeted_yesterday do
+    tweeted_at { DateTime.yesterday }
+  end
+
+  trait :tweeted_7days_ago do
+    tweeted_at { DateTime.now.ago(7.day) }
+  end
 end

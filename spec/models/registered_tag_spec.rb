@@ -43,10 +43,10 @@ RSpec.describe RegisteredTag, type: :model do
 
     end
 
-    describe 'fetch_data' do
+    fdescribe 'fetch_data' do
       let(:registered_tag) { create(:registered_tag, :with_tweets) }
-      let(:oldest_tweet) { registered_tag.tweets.desc.oldest }
-      let(:latest_tweet) { registered_tag.tweets.desc.latest }
+      let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
+      let(:latest_tweet) { registered_tag.tweets.latest }
       it 'tweet.first_tweetedが最初のツイート日時になる' do
         expect do
           registered_tag.fetch_data
@@ -60,7 +60,7 @@ RSpec.describe RegisteredTag, type: :model do
       it 'tweet.tweeted_day_countがツイートをした日数になる' do
         expect do
           registered_tag.fetch_data
-        end.to change { registered_tag.tweeted_day_count }.from(0).to(1)
+        end.to change { registered_tag.tweeted_day_count }.from(0).to(2)
       end
     end
   end
