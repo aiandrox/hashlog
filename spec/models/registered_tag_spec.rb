@@ -104,9 +104,7 @@ RSpec.describe RegisteredTag, type: :model do
           allow(client_mock).to receive(:tweets_data)
           allow(TwitterAPI::Client.new(registered_tag.user, registered_tag.tag)).to receive(:client).and_return(client_mock)
           expect(client_mock).not_to receive(:tweets_data)
-          VCR.use_cassette('twitter_api/everyday_search') do
-            registered_tag.add_tweets
-          end
+          registered_tag.add_tweets
         end
       end
 
