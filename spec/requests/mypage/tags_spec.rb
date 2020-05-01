@@ -1,5 +1,5 @@
 describe 'Mypage::Tags', type: :request do
-  let(:user) { create(:user, screen_name: 'screen_name') } # screen_nameは固定
+  let(:user) { create(:user, :real_value) }
   before { login_as(user) }
 
   context 'GET /mypage/tags/new' do
