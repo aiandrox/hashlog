@@ -27,10 +27,13 @@ RSpec.describe RegisteredTag, type: :model do
     end
   end
 
-  describe 'scopes' do
+  fdescribe 'scopes' do
     describe 'desc' do
+      let!(:latest_tag) { create(:registered_tag, created_at: DateTime.now) }
+      let!(:oldest_tag) { create(:registered_tag, created_at: DateTime.yesterday) }
       it 'create_atを基準に昇順に並ぶこと' do
-
+        expect(RegisteredTag.desc.first).to eq latest_tag
+        expect(RegisteredTag.desc.last).to eq oldest_tag
       end
     end
   end
@@ -43,7 +46,7 @@ RSpec.describe RegisteredTag, type: :model do
 
     end
 
-    fdescribe 'fetch_data' do
+    describe 'fetch_data' do
       let(:registered_tag) { create(:registered_tag, :with_tweets) }
       let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
       let(:latest_tweet) { registered_tag.tweets.latest }
