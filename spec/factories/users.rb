@@ -5,6 +5,11 @@ FactoryBot.define do
     sequence(:screen_name) { |n| "user_#{n}" }
   end
 
+  trait :real_value do
+    name { 'aiandrox' }
+    screen_name { 'aiandrox' }
+  end
+
   trait :with_tags do
     after(:build) do |user|
       create_list(:tag, 3, users: [user])

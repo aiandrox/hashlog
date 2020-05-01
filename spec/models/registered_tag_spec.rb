@@ -41,10 +41,30 @@ RSpec.describe RegisteredTag, type: :model do
     end
   end
 
-  describe 'methods' do
-    let(:user) { create(:user, :with_tags) }
-    let(:registered_tag) { user.registered_tags.take }
-    let(:tag) { registered_tag.tag }
+  fdescribe 'methods' do
+    let(:user) { create(:user, :real_value) }
+    describe 'create_tweets' do
+      context 'ハッシュタグのツイートが存在するとき' do
+        let(:present_tag) do
+          create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
+        end
+        it '取得したツイートを保存する' do
+          VCR.use_cassette('twitter_api/standard_search') do
+            expect { present_tag.create_tweets }.to change(Tweet, :count).by(3)
+          end
+        end
+      end
+      context 'ハッシュタグのツイートが存在しないとき' do
+        let(:absent_tag) do
+          create(:registered_tag, user: user, tag: create(:tag, name: 'absent_tag'))
+        end
+        it 'ツイートを取得しないので保存しない' do
+          VCR.use_cassette('twitter_api/standard_search_with_absent_tag') do
+            expect { absent_tag.create_tweets }.not_to change(Tweet, :count)
+          end
+        end
+      end
+    end
     describe 'add_tweets' do
       it '保留'
     end
