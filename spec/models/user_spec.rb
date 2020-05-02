@@ -29,7 +29,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'methods' do
-    describe 'registered_tag(tag)' do
+    describe '#registered_tag(tag)' do
       let!(:user) { create(:user, :with_tags) }
       let(:registered_tag) { user.registered_tags.take }
       let(:user_tag) { registered_tag.tag }
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe 'register_tag(tag)' do
+    describe '#register_tag(tag)' do
       let(:user) { create(:user, :real_value) }
       context 'tagが有効なとき' do
         let(:valid_tag) { build(:tag, name: 'ポートフォリオ進捗') }
