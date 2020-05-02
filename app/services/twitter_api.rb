@@ -56,7 +56,6 @@ module TwitterAPI
       end
     end
 
-    # TODO: standardとほとんど変わらない
     def everyday_search
       @everyday_search ||= begin
         client.search("##{tag_name} from:#{user.screen_name}",
