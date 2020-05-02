@@ -1,4 +1,4 @@
-describe 'Mypage::Tags', type: :request do
+xdescribe 'Mypage::Tags', type: :request do
   let(:user) { create(:user, :real_value) }
   before { login_as(user) }
 

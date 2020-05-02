@@ -1,4 +1,4 @@
-describe 'Users', type: :request do
+xdescribe 'Users', type: :request do
   let(:user) { create(:user, :with_tags) }
   let(:tag) { user.tags.first }
 
