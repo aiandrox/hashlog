@@ -34,12 +34,12 @@ RSpec.describe Tweet, type: :model do
   describe 'methods' do
     let!(:latest_tweet) { create(:tweet) }
     let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago) }
-    describe 'self.latest' do
+    describe '.latest' do
       it 'tweeted_atを基準に最も新しいツイートを返す' do
         expect(Tweet.latest).to eq latest_tweet
       end
     end
-    describe 'self.oldest' do
+    describe '.oldest' do
       it 'tweeted_atを基準に最も古いツイートを返す' do
         expect(Tweet.oldest).to eq oldest_tweet
       end
