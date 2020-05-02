@@ -1,9 +1,9 @@
 RSpec.describe Tag, type: :model do
-  context 'associations' do
+  describe 'associations' do
     it { is_expected.to have_many(:registered_tags).dependent(:restrict_with_error) }
   end
 
-  context 'validations' do
+  describe 'validations' do
     before { create(:tag) }
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:name) }
