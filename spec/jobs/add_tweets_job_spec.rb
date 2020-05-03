@@ -1,4 +1,4 @@
-RSpec.fdescribe AddTweetsJob, type: :job do
+RSpec.describe AddTweetsJob, type: :job do
   include ActiveJob::TestHelper
   include ActiveSupport::Testing::TimeHelpers
   ActiveJob::Base.queue_adapter = :test
