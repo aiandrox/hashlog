@@ -33,6 +33,9 @@ import Axios from "axios"
 import VueAxiosPlugin from "../plugins/vue-axios"
 Vue.use(VueAxiosPlugin, { axios: Axios })
 
+import TitlePlugin from "../plugins/page-title"
+Vue.mixin(TitlePlugin)
+
 import Vuetify from "vuetify"
 import "vuetify/dist/vuetify.min.css"
 import "@mdi/font/css/materialdesignicons.css"

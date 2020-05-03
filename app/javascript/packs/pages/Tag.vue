@@ -16,6 +16,7 @@ import Axios from "axios"
 import Tab from "../components/TagsTab"
 import Tweets from "../components/TagsTweets"
 export default {
+  title: "タグページ", // TODO: タグ名
   components: {
     Tab,
     Tweets
