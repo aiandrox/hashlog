@@ -1,7 +1,11 @@
 class StaticPagesController < ApplicationController
   def top
-    # TODO: ページ遷移時にリクエストを送ったらいける？
     @page_title = params[:page_title]
+  end
+
+  def mypage
+    @page_title = 'マイページ'
+    render 'static_pages/top'
   end
 
   def privacy; end
