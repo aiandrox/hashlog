@@ -3,8 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.6'
 
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'jbuilder', '~> 2.5'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
