@@ -16,7 +16,6 @@ gem 'webpacker'
 # ビュー
 gem 'enum_help'
 gem 'rails-i18n'
-gem 'slim-rails'
 
 # 機能
 gem 'redis-namespace'

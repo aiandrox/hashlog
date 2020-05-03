@@ -272,13 +272,6 @@ GEM
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
     simple_oauth (0.3.1)
-    slim (4.0.1)
-      temple (>= 0.7.6, < 0.9)
-      tilt (>= 2.0.6, < 2.1)
-    slim-rails (3.2.0)
-      actionpack (>= 3.1)
-      railties (>= 3.1)
-      slim (>= 3.0, < 5.0)
     sorcery (0.14.0)
       bcrypt (~> 3.1)
       oauth (~> 0.4, >= 0.4.4)
@@ -294,7 +287,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    temple (0.8.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -368,7 +360,6 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   shoulda-matchers
   sidekiq (~> 5.0)
-  slim-rails
   sorcery
   spring
   spring-watcher-listen (~> 2.0.0)
