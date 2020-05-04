@@ -31,12 +31,12 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'scopes' do
-    describe 'desc' do
+    describe 'asc' do
       let!(:latest_tag) { create(:registered_tag) }
       let!(:oldest_tag) { create(:registered_tag, :created_yesterday) }
-      it 'create_atを基準に昇順に並ぶこと' do
-        expect(RegisteredTag.desc.first).to eq latest_tag
-        expect(RegisteredTag.desc.last).to eq oldest_tag
+      it 'create_atを基準に降順に並ぶこと' do
+        expect(RegisteredTag.desc.first).to eq oldest_tag
+        expect(RegisteredTag.desc.last).to eq latest_tag
       end
     end
   end
