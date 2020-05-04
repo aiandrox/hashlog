@@ -1,4 +1,4 @@
-describe 'Base', type: :request do
+RSpec.describe 'Base', type: :request do
   let(:user) { create(:user) }
 
   context 'rescue_limited_twitter_requests' do
