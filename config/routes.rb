@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       namespace :mypage do
         resources :registered_tags, only: %i[show create], path: :tags
       end
-      resources :registered_tags, only: %i[create destroy]
+      resources :registered_tags, only: %i[index create show destroy]
       resources :tweets, only: :destroy
       # # ログイン、ログアウト
       post 'oauth/callback', to: 'oauths#callback'

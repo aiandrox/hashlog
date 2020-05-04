@@ -1,7 +1,36 @@
-describe 'RegisteredTags', type: :request do
-  let(:user) { create(:user, :with_tags) }
-  let(:tag) { user.tags.first }
-  let(:registered_tag) { user.registered_tags.find_by(tag_id: tag.id) }
+RSpec.describe 'RegisteredTags', type: :request do
+  let(:registered_tag) { create(:registered_tag) }
+  describe 'GET /api/v1/registered_tags' do
+    let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
+    let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
+    let(:registered_tags) { RegisteredTag.asc }
+    before do
+      create_list(:registered_tag, 3)
+      get '/api/v1/registered_tags'
+    end
+    context '公開されている場合' do
+      it '200 OKを返す' do
+        expect(response.status).to eq 200
+      end
+      it 'registered_tagsのJSONを返す' do
+        expect(json_data.length).to eq 5
+        registered_tags.each_with_index do |registered_tag, index|
+          expected_json = {
+            'tweetedDayCount' => registered_tag.tweeted_day_count,
+            'privacy' => registered_tag.privacy,
+            'remindDay' => registered_tag.remind_day,
+            'firstTweetedAt' => registered_tag.first_tweeted_at,
+            'lastTweetedAt' => registered_tag.last_tweeted_at,
+          }
+          expect(json_data[index]['attributes']).to eq(expected_json)
+        end
+      end
+      it 'registered_tagsが降順に並ぶ' do
+        expect(json_data.first['id'].to_i).to eq oldest_registered_tag.id
+        expect(json_data.last['id'].to_i).to eq latest_registered_tag.id
+      end
+    end
+  end
 
   fdescribe 'GET /api/v1/registered_tags/:id' do
     before { get "/api/v1/registered_tags/#{registered_tag.id}" }

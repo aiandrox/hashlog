@@ -1,5 +1,14 @@
 class Api::V1::RegisteredTagsController < Api::V1::BaseController
-  before_action :require_login
+
+  def index
+    registered_tags = RegisteredTag.all
+    render json: registered_tags
+  end
+
+  def show
+    registered_tag = RegisteredTag.find(params[:id])
+    render json: registered_tag
+  end
 
   def create
     tag = Tag.find_or_initialize_by(name: tag_params[:name])
