@@ -1,7 +1,7 @@
 class Api::V1::RegisteredTagsController < Api::V1::BaseController
 
   def index
-    registered_tags = RegisteredTag.all
+    registered_tags = RegisteredTag.asc
     render json: registered_tags
   end
 

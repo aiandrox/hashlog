@@ -32,17 +32,21 @@ RSpec.describe 'RegisteredTags', type: :request do
     end
   end
 
-  fdescribe 'GET /api/v1/registered_tags/:id' do
+  describe 'GET /api/v1/registered_tags/:id' do
     before { get "/api/v1/registered_tags/#{registered_tag.id}" }
     context '公開されている場合' do
       it '200 OKを返す' do
         expect(response.status).to eq 200
       end
-      it 'registered_tagのJSONレスポンスを返す' do
-        json = JSON.parse(response.body)
-        p json
-        # expect(response.body).to include user.name
-        # expect(response.body).to include tag.name
+      it 'registered_tagのJSONを返す' do
+        expected_json = {
+          'tweetedDayCount' => registered_tag.tweeted_day_count,
+          'privacy' => registered_tag.privacy,
+          'remindDay' => registered_tag.remind_day,
+          'firstTweetedAt' => registered_tag.first_tweeted_at,
+          'lastTweetedAt' => registered_tag.last_tweeted_at,
+        }
+        expect(json_data['attributes']).to eq(expected_json)
       end
     end
 
