@@ -1,12 +1,12 @@
 class Api::V1::RegisteredTagsController < Api::V1::BaseController
 
   def index
-    registered_tags = RegisteredTag.asc
+    registered_tags = RegisteredTag.asc.includes(:tag)
     render json: registered_tags
   end
 
   def show
-    registered_tag = RegisteredTag.find(params[:id])
+    registered_tag = RegisteredTag.includes(:tag).find(params[:id])
     render json: registered_tag
   end
 
