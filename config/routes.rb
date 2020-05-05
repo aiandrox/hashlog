@@ -13,7 +13,9 @@ Rails.application.routes.draw do
         get 'current', on: :collection
         resources :registered_tags, only: %i[index show create destroy]
       end
-      resources :registered_tags, only: %i[index show]
+      resources :registered_tags, only: %i[index show] do
+        resources :tweets, only: :index
+      end
       resources :tags, only: :index
       resources :tweets, only: :destroy
       # # ログイン、ログアウト
