@@ -12,15 +12,7 @@ class RegisteredTag < ApplicationRecord
 
   scope :desc, -> { order(created_at: :desc) }
 
-  def create_tweets(type = 'standard')
-    client = TwitterAPI::Client.new(user, tag.name)
-    client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
-      tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
-    end
-  end
-
-  # cron処理用
-  def add_tweets
+  def cron_tweets # TODO: サービスクラス
     last_tweet = tweets.latest
 
     unless last_tweet
@@ -31,15 +23,26 @@ class RegisteredTag < ApplicationRecord
     return if last_tweet.tweeted_at > Date.yesterday
 
     since_id = last_tweet.tweet_id.to_i
+    add_tweets(since_id)
+
+    return if add_tweets(since_id).empty?
+
+    fetch_data('add')
+    Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
+  end
+
+  def create_tweets(type = 'standard')
+    client = TwitterAPI::Client.new(user, tag.name)
+    client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
+      tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
+    end
+  end
+
+  def add_tweets(since_id)
     client = TwitterAPI::Client.new(user, tag.name, since_id)
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
-
-    return if client.tweets_data('everyday').empty?
-
-    fetch_data('add')
-    Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
   end
 
   def fetch_data(type = 'new')

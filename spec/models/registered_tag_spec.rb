@@ -66,7 +66,7 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
-    describe '#add_tweets' do
+    describe '#cron_tweets' do
       let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
       let(:registered_tag) { user.registered_tag(tag) }
       before 'タグ登録時にツイートを取得' do
@@ -79,32 +79,30 @@ RSpec.describe RegisteredTag, type: :model do
         it '取得したツイートを保存する' do
           expect do
             VCR.use_cassette('twitter_api/everyday_search') do
-              registered_tag.add_tweets
+              registered_tag.cron_tweets
             end
           end.to change(Tweet, :count).by(1)
         end
         it '#fetch_data("add")を実行する' do
           expect(registered_tag).to receive(:fetch_data).with('add').once
           VCR.use_cassette('twitter_api/everyday_search') do
-            registered_tag.add_tweets
+            registered_tag.cron_tweets
           end
         end
         it 'ログを出力する' do
           expect(Rails.logger).to receive(:info).with('@aiandrox の #ポートフォリオ進捗 にツイートを追加')
           VCR.use_cassette('twitter_api/everyday_search') do
-            registered_tag.add_tweets
+            registered_tag.cron_tweets
           end
         end
       end
 
       context '既に前日のツイートを取得しているとき' do
+        let(:client) { twitter_client(registered_tag.user, registered_tag.tag.name) }
         before { create(:tweet, :tweeted_yesterday, registered_tag: registered_tag) }
-        it 'Twitter::Client#tweets_dataを実行しない' do
-          client_mock = double('client mock')
-          allow(client_mock).to receive(:tweets_data)
-          allow(TwitterAPI::Client.new(registered_tag.user, registered_tag.tag)).to receive(:client).and_return(client_mock)
-          expect(client_mock).not_to receive(:tweets_data)
-          registered_tag.add_tweets
+        it 'Twitter::Client#add_tweetsを実行しない' do
+          expect(registered_tag).not_to receive(:add_tweets)
+          registered_tag.cron_tweets
         end
       end
 
@@ -112,7 +110,7 @@ RSpec.describe RegisteredTag, type: :model do
         it '#fetch_dataを実行しない' do
           expect(registered_tag).not_to receive(:fetch_data)
           VCR.use_cassette('twitter_api/everyday_search_none') do
-            registered_tag.add_tweets
+            registered_tag.cron_tweets
           end
         end
       end
@@ -125,7 +123,7 @@ RSpec.describe RegisteredTag, type: :model do
         it '#create_tweetsを実行する' do
           expect(registered_tag).to receive(:create_tweets).once
           VCR.use_cassette('twitter_api/standard_search') do
-            registered_tag.add_tweets
+            registered_tag.cron_tweets
           end
         end
       end

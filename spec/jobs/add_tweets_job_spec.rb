@@ -19,8 +19,8 @@ RSpec.describe AddTweetsJob, type: :job do
         job.perform
       end
     end
-    it 'Registeredtag#add_tweetsを実行する' do
-      expect(registered_tag).to receive(:add_tweets)
+    it 'Registeredtag#cron_tweetsを実行する' do
+      expect(registered_tag).to receive(:cron_tweets)
       VCR.use_cassette('twitter_api/everyday_search_all_tweets') do
         job.perform
       end
