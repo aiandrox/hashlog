@@ -13,15 +13,6 @@ RSpec.describe TwitterAPI::Client do
 
     context 'ツイートを取得できる場合' do
       let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
-      let(:client) { TwitterAPI::Client.new(user, tag.name) }
-      let(:client_mock) { double('TwitterClient') }
-      before do
-        allow(client_mock).to receive(:search)
-        allow(client_mock).to receive(:premium_search)
-        allow(client_mock).to receive(:oembeds).and_return([])
-        # メソッドを実行するかどうかだけ確かめる（TwitterAPIの返り値はどうでもいい）ときは以下のコードを記述する
-        # allow(client).to receive(:client).and_return(client_mock)
-      end
       shared_examples :return_value do
         it '配列を返す' do
           expect(
@@ -41,8 +32,9 @@ RSpec.describe TwitterAPI::Client do
       end
       context '"standard"を引数に渡すとき' do
         let(:type) { 'standard' }
+        let(:client) { twitter_client(user, tag.name) }
         it '#standard_searchを実行する' do
-          allow(client).to receive(:client).and_return(client_mock)
+          set_twitter_mock(user, tag.name)
           expect(client).to receive(:standard_search).once
           client.tweets_data(type)
         end
@@ -50,8 +42,9 @@ RSpec.describe TwitterAPI::Client do
       end
       context '"premium"を引数に渡すとき' do
         let(:type) { 'premium' }
+        let(:client) { twitter_client(user, tag.name) }
         it '#premiun_searchを実行する' do
-          allow(client).to receive(:client).and_return(client_mock)
+          set_twitter_mock(user, tag.name)
           expect(client).to receive(:premium_search).once
           client.tweets_data(type)
         end
@@ -60,9 +53,9 @@ RSpec.describe TwitterAPI::Client do
       context '"everyday"を引数に渡すとき' do
         let(:type) { 'everyday' }
         let(:since_id) { '1255854602626330624' }
-        let(:client) { TwitterAPI::Client.new(user, tag.name, since_id) }
+        let(:client) { twitter_client(user, tag.name, since_id) }
         it '#everyday_searchを実行する' do
-          allow(client).to receive(:client).and_return(client_mock)
+          set_twitter_mock(user, tag.name)
           expect(client).to receive(:everyday_search).once
           client.tweets_data(type)
         end
