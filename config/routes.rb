@@ -6,10 +6,14 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :mypage, only: [:show]
-      namespace :mypage do
-        resources :registered_tags, only: %i[show create], path: :tags
+      # namespace :mypage do
+      #   resources :registered_tags, only: %i[show create], path: :tags
+      # end
+      resources :users, param: :uuid, only: %i[index show destroy] do
+        get 'current', on: :collection
+        resources :registered_tags, only: %i[index show create destroy]
       end
-      resources :registered_tags, only: %i[index create show destroy]
+      resources :registered_tags, only: %i[index show]
       resources :tags, only: :index
       resources :tweets, only: :destroy
       # # ログイン、ログアウト
