@@ -1,4 +1,4 @@
-RSpec.fdescribe 'RegisteredTags', type: :request do
+RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags' do
     let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
     let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
@@ -24,8 +24,8 @@ RSpec.fdescribe 'RegisteredTags', type: :request do
           'tag' => {
             'id' => registered_tag.tag.id,
             'name' => registered_tag.tag.name,
-            },
-          })
+          },
+        })
       end
     end
     it '降順に並ぶ' do
@@ -114,20 +114,33 @@ RSpec.fdescribe 'RegisteredTags', type: :request do
       end
       it '?のJSONを返す'
       it 'user.registered_tagsを削除する' do
-        expect {
+        expect do
           delete "/api/v1/registered_tags/#{registered_tag.id}"
-        }.to change(user.registered_tags, :count).by(-1)
+        end.to change(user.registered_tags, :count).by(-1)
       end
     end
     context '自分以外のregistered_tagの場合' do
+      let(:other_user) { create(:user) }
+      before { login_as(other_user) }
       it '404 NotFoundを返す' do
         delete "/api/v1/registered_tags/#{registered_tag.id}"
         expect(response.status).to eq 404
       end
       it 'RegisteredTagを削除しない' do
-        expect {
+        expect do
           delete "/api/v1/registered_tags/#{registered_tag.id}"
-        }.not_to change(RegisteredTag, :count)
+        end.not_to change(RegisteredTag, :count)
+      end
+    end
+    context 'ログインしていない場合' do
+      it '401 Unauthorizedを返す' do
+        delete "/api/v1/registered_tags/#{registered_tag.id}"
+        expect(response.status).to eq 401
+      end
+      it 'RegisteredTagを削除しない' do
+        expect do
+          delete "/api/v1/registered_tags/#{registered_tag.id}"
+        end.not_to change(RegisteredTag, :count)
       end
     end
   end

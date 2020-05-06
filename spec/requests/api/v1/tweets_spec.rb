@@ -21,7 +21,7 @@ RSpec.describe 'Tweets', type: :request do
       tweets_json.zip(tweets).each do |tweet_json, tweet|
         expect(tweet_json).to eq({
           'id' => tweet.id,
-          'tweetId'=> tweet.tweet_id,
+          'tweetId' => tweet.tweet_id,
           'oembed' => tweet.oembed,
           'tweetedAt' => tweet.tweeted_at.as_json,
         })
