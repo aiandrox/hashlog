@@ -53,30 +53,25 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
 
-      context '正常系 前日のツイートを取得したとき' do
+      context '正常系 前日のツイートを取得したとき',
+        vcr: { cassette_name: 'twitter_api/everyday_search/正常系 前日のツイートを取得したとき' } do
         it '取得したツイートを保存する' do
           expect do
-            VCR.use_cassette('twitter_api/everyday_search') do
-              registered_tag.cron_tweets
-            end
-          end.to change(Tweet, :count).by(1)
+            registered_tag.cron_tweets
+          end.to change(Tweet, :count).by(3)
         end
         it '#fetch_data("add")を実行する' do
           expect(registered_tag).to receive(:fetch_data).with('add').once
-          VCR.use_cassette('twitter_api/everyday_search') do
-            registered_tag.cron_tweets
-          end
+          registered_tag.cron_tweets
         end
         it 'ログを出力する' do
           expect(Rails.logger).to receive(:info).with('@aiandrox の #ポートフォリオ進捗 にツイートを追加')
-          VCR.use_cassette('twitter_api/everyday_search') do
-            registered_tag.cron_tweets
-          end
+          registered_tag.cron_tweets
         end
       end
 
-      context '既に前日のツイートを取得しているとき' do
-        let(:client) { twitter_client(registered_tag.user, registered_tag.tag.name) }
+      context '既に前日のツイートを取得しているとき',
+      vcr: { cassette_name: 'twitter_api/everyday_search/既に前日のツイートを取得しているとき' } do
         before { create(:tweet, :tweeted_yesterday, registered_tag: registered_tag) }
         it 'Twitter::Client#add_tweetsを実行しない' do
           expect(registered_tag).not_to receive(:add_tweets)
@@ -84,15 +79,13 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
 
-      context '前日のツイートがなかったとき' do
+      context '前日のツイートがなかったとき', vcr: { cassette_name: 'twitter_api/everyday_search/前日のツイートがなかったとき' } do
         it '#fetch_dataを実行しない' do
           expect(registered_tag).not_to receive(:fetch_data)
-          VCR.use_cassette('twitter_api/everyday_search_none') do
-            registered_tag.cron_tweets
-          end
+          registered_tag.cron_tweets
         end
       end
-      context 'ハッシュタグのツイートが1件も保存されていなかったとき' do
+      context 'ツイートが1件も保存されていないとき' do
         before do
           registered_tag.tweets.each do |tweet|
             tweet.destroy
@@ -100,56 +93,50 @@ RSpec.describe RegisteredTag, type: :model do
         end
         it '#create_tweetsを実行する' do
           expect(registered_tag).to receive(:create_tweets).once
-          VCR.use_cassette('twitter_api/standard_search') do
-            registered_tag.cron_tweets
-          end
+          registered_tag.cron_tweets
         end
       end
     end
 
     describe '#create_tweets(type="standard")' do
-      context 'ハッシュタグのツイートがTwitterに存在するとき' do
+      context 'ハッシュタグのツイートがTwitterに存在するとき',
+        vcr: { cassette_name: 'twitter_api/standard_search' } do
         let(:present_tag) do
           create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
         end
         it '取得したツイートを保存する' do
-          VCR.use_cassette('twitter_api/standard_search') do
-            expect { present_tag.create_tweets }.to change(Tweet, :count).by(3)
-          end
+          expect { present_tag.create_tweets }.to change(Tweet, :count).by(3)
         end
       end
-      context 'ハッシュタグのツイートがTwitterに存在しないとき' do
+      context 'ハッシュタグのツイートがTwitterに存在しないとき',
+        vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
         let(:absent_tag) do
           create(:registered_tag, user: user, tag: create(:tag, name: 'absent_tag'))
         end
         it 'ツイートを取得しないので保存しない' do
-          VCR.use_cassette('twitter_api/standard_search_with_absent_tag') do
-            expect { absent_tag.create_tweets }.not_to change(Tweet, :count)
-          end
+          expect { absent_tag.create_tweets }.not_to change(Tweet, :count)
         end
       end
     end
 
     describe '#add_tweets(since_id)' do
       let(:since_id) { '1255854602626330624' }
-      context 'ハッシュタグのツイートがTwitterに存在するとき' do
+      context 'ハッシュタグのツイートがTwitterに存在するとき',
+        vcr: { cassette_name: 'twitter_api/everyday_search' } do
         let(:present_tag) do
           create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
         end
         it '取得したツイートを保存する' do
-          VCR.use_cassette('twitter_api/everyday_search') do
-            expect { present_tag.add_tweets(since_id) }.to change(Tweet, :count).by(1)
-          end
+          expect { present_tag.add_tweets(since_id) }.to change(Tweet, :count).by(1)
         end
       end
-      context 'ハッシュタグのツイートがTwitterに存在しないとき' do
+      context 'ハッシュタグのツイートがTwitterに存在しないとき',
+        vcr: { cassette_name: 'twitter_api/everyday_search/該当のツイートがない場合' } do
         let(:absent_tag) do
           create(:registered_tag, user: user, tag: create(:tag, name: 'absent_tag'))
         end
         it 'ツイートを取得しないので保存しない' do
-          VCR.use_cassette('twitter_api/everyday_search_with_absent_tag') do
-            expect { absent_tag.add_tweets(since_id) }.not_to change(Tweet, :count)
-          end
+          expect { absent_tag.add_tweets(since_id) }.not_to change(Tweet, :count)
         end
       end
     end

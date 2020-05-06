@@ -10,20 +10,17 @@ RSpec.describe AddTweetsJob, type: :job do
     end
   end
 
-  xdescribe 'AddTweetsJob#perform' do # 実行されているが……なぜ通らない
+  describe 'AddTweetsJob#perform',
+    vcr: { cassette_name: 'twitter_api/everyday_search/全てのタグのツイートを取得' } do # 実行されているが……なぜ通らない
     let(:job) { AddTweetsJob.new }
     let(:registered_tag) { create(:registered_tag) }
     it 'ログを出力する' do
       expect(Rails.logger).to receive(:info)
-      VCR.use_cassette('twitter_api/everyday_search_all_tweets') do
-        job.perform
-      end
+      job.perform
     end
     it 'Registeredtag#cron_tweetsを実行する' do
       expect(registered_tag).to receive(:cron_tweets)
-      VCR.use_cassette('twitter_api/everyday_search_all_tweets') do
-        job.perform
-      end
+      job.perform
     end
   end
 end
