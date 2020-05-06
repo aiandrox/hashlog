@@ -48,17 +48,13 @@ RSpec.describe User, type: :model do
 
     describe '#register_tag(tag)' do
       let(:user) { create(:user, :real_value) }
-      context 'tagが有効なとき' do
+      context 'tagが有効なとき', vcr: { cassette_name: 'twitter_api/standard_search' } do
         let(:valid_tag) { build(:tag, name: 'ポートフォリオ進捗') }
         it 'trueを返す' do
-          VCR.use_cassette('twitter_api/standard_search') do
-            expect(user.register_tag(valid_tag)).to eq true
-          end
+          expect(user.register_tag(valid_tag)).to eq true
         end
         it 'user.registered_tagが作成される' do
-          VCR.use_cassette('twitter_api/standard_search') do
-            expect { user.register_tag(valid_tag) }.to change(RegisteredTag, :count).by(1)
-          end
+          expect { user.register_tag(valid_tag) }.to change(RegisteredTag, :count).by(1)
         end
       end
       context 'tagが無効なとき' do
