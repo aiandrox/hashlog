@@ -4,7 +4,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   def create
     tag = Tag.find_or_initialize_by(name: tag_params[:name])
     if current_user.register_tag(tag)
-      registered_tag = current_user.registered_tag(tag: tag)
+      registered_tag = current_user.registered_tag(tag)
       result_values = {
         flash: {
           type: 'success',
@@ -24,7 +24,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   end
 
   def destroy
-    registered_tag = RegisteredTag.find(params[:id])
+    registered_tag = current_user.registered_tags.find(params[:id])
     registered_tag.destroy!
     result_values = {
       flash: {
