@@ -1,6 +1,5 @@
 class StaticPagesController < ApplicationController
-  def top
-  end
+  def top; end
 
   def mypage
     render 'static_pages/top'
