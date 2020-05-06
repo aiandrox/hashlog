@@ -21,7 +21,7 @@ class RegisteredTag < ApplicationRecord
 
   # cron処理用
   def add_tweets
-    last_tweet = tweets.desc.first
+    last_tweet = tweets.latest
     return create_tweets unless last_tweet
 
     return if last_tweet.tweeted_at > Date.yesterday
@@ -33,13 +33,13 @@ class RegisteredTag < ApplicationRecord
     end
     return if client.tweets_data('everyday').empty?
 
-    fetch_data
-    Rails.logger.info("#{user.screen_name}の#{tag.name}にツイートを追加")
+    fetch_data('add')
+    Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
   end
 
-  def fetch_data
-    self.first_tweeted_at = tweets.oldest.tweeted_at
+  def fetch_data(type = 'new')
+    self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
     self.last_tweeted_at = tweets.latest.tweeted_at
-    self.tweeted_day_count = tweets.group_by { |tweet| tweet.tweeted_at.to_date }.count # TODO: スコープにしたい
+    self.tweeted_day_count = tweets.tweeted_day_count
   end
 end

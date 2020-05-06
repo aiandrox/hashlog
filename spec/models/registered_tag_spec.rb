@@ -29,7 +29,9 @@ RSpec.describe RegisteredTag, type: :model do
 
   describe 'scopes' do
     describe 'desc' do
-      it 'create_atを基準に昇順に並ぶこと'
+      it 'create_atを基準に昇順に並ぶこと' do
+
+      end
     end
   end
 
@@ -45,17 +47,17 @@ RSpec.describe RegisteredTag, type: :model do
       let(:registered_tag) { create(:registered_tag, :with_tweets) }
       let(:oldest_tweet) { registered_tag.tweets.desc.oldest }
       let(:latest_tweet) { registered_tag.tweets.desc.latest }
-      it 'tweet.first_tweetedが更新される' do
+      it 'tweet.first_tweetedが最初のツイート日時になる' do
         expect do
           registered_tag.fetch_data
         end.to change { registered_tag.first_tweeted_at }.from(nil).to(oldest_tweet.tweeted_at)
       end
-      it 'tweet.last_tweetedが更新される' do
+      it 'tweet.last_tweetedが最後のツイート日時になる' do
         expect do
           registered_tag.fetch_data
         end.to change { registered_tag.last_tweeted_at }.from(nil).to(latest_tweet.tweeted_at)
       end
-      it 'tweet.tweeted_day_countが更新される' do
+      it 'tweet.tweeted_day_countがツイートをした日数になる' do
         expect do
           registered_tag.fetch_data
         end.to change { registered_tag.tweeted_day_count }.from(0).to(1)
