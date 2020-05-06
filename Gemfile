@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.6'
 
-gem 'active_model_serializers', '~> 0.10.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.11'
@@ -16,19 +15,18 @@ gem 'webpacker'
 # ビュー
 gem 'enum_help'
 gem 'rails-i18n'
-
 # 機能
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'config'
+gem 'sorcery'
+# cron
 gem 'redis-namespace'
 gem 'sidekiq', '~> 5.0'
-gem 'sorcery'
 gem 'whenever', require: false
 # api
 gem 'twitter'
 
 group :development, :test do
-  gem 'better_errors', '~> 2.6'
-  gem 'binding_of_caller', '~> 0.8.0'
   gem 'bullet', '~> 6.1'
   gem 'pry-byebug', '~> 3.9'
   gem 'pry-rails'
