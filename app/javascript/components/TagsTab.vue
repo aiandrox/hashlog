@@ -1,11 +1,10 @@
 <template>
   <v-tabs>
     <v-tab
-      v-for="tag in registeredTags"
-      :key="tag.name"
-      :to="{ name: 'tag', params: { id: tag.id } }"
-      >{{ tag.name }}</v-tab
-    >
+      v-for="registeredTag in registeredTags"
+      :key="registeredTag.name"
+      :to="{ name: 'tag', params: { id: registeredTag.id } }"
+    >{{ registeredTag.name }}</v-tab>
   </v-tabs>
 </template>
 <script>

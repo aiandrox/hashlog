@@ -1,11 +1,6 @@
 <template>
   <div>
-    <tweet
-      v-for="tweet in tweets"
-      :key="tweet.tweet_id"
-      :tweet="tweet"
-      :user="user"
-    />
+    <tweet v-for="tweet in tweets" :key="tweet.tweetId" :tweet="tweet" :user="user" />
   </div>
 </template>
 <script>

@@ -54,8 +54,8 @@ export default {
         .then(response => {
           const responseData = response.data
           this.user = responseData.user
-          this.tags = responseData.registered_tags
-          this.tag = responseData.registered_tag
+          this.tags = responseData.registeredTags
+          this.tag = responseData.registeredTag
           this.tweets = responseData.tweets
         })
         .catch(response => {
