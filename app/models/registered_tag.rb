@@ -10,7 +10,35 @@ class RegisteredTag < ApplicationRecord
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
-  scope :desc, -> { order(created_at: :desc) }
+  scope :asc, -> { order(created_at: :asc) }
+
+  def self.by_user(user_uuid)
+    if user_uuid
+      includes(:user).where(users: { uuid: user_uuid })
+    else
+      all
+    end
+  end
+
+  # TODO: サービスクラス
+  def cron_tweets
+    last_tweet = tweets.latest
+
+    unless last_tweet
+      create_tweets
+      return
+    end
+
+    return if last_tweet.tweeted_at > Date.yesterday
+
+    since_id = last_tweet.tweet_id.to_i
+    add_tweets(since_id)
+
+    return if add_tweets(since_id).empty?
+
+    fetch_data('add')
+    Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
+  end
 
   def create_tweets(type = 'standard')
     client = TwitterAPI::Client.new(user, tag.name)
@@ -19,27 +47,16 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
-  # cron処理用
-  def add_tweets
-    last_tweet = tweets.desc.first
-    return create_tweets unless last_tweet
-
-    return if last_tweet.tweeted_at > Date.yesterday
-
-    since_id = last_tweet.tweet_id.to_i
+  def add_tweets(since_id)
     client = TwitterAPI::Client.new(user, tag.name, since_id)
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
-      tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
+      tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
-    return if client.tweets_data('everyday').empty?
-
-    fetch_data
-    Rails.logger.info("#{user.screen_name}の#{tag.name}にツイートを追加")
   end
 
-  def fetch_data
-    self.first_tweeted_at = tweets.last.tweeted_at
-    self.last_tweeted_at = tweets.first.tweeted_at
-    self.tweeted_day_count = tweets.group_by { |tweet| tweet.tweeted_at.to_date }.count # TODO: スコープにしたい
+  def fetch_data(type = 'new')
+    self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
+    self.last_tweeted_at = tweets.latest.tweeted_at
+    self.tweeted_day_count = tweets.tweeted_day_count
   end
 end

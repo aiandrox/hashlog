@@ -10,7 +10,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
       return
     end
     create_user_from(provider) unless (@user = login_from(provider))
-    redirect_to mypage_path
+    redirect_to mypage_dashboard_path
   end
 
   private

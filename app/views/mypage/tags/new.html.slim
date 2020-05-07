@@ -1,8 +1,0 @@
-- content_for :title, t('.title')
-
-h1= t '.title'
-=  form_with model: @tag, url: mypage_tags_url, method: :post, local: true do |f|
-  = render 'shared/error_messages', object: f.object
-  = f.label :name
-  = f.text_field :name
-  = f.submit
