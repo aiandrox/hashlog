@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Axios from "axios"
+import axios from "axios"
 import Loading from "./shared/TheLoading"
 export default {
   data() {
@@ -48,18 +48,16 @@ export default {
     },
     sendTagName() {
       this.loading = true
-      Axios.post("/api/v1/registered_tags", {
-        tag: {
-          name: this.tagName
-        }
-      })
-        .then(response => {
-          const tagId = response.data.tag_id
-          const successOrFailure = response.data.flash.type
-          if (successOrFailure === "success") {
-            this.dialog = false
-            this.$router.push({ path: `/mypage/tags/${tagId}` })
+      axios
+        .post("/api/v1/registered_tags", {
+          tag: {
+            name: this.tagName
           }
+        })
+        .then(response => {
+          const tagId = response.data.registeredTag.id
+          this.dialog = false
+          this.$router.push({ path: `/mypage/tags/${tagId}` })
         })
         .catch(response => {
           console.log(response)

@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import Axios from "axios"
+import axios from "axios"
 import Profile from "../components/Profile"
 import TagsTab from "../components/TagsTab"
 
@@ -17,7 +17,15 @@ export default {
   },
   data() {
     return {
-      user: {},
+      user: {
+        uuid: "",
+        name: "",
+        description: "",
+        screenName: "",
+        twitterId: "",
+        privacy: "",
+        role: ""
+      },
       registeredTags: []
     }
   },
@@ -26,11 +34,11 @@ export default {
   },
   methods: {
     fetchUserData() {
-      Axios.get("/api/v1/mypage")
+      axios
+        .get("/api/v1/users/current")
         .then(response => {
           const responseData = response.data
           this.user = responseData.user
-          this.registeredTags = responseData.registered_tags
         })
         .catch(response => {
           console.log(response)

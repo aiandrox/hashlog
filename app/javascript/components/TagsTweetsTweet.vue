@@ -11,9 +11,7 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light"
-                >@{{ user.screen_name }}</v-list-item-subtitle
-              >
+              <v-list-item-subtitle class="font-weight-light">@{{ user.screen_name }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -53,7 +51,7 @@
 }
 </style>
 <script>
-import Axios from "axios"
+import axios from "axios"
 import moment from "moment"
 import "moment/locale/ja"
 moment.locale("ja")
@@ -102,7 +100,7 @@ export default {
   },
   methods: {
     deleteTweet() {
-      Axios.delete(this.deleteUrl).then(response => {})
+      axios.delete(this.deleteUrl).then(response => {})
     }
   }
 }

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Axios from "axios"
+import axios from "axios"
 import Tab from "../components/TagsTab"
 import Tweets from "../components/TagsTweets"
 export default {
@@ -49,7 +49,8 @@ export default {
   },
   methods: {
     fetchData() {
-      Axios.get(this.getUrl)
+      axios
+        .get(this.getUrl)
         .then(response => {
           const responseData = response.data
           this.user = responseData.user
@@ -62,7 +63,8 @@ export default {
         })
     },
     deleteTag() {
-      Axios.delete(this.deleteUrl)
+      axios
+        .delete(this.deleteUrl)
         .then(response => {
           const responseData = response.data
           this.$router.push({ name: "/mypage" })
