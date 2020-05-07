@@ -12,6 +12,14 @@ class RegisteredTag < ApplicationRecord
 
   scope :asc, -> { order(created_at: :asc) }
 
+  def self.by_user(user_uuid)
+    if user_uuid
+      includes(:user).where(users: { uuid: user_uuid })
+    else
+      all
+    end
+  end
+
   # TODO: サービスクラス
   def cron_tweets
     last_tweet = tweets.latest
