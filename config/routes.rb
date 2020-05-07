@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       # end
       resources :users, param: :uuid, only: %i[index show destroy] do
         get 'current', on: :collection
-        resources :registered_tags, only: %i[index show]
+        resources :registered_tags, only: %i[index]
       end
       resources :registered_tags, only: %i[index show create destroy] do
         resources :tweets, only: :index
