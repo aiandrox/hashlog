@@ -12,7 +12,8 @@ class RegisteredTag < ApplicationRecord
 
   scope :asc, -> { order(created_at: :asc) }
 
-  def cron_tweets # TODO: サービスクラス
+  # TODO: サービスクラス
+  def cron_tweets
     last_tweet = tweets.latest
 
     unless last_tweet
