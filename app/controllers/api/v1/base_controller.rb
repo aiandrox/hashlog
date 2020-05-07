@@ -10,14 +10,14 @@ class Api::V1::BaseController < ApplicationController
   protected
 
   def rescue_limited_twitter_requests
-    head 429
+    head 429  # TooManyRequests
   end
 
   def rescue_not_found
-    head 404
+    head 404  # NotFound
   end
 
   def not_authenticated
-    head 403
+    head 401  # Unauthorized
   end
 end

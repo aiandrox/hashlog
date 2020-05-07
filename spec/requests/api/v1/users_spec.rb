@@ -51,9 +51,9 @@ RSpec.describe 'Users', type: :request do
     let!(:user) { create(:user) }
     context '自分の場合' do
       before { login_as(user) }
-      it '200 OKを返す' do
+      it '204 NoContentを返す' do
         delete "/api/v1/users/#{user.uuid}"
-        expect(response.status).to eq 200
+        expect(response.status).to eq 204
       end
       it 'Userを削除する' do
         expect do
