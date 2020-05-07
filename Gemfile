@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.6'
 
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'jbuilder', '~> 2.5'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
@@ -16,20 +15,18 @@ gem 'webpacker'
 # ビュー
 gem 'enum_help'
 gem 'rails-i18n'
-gem 'slim-rails'
-
 # 機能
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'config'
+gem 'sorcery'
+# cron
 gem 'redis-namespace'
 gem 'sidekiq', '~> 5.0'
-gem 'sorcery'
 gem 'whenever', require: false
 # api
 gem 'twitter'
 
 group :development, :test do
-  gem 'better_errors', '~> 2.6'
-  gem 'binding_of_caller', '~> 0.8.0'
   gem 'bullet', '~> 6.1'
   gem 'pry-byebug', '~> 3.9'
   gem 'pry-rails'
@@ -45,7 +42,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
-  # gem 'capistrano-rails'
+  # gem 'capistrano-rails', require: false
 end
 
 group :test do

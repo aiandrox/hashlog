@@ -16,6 +16,7 @@ import Axios from "axios"
 import Tab from "../components/TagsTab"
 import Tweets from "../components/TagsTweets"
 export default {
+  title: "タグページ", // TODO: タグ名
   components: {
     Tab,
     Tweets
@@ -64,7 +65,7 @@ export default {
       Axios.delete(this.deleteUrl)
         .then(response => {
           const responseData = response.data
-          this.$router.push({ path: "/mypage" })
+          this.$router.push({ name: "/mypage" })
         })
         .catch(response => {
           console.log(response)

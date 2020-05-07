@@ -1,8 +1,8 @@
 class StaticPagesController < ApplicationController
   def top; end
 
-  def vue
-    render layout: false
+  def mypage
+    render 'static_pages/top'
   end
 
   def privacy; end

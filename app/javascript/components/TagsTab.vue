@@ -3,8 +3,9 @@
     <v-tab
       v-for="tag in registeredTags"
       :key="tag.name"
-      :to="{ path: `/mypage/tags/${tag.id}` }"
-    >{{ tag.name }}</v-tab>
+      :to="{ name: 'tag', params: { id: tag.id } }"
+      >{{ tag.name }}</v-tab
+    >
   </v-tabs>
 </template>
 <script>

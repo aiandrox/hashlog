@@ -10,6 +10,7 @@ import Profile from "../components/Profile"
 import TagsTab from "../components/TagsTab"
 
 export default {
+  title: "マイページ",
   components: {
     Profile,
     TagsTab

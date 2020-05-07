@@ -1,5 +1,9 @@
 class Api::V1::TweetsController < Api::V1::BaseController
-  before_action :require_login
+  def index
+    registered_tag = RegisteredTag.find(params[:registered_tag_id])
+    tweets = registered_tag.tweets.desc
+    render json: tweets
+  end
 
   # 開発時 & 管理者用
   def destroy

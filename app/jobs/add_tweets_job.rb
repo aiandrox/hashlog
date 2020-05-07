@@ -9,6 +9,6 @@ class AddTweetsJob < ApplicationJob
   def perform
     logger.info("\n#{DateTime.now} : AddTweetsJob")
     registered_tags = RegisteredTag.all.includes(:user, :tag)
-    registered_tags.each(&:add_tweets)
+    registered_tags.each(&:cron_tweets)
   end
 end

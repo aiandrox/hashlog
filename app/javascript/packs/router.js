@@ -11,7 +11,7 @@ const routes = [
     component: Top
   },
   {
-    path: "/mypage",
+    path: "/mypage/dashboard",
     name: "mypage",
     component: Mypage
   },

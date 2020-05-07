@@ -1,6 +1,6 @@
 module UserSessionsHelper
   def login_as(user)
-    get login_as_path(user)
+    get "/login_as/#{user.id}"
     expect(logged_in?).to be_truthy
   end
 

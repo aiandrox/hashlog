@@ -24,13 +24,12 @@ class User < ApplicationRecord
     end
   end
 
-  # 登録済みのregistered_tag
-  def registered_tag(tag: nil, tag_name: nil)
-    return nil if tag.invalid?
-
+  # tagからregistered_tagを返す
+  def registered_tag(tag)
     @registered_tag ||= begin
-      tag = Tag.find_by(name: tag_name) if tag_name
-      @registered_tag = registered_tags.find_by(tag_id: tag.id)
+      return nil if tag.invalid?
+
+      registered_tags.find_by(tag_id: tag.id)
     end
   end
 
