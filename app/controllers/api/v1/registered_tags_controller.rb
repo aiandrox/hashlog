@@ -2,7 +2,11 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   before_action :require_login, only: %i[create destroy]
 
   def index
-    registered_tags = RegisteredTag.asc.includes(:tag)
+    if params[:user_uuid]
+      registered_tags = User.find_by(uuid: params[:user_uuid]).registered_tags.asc.includes(:tag)
+    else
+      registered_tags = RegisteredTag.asc.includes(:tag)
+    end
     render json: registered_tags
   end
 

@@ -2,7 +2,7 @@ RSpec.describe 'Base', type: :request do
   let(:user) { create(:user) }
 
   describe '#rescue_limited_twitter_requests' do
-    context 'TwitterAPIのリクエストが上限に達した場合' do
+    xcontext 'TwitterAPIのリクエストが上限に達した場合' do
       let(:client) { TwitterAPI::Client.new(user, 'ハッシュタグ') }
       it '429 TooManyRequestsを返す' do
         allow(client).to receive(:tweets_data).and_raise(Twitter::Error::TooManyRequests)
