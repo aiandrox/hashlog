@@ -47,7 +47,7 @@ RSpec.describe 'RegisteredTags', type: :request do
     it '200 OKを返す' do
       expect(response.status).to eq 200
     end
-    it 'User.find(params[:uuid]).registered_tags.ascのJSONを返す' do
+    it 'User.find(params[:uuid]).registered_tags.ascのJSONを返す' do # 今は全てのタグを返している
       expect(tags_json.length).to eq 5
       tags_json.zip(registered_tags).each do |tag_json, registered_tag|
         expect(tag_json).to eq({
@@ -103,16 +103,60 @@ RSpec.describe 'RegisteredTags', type: :request do
     end
   end
 
+  describe 'POST /api/v1/registered_tags' do
+    let!(:user) { create(:user, :real_value) }
+    context 'ログインしている場合', vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
+      before { login_as(user) }
+      context '正常系 タグの名前を入力したとき' do
+        it '201 Createdを返す' do
+          post '/api/v1/registered_tags', params: { tag: { name: 'absent_tag' } }
+          expect(response.status).to eq 201
+        end
+        it 'registered_tag.idのJSONを返す' do
+          prev_registered_tag = create(:registered_tag)
+          post '/api/v1/registered_tags', params: { tag: { name: 'absent_tag' } }
+          expect(json['registeredTag']).to eq({ 'id' => prev_registered_tag.id + 1 } )
+        end
+        it 'current_user.registered_tagsを作成する' do
+          expect do
+            post '/api/v1/registered_tags', params: { tag: { name: 'absent_tag' } }
+          end.to change(current_user.registered_tags, :count).by(1)
+        end
+      end
+      context 'タグの値が不適なとき' do
+        it '422 UnprocessableEntityを返す' do
+          post '/api/v1/registered_tags', params: { tag: { name: '' } }
+          expect(response.status).to eq 422
+        end
+        it 'current_user.registered_tagsを作成しない' do
+          expect do
+            post '/api/v1/registered_tags', params: { tag: { name: '' } }
+          end.not_to change(current_user.registered_tags, :count)
+        end
+      end
+    end
+    context 'ログインしていない場合' do
+      it '401 Unauthorizedを返す' do
+        post '/api/v1/registered_tags', params: { tag: { name: 'hashtag_name' } }
+        expect(response.status).to eq 401
+      end
+      it 'current_user.registered_tagsを作成しない' do
+        expect do
+          post '/api/v1/registered_tags', params: { tag: { name: 'hashtag_name' } }
+        end.not_to change(RegisteredTag, :count)
+      end
+    end
+  end
+
   describe 'DELETE /api/v1/registered_tags/:id' do
     let(:user) { create(:user) }
     let!(:registered_tag) { create(:registered_tag, user: user) }
     context '自分のregistered_tagsの場合' do
       before { login_as(user) }
-      it '200 OKを返す' do
+      it '204 NoContentを返す' do
         delete "/api/v1/registered_tags/#{registered_tag.id}"
-        expect(response.status).to eq 200
+        expect(response.status).to eq 204
       end
-      it '?のJSONを返す'
       it 'user.registered_tagsを削除する' do
         expect do
           delete "/api/v1/registered_tags/#{registered_tag.id}"
