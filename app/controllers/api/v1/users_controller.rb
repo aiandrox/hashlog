@@ -15,7 +15,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     user = User.find_by(uuid: params[:uuid])
     if user == current_user
       user.destroy!
-      render json: { message: '何を返そうか' }
     else
       head 404
     end

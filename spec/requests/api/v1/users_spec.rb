@@ -55,7 +55,6 @@ RSpec.describe 'Users', type: :request do
         delete "/api/v1/users/#{user.uuid}"
         expect(response.status).to eq 200
       end
-      it '?のJSONを返す'
       it 'Userを削除する' do
         expect do
           delete "/api/v1/users/#{user.uuid}"
