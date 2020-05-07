@@ -128,6 +128,14 @@ RSpec.describe 'RegisteredTags', type: :request do
           post '/api/v1/registered_tags', params: { tag: { name: '' } }
           expect(response.status).to eq 422
         end
+        it 'エラーメッセージのJSONを返す' do
+          post '/api/v1/registered_tags', params: { tag: { name: '' } }
+          expect(json['errors']).to eq([{
+            'status' => '422',
+            'title' => '登録内容が適切ではありません。',
+            'detail' => '登録内容を確認してください。'
+          }])
+        end
         it 'current_user.registered_tagsを作成しない' do
           expect do
             post '/api/v1/registered_tags', params: { tag: { name: '' } }

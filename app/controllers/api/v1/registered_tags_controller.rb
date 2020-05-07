@@ -17,7 +17,12 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
       registered_tag = current_user.registered_tag(tag)
       render status: 201, json: { registeredTag: { id: registered_tag.id } }
     else
-      head 422
+      error = {
+        'status' => '422',
+        'title' => '登録内容が適切ではありません。',
+        'detail' => '登録内容を確認してください。'
+      }
+      render json: { 'errors': [error] }, status: 422
     end
   end
 
