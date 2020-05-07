@@ -1,5 +1,6 @@
 class Api::V1::RegisteredTagsController < Api::V1::BaseController
   before_action :require_login, only: %i[create destroy]
+
   def index
     registered_tags = RegisteredTag.asc.includes(:tag)
     render json: registered_tags
