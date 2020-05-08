@@ -13,9 +13,7 @@
     <v-btn class="ma-2" outlined @click="pushDelete">
       <v-icon left>mdi-delete</v-icon>削除
     </v-btn>
-    <v-btn class="ma-2" outlined>
-      <v-icon left>mdi-cog</v-icon>設定
-    </v-btn>
+    <v-btn class="ma-2" outlined> <v-icon left>mdi-cog</v-icon>設定 </v-btn>
   </v-card>
 </template>
 
@@ -58,12 +56,12 @@ export default {
         {
           name: "firstTweetedAt",
           title: "開始日",
-          text: this.registeredTag.firstTweetedAt
+          text: this.dayjs(this.registeredTag.firstTweetedAt)
         },
         {
           name: "lastTweetedAt",
           title: "最終ツイート日",
-          text: this.registeredTag.lastTweetedAt
+          text: this.dayjs(this.registeredTag.lastTweetedAt)
         }
       ]
     }

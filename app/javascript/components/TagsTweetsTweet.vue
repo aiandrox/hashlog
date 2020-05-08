@@ -11,7 +11,9 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light">@{{ user.screenName }}</v-list-item-subtitle>
+              <v-list-item-subtitle class="font-weight-light"
+                >@{{ user.screenName }}</v-list-item-subtitle
+              >
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -33,7 +35,9 @@
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
         <v-spacer />
-        <span class="body-2 font-weight-light">{{ tweetedAt }}</span>
+        <span class="body-2 font-weight-light">{{
+          dayjs(tweet.tweetedAt)
+        }}</span>
       </v-card-actions>
     </v-card>
     <!-- 開発用削除ボタン -->
@@ -52,9 +56,6 @@
 </style>
 <script>
 import axios from "axios"
-import moment from "moment"
-import "moment/locale/ja"
-moment.locale("ja")
 
 export default {
   props: {
@@ -89,9 +90,6 @@ export default {
         { url: this.retweetUrl, color: "green", icon: "mdi-twitter-retweet" },
         { url: this.likeUrl, color: "pink", icon: "mdi-heart-outline" }
       ]
-    },
-    tweetedAt() {
-      return moment(this.tweet.tweetedAt).format("YYYY年M月D日(dd)H時m分")
     },
     deleteUrl() {
       const id = this.tweet.id
