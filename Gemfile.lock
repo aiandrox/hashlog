@@ -313,7 +313,7 @@ GEM
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
     simple_oauth (0.3.1)
-    sorcery (0.14.0)
+    sorcery (0.15.0)
       bcrypt (~> 3.1)
       oauth (~> 0.4, >= 0.4.4)
       oauth2 (~> 1.0, >= 0.8.0)
@@ -400,7 +400,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   shoulda-matchers
   sidekiq (~> 5.0)
-  sorcery
+  sorcery (>= 0.15.0)
   spring
   spring-watcher-listen (~> 2.0.0)
   twitter
