@@ -1,8 +1,11 @@
 <template>
   <div>
     <tab :registered-tags="registeredTags" />
-    <tag-status @push-delete="deleteTag" :registered-tag="registeredTag" />
-    <tweets :tweets="tweets" :user="user" />
+    <div class="d-flex flex-row-reverse">
+      <tag-status @push-delete="deleteTag" :registered-tag="registeredTag" />
+      <v-spacer />
+      <tweets :tweets="tweets" :user="user" />
+    </div>
   </div>
 </template>
 

@@ -55,12 +55,12 @@ export default {
         },
         {
           name: "firstTweetedAt",
-          title: "開始日",
+          title: "初めてのツイート",
           text: this.dayjs(this.registeredTag.firstTweetedAt)
         },
         {
           name: "lastTweetedAt",
-          title: "最終ツイート日",
+          title: "最新のツイート",
           text: this.dayjs(this.registeredTag.lastTweetedAt)
         }
       ]
