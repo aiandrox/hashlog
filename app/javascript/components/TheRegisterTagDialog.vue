@@ -18,8 +18,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="blue darken-1" text @click="dialog = false">キャンセル</v-btn>
-          <v-btn color="blue darken-1" text @click="sendTagName">登録する</v-btn>
+          <v-btn text @click="dialog = false">キャンセル</v-btn>
+          <v-btn text @click="sendTagName">登録する</v-btn>
         </v-card-actions>
       </v-card>
       <!-- ローディング -->

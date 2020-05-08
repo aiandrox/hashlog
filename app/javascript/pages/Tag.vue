@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-btn class="ma-2" outlined color="success" @click="deleteTag">
+    <v-btn class="ma-2" outlined @click="deleteTag">
       <v-icon left>mdi-delete</v-icon>削除
     </v-btn>
-    <v-btn class="ma-2" outlined color="success">
+    <v-btn class="ma-2" outlined>
       <v-icon left>mdi-cog</v-icon>設定
     </v-btn>
     <tab :registered-tags="registeredTags" />
