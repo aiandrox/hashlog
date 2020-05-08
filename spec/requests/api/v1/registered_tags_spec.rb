@@ -17,7 +17,7 @@ RSpec.describe 'RegisteredTags', type: :request do
         expect(tag_json).to eq({
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
-          'privacy' => registered_tag.privacy,
+          'privacy' => registered_tag.privacy_i18n,
           'remindDay' => registered_tag.remind_day,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
@@ -53,7 +53,7 @@ RSpec.describe 'RegisteredTags', type: :request do
         expect(tag_json).to eq({
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
-          'privacy' => registered_tag.privacy,
+          'privacy' => registered_tag.privacy_i18n,
           'remindDay' => registered_tag.remind_day,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
@@ -81,7 +81,7 @@ RSpec.describe 'RegisteredTags', type: :request do
         expect(json['registeredTag']).to eq({
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
-          'privacy' => registered_tag.privacy,
+          'privacy' => registered_tag.privacy_i18n,
           'remindDay' => registered_tag.remind_day,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,

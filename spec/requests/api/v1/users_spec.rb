@@ -18,8 +18,8 @@ RSpec.describe 'Users', type: :request do
           'twitterId' => user.twitter_id,
           'screenName' => user.screen_name,
           'description' => user.description,
-          'privacy' => user.privacy,
-          'role' => user.role,
+          'privacy' => user.privacy_i18n,
+          'role' => user.role_i18n,
         })
       end
     end
@@ -41,8 +41,8 @@ RSpec.describe 'Users', type: :request do
         'twitterId' => user.twitter_id,
         'screenName' => user.screen_name,
         'description' => user.description,
-        'privacy' => user.privacy,
-        'role' => user.role,
+        'privacy' => user.privacy_i18n,
+        'role' => user.role_i18n,
       })
     end
   end
@@ -112,8 +112,8 @@ RSpec.describe 'Users', type: :request do
           'twitterId' => current_user.twitter_id,
           'screenName' => current_user.screen_name,
           'description' => current_user.description,
-          'privacy' => current_user.privacy,
-          'role' => current_user.role,
+          'privacy' => current_user.privacy_i18n,
+          'role' => current_user.role_i18n,
         })
       end
     end
