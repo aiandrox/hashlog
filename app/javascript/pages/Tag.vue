@@ -1,23 +1,22 @@
 <template>
   <div>
-    <v-btn class="ma-2" outlined @click="deleteTag">
-      <v-icon left>mdi-delete</v-icon>削除
-    </v-btn>
-    <v-btn class="ma-2" outlined>
-      <v-icon left>mdi-cog</v-icon>設定
-    </v-btn>
     <tab :registered-tags="registeredTags" />
+    <tag-status @push-delete="deleteTag" :registered-tag="registeredTag" />
     <tweets :tweets="tweets" :user="user" />
   </div>
 </template>
 
 <script>
 import axios from "axios"
+import TagStatus from "../components/TagStatus"
 import Tab from "../components/TagsTab"
 import Tweets from "../components/TagsTweets"
 export default {
-  title: "タグの名前", // 動的な名前がつけられない。this.registeredTag.tag.name
+  title() {
+    return this.registeredTag.tag.name
+  }, // 動的な名前がつけられない。
   components: {
+    TagStatus,
     Tab,
     Tweets
   },

@@ -1,5 +1,5 @@
 <template>
-  <v-card min-width="160" width="200" flat>
+  <v-card flat>
     <v-list disabled>
       <v-subheader>STATUS</v-subheader>
       <v-list-item-group color="primary">

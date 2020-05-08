@@ -5,4 +5,12 @@ class RegisteredTagSerializer < ActiveModel::Serializer
   def privacy
     object.privacy_i18n
   end
+
+  def remind_day
+    if object.remind_day.zero?
+      '未設定'
+    else
+      "#{object.remind_day}日"
+    end
+  end
 end
