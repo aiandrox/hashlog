@@ -28,6 +28,12 @@ export default {
   methods: {
     pushDelete() {
       this.$emit("push-delete")
+    },
+    date(date) {
+      if (date === null) {
+        return "まだツイートはありません"
+      }
+      return this.dayjs(date)
     }
   },
   computed: {
@@ -56,12 +62,12 @@ export default {
         {
           name: "firstTweetedAt",
           title: "初めてのツイート",
-          text: this.dayjs(this.registeredTag.firstTweetedAt)
+          text: this.date(this.registeredTag.firstTweetedAt)
         },
         {
           name: "lastTweetedAt",
           title: "最新のツイート",
-          text: this.dayjs(this.registeredTag.lastTweetedAt)
+          text: this.date(this.registeredTag.lastTweetedAt)
         }
       ]
     }
