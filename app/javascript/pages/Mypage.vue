@@ -33,16 +33,19 @@ export default {
     this.fetchUserData()
   },
   methods: {
-    fetchUserData() {
-      axios
-        .get("/api/v1/users/current")
-        .then(response => {
-          const responseData = response.data
-          this.user = responseData.user
-        })
-        .catch(response => {
-          console.log(response)
-        })
+    async fetchUserData() {
+      try {
+        const userRes = await axios.get("/api/v1/users/current")
+        const user = userRes.data.user
+        const registeredTagsRes = await axios.get(
+          `/api/v1/users/${user.uuid}/registered_tags`
+        )
+        const registeredTags = registeredTagsRes.data.registeredTags
+        this.user = user
+        this.registeredTags = registeredTags
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

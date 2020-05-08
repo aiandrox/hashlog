@@ -90,8 +90,8 @@ export default {
         { url: this.likeUrl, color: "pink", icon: "mdi-heart-outline" }
       ]
     },
-    tweeted_at() {
-      return moment(this.tweet.tweeted_at).format("YYYY年M月D日(dd)H時m分")
+    tweetedAt() {
+      return moment(this.tweet.tweetedAt).format("YYYY年M月D日(dd)H時m分")
     },
     deleteUrl() {
       const id = this.tweet.id

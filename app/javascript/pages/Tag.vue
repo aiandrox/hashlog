@@ -6,7 +6,7 @@
     <v-btn class="ma-2" outlined color="success">
       <v-icon left>mdi-cog</v-icon>設定
     </v-btn>
-    <tab :registered-tags="tags" />
+    <tab :registered-tags="registeredTags" />
     <tweets :tweets="tweets" :user="user" />
   </div>
 </template>
@@ -16,25 +16,39 @@ import axios from "axios"
 import Tab from "../components/TagsTab"
 import Tweets from "../components/TagsTweets"
 export default {
-  title: "タグページ", // TODO: タグ名
+  title: "タグの名前", // 動的な名前がつけられない。this.registeredTag.tag.name
   components: {
     Tab,
     Tweets
   },
   data() {
     return {
-      user: {},
-      tags: [],
+      user: {
+        uuid: "",
+        name: "",
+        description: "",
+        screenName: "",
+        twitterId: "",
+        privacy: "",
+        role: ""
+      },
+      registeredTag: {
+        id: "",
+        tweetedDayCount: "",
+        privacy: "",
+        remindDay: "",
+        firstTweetedAt: "",
+        lastTweetedAt: "",
+        tag: {
+          name: ""
+        }
+      },
+      registeredTags: [],
       tweets: []
     }
   },
   computed: {
-    // TODO: 多分、registered_tagリソースは同じURLになる
-    getUrl() {
-      const { id } = this.$route.params
-      return `/api/v1/mypage/tags/${id}`
-    },
-    deleteUrl() {
+    registeredTagUrl() {
       const { id } = this.$route.params
       return `/api/v1/registered_tags/${id}`
     }
@@ -48,26 +62,38 @@ export default {
     this.fetchData()
   },
   methods: {
-    fetchData() {
-      axios
-        .get(this.getUrl)
-        .then(response => {
-          const responseData = response.data
-          this.user = responseData.user
-          this.tags = responseData.registeredTags
-          this.tag = responseData.registeredTag
-          this.tweets = responseData.tweets
-        })
-        .catch(response => {
-          console.log(response)
-        })
+    async fetchData() {
+      try {
+        // TODO: await地獄
+        const userRes = await axios.get("/api/v1/users/current")
+        const user = userRes.data.user
+        this.user = user
+
+        const registeredTagsRes = await axios.get(
+          `/api/v1/users/${user.uuid}/registered_tags`
+        )
+        const registeredTags = registeredTagsRes.data.registeredTags
+        this.registeredTags = registeredTags
+
+        const registeredTagRes = await axios.get(this.registeredTagUrl)
+        const registeredTag = registeredTagRes.data.registeredTag
+        this.registeredTag = registeredTag
+
+        const tweetsRes = await axios.get(
+          `/api/v1/registered_tags/${registeredTag.id}/tweets`
+        )
+        const tweets = tweetsRes.data.tweets
+        this.tweets = tweets
+      } catch (error) {
+        console.log(error)
+      }
     },
     deleteTag() {
       axios
-        .delete(this.deleteUrl)
+        .delete(this.registeredTagUrl)
         .then(response => {
           const responseData = response.data
-          this.$router.push({ name: "/mypage" })
+          this.$router.push({ name: "mypage" })
         })
         .catch(response => {
           console.log(response)

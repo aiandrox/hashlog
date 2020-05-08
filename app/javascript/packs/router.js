@@ -17,7 +17,12 @@ const routes = [
   },
   {
     path: "/mypage/tags/:id",
-    name: "tag",
+    name: "mypageTag",
+    component: Tag
+  },
+  {
+    path: "/users/:user_uuid/tags/:id",
+    name: "userTag",
     component: Tag
   }
 ]

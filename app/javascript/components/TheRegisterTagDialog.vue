@@ -57,7 +57,7 @@ export default {
         .then(response => {
           const tagId = response.data.registeredTag.id
           this.dialog = false
-          this.$router.push({ path: `/mypage/tags/${tagId}` })
+          this.$router.push({ name: "mypageTag", params: { id: tagId } })
         })
         .catch(response => {
           console.log(response)
