@@ -1,9 +1,11 @@
 <template>
-  <v-row justify="center">
+  <v-row justify-center>
     <v-dialog v-model="dialog" max-width="600px">
       <v-card>
-        <v-card-title class="pt-5">新規ハッシュタグ登録</v-card-title>
-        <v-card-text>
+        <v-system-bar class="pa-5 subtitle-1"
+          >ハッシュタグを登録する</v-system-bar
+        >
+        <v-card-text class="mt-5">
           <v-container>
             <v-text-field
               v-model="tagName"
@@ -19,7 +21,7 @@
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="dialog = false">キャンセル</v-btn>
-          <v-btn text @click="sendTagName">登録する</v-btn>
+          <v-btn text color="primary" @click="sendTagName">登録する</v-btn>
         </v-card-actions>
       </v-card>
       <!-- ローディング -->
