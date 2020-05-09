@@ -1,22 +1,29 @@
 <template>
   <div>
+    <!-- タブとタグ登録ボタン -->
+    <tags-tab :registered-tags="registeredTags" @push-register="showDialog" />
+    <!-- プロフィール -->
     <profile ref="profile" :user="user" @update-user-data="updateUserData" />
-    <tags-tab :registered-tags="registeredTags" />
+    <!-- ダイアログ -->
+    <register-tag-dialog ref="dialog" />
   </div>
 </template>
 <script>
 import axios from "axios"
 import profile from "../components/Profile"
+import registerTagDialog from "../components/TheRegisterTagDialog"
 import tagsTab from "../components/TagsTab"
 
 export default {
   title: "マイページ",
   components: {
     profile,
+    registerTagDialog,
     tagsTab
   },
   data() {
     return {
+      loading: false,
       user: {
         uuid: "",
         name: "",
@@ -46,6 +53,9 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    showDialog() {
+      this.$refs.dialog.open()
     },
     async updateUserData() {
       try {
