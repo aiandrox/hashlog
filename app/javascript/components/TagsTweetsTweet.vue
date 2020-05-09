@@ -47,13 +47,6 @@
   </div>
 </template>
 
-<style scoped></style>
-
-<style scoped>
-.v-card {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-}
-</style>
 <script>
 import axios from "axios"
 

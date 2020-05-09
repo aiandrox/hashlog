@@ -18,9 +18,9 @@
 
 <script>
 import axios from "axios"
-import TagStatus from "../components/TagStatus"
-import Tab from "../components/TagsTab"
-import Tweets from "../components/TagsTweets"
+import tagStatus from "../components/TagStatus"
+import tab from "../components/TagsTab"
+import tweets from "../components/TagsTweets"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
@@ -28,9 +28,9 @@ export default {
     return this.registeredTag.tag.name
   }, // 動的な名前がつけられない。
   components: {
-    TagStatus,
-    Tab,
-    Tweets,
+    tagStatus,
+    tab,
+    tweets,
     deleteDialog
   },
   data() {

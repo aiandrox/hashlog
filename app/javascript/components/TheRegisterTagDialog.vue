@@ -32,7 +32,7 @@
 
 <script>
 import axios from "axios"
-import Loading from "./shared/TheLoading"
+import loading from "./shared/TheLoading"
 export default {
   data() {
     return {
@@ -42,7 +42,7 @@ export default {
     }
   },
   components: {
-    Loading
+    loading
   },
   methods: {
     open() {

@@ -25,17 +25,17 @@
 </template>
 
 <script>
-import ProfileStatus from "./ProfileStatus"
-import RegisterTagDialog from "./TheRegisterTagDialog"
-import ProfileUser from "./ProfileUser"
+import profileStatus from "./ProfileStatus"
+import registerTagDialog from "./TheRegisterTagDialog"
+import profileUser from "./ProfileUser"
 export default {
   data() {
     return { loading: false }
   },
   components: {
-    ProfileUser,
-    ProfileStatus,
-    RegisterTagDialog
+    profileUser,
+    profileStatus,
+    registerTagDialog
   },
   props: {
     user: {

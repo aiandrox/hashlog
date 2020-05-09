@@ -6,14 +6,14 @@
 </template>
 <script>
 import axios from "axios"
-import Profile from "../components/Profile"
-import TagsTab from "../components/TagsTab"
+import profile from "../components/Profile"
+import tagsTab from "../components/TagsTab"
 
 export default {
   title: "マイページ",
   components: {
-    Profile,
-    TagsTab
+    profile,
+    tagsTab
   },
   data() {
     return {
