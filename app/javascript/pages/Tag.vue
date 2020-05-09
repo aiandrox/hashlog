@@ -1,11 +1,18 @@
 <template>
   <div>
     <tab :registered-tags="registeredTags" />
-    <div class="d-flex flex-row-reverse">
-      <tag-status @push-delete="deleteTag" :registered-tag="registeredTag" />
+    <v-container class="d-flex flex-row-reverse" row>
+      <v-col cols="12" md="">
+        <tag-status @push-delete="showDialog" :registered-tag="registeredTag" />
+      </v-col>
       <v-spacer />
-      <tweets :tweets="tweets" :user="user" />
-    </div>
+      <v-col cols="12" md="6">
+        <tweets :tweets="tweets" :user="user" />
+      </v-col>
+    </v-container>
+    <delete-dialog ref="dialog" @push-delete="deleteTag"
+      >保存されていたツイートのデータは全て消えてしまいます。</delete-dialog
+    >
   </div>
 </template>
 
@@ -14,6 +21,8 @@ import axios from "axios"
 import TagStatus from "../components/TagStatus"
 import Tab from "../components/TagsTab"
 import Tweets from "../components/TagsTweets"
+import deleteDialog from "../components/shared/TheDeleteDialog"
+
 export default {
   title() {
     return this.registeredTag.tag.name
@@ -21,7 +30,8 @@ export default {
   components: {
     TagStatus,
     Tab,
-    Tweets
+    Tweets,
+    deleteDialog
   },
   data() {
     return {
@@ -89,6 +99,9 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    showDialog() {
+      this.$refs.dialog.open()
     },
     deleteTag() {
       axios
