@@ -210,7 +210,7 @@
       }
     ],
     "array-bracket-spacing": ["error", "never"],
-    "array-element-newline": ["error"],
+    "array-element-newline": ["error", "consistent"],
     "block-spacing": ["error", "always"],
     "brace-style": [
       "error",
