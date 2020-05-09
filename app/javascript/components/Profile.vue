@@ -3,14 +3,26 @@
     <v-card class="mx-auto" outlined>
       <v-container row>
         <v-col cols="12" lg="8">
-          <profile-user :user="user"></profile-user>
+          <!-- プロフィール -->
+          <profile-user :user="user" v-show="!isEditing" />
+          <!-- ユーザー編集 -->
+          <profile-edit :user="user" v-show="isEditing" />
           <v-card-actions>
-            <v-btn class="ma-2" outlined>
-              <v-icon left>mdi-pencil</v-icon>編集
-            </v-btn>
-            <v-btn class="ma-2" outlined @click="showDialog">
-              <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
-            </v-btn>
+            <div v-show="!isEditing">
+              <v-btn class="ma-2" outlined @click="isEditing = true">
+                <v-icon left>mdi-pencil</v-icon>編集
+              </v-btn>
+              <v-btn class="ma-2" outlined @click="showDialog">
+                <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
+              </v-btn>
+            </div>
+            <div v-show="isEditing">
+              <v-btn class="ma-2" outlined @click="updateUserData">
+                <v-icon left>mdi-pencil</v-icon>保存
+              </v-btn>
+              <v-btn class="ma-2" outlined @click="isEditing = false">キャンセル</v-btn>
+              <!-- TODO: キャンセル時にデータを戻す -->
+            </div>
           </v-card-actions>
           <!-- ダイアログ -->
           <register-tag-dialog ref="dialog" />
@@ -26,14 +38,19 @@
 
 <script>
 import profileStatus from "./ProfileStatus"
+import profileEdit from "./ProfileEdit"
 import registerTagDialog from "./TheRegisterTagDialog"
 import profileUser from "./ProfileUser"
 export default {
   data() {
-    return { loading: false }
+    return {
+      loading: false,
+      isEditing: false
+    }
   },
   components: {
     profileUser,
+    profileEdit,
     profileStatus,
     registerTagDialog
   },
@@ -51,6 +68,12 @@ export default {
   methods: {
     showDialog() {
       this.$refs.dialog.open()
+    },
+    updateUserData() {
+      this.$emit("update-user-data")
+    },
+    finishEdit() {
+      this.isEditing = false
     }
   }
 }

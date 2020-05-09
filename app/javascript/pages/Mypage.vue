@@ -1,6 +1,6 @@
 <template>
   <div>
-    <profile :user="user" />
+    <profile ref="profile" :user="user" @update-user-data="updateUserData" />
     <tags-tab :registered-tags="registeredTags" />
   </div>
 </template>
@@ -43,6 +43,16 @@ export default {
         const registeredTags = registeredTagsRes.data.registeredTags
         this.user = user
         this.registeredTags = registeredTags
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async updateUserData() {
+      try {
+        const res = await axios.patch(`/api/v1/users/${this.user.uuid}`, {
+          user: this.user
+        })
+        this.$refs.profile.finishEdit()
       } catch (error) {
         console.log(error)
       }
