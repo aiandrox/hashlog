@@ -1,25 +1,32 @@
 <template>
   <div>
     <!-- タブとタグ登録ボタン -->
-    <tags-tab :registered-tags="registeredTags" @push-register="showDialog" />
+    <tags-tab :registered-tags="registeredTags" />
     <!-- プロフィール -->
-    <profile ref="profile" :user="user" @update-user-data="updateUserData" />
-    <!-- ダイアログ -->
-    <register-tag-dialog ref="dialog" />
+    <profile
+      ref="profile"
+      :user="user"
+      @update-user-data="updateUserData"
+      @push-delete="showDeleteDialog"
+    />
+    <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
+      ツイートを含む全てのデータが消えて
+      <br />復活できなくなります。
+    </delete-dialog>
   </div>
 </template>
 <script>
 import axios from "axios"
 import profile from "../components/Profile"
-import registerTagDialog from "../components/TheRegisterTagDialog"
 import tagsTab from "../components/TagsTab"
+import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
   title: "マイページ",
   components: {
     profile,
-    registerTagDialog,
-    tagsTab
+    tagsTab,
+    deleteDialog
   },
   data() {
     return {
@@ -54,18 +61,28 @@ export default {
         console.log(error)
       }
     },
-    showDialog() {
-      this.$refs.dialog.open()
-    },
-    async updateUserData() {
+    updateUserData() {
       try {
-        const res = await axios.patch(`/api/v1/users/${this.user.uuid}`, {
+        axios.patch(`/api/v1/users/${this.user.uuid}`, {
           user: this.user
         })
         this.$refs.profile.finishEdit()
       } catch (error) {
         console.log(error)
       }
+    },
+    showDeleteDialog() {
+      this.$refs.deleteDialog.open()
+    },
+    deleteUser() {
+      axios
+        .delete(`/api/v1/users/${this.user.uuid}`)
+        .then(response => {
+          this.$router.push({ name: "top" })
+        })
+        .catch(response => {
+          console.log(response)
+        })
     }
   }
 }

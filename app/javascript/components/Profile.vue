@@ -7,25 +7,29 @@
           <profile-user :user="user" v-show="!isEditing" />
           <!-- ユーザー編集 -->
           <profile-edit :user="user" v-show="isEditing" />
-          <v-card-actions>
-            <div v-show="!isEditing">
-              <v-btn class="ma-2" outlined @click="isEditing = true">
-                <v-icon left>mdi-pencil</v-icon>編集
-              </v-btn>
-            </div>
-            <div v-show="isEditing">
-              <v-btn class="ma-2" outlined @click="updateUserData">
-                <v-icon left>mdi-pencil</v-icon>保存
-              </v-btn>
-              <v-btn class="ma-2" outlined @click="isEditing = false">キャンセル</v-btn>
-              <!-- TODO: キャンセル時にデータを戻す -->
-            </div>
-          </v-card-actions>
         </v-col>
-        <v-col>
+        <v-col cols="9" lg="4">
           <!-- ステータス -->
           <profile-status :user="user" :isEditing="isEditing" />
         </v-col>
+        <v-card-actions>
+          <div v-show="!isEditing">
+            <v-btn class="ma-2" outlined @click="isEditing = true">
+              <v-icon left>mdi-pencil</v-icon>編集
+            </v-btn>
+          </div>
+          <div v-show="isEditing">
+            <v-btn class="ma-2" outlined @click="updateUserData">
+              <v-icon left>mdi-pencil</v-icon>保存
+            </v-btn>
+            <v-btn class="ma-2" outlined @click="isEditing = false">キャンセル</v-btn>
+            <v-spacer />
+            <v-btn class="ma-2" color="error" outlined @click="pushDelete">
+              <v-icon left>mdi-account-off</v-icon>ユーザー削除
+            </v-btn>
+            <!-- TODO: キャンセル時にデータを戻す -->
+          </div>
+        </v-card-actions>
       </v-container>
     </v-card>
   </div>
@@ -58,6 +62,9 @@ export default {
     }
   },
   methods: {
+    pushDelete() {
+      this.$emit("push-delete")
+    },
     updateUserData() {
       this.$emit("update-user-data")
     },

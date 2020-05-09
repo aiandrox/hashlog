@@ -15,11 +15,18 @@
       <v-btn class="ma-2" color="primary" depressed @click="pushRegister">
         <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
       </v-btn>
+      <!-- ダイアログ -->
+      <register-tag-dialog ref="registerDialog" />
     </div>
   </v-container>
 </template>
+
 <script>
+import registerTagDialog from "../components/TheRegisterTagDialog"
 export default {
+  components: {
+    registerTagDialog
+  },
   props: {
     registeredTags: {
       type: Array,
@@ -28,7 +35,7 @@ export default {
   },
   methods: {
     pushRegister() {
-      this.$emit("push-register")
+      this.$refs.registerDialog.open()
     }
   }
 }

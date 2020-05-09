@@ -1,18 +1,19 @@
 <template>
   <div>
     <tab :registered-tags="registeredTags" />
-    <v-container class="d-flex flex-row-reverse" row>
-      <v-col cols="12" md="">
-        <tag-status @push-delete="showDialog" :registered-tag="registeredTag" />
+    <v-container class="d-flex flex-row-reverse pt-0" row>
+      <v-col cols="12" md>
+        <tag-status @push-delete="showDeleteDialog" :registered-tag="registeredTag" />
       </v-col>
       <v-spacer />
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="6" class="pt-0">
         <tweets :tweets="tweets" :user="user" />
       </v-col>
     </v-container>
-    <delete-dialog ref="dialog" @push-delete="deleteTag"
-      >保存されていたツイートのデータは全て消えてしまいます。</delete-dialog
-    >
+    <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
+      保存されていたツイートのデータが
+      <br />全て消えてしまいます。
+    </delete-dialog>
   </div>
 </template>
 
@@ -100,14 +101,13 @@ export default {
         console.log(error)
       }
     },
-    showDialog() {
-      this.$refs.dialog.open()
+    showDeleteDialog() {
+      this.$refs.deleteDialog.open()
     },
     deleteTag() {
       axios
         .delete(this.registeredTagUrl)
         .then(response => {
-          const responseData = response.data
           this.$router.push({ name: "mypage" })
         })
         .catch(response => {
