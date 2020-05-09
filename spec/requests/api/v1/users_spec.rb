@@ -47,6 +47,56 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
+  describe 'PATCH /api/v1/users/:uuid' do
+    let(:user) { create(:user) }
+    let(:user_json) { json['user'] }
+    context '自分の場合' do
+      before do
+        login_as(user)
+        patch "/api/v1/users/#{user.uuid}", params: {
+          user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+        }
+      end
+      it '200 OKを返す' do
+        expect(response.status).to eq 200
+      end
+      it 'User.find_by(uuid: params[:uuid])のJSONを返す' do
+        expect(user_json).to eq({
+          'uuid' => user.uuid,
+          'name' => '新しいユーザー名',
+          'twitterId' => user.twitter_id,
+          'screenName' => user.screen_name,
+          'description' => '新しい詳細',
+          'privacy' => '非公開',
+          'role' => user.role_i18n,
+        })
+      end
+    end
+    context '自分以外のuserの場合' do
+      let(:other_user) { create(:user) }
+      before do
+        login_as(other_user)
+        patch "/api/v1/users/#{user.uuid}", params: {
+          user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+        }
+      end
+      it '404 NotFoundを返す' do
+        delete "/api/v1/users/#{user.uuid}"
+        expect(response.status).to eq 404
+      end
+    end
+    context 'ログインしていない場合' do
+      before do
+        patch "/api/v1/users/#{user.uuid}", params: {
+          user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+        }
+      end
+      it '401 Unauthorizedを返す' do
+        expect(response.status).to eq 401
+      end
+    end
+  end
+
   describe 'DELETE /api/v1/users/:uuid' do
     let!(:user) { create(:user) }
     context '自分の場合' do

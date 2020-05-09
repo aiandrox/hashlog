@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       # namespace :mypage do
       #   resources :registered_tags, only: %i[show create], path: :tags
       # end
-      resources :users, param: :uuid, only: %i[index show destroy] do
+      resources :users, param: :uuid, only: %i[index show update destroy] do
         get 'current', on: :collection
         resources :registered_tags, only: %i[index]
       end
