@@ -24,7 +24,7 @@
         </v-col>
         <v-col>
           <!-- ステータス -->
-          <profile-status :role="user.role" :privacy="user.privacy" :isEditing="isEditing" />
+          <profile-status :user="user" :isEditing="isEditing" />
         </v-col>
       </v-container>
     </v-card>
