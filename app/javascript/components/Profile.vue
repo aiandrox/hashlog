@@ -19,10 +19,10 @@
             </v-btn>
           </div>
           <div v-show="isEditing">
-            <v-btn class="ma-2" outlined @click="updateUserData">
-              <v-icon left>mdi-pencil</v-icon>保存
-            </v-btn>
             <v-btn class="ma-2" outlined @click="isEditing = false">キャンセル</v-btn>
+            <v-btn class="ma-2" outlined @click="updateUserData">
+              <v-icon left>mdi-content-save</v-icon>保存
+            </v-btn>
             <v-spacer />
             <v-btn class="ma-2" color="error" outlined @click="pushDelete">
               <v-icon left>mdi-account-off</v-icon>ユーザー削除

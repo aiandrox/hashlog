@@ -2,9 +2,7 @@
   <v-row justify-center>
     <v-dialog v-model="dialog" max-width="600px">
       <v-card>
-        <v-system-bar class="pa-5 subtitle-1"
-          >ハッシュタグを登録する</v-system-bar
-        >
+        <v-system-bar class="pa-5 subtitle-1">ハッシュタグを登録する</v-system-bar>
         <v-card-text class="mt-5">
           <v-container>
             <v-text-field
@@ -59,6 +57,7 @@ export default {
         .then(response => {
           const tagId = response.data.registeredTag.id
           this.dialog = false
+          this.tagName = ""
           this.$router.push({ name: "mypageTag", params: { id: tagId } })
         })
         .catch(response => {

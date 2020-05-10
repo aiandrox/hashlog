@@ -11,9 +11,7 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light"
-                >@{{ user.screenName }}</v-list-item-subtitle
-              >
+              <v-list-item-subtitle class="font-weight-light">@{{ user.screenName }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -35,9 +33,7 @@
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
         <v-spacer />
-        <span class="body-2 font-weight-light">{{
-          dayjs(tweet.tweetedAt)
-        }}</span>
+        <span class="body-2 font-weight-light">{{ dayjs(tweet.tweetedAt) }}</span>
       </v-card-actions>
     </v-card>
     <!-- 開発用削除ボタン -->
