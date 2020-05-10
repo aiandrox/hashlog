@@ -1,28 +1,41 @@
 <template>
   <v-card flat>
-    <v-list disabled>
-      <v-list-item-group color="primary">
-        <v-list-item v-for="status in statusArray" :key="status.name">
-          <v-list-item-content>
-            <v-list-item-subtitle>{{ status.title }}</v-list-item-subtitle>
-            <v-list-item-title>{{ status.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
-    <v-btn class="ma-2" outlined @click="pushDelete">
-      <v-icon left>mdi-delete</v-icon>削除
+    <!-- ビュー部分 -->
+    <status-view :registeredTag="registeredTag" v-show="!isEditing" />
+    <!-- 編集部分 -->
+    <status-edit :registeredTag="registeredTag" v-show="isEditing" />
+    <v-btn class="ma-2" outlined @click="isEditing = true" v-show="!isEditing">
+      <v-icon left>mdi-cog</v-icon>設定
     </v-btn>
-    <v-btn class="ma-2" outlined> <v-icon left>mdi-cog</v-icon>設定 </v-btn>
+    <div v-show="isEditing">
+      <v-btn class="ma-2" outlined @click="isEditing = false">
+        <v-icon left>mdi-content-save</v-icon>保存
+      </v-btn>
+      <v-btn class="ma-2" outlined @click="isEditing = false">キャンセル</v-btn>
+      <v-btn class="ma-2" outlined color="error" @click="pushDelete">
+        <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
+      </v-btn>
+    </div>
   </v-card>
 </template>
 
 <script>
+import statusView from "./TagStatusView"
+import statusEdit from "./TagStatusEdit"
 export default {
+  components: {
+    statusView,
+    statusEdit
+  },
   props: {
     registeredTag: {
       type: Object,
       default: () => {}
+    }
+  },
+  data() {
+    return {
+      isEditing: false
     }
   },
   methods: {
