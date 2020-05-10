@@ -20,6 +20,20 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
+  # 最初にツイートした日から経過した日数
+  def all_day_count
+    return 0 if first_tweeted_at.nil?
+
+    first = first_tweeted_at.to_date
+    today = Date.current
+    (today - first).to_i
+  end
+
+  # ツイート率 今日のツイートは取得しないため、all_day_count-1をする
+  def tweet_rate
+    tweeted_day_count * 100 / (all_day_count - 1)
+  end
+
   # TODO: サービスクラス
   def cron_tweets
     last_tweet = tweets.latest

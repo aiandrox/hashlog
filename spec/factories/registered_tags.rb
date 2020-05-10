@@ -10,6 +10,16 @@ FactoryBot.define do
     end
   end
 
+  # 3/7日ツイートをする
+  trait :with_3_7_days_tweets do
+    after(:create) do |registered_tag|
+      create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
+      create(:tweet, tweeted_at: DateTime.now.ago(3.day), registered_tag: registered_tag)
+      create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag)
+      registered_tag.fetch_data
+    end
+  end
+
   trait :remind do
     remind_day { 3 }
   end

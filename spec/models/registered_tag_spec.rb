@@ -58,8 +58,40 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
-    let(:user) { create(:user, :real_value) }
+    describe '#all_day_count' do
+      context '最初のツイートが7日前で計3日分のツイートがあるとき' do
+        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
+        it '7を返す' do
+          registered_tag.fetch_data
+          expect(registered_tag.all_day_count).to eq 7
+        end
+      end
+      context 'ツイートを取得していないとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        it '0を返す' do
+          expect(registered_tag.all_day_count).to eq 0
+        end
+      end
+    end
+
+    describe '#tweet_rate' do
+      context '最初のツイートが7日前で計3日分のツイートがあるとき' do
+        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
+        it '3 / (7-1) * 100 = 50(%)を返す' do
+          registered_tag.fetch_data
+          expect(registered_tag.tweet_rate).to eq 50
+        end
+      end
+      context 'ツイートを取得していないとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        it '0を返す' do
+          expect(registered_tag.tweet_rate).to eq 0
+        end
+      end
+    end
+
     describe '#cron_tweets' do
+      let(:user) { create(:user, :real_value) }
       let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
       let(:registered_tag) { user.registered_tag(tag) }
       before 'タグ登録時にツイートを取得' do
