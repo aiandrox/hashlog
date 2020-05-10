@@ -43,7 +43,7 @@ class RegisteredTag < ApplicationRecord
       return
     end
 
-    return if last_tweet.tweeted_at > Date.yesterday
+    return if last_tweet.tweeted_at > DateTime.yesterday
 
     since_id = last_tweet.tweet_id.to_i
     add_tweets(since_id)

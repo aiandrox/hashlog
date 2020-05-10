@@ -117,10 +117,10 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
 
-      context '既に前日のツイートを取得しているとき',
-      vcr: { cassette_name: 'twitter_api/everyday_search/既に前日のツイートを取得しているとき' } do
-        before { create(:tweet, :tweeted_yesterday, registered_tag: registered_tag) }
-        it 'Twitter::Client#add_tweetsを実行しない' do
+      context '既に前日のツイートを取得しているとき' do
+        it '#add_tweetsを実行しない' do
+          create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
+          registered_tag.fetch_data
           expect(registered_tag).not_to receive(:add_tweets)
           registered_tag.cron_tweets
         end
@@ -146,6 +146,7 @@ RSpec.describe RegisteredTag, type: :model do
     end
 
     describe '#create_tweets(type="standard")' do
+      let(:user) { create(:user, :real_value) }
       context 'ハッシュタグのツイートがTwitterに存在するとき',
         vcr: { cassette_name: 'twitter_api/standard_search' } do
         let(:present_tag) do
@@ -167,6 +168,7 @@ RSpec.describe RegisteredTag, type: :model do
     end
 
     describe '#add_tweets(since_id)' do
+      let(:user) { create(:user, :real_value) }
       let(:since_id) { '1255854602626330624' }
       context 'ハッシュタグのツイートがTwitterに存在するとき',
         vcr: { cassette_name: 'twitter_api/everyday_search' } do
