@@ -1,5 +1,5 @@
 <template>
-  <v-list v-show="isEditing">
+  <v-list>
     <v-list-item class="pb-0">
       <v-list-item-content class="pb-0">
         <v-list-item-subtitle>ハッシュタグ</v-list-item-subtitle>
@@ -8,28 +8,29 @@
     </v-list-item>
     <v-list-item>
       <v-list-item-content class="pt-0">
-        <v-form v-model="valid" class="pt-0">
+        <v-form class="pt-0">
           <v-select
-            v-model="select"
-            :items="items"
-            :rules="[v => !!v || 'Item is required']"
+            v-model="registeredTag.privacy"
+            :items="privacyChoices"
+            prepend-icon="mdi-earth"
             required
-          ></v-select>
-          <v-container>
-            <v-checkbox v-model="isRemind">
-              <template v-slot:label>
-                <div @click.stop>リマインダーを使用する</div>
-              </template>
-            </v-checkbox>
-          </v-container>
-          <v-text-field
-            v-show="isRemind"
-            v-model="firstname"
-            label="リマインダー"
-            hint="設定した日数ツイートがない場合、Hashlogアカウントからリプライが送られます。"
-            persistent-hint
-            suffix="日"
           />
+          <v-container>
+            <v-checkbox
+              v-model="isRemind"
+              class="mt-0"
+              messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます。"
+              label="リマインダーを使用する"
+            />
+            <v-text-field
+              v-show="isRemind"
+              v-model.number="registeredTag.remindDay"
+              placeholder="リマインダー"
+              suffix="日"
+              hint="半角数字 1〜30日"
+              persistent-hint
+            />
+          </v-container>
         </v-form>
       </v-list-item-content>
     </v-list-item>
@@ -44,57 +45,19 @@ export default {
       default: () => {}
     }
   },
-  methods: {
-    pushDelete() {
-      this.$emit("push-delete")
-    },
-    date(date) {
-      if (date === null) {
-        return "まだツイートはありません"
-      }
-      return this.dayjs(date)
+  data() {
+    return {
+      privacyChoices: ["公開", "限定公開", "非公開"],
+      isRemind: true
     }
   },
-  computed: {
-    isRemind() {
-      if (this.registeredTag.remindDay === 0) {
-        return false
+  methods: {
+    checkReminder() {
+      if (!!this.registeredTag.remindDay === false) {
+        this.isRemind = false
+      } else {
+        this.isRemind = true
       }
-      return true
-    },
-    statusArray() {
-      return [
-        {
-          name: "name",
-          title: "ハッシュタグ",
-          text: `#${this.registeredTag.tag.name}`
-        },
-        {
-          name: "tweetedDayCount",
-          title: "ツイート総日数",
-          text: `${this.registeredTag.tweetedDayCount}日`
-        },
-        {
-          name: "privacy",
-          title: "公開設定",
-          text: this.registeredTag.privacy
-        },
-        {
-          name: "remindDay",
-          title: "リマインダー",
-          text: this.registeredTag.remindDay
-        },
-        {
-          name: "firstTweetedAt",
-          title: "初めてのツイート",
-          text: this.date(this.registeredTag.firstTweetedAt)
-        },
-        {
-          name: "lastTweetedAt",
-          title: "最新のツイート",
-          text: this.date(this.registeredTag.lastTweetedAt)
-        }
-      ]
     }
   }
 }
