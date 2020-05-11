@@ -4,13 +4,13 @@
       <v-container row>
         <v-col cols="12" lg="8">
           <!-- プロフィール -->
-          <profile-user :user="user" v-show="!isEditing" />
+          <profile-user v-show="!isEditing" :user="user" />
           <!-- ユーザー編集 -->
-          <profile-edit :user="user" v-show="isEditing" />
+          <profile-edit v-show="isEditing" :user="user" />
         </v-col>
         <v-col cols="9" lg="4">
           <!-- ステータス -->
-          <profile-status :user="user" :isEditing="isEditing" />
+          <profile-status :is-editing="isEditing" :user="user" />
         </v-col>
         <v-card-actions>
           <div v-show="!isEditing">
@@ -19,7 +19,11 @@
             </v-btn>
           </div>
           <div v-show="isEditing">
-            <v-btn class="ma-2" outlined @click="isEditing = false">キャンセル</v-btn>
+            <v-btn
+              class="ma-2"
+              outlined
+              @click="isEditing = false"
+            >キャンセル</v-btn>
             <v-btn class="ma-2" outlined @click="updateUserData">
               <v-icon left>mdi-content-save</v-icon>保存
             </v-btn>
@@ -40,11 +44,6 @@ import profileStatus from "./ProfileStatus"
 import profileEdit from "./ProfileEdit"
 import profileUser from "./ProfileUser"
 export default {
-  data() {
-    return {
-      isEditing: false
-    }
-  },
   components: {
     profileUser,
     profileEdit,
@@ -54,6 +53,11 @@ export default {
     user: {
       type: Object,
       default: () => {}
+    }
+  },
+  data() {
+    return {
+      isEditing: false
     }
   },
   computed: {

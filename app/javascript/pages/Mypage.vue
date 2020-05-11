@@ -11,7 +11,7 @@
     />
     <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
       ツイートを含む全てのデータが消えて
-      <br />復活できなくなります。
+      <br>復活できなくなります。
     </delete-dialog>
   </div>
 </template>
@@ -50,11 +50,11 @@ export default {
     async fetchUserData() {
       try {
         const userRes = await axios.get("/api/v1/users/current")
-        const user = userRes.data.user
+        const { user } = userRes.data
         const registeredTagsRes = await axios.get(
           `/api/v1/users/${user.uuid}/registered_tags`
         )
-        const registeredTags = registeredTagsRes.data.registeredTags
+        const { registeredTags } = registeredTagsRes.data
         this.user = user
         this.registeredTags = registeredTags
       } catch (error) {

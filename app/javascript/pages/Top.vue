@@ -1,7 +1,7 @@
 <template>
   <div>
     トップページ
-    <br />
+    <br>
     <a href="api/v1/oauth/twitter">ログイン</a>
   </div>
 </template>

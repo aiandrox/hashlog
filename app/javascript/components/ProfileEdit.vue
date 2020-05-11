@@ -9,14 +9,25 @@
       </v-list-item-avatar>
       <v-list-item-content row>
         <v-col cols="12" md="5">
-          <v-text-field v-model="user.name" :counter="30" label="ユーザーネーム" required></v-text-field>
+          <v-text-field
+            v-model="user.name"
+            :counter="30"
+            label="ユーザーネーム"
+            required
+          />
         </v-col>
-        <v-col cols="12" md="4"></v-col>
+        <v-col cols="12" md="4" />
       </v-list-item-content>
     </v-list-item>
     <v-card-text class="my-0">
       <div class="body-1">
-        <v-textarea outlined v-model="user.description" :counter="300" rows="3" label="プロフィール"></v-textarea>
+        <v-textarea
+          v-model="user.description"
+          outlined
+          :counter="300"
+          rows="3"
+          label="プロフィール"
+        />
       </div>
     </v-card-text>
   </v-form>

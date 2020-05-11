@@ -2,7 +2,9 @@
   <v-row justify-center>
     <v-dialog v-model="dialog" max-width="600px">
       <v-card>
-        <v-system-bar class="pa-5 subtitle-1">ハッシュタグを登録する</v-system-bar>
+        <v-system-bar
+          class="pa-5 subtitle-1"
+        >ハッシュタグを登録する</v-system-bar>
         <v-card-text class="mt-5">
           <v-container>
             <v-text-field
@@ -32,15 +34,15 @@
 import axios from "axios"
 import loading from "./shared/TheLoading"
 export default {
+  components: {
+    loading
+  },
   data() {
     return {
       dialog: false,
       tagName: "",
       loading: false
     }
-  },
-  components: {
-    loading
   },
   methods: {
     open() {

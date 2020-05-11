@@ -5,9 +5,11 @@ import VueRouter from "vue-router"
 import router from "./router"
 Vue.use(VueRouter)
 
-// import Vuex from "vuex"
-// Import store from './store.js'
-// Vue.use(Vuex)
+/*
+ * import Vuex from "vuex"
+ * Import store from './store.js'
+ * Vue.use(Vuex)
+ */
 
 import Axios from "axios"
 import VueAxiosPlugin from "../plugins/vue-axios"
@@ -31,9 +33,11 @@ const vuetify = new Vuetify({
   theme: {
     themes: {
       light: {
-        // primary: "#E53935",
-        // secondary: "#FFCDD2",
-        // accent: "#3F51B5"
+        /*
+         * primary: "#E53935",
+         * secondary: "#FFCDD2",
+         * accent: "#3F51B5"
+         */
       }
     }
   }

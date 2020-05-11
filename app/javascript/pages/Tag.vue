@@ -3,7 +3,7 @@
     <tab :registered-tags="registeredTags" />
     <v-container class="d-flex flex-row-reverse pt-0" row>
       <v-col cols="12" md>
-        <tag-status @push-delete="showDeleteDialog" :registered-tag="registeredTag" />
+        <tag-status :registered-tag="registeredTag" @push-delete="showDeleteDialog" />
       </v-col>
       <v-spacer />
       <v-col cols="12" md="6" class="pt-0">
@@ -12,7 +12,7 @@
     </v-container>
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
       保存されていたツイートのデータが
-      <br />全て消えてしまいます。
+      <br>全て消えてしまいます。
     </delete-dialog>
   </div>
 </template>
@@ -79,23 +79,23 @@ export default {
       try {
         // TODO: await地獄
         const userRes = await axios.get("/api/v1/users/current")
-        const user = userRes.data.user
+        const { user } = userRes.data
         this.user = user
 
         const registeredTagsRes = await axios.get(
           `/api/v1/users/${user.uuid}/registered_tags`
         )
-        const registeredTags = registeredTagsRes.data.registeredTags
+        const { registeredTags } = registeredTagsRes.data
         this.registeredTags = registeredTags
 
         const registeredTagRes = await axios.get(this.registeredTagUrl)
-        const registeredTag = registeredTagRes.data.registeredTag
+        const { registeredTag } = registeredTagRes.data
         this.registeredTag = registeredTag
 
         const tweetsRes = await axios.get(
           `/api/v1/registered_tags/${registeredTag.id}/tweets`
         )
-        const tweets = tweetsRes.data.tweets
+        const { tweets } = tweetsRes.data
         this.tweets = tweets
       } catch (error) {
         console.log(error)

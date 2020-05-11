@@ -17,14 +17,6 @@ export default {
       default: () => {}
     }
   },
-  methods: {
-    date(date) {
-      if (date === null) {
-        return "まだツイートはありません"
-      }
-      return this.dayjs(date)
-    }
-  },
   computed: {
     statusArray() {
       return [
@@ -49,6 +41,14 @@ export default {
           text: this.date(this.registeredTag.lastTweetedAt)
         }
       ]
+    }
+  },
+  methods: {
+    date(date) {
+      if (date === null) {
+        return "まだツイートはありません"
+      }
+      return this.dayjs(date)
     }
   }
 }

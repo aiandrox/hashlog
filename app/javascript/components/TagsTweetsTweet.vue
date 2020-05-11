@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
+    <v-card
+      flat
+      outlined
+      max-width="500"
+      class="mt-3"
+      :href="tweetUrl"
+    >
       <v-card-title>
         <v-list-item class="pl-0">
           <v-list-item :href="userUrl">
@@ -11,7 +17,9 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light">@{{ user.screenName }}</v-list-item-subtitle>
+              <v-list-item-subtitle
+                class="font-weight-light"
+              >@{{ user.screenName }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -33,7 +41,9 @@
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
         <v-spacer />
-        <span class="body-2 font-weight-light">{{ dayjs(tweet.tweetedAt) }}</span>
+        <span class="body-2 font-weight-light">{{
+          dayjs(tweet.tweetedAt)
+        }}</span>
       </v-card-actions>
     </v-card>
     <!-- 開発用削除ボタン -->
@@ -81,7 +91,7 @@ export default {
       ]
     },
     deleteUrl() {
-      const id = this.tweet.id
+      const { id } = this.tweet
       return `/api/v1/tweets/${id}`
     }
   },
