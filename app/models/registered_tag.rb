@@ -1,6 +1,4 @@
 class RegisteredTag < ApplicationRecord
-  before_validation :filter_remind_day
-
   has_many :tweets, dependent: :destroy
   belongs_to :user
   belongs_to :tag
@@ -78,16 +76,5 @@ class RegisteredTag < ApplicationRecord
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
-  end
-
-  def filter_remind_day
-    actual_remind_day = remind_day_before_type_cast
-    self.remind_day = if actual_remind_day.nil?
-                        0
-                      elsif actual_remind_day.integer?
-                        actual_remind_day
-                      else
-                        actual_remind_day.tr!('０-９', '0-9').split('日').first
-                      end
   end
 end

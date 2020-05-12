@@ -39,7 +39,9 @@ export default {
     }
   },
   watch: {
-    $route: "resetEditing"
+    $route() {
+      this.isEditing = false
+    }
   },
   methods: {
     pushDelete() {
