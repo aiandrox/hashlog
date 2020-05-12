@@ -5,20 +5,16 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :mypage, only: [:show]
-      # namespace :mypage do
-      #   resources :registered_tags, only: %i[show create], path: :tags
-      # end
       resources :users, param: :uuid, only: %i[index show update destroy] do
         get 'current', on: :collection
         resources :registered_tags, only: %i[index]
       end
-      resources :registered_tags, only: %i[index show create destroy] do
+      resources :registered_tags, only: %i[index show create update destroy] do
         resources :tweets, only: :index
       end
       resources :tags, only: :index
       resources :tweets, only: :destroy
-      # # ログイン、ログアウト
+      # ログイン、ログアウト
       post 'oauth/callback', to: 'oauths#callback'
       get 'oauth/callback', to: 'oauths#callback'
       get 'oauth/:provider', to: 'oauths#oauth'

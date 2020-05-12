@@ -1,11 +1,14 @@
 class RegisteredTag < ApplicationRecord
+  before_validation :filter_remind_day
+
   has_many :tweets, dependent: :destroy
   belongs_to :user
   belongs_to :tag
 
   validates :tweeted_day_count, presence: true
   validates :privacy, presence: true
-  validates :remind_day, presence: true
+  validates :remind_day, presence: true,
+                         numericality: { only_integer: true, less_than_or_equal_to: 30 }
   validates :tag_id, uniqueness: { scope: :user_id, message: 'を既に登録しています' }
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
@@ -29,7 +32,8 @@ class RegisteredTag < ApplicationRecord
     (today - first).to_i
   end
 
-  # ツイート率 今日のツイートは取得しないため、all_day_count-1をする
+  # ツイート率 今日のツイートはまだ取得できていないため、all_day_count-1をする
+  # TODO: 取得した日は場合によっては100％を超えそう
   def tweet_rate
     tweeted_day_count * 100 / (all_day_count - 1)
   end
@@ -61,6 +65,14 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
+  def fetch_data(type = 'new')
+    self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
+    self.last_tweeted_at = tweets.latest.tweeted_at
+    self.tweeted_day_count = tweets.tweeted_day_count
+  end
+
+  private
+
   def add_tweets(since_id)
     client = TwitterAPI::Client.new(user, tag.name, since_id)
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
@@ -68,9 +80,7 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
-  def fetch_data(type = 'new')
-    self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
-    self.last_tweeted_at = tweets.latest.tweeted_at
-    self.tweeted_day_count = tweets.tweeted_day_count
+  def filter_remind_day
+    self.remind_day = 0 if remind_day.nil?
   end
 end

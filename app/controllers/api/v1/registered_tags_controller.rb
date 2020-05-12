@@ -1,5 +1,5 @@
 class Api::V1::RegisteredTagsController < Api::V1::BaseController
-  before_action :require_login, only: %i[create destroy]
+  before_action :require_login, only: %i[create update destroy]
 
   def index
     registered_tags = RegisteredTag.by_user(params[:user_uuid]).asc.includes(:tag)
@@ -26,6 +26,23 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
     end
   end
 
+  def update
+    registered_tag = current_user.registered_tags.find(params[:id])
+    registered_tag.privacy = RegisteredTag.privacies_i18n.invert[tag_params[:privacy]]
+    registered_tag.remind_day = tag_params[:remind_day]
+
+    if registered_tag.save
+      render json: registered_tag
+    else
+      error = {
+        'status' => '422',
+        'title' => '登録内容が適切ではありません。',
+        'detail' => '登録内容を確認してください。'
+      }
+      render json: { 'errors': [error] }, status: 422
+    end
+  end
+
   def destroy
     registered_tag = current_user.registered_tags.find(params[:id])
     registered_tag.destroy!
@@ -34,6 +51,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   private
 
   def tag_params
-    params.require(:tag).permit(:privacy, :remind_day, :name)
+    permit_params = params.require(:tag).permit(:privacy, :remindDay, :name)
+    permit_params.transform_keys(&:underscore)
   end
 end
