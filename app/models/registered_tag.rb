@@ -7,7 +7,7 @@ class RegisteredTag < ApplicationRecord
 
   validates :tweeted_day_count, presence: true
   validates :privacy, presence: true
-  validates :remind_day, presence: true,
+  validates :remind_day, presence: true
                          numericality: { only_integer: true, less_than_or_equal_to: 30 }
   validates :tag_id, uniqueness: { scope: :user_id, message: 'を既に登録しています' }
 
@@ -81,6 +81,13 @@ class RegisteredTag < ApplicationRecord
   end
 
   def filter_remind_day
-    self.remind_day = 0 if remind_day.nil?
+    actual_remind_day = remind_day_before_type_cast
+    self.remind_day = if actual_remind_day.nil?
+                        0
+                      elsif actual_remind_day.integer?
+                        actual_remind_day
+                      else
+                        actual_remind_day.tr!('０-９', '0-9').split('日').first
+                      end
   end
 end

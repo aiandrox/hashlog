@@ -18,7 +18,7 @@ RSpec.describe 'RegisteredTags', type: :request do
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
           'privacy' => registered_tag.privacy_i18n,
-          'remindDay' => '未設定',
+          'remindDay' => registered_tag.remind_day,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {
@@ -54,7 +54,7 @@ RSpec.describe 'RegisteredTags', type: :request do
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
           'privacy' => registered_tag.privacy_i18n,
-          'remindDay' => '未設定',
+          'remindDay' => registered_tag.remind_day,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {
@@ -82,7 +82,7 @@ RSpec.describe 'RegisteredTags', type: :request do
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
           'privacy' => registered_tag.privacy_i18n,
-          'remindDay' => '未設定',
+          'remindDay' => registered_tag.remind_day,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {

@@ -27,7 +27,7 @@
               v-model.number="registeredTag.remindDay"
               placeholder="リマインダー"
               suffix="日"
-              hint="半角数字 1〜30日"
+              hint="1〜30日で設定できます。"
               persistent-hint
             />
           </v-container>

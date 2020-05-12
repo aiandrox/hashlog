@@ -4,6 +4,7 @@
     <v-container class="d-flex flex-row-reverse pt-0" row>
       <v-col cols="12" md>
         <tag-status
+          ref="tagStatus"
           :registered-tag="registeredTag"
           @push-delete="showDeleteDialog"
           @push-update="updateTagData"
@@ -107,10 +108,10 @@ export default {
     },
     updateTagData() {
       try {
-        console.log("aaa")
         axios.patch(`/api/v1/registered_tags/${this.registeredTag.id}`, {
-          registeredTag: this.registeredTag
+          tag: this.registeredTag
         })
+        this.$refs.tagStatus.finishEdit()
       } catch (error) {
         console.log(error)
       }
@@ -119,14 +120,12 @@ export default {
       this.$refs.deleteDialog.open()
     },
     deleteTag() {
-      axios
-        .delete(this.registeredTagUrl)
-        .then(response => {
-          this.$router.push({ name: "mypage" })
-        })
-        .catch(response => {
-          console.log(response)
-        })
+      try {
+        axios.delete(this.registeredTagUrl)
+        this.$router.push({ name: "mypage" })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
