@@ -1,4 +1,6 @@
 class RegisteredTag < ApplicationRecord
+  before_validation :filter_remind_day
+
   has_many :tweets, dependent: :destroy
   belongs_to :user
   belongs_to :tag
@@ -69,12 +71,16 @@ class RegisteredTag < ApplicationRecord
     self.tweeted_day_count = tweets.tweeted_day_count
   end
 
-  private
-
   def add_tweets(since_id)
     client = TwitterAPI::Client.new(user, tag.name, since_id)
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
+  end
+
+  private
+
+  def filter_remind_day
+    self.remind_day = remind_day
   end
 end
