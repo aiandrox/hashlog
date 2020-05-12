@@ -30,9 +30,6 @@ import tweets from "../components/TagsTweets"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
-  title() {
-    return this.registeredTag.tag.name
-  }, // 動的な名前がつけられない。
   components: {
     tagStatus,
     tab,
@@ -72,12 +69,14 @@ export default {
     }
   },
   watch: {
-    $route() {
-      this.fetchData()
+    async $route() {
+      await this.fetchData()
+      document.title = `${this.registeredTag.tag.name} | Hashlog`
     }
   },
-  mounted() {
-    this.fetchData()
+  async mounted() {
+    await this.fetchData()
+    document.title = `${this.registeredTag.tag.name} | Hashlog`
   },
   methods: {
     async fetchData() {
