@@ -4,7 +4,7 @@
       <Header />
       <v-content>
         <v-container>
-          <flash-message />
+          <!-- <flash-message /> -->
           <router-view />
         </v-container>
       </v-content>
@@ -16,14 +16,14 @@
 <script>
 import Header from "./components/shared/TheHeader.vue"
 import Footer from "./components/shared/TheFooter.vue"
-import FlashMessage from "./components/shared/TheFlashMessage.vue"
+// import FlashMessage from "./components/shared/TheFlashMessage.vue"
 
 export default {
   name: "MyApp",
   components: {
     Header,
-    Footer,
-    FlashMessage
+    Footer
+    // FlashMessage
   }
 }
 </script>

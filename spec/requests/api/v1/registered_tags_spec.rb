@@ -17,8 +17,8 @@ RSpec.describe 'RegisteredTags', type: :request do
         expect(tag_json).to eq({
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
-          'privacy' => registered_tag.privacy,
-          'remindDay' => registered_tag.remind_day,
+          'privacy' => registered_tag.privacy_i18n,
+          'remindDay' => nil,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {
@@ -53,8 +53,8 @@ RSpec.describe 'RegisteredTags', type: :request do
         expect(tag_json).to eq({
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
-          'privacy' => registered_tag.privacy,
-          'remindDay' => registered_tag.remind_day,
+          'privacy' => registered_tag.privacy_i18n,
+          'remindDay' => nil,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {
@@ -81,8 +81,8 @@ RSpec.describe 'RegisteredTags', type: :request do
         expect(json['registeredTag']).to eq({
           'id' => registered_tag.id,
           'tweetedDayCount' => registered_tag.tweeted_day_count,
-          'privacy' => registered_tag.privacy,
-          'remindDay' => registered_tag.remind_day,
+          'privacy' => registered_tag.privacy_i18n,
+          'remindDay' => nil,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {
@@ -152,6 +152,99 @@ RSpec.describe 'RegisteredTags', type: :request do
         expect do
           post '/api/v1/registered_tags', params: { tag: { name: 'hashtag_name' } }
         end.not_to change(RegisteredTag, :count)
+      end
+    end
+  end
+
+  describe 'PATCH /api/v1/users/:uuid' do
+    let(:user) { create(:user) }
+    let(:registered_tag) { create(:registered_tag, remind_day: 1, user: user) }
+    let(:registered_tag_json) { json['tag'] }
+    let(:remind_day) { rand(0..30).to_s }
+    context '自分の場合' do
+      before { login_as(user) }
+      context '正常系 remind_dayが0〜30のいずれかの数字（文字列）のとき' do
+        before do
+          patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+            tag: { privacy: '非公開', remindDay: remind_day }
+          }
+        end
+        it '200 OKを返す' do
+          expect(response.status).to eq 200
+        end
+        it 'registered_tagのデータが変更される' do
+          updated_registered_tag = registered_tag.reload
+          expect(updated_registered_tag.privacy).to eq 'closed'
+          expect(updated_registered_tag.remind_day).to eq remind_day.to_i
+        end
+        it 'registered_tagのJSONを返す' do
+          expect(json['registeredTag']).to eq({
+            'id' => registered_tag.id,
+            'tweetedDayCount' => registered_tag.tweeted_day_count,
+            'privacy' => '非公開',
+            'remindDay' => remind_day.to_i,
+            'firstTweetedAt' => registered_tag.first_tweeted_at,
+            'lastTweetedAt' => registered_tag.last_tweeted_at,
+            'tag' => {
+              'id' => registered_tag.tag.id,
+              'name' => registered_tag.tag.name,
+            }
+          })
+        end
+      end
+      context 'remind_dayが"aaa"（ただの文字列）のとき' do
+        let(:remind_day) { 'aaa' }
+        it 'remind_dayは0として保存される' do
+          patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+            tag: { privacy: '非公開', remindDay: remind_day }
+          }
+          updated_registered_tag = registered_tag.reload
+          expect(updated_registered_tag.remind_day).to eq 0
+        end
+      end
+      context 'remind_dayが31のとき' do
+        let(:remind_day) { 31 }
+        it '422 UnprocessableEntityを返す' do
+          patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+            tag: { privacy: '非公開', remindDay: remind_day }
+          }
+          expect(response.status).to eq 422
+        end
+        it 'エラーメッセージのJSONを返す' do
+          patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+            tag: { privacy: '非公開', remindDay: remind_day }
+          }
+          expect(json['errors']).to eq([{
+            'status' => '422',
+            'title' => '登録内容が適切ではありません。',
+            'detail' => '登録内容を確認してください。'
+          }])
+        end
+        it 'registered_tag.remind_dayを変更しない' do
+          expect do
+            patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+              tag: { privacy: '非公開', remindDay: remind_day }
+            }
+          end.not_to change(registered_tag, :remind_day)
+        end
+      end
+    end
+    context '自分以外のregistered_tagの場合' do
+      let(:other_registered_tag) { create(:registered_tag) }
+      it '404 NotFoundを返す' do
+        login_as(user)
+        patch "/api/v1/registered_tags/#{other_registered_tag.id}", params: {
+          tag: { privacy: '非公開', remindDay: remind_day }
+        }
+        expect(response.status).to eq 404
+      end
+    end
+    context 'ログインしていない場合' do
+      it '401 Unauthorizedを返す' do
+        patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+          tag: { privacy: '非公開', remindDay: remind_day }
+        }
+        expect(response.status).to eq 401
       end
     end
   end

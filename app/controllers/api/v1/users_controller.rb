@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :require_login, only: %i[current destroy]
+  before_action :require_login, only: %i[current update destroy]
 
   def index
     users = User.all
@@ -9,6 +9,25 @@ class Api::V1::UsersController < Api::V1::BaseController
   def show
     user = User.find_by(uuid: params[:uuid])
     render json: user
+  end
+
+  def update
+    user = User.find_by(uuid: params[:uuid])
+    return head 404 unless user == current_user
+
+    user.assign_attributes(user_params)
+    user.privacy = User.privacies_i18n.invert[params[:user][:privacy]]
+
+    if user.save
+      render json: user
+    else
+      error = {
+        'status' => '422',
+        'title' => '登録内容が適切ではありません。',
+        'detail' => '登録内容を確認してください。'
+      }
+      render json: { 'errors': [error] }, status: 422
+    end
   end
 
   def destroy
@@ -23,5 +42,11 @@ class Api::V1::UsersController < Api::V1::BaseController
   def current
     user = current_user
     render json: user
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:name, :description)
   end
 end

@@ -1,5 +1,10 @@
 <template>
-  <v-app-bar app flat dark src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
+  <v-app-bar
+    app
+    flat
+    dark
+    src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+  >
     <v-toolbar-title>Hashlog</v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
@@ -11,11 +16,11 @@
 </template>
 
 <script>
-import Axios from "axios"
+import axios from "axios"
 export default {
   methods: {
     logout() {
-      Axios.delete("/api/v1/logout", {}).then(response => {
+      axios.delete("/api/v1/logout", {}).then(response => {
         this.$router.push({ name: "top" })
       })
     }

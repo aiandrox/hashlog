@@ -18,8 +18,8 @@ RSpec.describe 'Users', type: :request do
           'twitterId' => user.twitter_id,
           'screenName' => user.screen_name,
           'description' => user.description,
-          'privacy' => user.privacy,
-          'role' => user.role,
+          'privacy' => user.privacy_i18n,
+          'role' => user.role_i18n,
         })
       end
     end
@@ -41,9 +41,87 @@ RSpec.describe 'Users', type: :request do
         'twitterId' => user.twitter_id,
         'screenName' => user.screen_name,
         'description' => user.description,
-        'privacy' => user.privacy,
-        'role' => user.role,
+        'privacy' => user.privacy_i18n,
+        'role' => user.role_i18n,
       })
+    end
+  end
+
+  describe 'PATCH /api/v1/users/:uuid' do
+    let(:user) { create(:user) }
+    let(:user_json) { json['user'] }
+    context '自分の場合' do
+      before { login_as(user) }
+      context '正常系' do
+        before do
+          patch "/api/v1/users/#{user.uuid}", params: {
+            user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+          }
+        end
+        it '200 OKを返す' do
+          expect(response.status).to eq 200
+        end
+        it 'userのデータが変更される' do
+          updated_user = user.reload
+          expect(updated_user.name).to eq '新しいユーザー名'
+          expect(updated_user.description).to eq '新しい詳細'
+          expect(updated_user.privacy).to eq 'closed'
+        end
+        it 'userのJSONを返す' do
+          expect(user_json).to eq({
+            'uuid' => user.uuid,
+            'name' => '新しいユーザー名',
+            'twitterId' => user.twitter_id,
+            'screenName' => user.screen_name,
+            'description' => '新しい詳細',
+            'privacy' => '非公開',
+            'role' => user.role_i18n,
+          } )
+        end
+      end
+      context '値が不適な場合' do
+        it '422 UnprocessableEntityを返す' do
+          patch "/api/v1/users/#{user.uuid}", params: {
+            user: { name: '', description: '新しい詳細', privacy: '非公開' }
+          }
+          expect(response.status).to eq 422
+        end
+        it 'エラーメッセージのJSONを返す' do
+          patch "/api/v1/users/#{user.uuid}", params: {
+            user: { name: '', description: '新しい詳細', privacy: '非公開' }
+          }
+          expect(json['errors']).to eq([{
+            'status' => '422',
+            'title' => '登録内容が適切ではありません。',
+            'detail' => '登録内容を確認してください。'
+          }])
+        end
+        it 'user.nameを変更しない' do
+          expect do
+            patch "/api/v1/users/#{user.uuid}", params: {
+              user: { name: '', description: '新しい詳細', privacy: '非公開' }
+            }
+          end.not_to change(user, :name)
+        end
+      end
+    end
+    context '自分以外のuserの場合' do
+      let(:other_user) { create(:user) }
+      it '404 NotFoundを返す' do
+        login_as(other_user)
+        patch "/api/v1/users/#{user.uuid}", params: {
+          user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+        }
+        expect(response.status).to eq 404
+      end
+    end
+    context 'ログインしていない場合' do
+      it '401 Unauthorizedを返す' do
+        patch "/api/v1/users/#{user.uuid}", params: {
+          user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+        }
+        expect(response.status).to eq 401
+      end
     end
   end
 
@@ -112,8 +190,8 @@ RSpec.describe 'Users', type: :request do
           'twitterId' => current_user.twitter_id,
           'screenName' => current_user.screen_name,
           'description' => current_user.description,
-          'privacy' => current_user.privacy,
-          'role' => current_user.role,
+          'privacy' => current_user.privacy_i18n,
+          'role' => current_user.role_i18n,
         })
       end
     end

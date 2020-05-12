@@ -4,8 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "5.0.1",
     "axios": "^0.19.2",
-    "moment": "^2.24.0",
-    "moment-locales-webpack-plugin": "^1.2.0",
+    "dayjs": "^1.8.26",
     "vue": "^2.6.11",
     "vue-eslint-parser": "^7.0.0",
     "vue-loader": "^15.9.1",

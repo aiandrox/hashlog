@@ -1,17 +1,27 @@
 <template>
-  <v-card min-width="160" width="200" flat>
-    <v-list disabled>
+  <v-card flat>
+    <v-list :class="{'v-list-item--disabled': !isEditing}">
       <v-subheader>STATUS</v-subheader>
-      <v-list-item-group color="primary">
-        <v-list-item v-for="status in statusArray" :key="status.name">
-          <v-list-item-icon>
-            <v-icon>{{ status.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ status.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
+      <v-list-item @click="togglePrivacy">
+        <v-list-item-icon>
+          <v-icon>mdi-earth</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>{{ user.privacy }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
+        v-for="status in statusArray"
+        :key="status.name"
+        :class="{'v-list-item--disabled': isEditing}"
+      >
+        <v-list-item-icon>
+          <v-icon>{{ status.icon }}</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>{{ status.text }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-card>
 </template>
@@ -19,13 +29,19 @@
 <script>
 export default {
   props: {
-    role: {
-      type: String,
-      default: ""
+    isEditing: {
+      type: Boolean,
+      default: false
     },
-    privacy: {
-      type: String,
-      default: ""
+    user: {
+      role: {
+        type: String,
+        default: ""
+      },
+      privacy: {
+        type: String,
+        default: ""
+      }
     }
   },
   computed: {
@@ -34,14 +50,18 @@ export default {
         {
           name: "role",
           icon: "mdi-account",
-          text: this.role
-        },
-        {
-          name: "privacy",
-          icon: "mdi-earth",
-          text: this.privacy
+          text: this.user.role
         }
       ]
+    }
+  },
+  methods: {
+    togglePrivacy() {
+      if (this.user.privacy === "公開") {
+        this.user.privacy = "非公開"
+      } else {
+        this.user.privacy = "公開"
+      }
     }
   }
 }
