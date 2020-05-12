@@ -1,11 +1,10 @@
 <template>
   <v-footer app absolute>
     <v-spacer />
-    <div>&copy; {{ startYear }} - {{ thisYear }} Hashlog</div>
+    <div>利用規約・プライバシーポリシー | 連絡先</div>
+    <small>&copy; {{ startYear }} - {{ thisYear }} Hashlog</small>
   </v-footer>
 </template>
-
-<style scoped></style>
 
 <script>
 export default {

@@ -2,17 +2,17 @@
   <div>
     <tweet
       v-for="tweet in tweets"
-      :key="tweet.tweet_id"
+      :key="tweet.tweetId"
       :tweet="tweet"
       :user="user"
     />
   </div>
 </template>
 <script>
-import Tweet from "./TagsTweetsTweet"
+import tweet from "./TagsTweetsTweet"
 export default {
   components: {
-    Tweet
+    tweet
   },
   props: {
     user: {

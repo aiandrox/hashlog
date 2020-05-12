@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
+    <v-card
+      flat
+      outlined
+      max-width="500"
+      class="mt-3"
+      :href="tweetUrl"
+    >
       <v-card-title>
         <v-list-item class="pl-0">
           <v-list-item :href="userUrl">
@@ -11,9 +17,9 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light"
-                >@{{ user.screen_name }}</v-list-item-subtitle
-              >
+              <v-list-item-subtitle
+                class="font-weight-light"
+              >@{{ user.screenName }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -35,7 +41,9 @@
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
         <v-spacer />
-        <span class="body-2 font-weight-light">{{ tweeted_at }}</span>
+        <span class="body-2 font-weight-light">{{
+          dayjs(tweet.tweetedAt)
+        }}</span>
       </v-card-actions>
     </v-card>
     <!-- 開発用削除ボタン -->
@@ -45,18 +53,8 @@
   </div>
 </template>
 
-<style scoped></style>
-
-<style scoped>
-.v-card {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-}
-</style>
 <script>
-import Axios from "axios"
-import moment from "moment"
-import "moment/locale/ja"
-moment.locale("ja")
+import axios from "axios"
 
 export default {
   props: {
@@ -71,19 +69,19 @@ export default {
   },
   computed: {
     userUrl() {
-      return `https://twitter.com/${this.user.screen_name}`
+      return `https://twitter.com/${this.user.screenName}`
     },
     tweetUrl() {
-      return `https://twitter.com/${this.user.screen_name}/status/${this.tweet.tweet_id}`
+      return `https://twitter.com/${this.user.screenName}/status/${this.tweet.tweetId}`
     },
     replyUrl() {
-      return `https://twitter.com/intent/tweet?in_reply_to=${this.tweet.tweet_id}`
+      return `https://twitter.com/intent/tweet?in_reply_to=${this.tweet.tweetId}`
     },
     retweetUrl() {
-      return `https://twitter.com/intent/retweet?tweet_id=${this.tweet.tweet_id}`
+      return `https://twitter.com/intent/retweet?tweet_id=${this.tweet.tweetId}`
     },
     likeUrl() {
-      return `https://twitter.com/intent/like?tweet_id=${this.tweet.tweet_id}`
+      return `https://twitter.com/intent/like?tweet_id=${this.tweet.tweetId}`
     },
     buttons() {
       return [
@@ -92,17 +90,14 @@ export default {
         { url: this.likeUrl, color: "pink", icon: "mdi-heart-outline" }
       ]
     },
-    tweeted_at() {
-      return moment(this.tweet.tweeted_at).format("YYYY年M月D日(dd)H時m分")
-    },
     deleteUrl() {
-      const id = this.tweet.id
+      const { id } = this.tweet
       return `/api/v1/tweets/${id}`
     }
   },
   methods: {
     deleteTweet() {
-      Axios.delete(this.deleteUrl).then(response => {})
+      axios.delete(this.deleteUrl).then(response => {})
     }
   }
 }
