@@ -21,6 +21,9 @@ Vue.mixin(titlePlugin)
 import dayjs from "../plugins/dayjs"
 Vue.mixin(dayjs)
 
+import veeValidate from "../plugins/vee-validate"
+Vue.mixin(veeValidate)
+
 import Vuetify from "vuetify"
 import "vuetify/dist/vuetify.min.css"
 import "@mdi/font/css/materialdesignicons.css"

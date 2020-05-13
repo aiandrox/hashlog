@@ -5,6 +5,7 @@
     "@rails/webpacker": "5.0.1",
     "axios": "^0.19.2",
     "dayjs": "^1.8.26",
+    "vee-validate": "^3.3.0",
     "vue": "^2.6.11",
     "vue-eslint-parser": "^7.0.0",
     "vue-loader": "^15.9.1",
