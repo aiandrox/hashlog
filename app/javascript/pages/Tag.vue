@@ -66,15 +66,15 @@ export default {
     registeredTagUrl() {
       const { id } = this.$route.params
       return `/api/v1/registered_tags/${id}`
-    },
-    editedRegisteredTag() {
-      const remindDay = String(this.registeredTag.remindDay)
-      const editedRemindDay = !!remindDay === false ? 0 : this.filter(remindDay)
-      return {
-        privacy: this.registeredTag.privacy,
-        remindDay: editedRemindDay
-      }
     }
+    // editedRegisteredTag() {
+    //   const remindDay = String(this.registeredTag.remindDay)
+    //   const editedRemindDay = !!remindDay === false ? 0 : this.remindDay
+    //   return {
+    //     privacy: this.registeredTag.privacy,
+    //     remindDay: editedRemindDay
+    //   }
+    // }
   },
   watch: {
     async $route() {
@@ -116,7 +116,7 @@ export default {
     async updateTagData() {
       try {
         await axios.patch(`/api/v1/registered_tags/${this.registeredTag.id}`, {
-          tag: this.editedRegisteredTag
+          tag: this.registeredTag
         })
         this.$refs.tagStatus.finishEdit()
         const registeredTagRes = await axios.get(this.registeredTagUrl)
@@ -136,13 +136,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
-    filter(remindDay) {
-      const deleteDayResult = remindDay.split("日").join("")
-      const result = deleteDayResult.replace(/[０-９]/g, s =>
-        String.fromCharCode(s.charCodeAt(0) - 65248)
-      )
-      return result
     }
   }
 }

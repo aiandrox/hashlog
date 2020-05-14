@@ -62,7 +62,7 @@ export default {
       this.$refs.editArea.fetchSelectFromRemindDay()
     },
     pushSave() {
-      this.$refs.editArea.fetchRemindDayFromSelect()
+      this.$refs.editArea.fetchRemindDayFromForm()
       this.$emit("push-update")
     },
     finishEdit() {

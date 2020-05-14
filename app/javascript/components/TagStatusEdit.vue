@@ -59,10 +59,24 @@ export default {
         this.isRemind = true
       }
     },
-    fetchRemindDayFromSelect() {
+    fetchRemindDayFromForm() {
+      this.registeredTag.remindDay = this.filter(
+        String(this.registeredTag.remindDay)
+      )
       if (this.isRemind === false) {
         this.registeredTag.remindDay = 0
       }
+    },
+    filter(remindDay) {
+      if (remindDay === null) {
+        return 0
+      }
+      const deleteDayResult = remindDay.split("日").join("")
+      const result = deleteDayResult.replace(/[０-９]/g, s =>
+        String.fromCharCode(s.charCodeAt(0) - 65248)
+      )
+      // result => "20", "文字列"
+      return isNaN(Number(result)) ? 0 : Number(result)
     }
   }
 }
