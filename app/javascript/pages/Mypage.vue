@@ -6,12 +6,12 @@
     <profile
       ref="profile"
       :user="user"
-      @update-user-data="updateUserData"
+      @push-update="updateUserData"
       @push-delete="showDeleteDialog"
     />
     <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
       ツイートを含む全てのデータが消えて
-      <br>復活できなくなります。
+      <br />復活できなくなります。
     </delete-dialog>
   </div>
 </template>
@@ -61,9 +61,9 @@ export default {
         console.log(error)
       }
     },
-    updateUserData() {
+    async updateUserData() {
       try {
-        axios.patch(`/api/v1/users/${this.user.uuid}`, {
+        await axios.patch(`/api/v1/users/${this.user.uuid}`, {
           user: this.user
         })
         this.$refs.profile.finishEdit()
