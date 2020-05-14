@@ -24,7 +24,7 @@
             />
             <v-text-field
               v-show="isRemind"
-              v-model.number="registeredTag.remindDay"
+              v-model="registeredTag.remindDay"
               placeholder="リマインダー"
               suffix="日"
               hint="1〜30日で設定できます。"

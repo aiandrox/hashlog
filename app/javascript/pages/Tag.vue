@@ -113,12 +113,15 @@ export default {
         console.log(error)
       }
     },
-    updateTagData() {
+    async updateTagData() {
       try {
-        axios.patch(`/api/v1/registered_tags/${this.registeredTag.id}`, {
+        await axios.patch(`/api/v1/registered_tags/${this.registeredTag.id}`, {
           tag: this.editedRegisteredTag
         })
         this.$refs.tagStatus.finishEdit()
+        const registeredTagRes = await axios.get(this.registeredTagUrl)
+        const { registeredTag } = registeredTagRes.data
+        this.registeredTag = registeredTag
       } catch (error) {
         console.log(error)
       }
