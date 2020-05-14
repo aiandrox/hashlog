@@ -19,17 +19,23 @@
             <v-checkbox
               v-model="isRemind"
               class="mt-0"
-              messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます。"
+              messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます"
               label="リマインダーを使用する"
             />
-            <v-text-field
-              v-show="isRemind"
-              v-model="registeredTag.remindDay"
-              placeholder="リマインダー"
-              suffix="日"
-              hint="1〜30日で設定できます。"
-              persistent-hint
-            />
+            <validation-provider
+              v-slot="{ errors }"
+              rules="remindDay|maxRemindDay"
+            >
+              <v-text-field
+                v-show="isRemind"
+                v-model="registeredTag.remindDay"
+                :error-messages="errors"
+                placeholder="リマインダー"
+                suffix="日"
+                hint="1〜30日で設定できます"
+                persistent-hint
+              />
+            </validation-provider>
           </v-container>
         </v-form>
       </v-list-item-content>
@@ -67,6 +73,7 @@ export default {
         this.registeredTag.remindDay = 0
       }
     },
+    // TODO: vee-validate.jsと同じメソッド
     filter(remindDay) {
       if (remindDay === null) {
         return 0
@@ -76,7 +83,8 @@ export default {
         String.fromCharCode(s.charCodeAt(0) - 65248)
       )
       // result => "20", "文字列"
-      return isNaN(Number(result)) ? 0 : Number(result)
+      const number = Number(result) < 0 ? 0 : Number(result)
+      return number
     }
   }
 }

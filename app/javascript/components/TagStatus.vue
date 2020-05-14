@@ -3,23 +3,25 @@
     <!-- ビュー部分 -->
     <status-view v-show="!isEditing" :registered-tag="registeredTag" />
     <!-- 編集部分 -->
-    <status-edit
-      v-show="isEditing"
-      ref="editArea"
-      :registered-tag="registeredTag"
-    />
-    <v-btn v-show="!isEditing" class="ma-2" outlined @click="pushEdit">
-      <v-icon left>mdi-cog</v-icon>設定
-    </v-btn>
-    <div v-show="isEditing">
-      <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
-      <v-btn class="ma-2" outlined @click="pushSave">
-        <v-icon left>mdi-content-save</v-icon>保存
+    <ValidationObserver ref="observer" v-slot="{ invalid }">
+      <status-edit
+        v-show="isEditing"
+        ref="editArea"
+        :registered-tag="registeredTag"
+      />
+      <v-btn v-show="!isEditing" class="ma-2" outlined @click="pushEdit">
+        <v-icon left>mdi-cog</v-icon>設定
       </v-btn>
-      <v-btn class="ma-2" outlined color="error" @click="pushDelete">
-        <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
-      </v-btn>
-    </div>
+      <div v-show="isEditing">
+        <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
+        <v-btn class="ma-2" outlined @click="pushSave" :disabled="invalid">
+          <v-icon left>mdi-content-save</v-icon>保存
+        </v-btn>
+        <v-btn class="ma-2" outlined color="error" @click="pushDelete">
+          <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
+        </v-btn>
+      </div>
+    </ValidationObserver>
   </v-card>
 </template>
 
