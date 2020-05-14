@@ -3,7 +3,11 @@
     <!-- ビュー部分 -->
     <status-view v-show="!isEditing" :registered-tag="registeredTag" />
     <!-- 編集部分 -->
-    <status-edit v-show="isEditing" ref="editArea" :registered-tag="registeredTag" />
+    <status-edit
+      v-show="isEditing"
+      ref="editArea"
+      :registered-tag="registeredTag"
+    />
     <v-btn v-show="!isEditing" class="ma-2" outlined @click="pushEdit">
       <v-icon left>mdi-cog</v-icon>設定
     </v-btn>
@@ -55,9 +59,10 @@ export default {
     },
     pushEdit() {
       this.isEditing = true
-      this.$refs.editArea.checkReminder()
+      this.$refs.editArea.fetchSelectFromRemindDay()
     },
     pushSave() {
+      this.$refs.editArea.fetchRemindDayFromSelect()
       this.$emit("push-update")
     },
     finishEdit() {

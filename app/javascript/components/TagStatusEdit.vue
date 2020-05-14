@@ -52,11 +52,16 @@ export default {
     }
   },
   methods: {
-    checkReminder() {
+    fetchSelectFromRemindDay() {
       if (!!this.registeredTag.remindDay === false) {
         this.isRemind = false
       } else {
         this.isRemind = true
+      }
+    },
+    fetchRemindDayFromSelect() {
+      if (this.isRemind === false) {
+        this.registeredTag.remindDay = 0
       }
     }
   }
