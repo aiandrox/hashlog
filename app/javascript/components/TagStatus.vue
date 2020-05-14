@@ -1,27 +1,19 @@
 <template>
   <v-card flat>
-    <!-- ビュー部分 -->
-    <status-view v-show="!isEditing" :registered-tag="registeredTag" />
     <!-- 編集部分 -->
-    <ValidationObserver ref="observer" v-slot="{ invalid }">
-      <status-edit
-        v-show="isEditing"
-        ref="editArea"
-        :registered-tag="registeredTag"
-      />
-      <v-btn v-show="!isEditing" class="ma-2" outlined @click="pushEdit">
-        <v-icon left>mdi-cog</v-icon>設定
-      </v-btn>
-      <div v-show="isEditing">
-        <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
-        <v-btn class="ma-2" outlined @click="pushSave" :disabled="invalid">
-          <v-icon left>mdi-content-save</v-icon>保存
-        </v-btn>
-        <v-btn class="ma-2" outlined color="error" @click="pushDelete">
-          <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
-        </v-btn>
-      </div>
-    </ValidationObserver>
+    <status-edit
+      v-if="isEditing"
+      ref="editArea"
+      :registered-tag="registeredTag"
+      @push-update="pushUpdate"
+      @push-cancel="pushCancel"
+      @push-delete="pushDelete"
+    />
+    <!-- ビュー部分 -->
+    <status-view v-if="!isEditing" :registered-tag="registeredTag" />
+    <v-btn v-if="!isEditing" class="ma-2" outlined @click="pushEdit">
+      <v-icon left>mdi-cog</v-icon>設定
+    </v-btn>
   </v-card>
 </template>
 
@@ -50,9 +42,6 @@ export default {
     }
   },
   methods: {
-    pushDelete() {
-      this.$emit("push-delete")
-    },
     date(date) {
       if (date === null) {
         return "まだツイートはありません"
@@ -63,14 +52,17 @@ export default {
       this.isEditing = true
       this.$refs.editArea.fetchSelectFromRemindDay()
     },
-    pushSave() {
+    pushDelete() {
+      this.$emit("push-delete")
+    },
+    pushUpdate() {
       this.$refs.editArea.fetchRemindDayFromForm()
       this.$emit("push-update")
     },
-    finishEdit() {
+    pushCancel() {
       this.isEditing = false
     },
-    pushCancel() {
+    finishEdit() {
       this.isEditing = false
     }
   }

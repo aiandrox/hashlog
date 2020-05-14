@@ -39,7 +39,7 @@
         </v-card>
       </ValidationObserver>
       <!-- ローディング -->
-      <loading-view v-show="isLoading" />
+      <loading-view v-if="isLoading" />
     </v-dialog>
   </v-row>
 </template>

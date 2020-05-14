@@ -4,10 +4,10 @@
       <v-container row>
         <v-col cols="12" lg="8">
           <!-- プロフィール -->
-          <profile-view v-show="!isEditing" :user="user" />
+          <profile-view v-if="!isEditing" :user="user" />
           <!-- ユーザー編集 -->
           <profile-edit
-            v-show="isEditing"
+            v-if="isEditing"
             @push-update="pushUpdate"
             @push-delete="pushDelete"
             @push-cencel="pushCancel"
@@ -19,7 +19,7 @@
           <profile-status :is-editing="isEditing" :user="user" />
         </v-col>
         <v-card-actions>
-          <div v-show="!isEditing">
+          <div v-if="!isEditing">
             <v-btn class="ma-2" outlined @click="pushEdit">
               <v-icon left>mdi-pencil</v-icon>編集
             </v-btn>
