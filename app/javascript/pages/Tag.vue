@@ -8,6 +8,7 @@
           :registered-tag="registeredTag"
           @push-delete="showDeleteDialog"
           @push-update="updateTagData"
+          @push-cancel="fetchTagData"
         />
       </v-col>
       <v-spacer />
@@ -67,14 +68,6 @@ export default {
       const { id } = this.$route.params
       return `/api/v1/registered_tags/${id}`
     }
-    // editedRegisteredTag() {
-    //   const remindDay = String(this.registeredTag.remindDay)
-    //   const editedRemindDay = !!remindDay === false ? 0 : this.remindDay
-    //   return {
-    //     privacy: this.registeredTag.privacy,
-    //     remindDay: editedRemindDay
-    //   }
-    // }
   },
   watch: {
     async $route() {
@@ -125,6 +118,11 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    async fetchTagData() {
+      const registeredTagRes = await axios.get(this.registeredTagUrl)
+      const { registeredTag } = registeredTagRes.data
+      this.registeredTag = registeredTag
     },
     showDeleteDialog() {
       this.$refs.deleteDialog.open()

@@ -48,19 +48,19 @@ export default {
       }
       return this.dayjs(date)
     },
-    pushEdit() {
-      this.isEditing = true
+    async pushEdit() {
+      await (this.isEditing = true)
       this.$refs.editArea.fetchSelectFromRemindDay()
     },
     pushDelete() {
       this.$emit("push-delete")
     },
     pushUpdate() {
-      this.$refs.editArea.fetchRemindDayFromForm()
       this.$emit("push-update")
     },
     pushCancel() {
       this.isEditing = false
+      this.$emit("push-cancel")
     },
     finishEdit() {
       this.isEditing = false
