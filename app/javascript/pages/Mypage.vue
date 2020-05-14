@@ -74,15 +74,13 @@ export default {
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
     },
-    deleteUser() {
-      axios
-        .delete(`/api/v1/users/${this.user.uuid}`)
-        .then(response => {
-          this.$router.push({ name: "top" })
-        })
-        .catch(response => {
-          console.log(response)
-        })
+    async deleteUser() {
+      try {
+        await axios.delete(`/api/v1/users/${this.user.uuid}`)
+        this.$router.push({ name: "top" })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
