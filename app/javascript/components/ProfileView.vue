@@ -2,9 +2,7 @@
   <div>
     <v-list-item>
       <v-list-item-avatar color="grey" size="60">
-        <v-img
-          src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-        />
+        <v-img src="" />
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="title">

@@ -10,7 +10,7 @@
             v-show="isEditing"
             @push-update="pushUpdate"
             @push-delete="pushDelete"
-            @push-cencel="cancelEdit"
+            @push-cencel="pushCancel"
             :user="user"
           />
         </v-col>
@@ -68,9 +68,9 @@ export default {
     pushUpdate() {
       this.$emit("push-update")
     },
-    cancelEdit() {
+    pushCancel() {
       this.isEditing = false
-      this.user = this.beforeUserData
+      this.$emit("push-cancel")
     },
     finishEdit() {
       this.isEditing = false

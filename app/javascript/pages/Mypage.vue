@@ -8,6 +8,7 @@
       :user="user"
       @push-update="updateUserData"
       @push-delete="showDeleteDialog"
+      @push-cancel="cancelEdit"
     />
     <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
       ツイートを含む全てのデータが消えて
@@ -51,11 +52,11 @@ export default {
       try {
         const userRes = await axios.get("/api/v1/users/current")
         const { user } = userRes.data
+        this.user = user
         const registeredTagsRes = await axios.get(
           `/api/v1/users/${user.uuid}/registered_tags`
         )
         const { registeredTags } = registeredTagsRes.data
-        this.user = user
         this.registeredTags = registeredTags
       } catch (error) {
         console.log(error)
@@ -70,6 +71,12 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    // TODO: APIを叩かずに実装したい
+    async cancelEdit() {
+      const userRes = await axios.get(`/api/v1/users/${this.user.uuid}`)
+      const { user } = userRes.data
+      this.user = user
     },
     showDeleteDialog() {
       this.$refs.deleteDialog.open()

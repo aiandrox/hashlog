@@ -12,7 +12,7 @@
       <v-icon left>mdi-cog</v-icon>設定
     </v-btn>
     <div v-show="isEditing">
-      <v-btn class="ma-2" outlined @click="pushResetEditing">キャンセル</v-btn>
+      <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
       <v-btn class="ma-2" outlined @click="pushSave">
         <v-icon left>mdi-content-save</v-icon>保存
       </v-btn>
@@ -67,9 +67,8 @@ export default {
     },
     finishEdit() {
       this.isEditing = false
-      // 再描画
     },
-    pushResetEditing() {
+    pushCancel() {
       this.isEditing = false
     }
   }
