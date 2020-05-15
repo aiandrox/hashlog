@@ -11,6 +11,7 @@
             <v-container>
               <v-form>
                 <ValidationProvider
+                  ref="provider"
                   v-slot="{ errors }"
                   name="ハッシュタグ"
                   rules="required"
@@ -86,9 +87,11 @@ export default {
           this.tagName = ""
           this.$router.push({ name: "mypageTag", params: { id: tagId } })
         } catch (error) {
-          console.log(error)
+          const errorMessages = error.response.data.errors.messages
+          this.$refs.provider.errors.push(errorMessages[0])
+        } finally {
+          this.isLoading = false
         }
-        this.isLoading = false
       }
     }
   }
