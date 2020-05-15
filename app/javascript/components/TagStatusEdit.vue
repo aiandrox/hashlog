@@ -82,11 +82,12 @@ export default {
     },
     // TODO: vee-validate.jsと同じメソッド
     filter(remindDay) {
-      const stringRemindDay = String(remindDay)
-      if (stringRemindDay === null) {
+      if (remindDay === null) {
         return 0
       }
+      const stringRemindDay = String(remindDay)
       const deleteDayResult = stringRemindDay.split("日").join("")
+      // 全角数字を半角に変換
       const result = deleteDayResult.replace(/[０-９]/g, s =>
         String.fromCharCode(s.charCodeAt(0) - 65248)
       )
