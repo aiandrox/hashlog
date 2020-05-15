@@ -25,7 +25,7 @@
               />
               <validation-provider
                 v-slot="{ errors }"
-                :rules="`${isRemind ? 'remindDay|maxRemindDay' : ''}`"
+                :rules="`${isRemind ? 'remindDay|maxRemindDay|minRemindDay' : ''}`"
               >
                 <v-text-field
                   v-show="isRemind"

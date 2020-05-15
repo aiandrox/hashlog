@@ -20,8 +20,7 @@ const filter = remindDay => {
     String.fromCharCode(s.charCodeAt(0) - 65248)
   )
   // result => "-4", "20", "文字列"
-  const number = Number(result) < 0 ? 0 : Number(result)
-  return number
+  return Number(result)
 }
 
 extend("remindDay", {
@@ -33,12 +32,22 @@ extend("remindDay", {
 
 extend("maxRemindDay", {
   validate(value) {
-    if (filter(value) > 31) {
+    if (filter(value) > 30) {
       return false
     }
     return true
   },
   message: "30日以下で設定してください"
+})
+
+extend("minRemindDay", {
+  validate(value) {
+    if (filter(value) < 1) {
+      return false
+    }
+    return true
+  },
+  message: "1日以上で設定してください"
 })
 
 export default {

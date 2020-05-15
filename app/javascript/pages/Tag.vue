@@ -72,12 +72,12 @@ export default {
   watch: {
     async $route() {
       await this.fetchData()
-      document.title = `${this.registeredTag.tag.name} | Hashlog`
+      document.title = `#${this.registeredTag.tag.name} | Hashlog`
     }
   },
   async mounted() {
     await this.fetchData()
-    document.title = `${this.registeredTag.tag.name} | Hashlog`
+    document.title = `#${this.registeredTag.tag.name} | Hashlog`
   },
   methods: {
     async fetchData() {
