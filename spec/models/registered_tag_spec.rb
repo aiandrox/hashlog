@@ -58,18 +58,35 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
-    describe '#all_day_count' do
-      context '最初のツイートが7日前で計3日分のツイートがあるとき' do
-        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
+    describe '#day_from_last_tweet' do
+      context '最後のツイートが7日前のとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        before { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
         it '7を返す' do
           registered_tag.fetch_data
-          expect(registered_tag.all_day_count).to eq 7
+          expect(registered_tag.day_from_last_tweet).to eq 7
         end
       end
       context 'ツイートを取得していないとき' do
         let(:registered_tag) { create(:registered_tag) }
         it '0を返す' do
-          expect(registered_tag.all_day_count).to eq 0
+          expect(registered_tag.day_from_last_tweet).to eq nil
+        end
+      end
+    end
+
+    describe '#day_from_first_tweet' do
+      context '最初のツイートが7日前で計3日分のツイートがあるとき' do
+        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
+        it '7を返す' do
+          registered_tag.fetch_data
+          expect(registered_tag.day_from_first_tweet).to eq 7
+        end
+      end
+      context 'ツイートを取得していないとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        it '0を返す' do
+          expect(registered_tag.day_from_first_tweet).to eq nil
         end
       end
     end
