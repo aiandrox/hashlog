@@ -2,21 +2,25 @@ module TwitterAPI
   class RemindTweet
     include TwitterAPIClient
 
-    def initialize(registered_tag)
-      @registered_tag = registered_tag
-      @user = registered_tag.user
-      @tag = registered_tag.tag
+    def initialize(registered_tags)
+      @registered_tags = registered_tags
     end
 
     def call
-      tweet_text = "@#{user.screen_name}\n##{tag.name} のツイートが#{registered_tag.day_from_last_tweet}日ありません。"
-      client.update(tweet_text)
-      Rails.logger.info("@#{user.screen_name} の ##{tag.name} にリマインドリプライ送信")
+      registered_tags.each do |tag|
+        send_tweet(tag) unless tag.remind_day > tag.day_from_last_tweet || tag.remind_day.zero?
+      end
     end
 
     private
 
-    attr_reader :registered_tag, :user, :tag
+    attr_reader :registered_tags
+
+    def send_tweet(r_tag)
+      tweet_text = "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{r_tag.day_from_last_tweet}日間途絶えているようです。調子はいかがですか？"
+      client.update(tweet_text)
+      Rails.logger.info("@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信")
+    end
   end
 
   class Search

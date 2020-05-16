@@ -27,16 +27,14 @@ class RegisteredTag < ApplicationRecord
     return nil if last_tweeted_at.nil?
 
     last = last_tweeted_at.to_date
-    today = Date.today
-    (today - last).to_i
+    (Date.today - last).to_i
   end
 
   def day_from_first_tweet
     return nil if first_tweeted_at.nil?
 
     first = first_tweeted_at.to_date
-    today = Date.today
-    (today - first).to_i
+    (Date.today - first).to_i
   end
 
   # ツイート率 今日のツイートはまだ取得できていないため、day_from_first_tweet-1をする
@@ -47,7 +45,6 @@ class RegisteredTag < ApplicationRecord
     tweeted_day_count * 100 / (day_from_first_tweet - 1)
   end
 
-  # TODO: サービスクラスにしたい
   def cron_tweets
     last_tweet = tweets.latest
 
