@@ -1,40 +1,55 @@
 <template>
-  <v-list>
-    <v-list-item class="pb-0">
-      <v-list-item-content class="pb-0">
-        <v-list-item-subtitle>ハッシュタグ</v-list-item-subtitle>
-        <v-list-item-title>#{{ registeredTag.tag.name }}</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item>
-      <v-list-item-content class="pt-0">
-        <v-form class="pt-0">
-          <v-select
-            v-model="registeredTag.privacy"
-            :items="privacyChoices"
-            prepend-icon="mdi-earth"
-            required
-          />
-          <v-container>
-            <v-checkbox
-              v-model="isRemind"
-              class="mt-0"
-              messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます。"
-              label="リマインダーを使用する"
+  <ValidationObserver ref="observer" v-slot="{ invalid }">
+    <v-list>
+      <v-list-item class="pb-0">
+        <v-list-item-content class="pb-0">
+          <v-list-item-subtitle>ハッシュタグ</v-list-item-subtitle>
+          <v-list-item-title>#{{ registeredTag.tag.name }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-content class="pt-0">
+          <v-form class="pt-0">
+            <v-select
+              v-model="registeredTag.privacy"
+              :items="privacyChoices"
+              prepend-icon="mdi-earth"
+              required
             />
-            <v-text-field
-              v-show="isRemind"
-              v-model.number="registeredTag.remindDay"
-              placeholder="リマインダー"
-              suffix="日"
-              hint="1〜30日で設定できます。"
-              persistent-hint
-            />
-          </v-container>
-        </v-form>
-      </v-list-item-content>
-    </v-list-item>
-  </v-list>
+            <v-container>
+              <v-checkbox
+                v-model="isRemind"
+                class="mt-0"
+                messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます"
+                label="リマインダーを使用する"
+              />
+              <validation-provider
+                v-slot="{ errors }"
+                :rules="`${isRemind ? 'remindDay|maxRemindDay|minRemindDay' : ''}`"
+              >
+                <v-text-field
+                  v-show="isRemind"
+                  v-model="registeredTag.remindDay"
+                  :error-messages="errors"
+                  placeholder="リマインダー"
+                  suffix="日"
+                  hint="1〜30日で設定できます"
+                  persistent-hint
+                />
+              </validation-provider>
+            </v-container>
+          </v-form>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+    <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
+    <v-btn class="ma-2" outlined @click="pushUpdate" :disabled="invalid">
+      <v-icon left>mdi-content-save</v-icon>保存
+    </v-btn>
+    <v-btn class="ma-2" outlined color="error" @click="pushDelete">
+      <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
+    </v-btn>
+  </ValidationObserver>
 </template>
 
 <script>
@@ -52,12 +67,43 @@ export default {
     }
   },
   methods: {
-    checkReminder() {
+    fetchSelectFromRemindDay() {
       if (!!this.registeredTag.remindDay === false) {
         this.isRemind = false
       } else {
         this.isRemind = true
       }
+    },
+    fetchRemindDayFromForm() {
+      this.registeredTag.remindDay = this.filter(this.registeredTag.remindDay)
+      if (this.isRemind === false) {
+        this.registeredTag.remindDay = 0
+      }
+    },
+    // TODO: vee-validate.jsと同じメソッド
+    filter(remindDay) {
+      if (remindDay === null) {
+        return 0
+      }
+      const stringRemindDay = String(remindDay)
+      const deleteDayResult = stringRemindDay.split("日").join("")
+      // 全角数字を半角に変換
+      const result = deleteDayResult.replace(/[０-９]/g, s =>
+        String.fromCharCode(s.charCodeAt(0) - 65248)
+      )
+      // result => "20", "文字列"
+      const number = Number(result) < 0 ? 0 : Number(result)
+      return number
+    },
+    pushDelete() {
+      this.$emit("push-delete")
+    },
+    pushUpdate() {
+      this.fetchRemindDayFromForm()
+      this.$emit("push-update")
+    },
+    pushCancel() {
+      this.$emit("push-cancel")
     }
   }
 }

@@ -4,34 +4,25 @@
       <v-container row>
         <v-col cols="12" lg="8">
           <!-- プロフィール -->
-          <profile-user v-show="!isEditing" :user="user" />
+          <profile-view v-if="!isEditing" :user="user" />
           <!-- ユーザー編集 -->
-          <profile-edit v-show="isEditing" :user="user" />
+          <profile-edit
+            v-if="isEditing"
+            @push-update="pushUpdate"
+            @push-delete="pushDelete"
+            @push-cencel="pushCancel"
+            :user="user"
+          />
         </v-col>
         <v-col cols="9" lg="4">
           <!-- ステータス -->
           <profile-status :is-editing="isEditing" :user="user" />
         </v-col>
         <v-card-actions>
-          <div v-show="!isEditing">
-            <v-btn class="ma-2" outlined @click="isEditing = true">
+          <div v-if="!isEditing">
+            <v-btn class="ma-2" outlined @click="pushEdit">
               <v-icon left>mdi-pencil</v-icon>編集
             </v-btn>
-          </div>
-          <div v-show="isEditing">
-            <v-btn
-              class="ma-2"
-              outlined
-              @click="isEditing = false"
-            >キャンセル</v-btn>
-            <v-btn class="ma-2" outlined @click="updateUserData">
-              <v-icon left>mdi-content-save</v-icon>保存
-            </v-btn>
-            <v-spacer />
-            <v-btn class="ma-2" color="error" outlined @click="pushDelete">
-              <v-icon left>mdi-account-off</v-icon>ユーザー削除
-            </v-btn>
-            <!-- TODO: キャンセル時にデータを戻す -->
           </div>
         </v-card-actions>
       </v-container>
@@ -42,10 +33,10 @@
 <script>
 import profileStatus from "./ProfileStatus"
 import profileEdit from "./ProfileEdit"
-import profileUser from "./ProfileUser"
+import profileView from "./ProfileView"
 export default {
   components: {
-    profileUser,
+    profileView,
     profileEdit,
     profileStatus
   },
@@ -57,7 +48,8 @@ export default {
   },
   data() {
     return {
-      isEditing: false
+      isEditing: false,
+      beforeUserData: {}
     }
   },
   computed: {
@@ -66,11 +58,19 @@ export default {
     }
   },
   methods: {
+    pushEdit() {
+      this.isEditing = true
+      this.beforeUserData = this.user
+    },
     pushDelete() {
       this.$emit("push-delete")
     },
-    updateUserData() {
-      this.$emit("update-user-data")
+    pushUpdate() {
+      this.$emit("push-update")
+    },
+    pushCancel() {
+      this.isEditing = false
+      this.$emit("push-cancel")
     },
     finishEdit() {
       this.isEditing = false

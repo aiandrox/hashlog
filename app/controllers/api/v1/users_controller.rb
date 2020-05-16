@@ -21,12 +21,13 @@ class Api::V1::UsersController < Api::V1::BaseController
     if user.save
       render json: user
     else
-      error = {
+      error_json = {
         'status' => '422',
-        'title' => '登録内容が適切ではありません。',
-        'detail' => '登録内容を確認してください。'
+        'title' => '登録内容が適切ではありません',
+        'detail' => '登録内容を確認してください',
+        'messages' => user.errors.full_messages
       }
-      render json: { 'errors': [error] }, status: 422
+      render json: { 'error': error_json }, status: 422
     end
   end
 

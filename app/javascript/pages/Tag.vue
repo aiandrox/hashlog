@@ -8,6 +8,7 @@
           :registered-tag="registeredTag"
           @push-delete="showDeleteDialog"
           @push-update="updateTagData"
+          @push-cancel="fetchTagData"
         />
       </v-col>
       <v-spacer />
@@ -66,25 +67,17 @@ export default {
     registeredTagUrl() {
       const { id } = this.$route.params
       return `/api/v1/registered_tags/${id}`
-    },
-    editedRegisteredTag() {
-      const remindDay = String(this.registeredTag.remindDay)
-      const editedRemindDay = !!remindDay === false ? 0 : this.filter(remindDay)
-      return {
-        privacy: this.registeredTag.privacy,
-        remindDay: editedRemindDay
-      }
     }
   },
   watch: {
     async $route() {
       await this.fetchData()
-      document.title = `${this.registeredTag.tag.name} | Hashlog`
+      document.title = `#${this.registeredTag.tag.name} | Hashlog`
     }
   },
   async mounted() {
     await this.fetchData()
-    document.title = `${this.registeredTag.tag.name} | Hashlog`
+    document.title = `#${this.registeredTag.tag.name} | Hashlog`
   },
   methods: {
     async fetchData() {
@@ -113,15 +106,23 @@ export default {
         console.log(error)
       }
     },
-    updateTagData() {
+    async updateTagData() {
       try {
-        axios.patch(`/api/v1/registered_tags/${this.registeredTag.id}`, {
-          tag: this.editedRegisteredTag
+        await axios.patch(`/api/v1/registered_tags/${this.registeredTag.id}`, {
+          tag: this.registeredTag
         })
         this.$refs.tagStatus.finishEdit()
+        const registeredTagRes = await axios.get(this.registeredTagUrl)
+        const { registeredTag } = registeredTagRes.data
+        this.registeredTag = registeredTag
       } catch (error) {
         console.log(error)
       }
+    },
+    async fetchTagData() {
+      const registeredTagRes = await axios.get(this.registeredTagUrl)
+      const { registeredTag } = registeredTagRes.data
+      this.registeredTag = registeredTag
     },
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
@@ -133,13 +134,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    },
-    filter(remindDay) {
-      const deleteDayResult = remindDay.split("日").join("")
-      const result = deleteDayResult.replace(/[０-９]/g, s =>
-        String.fromCharCode(s.charCodeAt(0) - 65248)
-      )
-      return result
     }
   }
 }

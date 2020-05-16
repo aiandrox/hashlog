@@ -90,11 +90,12 @@ RSpec.describe 'Users', type: :request do
           patch "/api/v1/users/#{user.uuid}", params: {
             user: { name: '', description: '新しい詳細', privacy: '非公開' }
           }
-          expect(json['errors']).to eq([{
+          expect(json['error']).to eq({
             'status' => '422',
-            'title' => '登録内容が適切ではありません。',
-            'detail' => '登録内容を確認してください。'
-          }])
+            'title' => '登録内容が適切ではありません',
+            'detail' => '登録内容を確認してください',
+            'messages' => ['名前を入力してください']
+          })
         end
         it 'user.nameを変更しない' do
           expect do

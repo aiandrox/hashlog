@@ -1,8 +1,0 @@
-ja:
-  helpers:
-    edit: 編集
-    destroy: 削除
-    submit:
-      create: 登録
-      update: 更新
-      submit: 保存
