@@ -130,11 +130,12 @@ RSpec.describe 'RegisteredTags', type: :request do
         end
         it 'エラーメッセージのJSONを返す' do
           post '/api/v1/registered_tags', params: { tag: { name: '' } }
-          expect(json['errors']).to eq([{
+          expect(json['error']).to eq({
             'status' => '422',
-            'title' => '登録内容が適切ではありません。',
-            'detail' => '登録内容を確認してください。'
-          }])
+            'title' => '登録内容が適切ではありません',
+            'detail' => '登録内容を確認してください',
+            'messages' => ['名前を入力してください']
+          })
         end
         it 'current_user.registered_tagsを作成しない' do
           expect do
@@ -214,11 +215,12 @@ RSpec.describe 'RegisteredTags', type: :request do
           patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
             tag: { privacy: '非公開', remindDay: remind_day }
           }
-          expect(json['errors']).to eq([{
+          expect(json['error']).to eq({
             'status' => '422',
-            'title' => '登録内容が適切ではありません。',
-            'detail' => '登録内容を確認してください。'
-          }])
+            'title' => '登録内容が適切ではありません',
+            'detail' => '登録内容を確認してください',
+            'messages' => ['リマインダー日数は30以下の値にしてください']
+          })
         end
         it 'registered_tag.remind_dayを変更しない' do
           expect do
