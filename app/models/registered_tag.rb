@@ -75,6 +75,7 @@ class RegisteredTag < ApplicationRecord
     self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
     self.last_tweeted_at = tweets.latest.tweeted_at
     self.tweeted_day_count = tweets.tweeted_day_count
+    save!
   end
 
   def add_tweets(since_id)
