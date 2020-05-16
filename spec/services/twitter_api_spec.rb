@@ -1,10 +1,10 @@
-RSpec.describe TwitterApi::Search do
+RSpec.describe TwitterAPI::Search do
   let(:user) { create(:user, :real_value) }
   describe '#tweets_data' do
     context '該当のツイートがない場合',
       vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
       let(:tag) { create(:tag, name: 'absent_tag') }
-      let(:client) { TwitterApi::Search.new(user, tag.name) }
+      let(:client) { TwitterAPI::Search.new(user, tag.name) }
       it '空の配列を返す' do
         expect(client.tweets_data).to eq([])
       end
@@ -31,7 +31,7 @@ RSpec.describe TwitterApi::Search do
       end
       context '"standard"を引数に渡すとき' do
         let(:type) { 'standard' }
-        let(:client) { TwitterApi::Search.new(user, tag.name) }
+        let(:client) { TwitterAPI::Search.new(user, tag.name) }
         it '#standard_searchを実行する' do
           set_twitter_mock(user, tag.name)
           expect(client).to receive(:standard_search).once
@@ -41,7 +41,7 @@ RSpec.describe TwitterApi::Search do
       end
       context '"premium"を引数に渡すとき' do
         let(:type) { 'premium' }
-        let(:client) { TwitterApi::Search.new(user, tag.name) }
+        let(:client) { TwitterAPI::Search.new(user, tag.name) }
         it '#premiun_searchを実行する' do
           set_twitter_mock(user, tag.name)
           expect(client).to receive(:premium_search).once
@@ -52,7 +52,7 @@ RSpec.describe TwitterApi::Search do
       context '"everyday"を引数に渡すとき' do
         let(:type) { 'everyday' }
         let(:since_id) { '1255854602626330624' }
-        let(:client) { TwitterApi::Search.new(user, tag.name, since_id) }
+        let(:client) { TwitterAPI::Search.new(user, tag.name, since_id) }
         it '#everyday_searchを実行する' do
           set_twitter_mock(user, tag.name, since_id)
           expect(client).to receive(:everyday_search).once

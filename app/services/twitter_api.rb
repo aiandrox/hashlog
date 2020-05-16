@@ -1,6 +1,6 @@
-module TwitterApi
+module TwitterAPI
   class Search
-    include TwitterApiClient
+    include TwitterAPIClient
 
     def initialize(user, tag_name, since_id = nil)
       @tweet_ids = []

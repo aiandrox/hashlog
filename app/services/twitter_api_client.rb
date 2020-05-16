@@ -1,6 +1,6 @@
 require 'twitter'
 
-module TwitterApiClient
+module TwitterAPIClient
   def client
     @client ||= begin
       Twitter::REST::Client.new do |config|

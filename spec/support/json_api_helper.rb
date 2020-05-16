@@ -1,4 +1,4 @@
-module JsonApiHelper
+module JsonAPIHelper
   def json
     JSON.parse(response.body)
   end
