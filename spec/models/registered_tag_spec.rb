@@ -13,7 +13,7 @@ RSpec.describe RegisteredTag, type: :model do
     it do
       is_expected.to(validate_uniqueness_of(:tag_id)
                     .scoped_to(:user_id)
-                    .with_message('を既に登録しています'))
+                    .with_message('は既に登録しています'))
     end
   end
 

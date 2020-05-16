@@ -13,7 +13,7 @@ ja:
       user:
         twitter_id: Twitter ID
         name: 名前
-        description: 自己紹介
+        description: プロフィール
         role: 権限
         privacy: 公開設定
       registered_tag:
@@ -25,6 +25,7 @@ ja:
         tag_id: ハッシュタグ
       tag:
         name: 名前
+        tag_id: ハッシュタグ
       tweet: ツイート
 
   enums:

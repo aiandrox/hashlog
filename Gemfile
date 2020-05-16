@@ -18,7 +18,7 @@ gem 'rails-i18n'
 # 機能
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'config'
-gem 'sorcery'
+gem 'sorcery', '>= 0.15.0'
 # cron
 gem 'redis-namespace'
 gem 'sidekiq', '~> 5.0'
