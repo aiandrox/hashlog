@@ -59,7 +59,7 @@ class RegisteredTag < ApplicationRecord
   end
 
   def create_tweets(type = 'standard')
-    client = TwitterAPI::Client.new(user, tag.name)
+    client = TwitterApi::Search.new(user, tag.name)
     client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
@@ -72,7 +72,7 @@ class RegisteredTag < ApplicationRecord
   end
 
   def add_tweets(since_id)
-    client = TwitterAPI::Client.new(user, tag.name, since_id)
+    client = TwitterApi::Search.new(user, tag.name, since_id)
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
