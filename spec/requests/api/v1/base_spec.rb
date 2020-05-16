@@ -30,11 +30,11 @@ RSpec.describe 'Base', type: :request do
         expect(response.status).to eq 404
       end
       it 'エラーメッセージのJSONを返す' do
-        expect(json['errors']).to eq([{
+        expect(json['error']).to eq({
           'status' => '404',
           'title' => 'リソースが見つかりませんでした。',
           'detail' => 'アドレスを確認してください。'
-        }])
+        })
       end
     end
   end
@@ -46,11 +46,11 @@ RSpec.describe 'Base', type: :request do
         expect(response.status).to eq 401
       end
       it 'エラーメッセージのJSONを返す' do
-        expect(json['errors']).to eq([{
+        expect(json['error']).to eq({
           'status' => '401',
           'title' => '認証されていません。',
           'detail' => 'ログインしてください。'
-        }])
+        })
       end
     end
   end
