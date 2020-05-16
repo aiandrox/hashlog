@@ -5,7 +5,7 @@ namespace :twitter_cron do
   end
 
   desc 'TwitterAPIによる自動ツイート'
-  task remind_tweet: :environment do
-    RemindTweetJob.perform_later
+  task remind_reply: :environment do
+    RemindReplyJob.perform_later
   end
 end
