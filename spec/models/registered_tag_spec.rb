@@ -211,20 +211,20 @@ RSpec.describe RegisteredTag, type: :model do
       let(:registered_tag) { create(:registered_tag, :with_tweets) }
       let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
       let(:latest_tweet) { registered_tag.tweets.latest }
-      it 'tweet.first_tweetedが最初のツイート日時になる' do
+      it '更新後のtweet.first_tweetedが最初のツイート日時になる' do
         expect do
           registered_tag.fetch_data
-        end.to change { registered_tag.first_tweeted_at }.from(nil).to(oldest_tweet.tweeted_at)
+        end.to change { registered_tag.reload.first_tweeted_at }.from(nil).to(oldest_tweet.tweeted_at)
       end
-      it 'tweet.last_tweetedが最後のツイート日時になる' do
+      it '更新後のtweet.last_tweetedが最後のツイート日時になる' do
         expect do
           registered_tag.fetch_data
-        end.to change { registered_tag.last_tweeted_at }.from(nil).to(latest_tweet.tweeted_at)
+        end.to change { registered_tag.reload.last_tweeted_at }.from(nil).to(latest_tweet.tweeted_at)
       end
-      it 'tweet.tweeted_day_countがツイートをした日数になる' do
+      it '更新後のtweet.tweeted_day_countがツイートをした日数になる' do
         expect do
           registered_tag.fetch_data
-        end.to change { registered_tag.tweeted_day_count }.from(0).to(2)
+        end.to change { registered_tag.reload.tweeted_day_count }.from(0).to(2)
       end
       context 'type = "add"のとき' do
         it 'tweet.first_tweetedを更新しない' do
