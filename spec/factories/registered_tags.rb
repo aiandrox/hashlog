@@ -20,10 +20,6 @@ FactoryBot.define do
     end
   end
 
-  trait :remind do
-    remind_day { 3 }
-  end
-
   trait :limited do
     privacy { :limited }
   end

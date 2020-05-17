@@ -1,13 +1,15 @@
 module TwitterAPI
-  class RemindTweet
+  class RemindReply
     include TwitterAPIClient
 
-    def initialize(registered_tags)
-      @registered_tags = registered_tags
+    def initialize
+      @registered_tags = RegisteredTag.all.includes(:user, :tag)
     end
 
     def call
       registered_tags.each do |tag|
+        next if tag.day_from_last_tweet.nil?
+        
         send_tweet(tag) unless tag.remind_day > tag.day_from_last_tweet || tag.remind_day.zero?
       end
     end
