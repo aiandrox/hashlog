@@ -1,35 +1,26 @@
 RSpec.describe TwitterAPI do
   let(:user) { create(:user, :real_value) }
   describe '::RemindReply' do
-    xdescribe '#call' do
-      let(:remind_reply) { TwitterAPI::RemindReply.new }
-      it '全てのregistered_tagに対してsend_tweetメソッドを実行している' do
-        create_list(:registered_tag, 3)
-        expect(remind_reply).not_to receive(:send_tweet).exactly(3).times
-      end
+    let(:registered_tag) { create(:registered_tag, user: user) }
+    let(:remind_reply) { TwitterAPI::RemindReply.new }
+    before { create_list(:registered_tag, 3) }
+    describe '#call' do
       it 'remind_dayが0のtagに対してsend_tweetメソッドを実行しない' do
         remind_0_tag = create(:registered_tag, remind_day: 0)
         expect(remind_reply).not_to receive(:send_tweet).with(remind_0_tag)
         remind_reply.call
       end
       it 'remind_dayが3で最終ツイートが3日前のtagに対してsend_tweetメソッドを実行しない' do
-        remind_3_last_tweet_3_tag = create(:registered_tag, remind_day: 3, last_tweeted_at: DateTime.now.ago(3.day))
+        remind_3_last_tweet_3_tag = create(:registered_tag, remind_day: 3)
+        create(:tweet, tweeted_at: DateTime.now.ago(3.day), registered_tag: remind_3_last_tweet_3_tag)
         expect(remind_reply).not_to receive(:send_tweet).with(remind_3_last_tweet_3_tag)
         remind_reply.call
       end
       it 'remind_dayが2で最終ツイートが3日前のtagに対してsend_tweetメソッドを実行する' do
-        remind_2_last_tweet_3_tag = create(:registered_tag, remind_day: 2, last_tweeted_at: DateTime.now.ago(3.day))
+        remind_2_last_tweet_3_tag = create(:registered_tag, remind_day: 2)
+        create(:tweet, tweeted_at: DateTime.now.ago(3.day), registered_tag: remind_2_last_tweet_3_tag)
         expect(remind_reply).to receive(:send_tweet).with(remind_2_last_tweet_3_tag).once
         remind_reply.call
-      end
-    end
-
-    describe '#send_reply', vcr: { cassette_name: 'twitter_api/update/リマインダー' } do
-      let(:remind_reply) { TwitterAPI::RemindReply.new }
-      let(:client) { remind_reply.client }
-      it '#updateを実行してTwitterAPIにリクエストを送る' do
-        expect(client).to receive(:update).once
-        remind_reply.send_reply
       end
     end
   end

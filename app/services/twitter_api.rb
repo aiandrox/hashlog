@@ -8,9 +8,7 @@ module TwitterAPI
 
     def call
       registered_tags.each do |tag|
-        next if tag.day_from_last_tweet.nil?
-        
-        send_tweet(tag) unless tag.remind_day > tag.day_from_last_tweet || tag.remind_day.zero?
+        send_tweet(tag) if tag.remind_day.positive? && tag.remind_day < tag.day_from_last_tweet
       end
     end
 
@@ -19,9 +17,18 @@ module TwitterAPI
     attr_reader :registered_tags
 
     def send_tweet(r_tag)
-      tweet_text = "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{r_tag.day_from_last_tweet}日間途絶えているようです。調子はいかがですか？"
-      client.update(tweet_text)
+      client.update(remind_message(r_tag))
       Rails.logger.info("@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信")
+    end
+
+    def remind_message(r_tag)
+      day = case r_tag.day_from_last_tweet
+            when 1
+              '丸1日'
+            else
+              "#{r_tag.day_from_last_tweet}日間"
+            end
+      "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{day}途絶えているようです。調子はいかがですか？"
     end
   end
 
