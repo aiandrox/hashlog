@@ -26,7 +26,7 @@
             outlined
             :counter="300"
             :error-messages="errors"
-            rows="3"
+            rows="5"
             label="プロフィール"
           />
         </ValidationProvider>

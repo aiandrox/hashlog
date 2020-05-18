@@ -37,9 +37,8 @@ export default {
       return `https://twitter.com/${this.user.screen_name}`
     },
     replacedDescription() {
-      const url = new RegExp("(https?://[a-zA-Z0-9!-/:-@¥[-`{-~]*)")
       const replaced = this.user.description.replace(
-        url,
+        /(https?:\/\/[\w!-/:-@¥[-`{-~]*)/g,
         "<a href='$1' target='_blank'>$1</a>"
       )
       return replaced

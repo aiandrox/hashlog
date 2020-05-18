@@ -23,7 +23,7 @@
         </v-list-item>
       </v-card-title>
 
-      <v-card-text class="text--primary" v-html="tweet.oembed" />
+      <v-card-text class="text--primary" v-html="$sanitize(tweet.oembed)" />
       <v-card-actions>
         <v-btn
           v-for="button in buttons"
