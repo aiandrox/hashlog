@@ -23,6 +23,14 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
+  def last_tweeted_at
+    @last_tweeted_at ||= tweets.latest.tweeted_at
+  end
+
+  def tweeted_day_count
+    @tweeted_day_count ||= tweets.tweeted_day_count
+  end
+
   def day_from_last_tweet
     return nil if last_tweeted_at.nil?
 
