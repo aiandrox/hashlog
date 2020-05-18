@@ -2,7 +2,7 @@
   <ValidationObserver ref="observer" v-slot="{ invalid }">
     <v-list-item>
       <v-list-item-avatar color="grey" size="60">
-        <v-img src="" />
+        <v-img src />
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="title">
@@ -16,11 +16,7 @@
     </v-list-item>
     <v-card-text class="my-0">
       <div class="body-1">
-        <ValidationProvider
-          v-slot="{ errors }"
-          name="プロフィール"
-          rules="max:300"
-        >
+        <ValidationProvider v-slot="{ errors }" name="プロフィール" rules="max:300">
           <v-textarea
             v-model="user.description"
             outlined

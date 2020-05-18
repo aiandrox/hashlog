@@ -17,10 +17,8 @@ Vue.use(VueAxiosPlugin, { axios: Axios })
 
 import titlePlugin from "../plugins/page-title"
 Vue.mixin(titlePlugin)
-
 import dayjs from "../plugins/dayjs"
 Vue.mixin(dayjs)
-
 import veeValidate from "../plugins/vee-validate"
 Vue.mixin(veeValidate)
 
@@ -45,6 +43,9 @@ const vuetify = new Vuetify({
     }
   }
 })
+
+import sanitizeHTML from "sanitize-html"
+Vue.prototype.$sanitize = sanitizeHTML
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({

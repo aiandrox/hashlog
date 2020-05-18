@@ -2,7 +2,7 @@
   <div>
     <v-list-item>
       <v-list-item-avatar color="grey" size="60">
-        <v-img src="" />
+        <v-img src />
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="title">
@@ -15,7 +15,11 @@
       </v-list-item-content>
     </v-list-item>
     <v-card-text>
-      <div class="body-1">{{ user.description }}</div>
+      <div
+        class="body-1"
+        style="white-space: pre-line;word-wrap: break-word"
+        v-html="$sanitize(replacedDescription)"
+      />
     </v-card-text>
   </div>
 </template>
@@ -31,6 +35,14 @@ export default {
   computed: {
     twitterUrl() {
       return `https://twitter.com/${this.user.screen_name}`
+    },
+    replacedDescription() {
+      const url = new RegExp("(https?://[a-zA-Z0-9!-/:-@¥[-`{-~]*)")
+      const replaced = this.user.description.replace(
+        url,
+        "<a href='$1' target='_blank'>$1</a>"
+      )
+      return replaced
     }
   }
 }
