@@ -1,12 +1,6 @@
 <template>
   <div>
-    <v-card
-      flat
-      outlined
-      max-width="500"
-      class="mt-3"
-      :href="tweetUrl"
-    >
+    <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
       <v-card-title>
         <v-list-item class="pl-0">
           <v-list-item :href="userUrl">
@@ -17,9 +11,9 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle
-                class="font-weight-light"
-              >@{{ user.screenName }}</v-list-item-subtitle>
+              <v-list-item-subtitle class="font-weight-light"
+                >@{{ user.screenName }}</v-list-item-subtitle
+              >
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -29,7 +23,7 @@
         </v-list-item>
       </v-card-title>
 
-      <v-card-text class="text--primary" v-html="tweet.oembed" />
+      <v-card-text class="text--primary" v-html="$sanitize(tweet.oembed)" />
       <v-card-actions>
         <v-btn
           v-for="button in buttons"
@@ -54,8 +48,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 export default {
   props: {
     tweet: {
@@ -97,7 +89,7 @@ export default {
   },
   methods: {
     deleteTweet() {
-      axios.delete(this.deleteUrl).then(response => {})
+      this.$axios.delete(this.deleteUrl).then(response => {})
     }
   }
 }
