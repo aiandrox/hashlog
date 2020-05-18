@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   before_create :set_uuid
-  before_save :delete_description_space
+  before_update :delete_description_space
 
   authenticates_with_sorcery!
   has_many :authentications, dependent: :destroy
@@ -14,6 +14,7 @@ class User < ApplicationRecord
   validates :description, length: { maximum: 300 }
   validates :privacy, presence: true
   validates :role, presence: true
+  # validates :registered_tags, length: { maximum: 3, message: 'は最大3つまでしか登録できません' }
 
   enum privacy: { published: 0, closed: 1 }
   enum role: { admin: 0, general: 1, guest: 2 }
@@ -49,7 +50,7 @@ class User < ApplicationRecord
   def set_uuid
     self.uuid = loop do
       random_token = SecureRandom.urlsafe_base64(9)
-      break random_token unless self.class.exists?(uuid: rando_token)
+      break random_token unless self.class.exists?(uuid: random_token)
     end
   end
 
