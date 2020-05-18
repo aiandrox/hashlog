@@ -16,7 +16,11 @@
     </v-list-item>
     <v-card-text class="my-0">
       <div class="body-1">
-        <ValidationProvider v-slot="{ errors }" name="プロフィール" rules="max:300">
+        <ValidationProvider
+          v-slot="{ errors }"
+          name="プロフィール"
+          rules="max:300"
+        >
           <v-textarea
             v-model="user.description"
             outlined
@@ -40,8 +44,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 export default {
   props: {
     user: {

@@ -14,6 +14,7 @@ Vue.use(VueRouter)
 import Axios from "axios"
 import VueAxiosPlugin from "../plugins/vue-axios"
 Vue.use(VueAxiosPlugin, { axios: Axios })
+Vue.prototype.$axios = Axios
 
 import titlePlugin from "../plugins/page-title"
 Vue.mixin(titlePlugin)

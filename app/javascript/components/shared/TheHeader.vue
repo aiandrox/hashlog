@@ -16,11 +16,10 @@
 </template>
 
 <script>
-import axios from "axios"
 export default {
   methods: {
     logout() {
-      axios.delete("/api/v1/logout", {}).then(response => {
+      this.$axios.delete("/api/v1/logout", {}).then(response => {
         this.$router.push({ name: "top" })
       })
     }
