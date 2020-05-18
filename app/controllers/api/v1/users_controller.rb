@@ -44,10 +44,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: user
   end
 
-  def update_twitter_data
-    
-  end
-
   private
 
   def user_params
