@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   before_create :set_uuid
+  before_save :delete_description_space
 
   authenticates_with_sorcery!
   has_many :authentications, dependent: :destroy
@@ -16,13 +17,6 @@ class User < ApplicationRecord
 
   enum privacy: { published: 0, closed: 1 }
   enum role: { admin: 0, general: 1, guest: 2 }
-
-  def set_uuid
-    self.uuid = loop do
-      random_token = SecureRandom.urlsafe_base64(9)
-      break random_token unless self.class.exists?(uuid: random_token)
-    end
-  end
 
   # tagからregistered_tagを返す
   def registered_tag(tag)
@@ -48,5 +42,18 @@ class User < ApplicationRecord
       tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?
       false
     end
+  end
+
+  private
+
+  def set_uuid
+    self.uuid = loop do
+      random_token = SecureRandom.urlsafe_base64(9)
+      break random_token unless self.class.exists?(uuid: rando_token)
+    end
+  end
+
+  def delete_description_space
+    description.gsub!(/[　 \n]+$/, '')
   end
 end

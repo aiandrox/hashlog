@@ -63,9 +63,14 @@ export default {
     },
     async updateUserData() {
       try {
-        await this.$axios.patch(`/api/v1/users/${this.user.uuid}`, {
-          user: this.user
-        })
+        const userRes = await this.$axios.patch(
+          `/api/v1/users/${this.user.uuid}`,
+          {
+            user: this.user
+          }
+        )
+        const { user } = userRes.data
+        this.user = user
         this.$refs.profile.finishEdit()
       } catch (error) {
         console.log(error)
