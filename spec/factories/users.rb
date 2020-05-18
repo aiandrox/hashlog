@@ -3,6 +3,7 @@ FactoryBot.define do
     twitter_id { rand(10 ** 19).to_s }
     sequence(:name) { |n| "user_#{n}" }
     sequence(:screen_name) { |n| "user_#{n}" }
+    sqquence(:description) { |n| "description #{n}" }
   end
 
   trait :real_value do

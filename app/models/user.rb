@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   before_create :set_uuid
-  before_update :delete_description_space
+  before_save :delete_description_space
 
   authenticates_with_sorcery!
   has_many :authentications, dependent: :destroy
