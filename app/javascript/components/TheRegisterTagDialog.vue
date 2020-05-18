@@ -3,7 +3,9 @@
     <v-dialog v-model="dialog" max-width="600px">
       <ValidationObserver ref="observer" v-slot="{ invalid }">
         <v-card>
-          <v-system-bar class="pa-5 subtitle-1">ハッシュタグを登録する</v-system-bar>
+          <v-system-bar class="pa-5 subtitle-1"
+            >ハッシュタグを登録する</v-system-bar
+          >
 
           <v-card-text class="mt-5">
             <v-container>
@@ -31,7 +33,9 @@
           <v-card-actions>
             <v-spacer />
             <v-btn text @click="pushCancel">キャンセル</v-btn>
-            <v-btn text color="primary" @click="sendTagName" :disabled="invalid">登録する</v-btn>
+            <v-btn text color="primary" @click="sendTagName" :disabled="invalid"
+              >登録する</v-btn
+            >
           </v-card-actions>
         </v-card>
       </ValidationObserver>
@@ -42,7 +46,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import loadingView from "./shared/TheLoading"
 
 export default {
@@ -73,11 +76,14 @@ export default {
       if (isValid) {
         try {
           this.isLoading = true
-          const registeredTagRes = await axios.post("/api/v1/registered_tags", {
-            tag: {
-              name: this.tagName
+          const registeredTagRes = await this.$axios.post(
+            "/api/v1/registered_tags",
+            {
+              tag: {
+                name: this.tagName
+              }
             }
-          })
+          )
           const tagId = registeredTagRes.data.registeredTag.id
           this.dialog = false
           this.$router.push({ name: "mypageTag", params: { id: tagId } })

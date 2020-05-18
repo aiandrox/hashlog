@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import tagStatus from "../components/TagStatus"
 import tab from "../components/TagsTab"
 import tweets from "../components/TagsTweets"
@@ -83,21 +82,21 @@ export default {
     async fetchData() {
       try {
         // TODO: await地獄
-        const userRes = await axios.get("/api/v1/users/current")
+        const userRes = await this.$axios.get("/api/v1/users/current")
         const { user } = userRes.data
         this.user = user
 
-        const registeredTagsRes = await axios.get(
+        const registeredTagsRes = await this.$axios.get(
           `/api/v1/users/${user.uuid}/registered_tags`
         )
         const { registeredTags } = registeredTagsRes.data
         this.registeredTags = registeredTags
 
-        const registeredTagRes = await axios.get(this.registeredTagUrl)
+        const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
         const { registeredTag } = registeredTagRes.data
         this.registeredTag = registeredTag
 
-        const tweetsRes = await axios.get(
+        const tweetsRes = await this.$axios.get(
           `/api/v1/registered_tags/${registeredTag.id}/tweets`
         )
         const { tweets } = tweetsRes.data
@@ -108,11 +107,14 @@ export default {
     },
     async updateTagData() {
       try {
-        await axios.patch(`/api/v1/registered_tags/${this.registeredTag.id}`, {
-          tag: this.registeredTag
-        })
+        await this.$axios.patch(
+          `/api/v1/registered_tags/${this.registeredTag.id}`,
+          {
+            tag: this.registeredTag
+          }
+        )
         this.$refs.tagStatus.finishEdit()
-        const registeredTagRes = await axios.get(this.registeredTagUrl)
+        const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
         const { registeredTag } = registeredTagRes.data
         this.registeredTag = registeredTag
       } catch (error) {
@@ -120,7 +122,7 @@ export default {
       }
     },
     async fetchTagData() {
-      const registeredTagRes = await axios.get(this.registeredTagUrl)
+      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
       const { registeredTag } = registeredTagRes.data
       this.registeredTag = registeredTag
     },
@@ -129,7 +131,7 @@ export default {
     },
     deleteTag() {
       try {
-        axios.delete(this.registeredTagUrl)
+        this.$axios.delete(this.registeredTagUrl)
         this.$router.push({ name: "mypage" })
       } catch (error) {
         console.log(error)
