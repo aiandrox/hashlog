@@ -16,7 +16,7 @@ FactoryBot.define do
       create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
       create(:tweet, tweeted_at: DateTime.now.ago(3.day), registered_tag: registered_tag)
       create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag)
-      registered_tag.fetch_data
+      registered_tag.fetch_tweets_data!
     end
   end
 

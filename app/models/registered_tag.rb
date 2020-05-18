@@ -49,33 +49,23 @@ class RegisteredTag < ApplicationRecord
     last_tweet = tweets.latest
 
     unless last_tweet
-      create_tweets
+      create_tweets!
       return
     end
 
     return if last_tweet.tweeted_at > DateTime.yesterday
 
     since_id = last_tweet.tweet_id.to_i
-    add_tweets(since_id)
-
-    return if add_tweets(since_id).empty?
-
-    fetch_data('add')
-    Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
+    if add_tweets(since_id).any?
+      Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
+    end
   end
 
-  def create_tweets(type = 'standard')
+  def create_tweets!(type = 'standard')
     client = TwitterAPI::Search.new(user, tag.name)
     client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
-  end
-
-  def fetch_data(type = 'new')
-    self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
-    self.last_tweeted_at = tweets.latest.tweeted_at
-    self.tweeted_day_count = tweets.tweeted_day_count
-    save!
   end
 
   def add_tweets(since_id)
@@ -83,6 +73,10 @@ class RegisteredTag < ApplicationRecord
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
+  end
+
+  def fetch_tweets_data!
+    update!(first_tweeted_at: tweets.oldest.tweeted_at) if tweets.any?
   end
 
   private
