@@ -68,7 +68,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include UserSessionsHelper
   config.include TwitterAPIMockHelper
-  config.include JsonAPIHelper
+  config.include JsonAPIHelper, type: :request
 end
 
 Shoulda::Matchers.configure do |config|

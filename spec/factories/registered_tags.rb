@@ -7,6 +7,7 @@ FactoryBot.define do
   trait :with_tweets do
     after(:create) do |registered_tag|
       create_list(:tweet, 3, registered_tag: registered_tag)
+      registered_tag.fetch_tweets_data!
     end
   end
 

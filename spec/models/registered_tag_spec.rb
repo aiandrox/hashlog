@@ -7,7 +7,6 @@ RSpec.describe RegisteredTag, type: :model do
 
   describe 'validations' do
     before { create(:registered_tag) }
-    it { is_expected.to validate_presence_of(:tweeted_day_count) }
     it { is_expected.to validate_presence_of(:privacy) }
     it { is_expected.to validate_presence_of(:remind_day) }
     it do
@@ -19,9 +18,6 @@ RSpec.describe RegisteredTag, type: :model do
 
   describe 'default value' do
     let(:registered_tag) { create(:registered_tag) }
-    it 'tweeted_day_countが0である' do
-      expect(registered_tag.tweeted_day_count).to eq 0
-    end
     it 'remind_dayが0である' do
       expect(registered_tag.tweeted_day_count).to eq 0
     end
@@ -58,12 +54,41 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
+    describe '#last_tweeted_at' do
+      let(:registered_tag) { create(:registered_tag) }
+      context 'ツイートがあるとき' do
+        let!(:tweet) { create(:tweet, registered_tag: registered_tag) }
+        it '最新のツイートのツイート日を返す' do
+          expect(registered_tag.last_tweeted_at).to eq tweet.tweeted_at
+        end
+      end
+      context 'ツイートがないとき' do
+        it 'nilを返す' do
+          expect(registered_tag.last_tweeted_at).to eq nil
+        end
+      end
+    end
+
+    describe '#tweeted_day_count' do
+      context '計3日分のツイートがあるとき' do
+        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
+        it '3を返す' do
+          expect(registered_tag.tweeted_day_count).to eq 3
+        end
+      end
+      context 'ツイートがないとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        it '0を返す' do
+          expect(registered_tag.tweeted_day_count).to eq 0
+        end
+      end
+    end
+
     describe '#day_from_last_tweet' do
       context '最後のツイートが7日前のとき' do
         let(:registered_tag) { create(:registered_tag) }
         before { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
         it '7を返す' do
-          registered_tag.fetch_data
           expect(registered_tag.day_from_last_tweet).to eq 7
         end
       end
@@ -79,7 +104,7 @@ RSpec.describe RegisteredTag, type: :model do
       context '最初のツイートが7日前で計3日分のツイートがあるとき' do
         let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
         it '7を返す' do
-          registered_tag.fetch_data
+          registered_tag.fetch_tweets_data!
           expect(registered_tag.day_from_first_tweet).to eq 7
         end
       end
@@ -95,7 +120,6 @@ RSpec.describe RegisteredTag, type: :model do
       context '最初のツイートが7日前で計3日分のツイートがあるとき' do
         let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
         it '3 / (7-1) * 100 = 50(%)を返す' do
-          registered_tag.fetch_data
           expect(registered_tag.tweet_rate).to eq 50
         end
       end
@@ -124,10 +148,6 @@ RSpec.describe RegisteredTag, type: :model do
             registered_tag.cron_tweets
           end.to change(Tweet, :count).by(3)
         end
-        it '#fetch_data("add")を実行する' do
-          expect(registered_tag).to receive(:fetch_data).with('add').once
-          registered_tag.cron_tweets
-        end
         it 'ログを出力する' do
           expect(Rails.logger).to receive(:info).with('@aiandrox の #ポートフォリオ進捗 にツイートを追加')
           registered_tag.cron_tweets
@@ -137,32 +157,27 @@ RSpec.describe RegisteredTag, type: :model do
       context '既に前日のツイートを取得しているとき' do
         it '#add_tweetsを実行しない' do
           create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
-          registered_tag.fetch_data
+          registered_tag.fetch_tweets_data!
           expect(registered_tag).not_to receive(:add_tweets)
           registered_tag.cron_tweets
         end
       end
-
       context '前日のツイートがなかったとき', vcr: { cassette_name: 'twitter_api/everyday_search/前日のツイートがなかったとき' } do
-        it '#fetch_dataを実行しない' do
-          expect(registered_tag).not_to receive(:fetch_data)
+        it 'Rails.logger.infoを実行しない' do
+          expect(Rails.logger).not_to receive(:info)
           registered_tag.cron_tweets
         end
       end
       context 'ツイートが1件も保存されていないとき' do
-        before do
-          registered_tag.tweets.each do |tweet|
-            tweet.destroy
-          end
-        end
-        it '#create_tweetsを実行する' do
-          expect(registered_tag).to receive(:create_tweets).once
+        before { registered_tag.tweets.each(&:destroy) }
+        it '#create_tweets!を実行する' do
+          expect(registered_tag).to receive(:create_tweets!).once
           registered_tag.cron_tweets
         end
       end
     end
 
-    describe '#create_tweets(type="standard")' do
+    describe '#create_tweets!(type="standard")' do
       let(:user) { create(:user, :real_value) }
       context 'ハッシュタグのツイートがTwitterに存在するとき',
         vcr: { cassette_name: 'twitter_api/standard_search' } do
@@ -170,7 +185,7 @@ RSpec.describe RegisteredTag, type: :model do
           create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
         end
         it '取得したツイートを保存する' do
-          expect { present_tag.create_tweets }.to change(Tweet, :count).by(3)
+          expect { present_tag.create_tweets! }.to change(Tweet, :count).by(3)
         end
       end
       context 'ハッシュタグのツイートがTwitterに存在しないとき',
@@ -179,7 +194,7 @@ RSpec.describe RegisteredTag, type: :model do
           create(:registered_tag, user: user, tag: create(:tag, name: 'absent_tag'))
         end
         it 'ツイートを取得しないので保存しない' do
-          expect { absent_tag.create_tweets }.not_to change(Tweet, :count)
+          expect { absent_tag.create_tweets! }.not_to change(Tweet, :count)
         end
       end
     end
@@ -207,31 +222,13 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
-    describe '#fetch_data(type="new")' do
-      let(:registered_tag) { create(:registered_tag, :with_tweets) }
+    describe '#fetch_tweets_data!' do
+      let!(:registered_tag) { create(:registered_tag, :with_tweets) }
       let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
-      let(:latest_tweet) { registered_tag.tweets.latest }
       it '更新後のtweet.first_tweetedが最初のツイート日時になる' do
         expect do
-          registered_tag.fetch_data
-        end.to change { registered_tag.reload.first_tweeted_at }.from(nil).to(oldest_tweet.tweeted_at)
-      end
-      it '更新後のtweet.last_tweetedが最後のツイート日時になる' do
-        expect do
-          registered_tag.fetch_data
-        end.to change { registered_tag.reload.last_tweeted_at }.from(nil).to(latest_tweet.tweeted_at)
-      end
-      it '更新後のtweet.tweeted_day_countがツイートをした日数になる' do
-        expect do
-          registered_tag.fetch_data
-        end.to change { registered_tag.reload.tweeted_day_count }.from(0).to(2)
-      end
-      context 'type = "add"のとき' do
-        it 'tweet.first_tweetedを更新しない' do
-          expect do
-            registered_tag.fetch_data('add')
-          end.not_to change(registered_tag, :first_tweeted_at)
-        end
+          registered_tag.fetch_tweets_data!
+        end.to change { registered_tag.reload.first_tweeted_at }.to(oldest_tweet.tweeted_at)
       end
     end
   end

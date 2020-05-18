@@ -23,12 +23,13 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
+  # データ更新後の値が変更されなくなるので、||=は使わない
   def last_tweeted_at
-    @last_tweeted_at ||= tweets.latest.tweeted_at
+    tweets.latest&.tweeted_at
   end
 
   def tweeted_day_count
-    @tweeted_day_count ||= tweets.tweeted_day_count
+    tweets&.tweeted_day_count
   end
 
   def day_from_last_tweet
@@ -50,7 +51,7 @@ class RegisteredTag < ApplicationRecord
   def tweet_rate
     return 0 if day_from_first_tweet.nil?
 
-    tweeted_day_count * 100 / (day_from_first_tweet - 1)
+    tweeted_day_count * 100 / (day_from_first_tweet - 1) #これ0になりかねん
   end
 
   def cron_tweets
