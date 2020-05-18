@@ -2,7 +2,7 @@
   <ValidationObserver ref="observer" v-slot="{ invalid }">
     <v-list-item>
       <v-list-item-avatar color="grey" size="60">
-        <v-img src="" />
+        <v-img src />
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="title">
@@ -26,7 +26,7 @@
             outlined
             :counter="300"
             :error-messages="errors"
-            rows="3"
+            rows="5"
             label="プロフィール"
           />
         </ValidationProvider>
@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 export default {
   props: {
     user: {

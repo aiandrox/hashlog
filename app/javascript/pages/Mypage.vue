@@ -17,7 +17,6 @@
   </div>
 </template>
 <script>
-import axios from "axios"
 import profile from "../components/Profile"
 import tagsTab from "../components/TagsTab"
 import deleteDialog from "../components/shared/TheDeleteDialog"
@@ -50,10 +49,10 @@ export default {
   methods: {
     async fetchUserData() {
       try {
-        const userRes = await axios.get("/api/v1/users/current")
+        const userRes = await this.$axios.get("/api/v1/users/current")
         const { user } = userRes.data
         this.user = user
-        const registeredTagsRes = await axios.get(
+        const registeredTagsRes = await this.$axios.get(
           `/api/v1/users/${user.uuid}/registered_tags`
         )
         const { registeredTags } = registeredTagsRes.data
@@ -64,9 +63,14 @@ export default {
     },
     async updateUserData() {
       try {
-        await axios.patch(`/api/v1/users/${this.user.uuid}`, {
-          user: this.user
-        })
+        const userRes = await this.$axios.patch(
+          `/api/v1/users/${this.user.uuid}`,
+          {
+            user: this.user
+          }
+        )
+        const { user } = userRes.data
+        this.user = user
         this.$refs.profile.finishEdit()
       } catch (error) {
         console.log(error)
@@ -74,7 +78,7 @@ export default {
     },
     // TODO: APIを叩かずに実装したい
     async cancelEdit() {
-      const userRes = await axios.get(`/api/v1/users/${this.user.uuid}`)
+      const userRes = await this.$axios.get(`/api/v1/users/${this.user.uuid}`)
       const { user } = userRes.data
       this.user = user
     },
@@ -83,7 +87,7 @@ export default {
     },
     async deleteUser() {
       try {
-        await axios.delete(`/api/v1/users/${this.user.uuid}`)
+        await this.$axios.delete(`/api/v1/users/${this.user.uuid}`)
         this.$router.push({ name: "top" })
       } catch (error) {
         console.log(error)

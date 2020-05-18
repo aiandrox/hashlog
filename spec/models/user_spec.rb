@@ -67,5 +67,19 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe '#delete_description_space' do
+      let(:user) { create(:user) }
+      before do
+        text = "テキスト\n\n↑ここの改行は残したい\n↓は改行空白全て消してしまいたい。\n\n     \n\n\n　\n　\n　　　\n\n"
+        user.update!(description: text)
+      end
+      it '保存時にuser.descriptionの最後の空白文字/改行が削除される' do
+        # 本当は"テキスト\n\n↑ここの改行は残したい\n↓は改行空白全て消してしまいたい。"を実装したい
+        expect(user.reload.description).to eq "テキスト\n↑ここの改行は残したい\n↓は改行空白全て消してしまいたい。"
+      end
+      
+    end
+    
   end
 end
