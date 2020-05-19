@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2020_05_19_035839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "screen_name", null: false
-    t.string "avatar_url"
+    t.string "avatar_url", default: "https://abs.twimg.com/sticky/default_profile_images/default_profile.png", null: false
     t.index ["twitter_id"], name: "index_users_on_twitter_id", unique: true
   end
 
