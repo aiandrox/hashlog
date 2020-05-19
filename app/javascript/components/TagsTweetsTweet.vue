@@ -4,7 +4,7 @@
       <v-card-title>
         <v-list-item class="pl-0">
           <v-list-item :href="userUrl">
-            <v-list-item-avatar color="white" size="40">
+            <v-list-item-avatar color="grey" size="40">
               <v-img :src="user.avatarUrl" />
             </v-list-item-avatar>
             <v-list-item-content>
