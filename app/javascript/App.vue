@@ -1,28 +1,28 @@
 <template>
   <div id="app">
     <v-app>
-      <Header />
+      <the-header />
       <v-content>
         <v-container>
           <!-- <flash-message /> -->
           <router-view />
         </v-container>
       </v-content>
-      <Footer />
+      <the-footer />
     </v-app>
   </div>
 </template>
 
 <script>
-import Header from "./components/shared/TheHeader.vue"
-import Footer from "./components/shared/TheFooter.vue"
+import theHeader from "./components/shared/TheHeader.vue"
+import theFooter from "./components/shared/TheFooter.vue"
 // import FlashMessage from "./components/shared/TheFlashMessage.vue"
 
 export default {
   name: "MyApp",
   components: {
-    Header,
-    Footer
+    theHeader,
+    theFooter
     // FlashMessage
   }
 }

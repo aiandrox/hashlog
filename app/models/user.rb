@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   before_create :set_uuid
-  before_save :delete_description_space
+  before_save :replace_user_data
 
   authenticates_with_sorcery!
   has_many :authentications, dependent: :destroy
@@ -50,7 +50,8 @@ class User < ApplicationRecord
     end
   end
 
-  def delete_description_space
+  def replace_user_data
     description.gsub!(/[　 \n]+$/, '')
+    avatar_url&.sub!(/_normal(.jpg|.jpeg|.gif|.png)/i) { Regexp.last_match[1] }
   end
 end
