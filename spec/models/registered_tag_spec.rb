@@ -95,7 +95,7 @@ RSpec.describe RegisteredTag, type: :model do
       context 'ツイートを取得していないとき' do
         let(:registered_tag) { create(:registered_tag) }
         it '0を返す' do
-          expect(registered_tag.day_from_last_tweet).to eq nil
+          expect(registered_tag.day_from_last_tweet).to eq 0
         end
       end
     end
@@ -111,7 +111,7 @@ RSpec.describe RegisteredTag, type: :model do
       context 'ツイートを取得していないとき' do
         let(:registered_tag) { create(:registered_tag) }
         it '0を返す' do
-          expect(registered_tag.day_from_first_tweet).to eq nil
+          expect(registered_tag.day_from_first_tweet).to eq 0
         end
       end
     end

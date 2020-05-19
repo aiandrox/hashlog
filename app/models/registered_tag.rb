@@ -5,7 +5,6 @@ class RegisteredTag < ApplicationRecord
   belongs_to :user
   belongs_to :tag
 
-  validates :tweeted_day_count, presence: true
   validates :privacy, presence: true
   validates :remind_day, presence: true,
                          numericality: { only_integer: true, less_than_or_equal_to: 30 }
@@ -23,35 +22,31 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
-  # データ更新後の値が変更されなくなるので、||=は使わない
   def last_tweeted_at
-    tweets.latest&.tweeted_at
+    @last_tweeted_at ||= tweets.latest&.tweeted_at
   end
 
   def tweeted_day_count
-    tweets&.tweeted_day_count
+    @tweeted_day_count ||= tweets&.tweeted_day_count
   end
 
   def day_from_last_tweet
-    return nil if last_tweeted_at.nil?
-
-    last = last_tweeted_at.to_date
-    (Date.today - last).to_i
+    last_tweeted_at.nil? ? 0 : (Date.today - last_tweeted_at.to_date).to_i
   end
 
   def day_from_first_tweet
-    return nil if first_tweeted_at.nil?
-
-    first = first_tweeted_at.to_date
-    (Date.today - first).to_i
+    first_tweeted_at.nil? ? 0 : (Date.today - first_tweeted_at.to_date).to_i
   end
 
-  # ツイート率 今日のツイートはまだ取得できていないため、day_from_first_tweet-1をする
-  # TODO: 取得した日は場合によっては100％を超えそう
   def tweet_rate
-    return 0 if day_from_first_tweet.nil?
+    return 0 if day_from_first_tweet.zero?
 
-    tweeted_day_count * 100 / (day_from_first_tweet - 1) #これ0になりかねん
+    denominator = if day_from_last_tweet.zero? # 当日のツイートが存在する場合
+                    day_from_first_tweet
+                  else
+                    day_from_first_tweet - 1 # 昨日時点までのデータで計算する
+                  end
+    tweeted_day_count * 100 / denominator
   end
 
   def cron_tweets
