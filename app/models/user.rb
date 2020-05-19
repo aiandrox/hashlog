@@ -31,13 +31,9 @@ class User < ApplicationRecord
   def register_tag(tag)
     ActiveRecord::Base.transaction do
       tag.save!
-      registered_tag = registered_tags.build(tag_id: tag.id)
-      registered_tag.save!
-      registered_tag.create_tweets
-      if registered_tag.tweets.any?
-        registered_tag.fetch_data
-        registered_tag.save! # TODO: 一回のsave!でどうにかしたい
-      end
+      registered_tag = registered_tags.create!(tag_id: tag.id)
+      registered_tag.create_tweets!
+      registered_tag.fetch_tweets_data!
       true
     rescue ActiveRecord::RecordInvalid
       tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?
