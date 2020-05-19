@@ -28,7 +28,9 @@ module TwitterAPI
             else
               "#{r_tag.day_from_last_tweet}日間"
             end
-      "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{day}途絶えているようです。調子はいかがですか？"
+      url = "https://hashlog.work/mypage/tags/#{r_tag.id}"
+      "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{day}途絶えているようです。調子はいかがですか？
+\n通知を解除する場合は以下のリンクから設定してください。\n#{url}"
     end
   end
 
