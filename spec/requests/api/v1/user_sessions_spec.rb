@@ -1,4 +1,4 @@
-RSpec.fdescribe 'UserSessions', type: :request do
+RSpec.describe 'UserSessions', type: :request do
   describe 'DELETE /api/v1/logout' do
     let(:user) { create(:user) }
     before do
