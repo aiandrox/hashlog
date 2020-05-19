@@ -1,15 +1,21 @@
 RSpec.describe 'Base', type: :request do
   let(:user) { create(:user) }
 
-  describe '#rescue_limited_twitter_requests' do
-    xcontext 'TwitterAPIのリクエストが上限に達した場合' do
-      let(:client) { TwitterAPI::Client.new(user, 'ハッシュタグ') }
+  xdescribe '#rescue_limited_twitter_requests' do
+    context 'TwitterAPIのリクエストが上限に達した場合' do
+      let(:client) { TwitterAPI::Search.new(user, 'ハッシュタグ') }
       it '429 TooManyRequestsを返す' do
         allow(client).to receive(:tweets_data).and_raise(Twitter::Error::TooManyRequests)
         client.tweets_data('standard')
         expect(response.status).to eq 429
       end
-      it 'エラーメッセージのJSONを返す'
+      it 'エラーメッセージのJSONを返す' do
+        expect(json['error']).to eq({
+          'status' => '429',
+          'title' => 'Twitter APIが制限されています。',
+          'detail' => '15分後に再度試してください。',
+        })
+      end
     end
   end
 
@@ -30,11 +36,11 @@ RSpec.describe 'Base', type: :request do
         expect(response.status).to eq 404
       end
       it 'エラーメッセージのJSONを返す' do
-        expect(json['errors']).to eq([{
+        expect(json['error']).to eq({
           'status' => '404',
           'title' => 'リソースが見つかりませんでした。',
           'detail' => 'アドレスを確認してください。'
-        }])
+        })
       end
     end
   end
@@ -46,11 +52,11 @@ RSpec.describe 'Base', type: :request do
         expect(response.status).to eq 401
       end
       it 'エラーメッセージのJSONを返す' do
-        expect(json['errors']).to eq([{
+        expect(json['error']).to eq({
           'status' => '401',
           'title' => '認証されていません。',
           'detail' => 'ログインしてください。'
-        }])
+        })
       end
     end
   end

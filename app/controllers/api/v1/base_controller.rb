@@ -10,29 +10,29 @@ class Api::V1::BaseController < ApplicationController
   protected
 
   def rescue_limited_twitter_requests
-    error = {
+    error_json = {
       'status' => '429',
       'title' => 'Twitter APIが制限されています。',
       'detail' => '15分後に再度試してください。'
     }
-    render json: { 'errors': [error] }, status: 429 # TooManyRequests
+    render json: { 'error': error_json }, status: 429 # TooManyRequests
   end
 
   def rescue_not_found
-    error = {
+    error_json = {
       'status' => '404',
       'title' => 'リソースが見つかりませんでした。',
       'detail' => 'アドレスを確認してください。'
     }
-    render json: { 'errors': [error] }, status: 404  # NotFound
+    render json: { 'error': error_json }, status: 404 # NotFound
   end
 
   def not_authenticated
-    error = {
+    error_json = {
       'status' => '401',
       'title' => '認証されていません。',
       'detail' => 'ログインしてください。'
     }
-    render json: { 'errors': [error] }, status: 401  # Unauthorized
+    render json: { 'error': error_json }, status: 401 # Unauthorized
   end
 end

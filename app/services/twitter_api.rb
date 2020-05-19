@@ -1,7 +1,42 @@
-require 'twitter'
-
 module TwitterAPI
-  class Client
+  class RemindReply
+    include TwitterAPIClient
+
+    def initialize
+      @registered_tags = RegisteredTag.all.includes(:user, :tag)
+    end
+
+    def call
+      registered_tags.each do |tag|
+        send_tweet(tag) if tag.remind_day.positive? && tag.remind_day < tag.day_from_last_tweet
+      end
+    end
+
+    private
+
+    attr_reader :registered_tags
+
+    def send_tweet(r_tag)
+      client.update(remind_message(r_tag))
+      Rails.logger.info("@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信")
+    end
+
+    def remind_message(r_tag)
+      day = case r_tag.day_from_last_tweet
+            when 1
+              '丸1日'
+            else
+              "#{r_tag.day_from_last_tweet}日間"
+            end
+      url = "https://hashlog.work/mypage/tags/#{r_tag.id}"
+      "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{day}途絶えているようです。調子はいかがですか？
+\n通知を解除する場合は以下のリンクから設定してください。\n#{url}"
+    end
+  end
+
+  class Search
+    include TwitterAPIClient
+
     def initialize(user, tag_name, since_id = nil)
       @tweet_ids = []
       @tweeted_ats = []
@@ -62,20 +97,6 @@ module TwitterAPI
                       result_type: 'recent', since_id: since_id).take(100).map do |result|
           tweeted_ats << result.created_at
           tweet_ids << result.id
-        end
-      end
-    end
-
-    def client
-      @client ||= begin
-        Twitter::REST::Client.new do |config|
-          config.consumer_key        = Rails.application.credentials.twitter[:key]
-          config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
-          config.access_token        = Rails.application.credentials.twitter[:access_token]
-          config.access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
-          # config.access_token        = @user.access_token || Rails.application.credentials.twitter[:access_token]
-          # config.access_token_secret = @user.access_token_secret || Rails.application.credentials.twitter[:access_token_secret]
-          config.dev_environment     = 'dev'
         end
       end
     end

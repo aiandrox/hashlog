@@ -92,7 +92,7 @@ export default {
           })
           this.tagName = ""
         } catch (error) {
-          const errorMessages = error.response.data.errors.messages
+          const errorMessages = error.response.data.error.messages
           this.$refs.provider.errors.push(errorMessages[0])
         } finally {
           this.isLoading = false

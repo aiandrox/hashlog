@@ -5,7 +5,6 @@ class RegisteredTag < ApplicationRecord
   belongs_to :user
   belongs_to :tag
 
-  validates :tweeted_day_count, presence: true
   validates :privacy, presence: true
   validates :remind_day, presence: true,
                          numericality: { only_integer: true, less_than_or_equal_to: 30 }
@@ -23,59 +22,63 @@ class RegisteredTag < ApplicationRecord
     end
   end
 
-  # 最初にツイートした日から経過した日数
-  def all_day_count
-    return 0 if first_tweeted_at.nil?
-
-    first = first_tweeted_at.to_date
-    today = Date.current
-    (today - first).to_i
+  def last_tweeted_at
+    @last_tweeted_at ||= tweets.latest&.tweeted_at
   end
 
-  # ツイート率 今日のツイートはまだ取得できていないため、all_day_count-1をする
-  # TODO: 取得した日は場合によっては100％を超えそう
+  def tweeted_day_count
+    @tweeted_day_count ||= tweets&.tweeted_day_count
+  end
+
+  def day_from_last_tweet
+    last_tweeted_at.nil? ? 0 : (Date.today - last_tweeted_at.to_date).to_i
+  end
+
+  def day_from_first_tweet
+    first_tweeted_at.nil? ? 0 : (Date.today - first_tweeted_at.to_date).to_i
+  end
+
   def tweet_rate
-    tweeted_day_count * 100 / (all_day_count - 1)
+    return 0 if day_from_first_tweet.zero?
+
+    denominator = if day_from_last_tweet.zero? # 当日のツイートが存在する場合
+                    day_from_first_tweet
+                  else
+                    day_from_first_tweet - 1 # 昨日時点までのデータで計算する
+                  end
+    tweeted_day_count * 100 / denominator
   end
 
-  # TODO: サービスクラス
   def cron_tweets
     last_tweet = tweets.latest
 
     unless last_tweet
-      create_tweets
+      create_tweets!
       return
     end
 
     return if last_tweet.tweeted_at > DateTime.yesterday
 
     since_id = last_tweet.tweet_id.to_i
-    add_tweets(since_id)
-
-    return if add_tweets(since_id).empty?
-
-    fetch_data('add')
-    Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
+    add_tweets(since_id).any? && Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
   end
 
-  def create_tweets(type = 'standard')
-    client = TwitterAPI::Client.new(user, tag.name)
+  def create_tweets!(type = 'standard')
+    client = TwitterAPI::Search.new(user, tag.name)
     client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
   end
 
-  def fetch_data(type = 'new')
-    self.first_tweeted_at = tweets.oldest.tweeted_at if type == 'new'
-    self.last_tweeted_at = tweets.latest.tweeted_at
-    self.tweeted_day_count = tweets.tweeted_day_count
-  end
-
   def add_tweets(since_id)
-    client = TwitterAPI::Client.new(user, tag.name, since_id)
+    client = TwitterAPI::Search.new(user, tag.name, since_id)
     client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
+  end
+
+  def fetch_tweets_data!
+    update!(first_tweeted_at: tweets.oldest.tweeted_at) if tweets.any?
   end
 
   private

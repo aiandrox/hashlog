@@ -7,6 +7,7 @@ FactoryBot.define do
   trait :with_tweets do
     after(:create) do |registered_tag|
       create_list(:tweet, 3, registered_tag: registered_tag)
+      registered_tag.fetch_tweets_data!
     end
   end
 
@@ -16,12 +17,8 @@ FactoryBot.define do
       create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
       create(:tweet, tweeted_at: DateTime.now.ago(3.day), registered_tag: registered_tag)
       create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag)
-      registered_tag.fetch_data
+      registered_tag.fetch_tweets_data!
     end
-  end
-
-  trait :remind do
-    remind_day { 3 }
   end
 
   trait :limited do

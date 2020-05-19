@@ -17,7 +17,6 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     user.assign_attributes(user_params)
     user.privacy = User.privacies_i18n.invert[params[:user][:privacy]]
-
     if user.save
       render json: user
     else
