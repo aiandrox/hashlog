@@ -1,4 +1,4 @@
-RSpec.fdescribe RemindReplyJob, type: :job do
+RSpec.describe RemindReplyJob, type: :job do
   include ActiveJob::TestHelper
   include ActiveSupport::Testing::TimeHelpers
   ActiveJob::Base.queue_adapter = :test

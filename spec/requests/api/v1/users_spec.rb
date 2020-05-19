@@ -20,6 +20,7 @@ RSpec.describe 'Users', type: :request do
           'description' => user.description,
           'privacy' => user.privacy_i18n,
           'role' => user.role_i18n,
+          'avatarUrl' => user.avatar_url,
         })
       end
     end
@@ -43,6 +44,7 @@ RSpec.describe 'Users', type: :request do
         'description' => user.description,
         'privacy' => user.privacy_i18n,
         'role' => user.role_i18n,
+        'avatarUrl' => user.avatar_url,
       })
     end
   end
@@ -76,6 +78,7 @@ RSpec.describe 'Users', type: :request do
             'description' => '新しい詳細',
             'privacy' => '非公開',
             'role' => user.role_i18n,
+            'avatarUrl' => user.avatar_url,
           } )
         end
       end
@@ -193,6 +196,7 @@ RSpec.describe 'Users', type: :request do
           'description' => current_user.description,
           'privacy' => current_user.privacy_i18n,
           'role' => current_user.role_i18n,
+          'avatarUrl' => current_user.avatar_url,
         })
       end
     end

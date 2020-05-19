@@ -114,7 +114,8 @@ Rails.application.config.sorcery.configure do |config|
     twitter_id: 'id',
     screen_name: 'screen_name',
     name: 'name',
-    description: 'description'
+    description: 'description',
+    avatar_url: 'profile_image_url_https'
   } # カラム名: twitterのparams
 
   # config.facebook.key = ""

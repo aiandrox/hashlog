@@ -26,6 +26,9 @@ RSpec.describe User, type: :model do
     it '12字のuuidが生成されている' do
       expect(user.uuid.length).to eq 12
     end
+    it 'avatar_urlがデフォルトのURLである' do
+      expect(user.avatar_url).to eq 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
+    end
   end
 
   describe 'methods' do
@@ -68,18 +71,23 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '#delete_description_space' do
+    describe '#replace_user_data' do
       let(:user) { create(:user) }
-      before do
+      it '保存時にdescriptionの最後の空白文字/改行が削除される' do
         text = "テキスト\n\n↑ここの改行は残したい\n↓は改行空白全て消してしまいたい。\n\n     \n\n\n　\n　\n　　　\n\n"
         user.update!(description: text)
-      end
-      it '保存時にuser.descriptionの最後の空白文字/改行が削除される' do
         # 本当は"テキスト\n\n↑ここの改行は残したい\n↓は改行空白全て消してしまいたい。"を実装したい
         expect(user.reload.description).to eq "テキスト\n↑ここの改行は残したい\n↓は改行空白全て消してしまいたい。"
       end
-      
+      it 'avatar_urlの"_normal.拡張子"が".拡張子"に変換される' do
+        types = %w[jpg jpeg gif png JPG JPEG GIF PNG]
+        types.each do |type|
+          avatar_url = "https://省略profile_normal.#{type}"
+          expected_url = "https://省略profile.#{type}"
+          user.update!(avatar_url: avatar_url)
+          expect(user.reload.avatar_url).to eq expected_url
+        end
+      end
     end
-    
   end
 end
