@@ -52,6 +52,6 @@ class User < ApplicationRecord
 
   def replace_user_data
     description.gsub!(/[　 \n]+$/, '')
-    avatar_url&.sub!(/_normal(.jpg|.jpeg|.gif|.png)/i) { $1 }
+    avatar_url&.sub!(/_normal(.jpg|.jpeg|.gif|.png)/i) { Regexp.last_match[1] }
   end
 end
