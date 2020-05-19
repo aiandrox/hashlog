@@ -60,9 +60,7 @@ class RegisteredTag < ApplicationRecord
     return if last_tweet.tweeted_at > DateTime.yesterday
 
     since_id = last_tweet.tweet_id.to_i
-    if add_tweets(since_id).any?
-      Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
-    end
+    add_tweets(since_id).any? && Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
   end
 
   def create_tweets!(type = 'standard')
