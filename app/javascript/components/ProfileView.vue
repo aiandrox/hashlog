@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-list-item>
-      <v-list-item-avatar color="grey" size="60">
-        <v-img src />
+      <v-list-item-avatar color="white" size="60">
+        <v-img :src="user.avatarUrl" />
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="title">

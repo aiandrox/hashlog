@@ -4,10 +4,8 @@
       <v-card-title>
         <v-list-item class="pl-0">
           <v-list-item :href="userUrl">
-            <v-list-item-avatar color="grey" size="40">
-              <v-img
-                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-              />
+            <v-list-item-avatar color="white" size="40">
+              <v-img :src="user.avatarUrl" />
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
