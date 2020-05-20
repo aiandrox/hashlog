@@ -14,14 +14,12 @@ export default {
     setPageData(response) {
       this.page.totalPages = Number(response.headers["total-pages"])
       this.page.requestUrl = response.headers["request-url"]
-    }
-  },
-  watch: {
+    },
     // ページネーション。ボタンを押したときに表示するデータを変更する
-    async "page.currentPage"(val) {
+    async pageChange(val) {
       goTo(0)
       const res = await this.$axios.get(`${this.page.requestUrl}?page=${val}`)
-      // 増えたらメソッドに切り出す
+      // TODO: 増えたらメソッドに切り出す
       const { tweets } = res.data
       this.tweets = tweets
     }

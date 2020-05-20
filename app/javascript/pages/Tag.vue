@@ -17,7 +17,12 @@
       </v-col>
     </v-container>
     <div class="text-center">
-      <v-pagination v-model="page.currentPage" :length="page.totalPages" :total-visible="7"></v-pagination>
+      <v-pagination
+        v-model="page.currentPage"
+        :length="page.totalPages"
+        :total-visible="7"
+        @input="pageChange"
+      />
     </div>
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
       保存されていたツイートのデータが
@@ -89,7 +94,6 @@ export default {
   methods: {
     async fetchData() {
       try {
-        // TODO: await地獄
         const userRes = await this.$axios.get("/api/v1/users/current")
         const { user } = userRes.data
         this.user = user
