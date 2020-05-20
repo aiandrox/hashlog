@@ -1,3 +1,5 @@
+require 'pagy/extras/headers'
+
 class Api::V1::BaseController < ApplicationController
   include Pagy::Backend
   after_action :set_pagy_header, if: -> { @pagy }
