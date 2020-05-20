@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :require_login
+  before_action :require_login, only: %i[update destroy current]
 
   def index
     @pagy, users = pagy(User.all)
