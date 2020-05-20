@@ -1,12 +1,9 @@
 require 'pagy/extras/headers'
 
 class Api::V1::TweetsController < Api::V1::BaseController
-  include Pagy::Backend
-
   def index
     registered_tag = RegisteredTag.find(params[:registered_tag_id])
-    pagy, tweets = pagy(registered_tag.tweets.desc)
-    pagy_headers_merge(pagy)
+    @pagy, tweets = pagy(registered_tag.tweets.desc)
     render json: tweets
   end
 
