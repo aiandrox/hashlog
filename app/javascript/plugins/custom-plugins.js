@@ -12,7 +12,6 @@ export default {
   methods: {
     // ページネーション。ページ用コンポーネントでpageオブジェクトを定義しておくこと。
     setPageData(response) {
-      this.page.currentPage = Number(response.headers["current-page"])
       this.page.totalPages = Number(response.headers["total-pages"])
       this.page.requestUrl = response.headers["request-url"]
     }
