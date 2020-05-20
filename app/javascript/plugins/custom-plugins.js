@@ -16,7 +16,7 @@ export default {
       this.page.requestUrl = response.headers["request-url"]
     },
     // ページネーション。ボタンを押したときに表示するデータを変更する
-    async pageChange(val) {
+    async changePage(val) {
       goTo(0)
       const res = await this.$axios.get(`${this.page.requestUrl}?page=${val}`)
       // TODO: 増えたらメソッドに切り出す

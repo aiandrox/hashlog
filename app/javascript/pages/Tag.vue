@@ -21,7 +21,7 @@
         v-model="page.currentPage"
         :length="page.totalPages"
         :total-visible="7"
-        @input="pageChange"
+        @input="changePage"
       />
     </div>
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
