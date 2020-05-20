@@ -1,10 +1,5 @@
 <template>
-  <v-app-bar
-    app
-    flat
-    dark
-    src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
-  >
+  <v-app-bar app flat dark src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
     <v-toolbar-title>Hashlog</v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
@@ -19,9 +14,12 @@
 export default {
   methods: {
     logout() {
-      this.$axios.delete("/api/v1/logout", {}).then(response => {
+      try {
+        this.$axios.delete("/api/v1/logout", {})
         this.$router.push({ name: "top" })
-      })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
