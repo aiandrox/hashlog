@@ -1,6 +1,8 @@
 RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags' do
-    let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
+    # latest_registered_tagの場所がおかしいのは、作成順に並べるため
+    # 実際は作成日が前後することはない
+    # https://ddnexus.github.io/pagy/extras/array.html
     let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
     let(:registered_tags) { RegisteredTag.asc }
     let(:tags_json) { json['registeredTags'] }
@@ -8,6 +10,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       create_list(:registered_tag, 50)
       get '/api/v1/registered_tags'
     end
+    let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
     describe 'pagy' do
       it 'pageクエリがないとき 20件返す' do
         expect(tags_json.length).to eq 20
