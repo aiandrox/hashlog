@@ -6,10 +6,9 @@
           <v-system-bar class="pa-5 subtitle-1"
             >ハッシュタグを登録する</v-system-bar
           >
-
           <v-card-text class="mt-5">
             <v-container>
-              <v-form>
+              <v-form v-on:submit.prevent="onSubmit">
                 <ValidationProvider
                   ref="provider"
                   v-slot="{ errors }"
@@ -32,7 +31,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn text @click="pushCancel">キャンセル</v-btn>
+            <v-btn text @click="resetForm">キャンセル</v-btn>
             <v-btn text color="primary" @click="sendTagName" :disabled="invalid"
               >登録する</v-btn
             >
@@ -40,17 +39,15 @@
         </v-card>
       </ValidationObserver>
       <!-- ローディング -->
-      <loading-view v-if="isLoading" />
+      <loading-circle v-if="isLoading" />
     </v-dialog>
   </v-row>
 </template>
-
 <script>
-import loadingView from "./shared/TheLoading"
-
+import loadingCircle from "./shared/TheLoading"
 export default {
   components: {
-    loadingView
+    loadingCircle
   },
   data() {
     return {
@@ -63,7 +60,7 @@ export default {
     open() {
       this.dialog = true
     },
-    pushCancel() {
+    resetForm() {
       this.dialog = false
       this.tagName = ""
       this.$nextTick(() => {
@@ -85,16 +82,11 @@ export default {
             }
           )
           const tagId = registeredTagRes.data.registeredTag.id
-          this.dialog = false
           this.$router.push({ name: "mypageTag", params: { id: tagId } })
-          this.$nextTick(() => {
-            this.$refs.observer.reset()
-          })
-          this.tagName = ""
+          this.resetForm()
         } catch (error) {
           const errorMessages = error.response.data.error.messages
           this.$refs.provider.errors.push(errorMessages[0])
-        } finally {
           this.isLoading = false
         }
       }
