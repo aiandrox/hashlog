@@ -15,7 +15,7 @@ class Api::V1::BaseController < ApplicationController
 
   def set_pagy_header
     pagy_headers_merge(@pagy)
-    response.headers.merge!({ 'Request-Url' => request.url.sub(/\?page=\d+$/, '') })
+    response.headers.merge!({ 'Request-Url' => request.path_info })
   end
 
   def rescue_limited_twitter_requests
