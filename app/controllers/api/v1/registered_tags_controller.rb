@@ -3,6 +3,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
 
   def index
     registered_tags = RegisteredTag.by_user(params[:user_uuid]).asc.includes(:tag, :tweets)
+    @pagy, registered_tags = pagy(registered_tags)
     render json: registered_tags
   end
 
