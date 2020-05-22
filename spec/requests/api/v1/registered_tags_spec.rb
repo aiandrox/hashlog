@@ -3,14 +3,14 @@ RSpec.describe 'RegisteredTags', type: :request do
     # latest_registered_tagの場所がおかしいのは、作成順に並べるため
     # 実際は作成日が前後することはない
     # https://ddnexus.github.io/pagy/extras/array.html
-    let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
+    let(:oldest_registered_tag) { RegisteredTag.asc.first }
+    let(:latest_registered_tag) { RegisteredTag.asc.last }
     let(:registered_tags) { RegisteredTag.asc }
     let(:tags_json) { json['registeredTags'] }
     before do
       create_list(:registered_tag, 50)
       get '/api/v1/registered_tags'
     end
-    let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
     describe 'pagy' do
       it 'pageクエリがないとき 20件返す' do
         expect(tags_json.length).to eq 20
@@ -40,6 +40,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       end
     end
     it '降順に並ぶ（最古のregistered_tagが最初になる）' do
+      
       expect(tags_json.first['id']).to eq oldest_registered_tag.id
     end
     it '降順に並ぶ（最新のregistered_tagが最後になる）' do

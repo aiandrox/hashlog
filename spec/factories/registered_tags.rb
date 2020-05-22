@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :registered_tag do
     user
     tag
+    sequence(:created_at) { |n| Time.current + n.minute }
   end
 
   trait :with_tweets do
