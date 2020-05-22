@@ -8,7 +8,7 @@ class RemindReplyJob < ApplicationJob
   # end
 
   def perform
-    logger.info("\n#{DateTime.now} : RemindReplyJob")
+    logger.info("\n#{Time.now} : RemindReplyJob")
     TwitterAPI::RemindReply.new.call
   end
 end

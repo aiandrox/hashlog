@@ -10,16 +10,16 @@ RSpec.describe TwitterAPI do
         expect(remind_reply).not_to receive(:send_tweet).with(remind_0_tag)
         remind_reply.call
       end
-      it 'remind_dayが3で最終ツイートが3日前のtagに対してsend_tweetメソッドを実行しない' do
-        remind_3_last_tweet_3_tag = create(:registered_tag, remind_day: 3)
-        create(:tweet, tweeted_at: DateTime.now.ago(3.day), registered_tag: remind_3_last_tweet_3_tag)
-        expect(remind_reply).not_to receive(:send_tweet).with(remind_3_last_tweet_3_tag)
+      it 'remind_dayが7で最終ツイートが7日前のtagに対してsend_tweetメソッドを実行しない' do
+        remind_7_last_tweet_7_tag = create(:registered_tag, remind_day: 7)
+        create(:tweet, :tweeted_7days_ago, registered_tag: remind_7_last_tweet_7_tag)
+        expect(remind_reply).not_to receive(:send_tweet).with(remind_7_last_tweet_7_tag)
         remind_reply.call
       end
-      it 'remind_dayが2で最終ツイートが3日前のtagに対してsend_tweetメソッドを実行する' do
-        remind_2_last_tweet_3_tag = create(:registered_tag, remind_day: 2)
-        create(:tweet, tweeted_at: DateTime.now.ago(3.day), registered_tag: remind_2_last_tweet_3_tag)
-        expect(remind_reply).to receive(:send_tweet).with(remind_2_last_tweet_3_tag).once
+      it 'remind_dayが6で最終ツイートが7日前のtagに対してsend_tweetメソッドを実行する' do
+        remind_6_last_tweet_7_tag = create(:registered_tag, remind_day: 6)
+        create(:tweet, :tweeted_7days_ago, registered_tag: remind_6_last_tweet_7_tag)
+        expect(remind_reply).to receive(:send_tweet).with(remind_6_last_tweet_7_tag).once
         remind_reply.call
       end
     end
