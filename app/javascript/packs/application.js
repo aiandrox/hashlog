@@ -16,8 +16,8 @@ import VueAxiosPlugin from "../plugins/vue-axios"
 Vue.use(VueAxiosPlugin, { axios: Axios })
 Vue.prototype.$axios = Axios
 
-import titlePlugin from "../plugins/page-title"
-Vue.mixin(titlePlugin)
+import customPlugin from "../plugins/custom-plugins"
+Vue.mixin(customPlugin)
 import dayjs from "../plugins/dayjs"
 Vue.mixin(dayjs)
 import veeValidate from "../plugins/vee-validate"

@@ -12,18 +12,19 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker'
 
-# ビュー
+# 日本語化
 gem 'enum_help'
 gem 'rails-i18n'
 # 機能
+gem 'pagy', '~> 3.5'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'config'
 gem 'sorcery', '>= 0.15.0'
-# cron
+# 定期実行
 gem 'redis-namespace'
 gem 'sidekiq', '~> 5.0'
 gem 'whenever', require: false
-# api
+# 外部API
 gem 'twitter'
 
 group :development, :test do

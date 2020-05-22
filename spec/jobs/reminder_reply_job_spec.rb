@@ -10,6 +10,7 @@ RSpec.describe RemindReplyJob, type: :job do
     end
   end
 
+  # TODO: 実行されているが……なぜ通らない
   xdescribe 'AddTweetsJob#perform' do
     let(:job) { RemindReplyJob.new }
     let(:remind_reply) { TwitterAPI::RemindReply.new }

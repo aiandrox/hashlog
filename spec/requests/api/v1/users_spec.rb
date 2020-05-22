@@ -3,14 +3,22 @@ RSpec.describe 'Users', type: :request do
     let(:users) { User.all }
     let(:users_json) { json['users'] }
     before do
-      create_list(:user, 3)
+      create_list(:user, 50)
       get '/api/v1/users'
+    end
+    describe 'pagy' do
+      it 'pageクエリがないとき 10件返す' do
+        expect(users_json.length).to eq 20
+      end
+      it 'page=2のとき 10件返す' do
+        get '/api/v1/users?page=2'
+        expect(users_json.length).to eq 20
+      end
     end
     it '200 OKを返す' do
       expect(response.status).to eq 200
     end
     it 'User.allのJSONを返す' do
-      expect(users_json.length).to eq 3
       users_json.zip(users).each do |user_json, user|
         expect(user_json).to eq({
           'uuid' => user.uuid,

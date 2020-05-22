@@ -15,8 +15,8 @@ RSpec.describe Tweet, type: :model do
   end
 
   describe 'scopes' do
-    let!(:latest_tweet) { create(:tweet, tweeted_at: DateTime.now) }
-    let!(:oldest_tweet) { create(:tweet, tweeted_at: DateTime.yesterday) }
+    let!(:latest_tweet) { create(:tweet, tweeted_at: Time.now) }
+    let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.now.prev_day) }
     describe 'desc' do
       it 'tweeted_atを基準に昇順に並ぶこと' do
         expect(Tweet.desc.first).to eq latest_tweet

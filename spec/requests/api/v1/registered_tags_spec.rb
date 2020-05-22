@@ -1,18 +1,29 @@
 RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags' do
-    let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
-    let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
+    # latest_registered_tagの場所がおかしいのは、作成順に並べるため
+    # 実際は作成日が前後することはない
+    # https://ddnexus.github.io/pagy/extras/array.html
+    let(:oldest_registered_tag) { RegisteredTag.asc.first }
+    let(:latest_registered_tag) { RegisteredTag.asc.last }
     let(:registered_tags) { RegisteredTag.asc }
     let(:tags_json) { json['registeredTags'] }
     before do
-      create_list(:registered_tag, 3)
+      create_list(:registered_tag, 50)
       get '/api/v1/registered_tags'
+    end
+    describe 'pagy' do
+      it 'pageクエリがないとき 20件返す' do
+        expect(tags_json.length).to eq 20
+      end
+      it 'page=2のとき 10件返す' do
+        get '/api/v1/registered_tags?page=2'
+        expect(tags_json.length).to eq 20
+      end
     end
     it '200 OKを返す' do
       expect(response.status).to eq 200
     end
     it 'RegisteredTag.ascのJSONを返す' do
-      expect(tags_json.length).to eq 5
       tags_json.zip(registered_tags).each do |tag_json, registered_tag|
         expect(tag_json).to eq({
           'id' => registered_tag.id,
@@ -28,12 +39,15 @@ RSpec.describe 'RegisteredTags', type: :request do
         })
       end
     end
-    it '降順に並ぶ' do
+    it '降順に並ぶ（最古のregistered_tagが最初になる）' do
+      
       expect(tags_json.first['id']).to eq oldest_registered_tag.id
+    end
+    it '降順に並ぶ（最新のregistered_tagが最後になる）' do
+      get '/api/v1/registered_tags?page=3'
       expect(tags_json.last['id']).to eq latest_registered_tag.id
     end
   end
-
   describe 'GET /api/v1/users/:user_uuid/registered_tags' do
     let(:user) { create(:user, :with_tags) }
     let!(:latest_registered_tag) { create(:registered_tag, user: user, created_at: Date.tomorrow) }
@@ -44,10 +58,11 @@ RSpec.describe 'RegisteredTags', type: :request do
       create_list(:registered_tag, 3)
       get "/api/v1/users/#{user.uuid}/registered_tags"
     end
+    # user.registered_tagsは上限3つなので、ページネーションは使わない
     it '200 OKを返す' do
       expect(response.status).to eq 200
     end
-    it 'User.find(params[:uuid]).registered_tags.ascのJSONを返す' do # 今は全てのタグを返している
+    it 'User.find(params[:uuid]).registered_tags.ascのJSONを返す' do
       expect(tags_json.length).to eq 5
       tags_json.zip(registered_tags).each do |tag_json, registered_tag|
         expect(tag_json).to eq({
