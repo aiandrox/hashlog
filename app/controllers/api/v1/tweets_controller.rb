@@ -1,7 +1,7 @@
 class Api::V1::TweetsController < Api::V1::BaseController
   def index
     registered_tag = RegisteredTag.find(params[:registered_tag_id])
-    tweets = registered_tag.tweets.desc
+    @pagy, tweets = pagy(registered_tag.tweets.desc, items: 10)
     render json: tweets
   end
 

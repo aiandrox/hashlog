@@ -16,6 +16,14 @@
         <tweets :tweets="tweets" :user="user" />
       </v-col>
     </v-container>
+    <div class="text-center">
+      <v-pagination
+        v-model="page.currentPage"
+        :length="page.totalPages"
+        :total-visible="7"
+        @input="changePage"
+      />
+    </div>
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
       保存されていたツイートのデータが
       <br />全て消えてしまいます。
@@ -38,6 +46,11 @@ export default {
   },
   data() {
     return {
+      page: {
+        currentPage: 1,
+        totalPages: 1,
+        requestUrl: ""
+      },
       user: {
         uuid: "",
         name: "",
@@ -81,7 +94,6 @@ export default {
   methods: {
     async fetchData() {
       try {
-        // TODO: await地獄
         const userRes = await this.$axios.get("/api/v1/users/current")
         const { user } = userRes.data
         this.user = user
@@ -99,6 +111,7 @@ export default {
         const tweetsRes = await this.$axios.get(
           `/api/v1/registered_tags/${registeredTag.id}/tweets`
         )
+        this.setPageData(tweetsRes)
         const { tweets } = tweetsRes.data
         this.tweets = tweets
       } catch (error) {

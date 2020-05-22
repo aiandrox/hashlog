@@ -10,8 +10,9 @@ RSpec.describe AddTweetsJob, type: :job do
     end
   end
 
+  # TODO: 実行されているが……なぜ通らない
   xdescribe 'AddTweetsJob#perform',
-    vcr: { cassette_name: 'twitter_api/everyday_search/全てのタグのツイートを取得' } do # 実行されているが……なぜ通らない
+    vcr: { cassette_name: 'twitter_api/everyday_search/全てのタグのツイートを取得' } do
     let(:job) { AddTweetsJob.new }
     let(:registered_tag) { create(:registered_tag) }
     it 'ログを出力する' do

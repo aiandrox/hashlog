@@ -1,8 +1,8 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :require_login, only: %i[current update destroy]
+  before_action :require_login, only: %i[update destroy current]
 
   def index
-    users = User.all
+    @pagy, users = pagy(User.all)
     render json: users
   end
 

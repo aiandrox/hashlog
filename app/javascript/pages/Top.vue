@@ -1,30 +1,11 @@
 <template>
   <ValidationObserver ref="observer">
     <form>
-      <ValidationProvider
-        v-slot="{ errors }"
-        name="Name"
-        rules="required|max:10"
-      >
-        <v-text-field
-          v-model="name"
-          :counter="10"
-          :error-messages="errors"
-          label="Name"
-          required
-        ></v-text-field>
+      <ValidationProvider v-slot="{ errors }" name="Name" rules="required|max:10">
+        <v-text-field v-model="name" :counter="10" :error-messages="errors" label="Name" required />
       </ValidationProvider>
-      <ValidationProvider
-        v-slot="{ errors }"
-        name="email"
-        rules="required|email"
-      >
-        <v-text-field
-          v-model="email"
-          :error-messages="errors"
-          label="E-mail"
-          required
-        ></v-text-field>
+      <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
+        <v-text-field v-model="email" :error-messages="errors" label="E-mail" required />
       </ValidationProvider>
       <ValidationProvider v-slot="{ errors }" name="select" rules="required">
         <v-select
@@ -34,7 +15,7 @@
           label="Select"
           data-vv-name="select"
           required
-        ></v-select>
+        />
       </ValidationProvider>
       <ValidationProvider v-slot="{ errors }" rules="required" name="checkbox">
         <v-checkbox
@@ -44,7 +25,7 @@
           label="Option"
           type="checkbox"
           required
-        ></v-checkbox>
+        />
       </ValidationProvider>
 
       <v-btn class="mr-4" @click="submit">submit</v-btn>
