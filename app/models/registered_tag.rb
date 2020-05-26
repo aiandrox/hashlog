@@ -15,11 +15,7 @@ class RegisteredTag < ApplicationRecord
   scope :asc, -> { order(created_at: :asc) }
 
   def self.by_user(user_uuid)
-    if user_uuid
-      includes(:user).where(users: { uuid: user_uuid })
-    else
-      all
-    end
+    user_uuid ? includes(:user).where(users: { uuid: user_uuid }) : all
   end
 
   def last_tweeted_at
@@ -41,11 +37,7 @@ class RegisteredTag < ApplicationRecord
   def tweet_rate
     return 0 if day_from_first_tweet.zero?
 
-    denominator = if day_from_last_tweet.zero? # 当日のツイートが存在する場合
-                    day_from_first_tweet
-                  else
-                    day_from_first_tweet - 1 # 昨日時点までのデータで計算する
-                  end
+    denominator = day_from_last_tweet.zero? ? day_from_first_tweet : day_from_first_tweet - 1 # 昨日時点までのデータで計算する
     tweeted_day_count * 100 / denominator
   end
 
