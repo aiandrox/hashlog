@@ -2,14 +2,16 @@
   <div>
     <tab :registered-tags="registeredTags" />
     <v-container class="d-flex flex-row-reverse pt-0" row>
-      <v-col cols="12" md>
-        <tag-status
-          ref="tagStatus"
-          :registered-tag="registeredTag"
-          @push-delete="showDeleteDialog"
-          @push-update="updateTagData"
-          @push-cancel="fetchTagData"
-        />
+      <v-col class="hidden-sm-and-down" cols="12" md>
+        <v-card flat>
+          <tag-status
+            ref="tagStatus"
+            :registered-tag="registeredTag"
+            @push-delete="showDeleteDialog"
+            @push-update="updateTagData"
+            @push-cancel="fetchTagData"
+          />
+        </v-card>
       </v-col>
       <v-spacer />
       <v-col cols="12" md="6" class="pt-0">
@@ -46,6 +48,7 @@ export default {
   },
   data() {
     return {
+      drawer: true,
       page: {
         currentPage: 1,
         totalPages: 1,

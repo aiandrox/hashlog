@@ -21,6 +21,11 @@
         v-html="$sanitize(replacedDescription)"
       />
     </v-card-text>
+    <div>
+      <v-btn class="ma-2" outlined @click="pushEdit">
+        <v-icon left>mdi-pencil</v-icon>編集
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -42,6 +47,11 @@ export default {
         "<a href='$1' target='_blank'>$1</a>"
       )
       return replaced
+    }
+  },
+  methods: {
+    pushEdit() {
+      this.$emit("push-edit")
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <div>
     <!-- 編集部分 -->
     <status-edit
       v-if="isEditing"
@@ -14,7 +14,7 @@
     <v-btn v-if="!isEditing" class="ma-2" outlined @click="pushEdit">
       <v-icon left>mdi-cog</v-icon>設定
     </v-btn>
-  </v-card>
+  </div>
 </template>
 
 <script>
