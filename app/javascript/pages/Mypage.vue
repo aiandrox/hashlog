@@ -10,6 +10,7 @@
       @push-delete="showDeleteDialog"
       @push-cancel="cancelEdit"
     />
+    <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
       ツイートを含む全てのデータが消えて
       <br />復活できなくなります。

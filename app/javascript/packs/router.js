@@ -1,8 +1,9 @@
 import VueRouter from "vue-router"
 
-import Top from "../pages/Top.vue"
-import Mypage from "../pages/Mypage.vue"
-import Tag from "../pages/Tag.vue"
+import Top from "../pages/Top"
+import Mypage from "../pages/Mypage"
+import Tag from "../pages/Tag"
+import User from "../pages/User"
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: "/mypage/tags/:id",
     name: "mypageTag",
     component: Tag
+  },
+  {
+    path: "/users/:user_uuid",
+    name: "user",
+    component: User
   },
   {
     path: "/users/:user_uuid/tags/:id",
