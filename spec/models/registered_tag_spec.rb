@@ -14,6 +14,14 @@ RSpec.describe RegisteredTag, type: :model do
                     .scoped_to(:user_id)
                     .with_message('は既に登録しています'))
     end
+    it :user_registered_tags_size_validate do
+      user = create(:user)
+      user.registered_tags.create(tag_id: create(:tag).id)
+      registered_tag = build(:registered_tag, user: user)
+      # binding.pry
+      expect(registered_tag).to be_invalid
+      expect(registered_tag.errors.full_messages).to include '登録できるハッシュタグは3つまでです'
+    end
   end
 
   describe 'default value' do
