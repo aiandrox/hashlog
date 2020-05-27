@@ -9,6 +9,7 @@ class RegisteredTag < ApplicationRecord
   validates :remind_day, presence: true,
                          numericality: { only_integer: true, less_than_or_equal_to: 30 }
   validates :tag_id, uniqueness: { scope: :user_id, message: 'は既に登録しています' }
+  validate :user_registered_tags_size_validate
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
@@ -77,5 +78,9 @@ class RegisteredTag < ApplicationRecord
 
   def filter_remind_day
     self.remind_day = remind_day
+  end
+
+  def user_registered_tags_size_validate
+    errors.add(:base, '登録できるハッシュタグは3つまでです') if user.registered_tags.size > 3
   end
 end
