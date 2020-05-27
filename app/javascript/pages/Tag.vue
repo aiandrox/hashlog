@@ -85,8 +85,8 @@ export default {
   },
   computed: {
     registeredTagUrl() {
-      const { id } = this.$route.params
-      return `/api/v1/registered_tags/${id}`
+      const { tag_id } = this.$route.params
+      return `/api/v1/registered_tags/${tag_id}`
     }
   },
   watch: {
