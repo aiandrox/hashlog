@@ -22,7 +22,7 @@ module TwitterAPI
     end
 
     def remind_message(r_tag)
-      day = (r_tag.day_from_last_tweet == 1) ? '丸1日' : "#{r_tag.day_from_last_tweet}日間"
+      day = r_tag.day_from_last_tweet == 1 ? '丸1日' : "#{r_tag.day_from_last_tweet}日間"
       url = "https://hashlog.work/mypage/tags/#{r_tag.id}"
       "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{day}途絶えているようです。調子はいかがですか？
 \n通知を解除する場合は以下のリンクから設定してください。\n#{url}"

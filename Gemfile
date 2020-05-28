@@ -16,9 +16,9 @@ gem 'webpacker'
 gem 'enum_help'
 gem 'rails-i18n'
 # 機能
-gem 'pagy', '~> 3.5'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'config'
+gem 'pagy', '~> 3.5'
 gem 'sorcery', '>= 0.15.0'
 # 定期実行
 gem 'redis-namespace'
