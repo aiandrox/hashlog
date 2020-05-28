@@ -13,7 +13,7 @@ extend("max", {
 const filter = remindDay => {
   const stringRemindDay = String(remindDay)
   if (stringRemindDay === null) {
-    return 0
+    return null
   }
   const deleteDayResult = stringRemindDay.split("日").join("")
   const result = deleteDayResult.replace(/[０-９]/g, s =>
