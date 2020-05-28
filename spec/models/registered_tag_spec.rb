@@ -8,11 +8,20 @@ RSpec.describe RegisteredTag, type: :model do
   describe 'validations' do
     before { create(:registered_tag) }
     it { is_expected.to validate_presence_of(:privacy) }
-    it { is_expected.to validate_presence_of(:remind_day) }
+    it do
+      is_expected.to validate_numericality_of(:remind_day).only_integer.is_less_than_or_equal_to(30)
+    end
     it do
       is_expected.to(validate_uniqueness_of(:tag_id)
                     .scoped_to(:user_id)
                     .with_message('は既に登録しています'))
+    end
+    it :user_registered_tags_count_validate do
+      user = create(:user)
+      create_list(:registered_tag, 3, user: user)
+      registered_tag = build(:registered_tag, user: user)
+      expect(registered_tag).to be_invalid
+      expect(registered_tag.errors.full_messages).to include '登録できるハッシュタグは3つまでです'
     end
   end
 

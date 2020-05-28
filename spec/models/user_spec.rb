@@ -68,6 +68,31 @@ RSpec.describe User, type: :model do
         it 'user.registered_tagが作成されない' do
           expect { user.register_tag(invalid_tag) }.not_to change(RegisteredTag, :count)
         end
+        describe 'tag.errors.full_messagesの値' do
+          context 'tag.name = ""のとき' do
+            let(:tag) { build(:tag, name: '') }
+            it '"名前を入力してください"を含む' do
+              user.register_tag(tag)
+              expect(tag.errors.full_messages).to include '名前を入力してください'
+            end
+          end
+          context 'registered_tagが重複しているとき' do
+            let(:tag) { build(:tag, name: '重複する名前') }
+            it '"ハッシュタグは既に登録しています"を含む' do
+              create(:registered_tag, user: user, tag: tag)
+              user.register_tag(tag)
+              expect(tag.errors.full_messages).to include 'ハッシュタグは既に登録しています'
+            end
+          end
+          context '同一ユーザーのregistered_tagとして4つ目のとき' do
+            let(:tag) { create(:tag) }
+            it '"登録できるハッシュタグは3つまでです"を含む' do
+              create_list(:registered_tag, 3, user: user)
+              user.register_tag(tag)
+              expect(tag.errors.full_messages).to include '登録できるハッシュタグは3つまでです'
+            end
+          end
+        end
       end
     end
 

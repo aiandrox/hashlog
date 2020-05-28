@@ -6,20 +6,16 @@ class RegisteredTag < ApplicationRecord
   belongs_to :tag
 
   validates :privacy, presence: true
-  validates :remind_day, presence: true,
-                         numericality: { only_integer: true, less_than_or_equal_to: 30 }
+  validates :remind_day, numericality: { only_integer: true, less_than_or_equal_to: 30 }
   validates :tag_id, uniqueness: { scope: :user_id, message: 'は既に登録しています' }
+  validate :user_registered_tags_count_validate
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
   scope :asc, -> { order(created_at: :asc) }
 
   def self.by_user(user_uuid)
-    if user_uuid
-      includes(:user).where(users: { uuid: user_uuid })
-    else
-      all
-    end
+    user_uuid ? includes(:user).where(users: { uuid: user_uuid }) : all
   end
 
   def last_tweeted_at
@@ -41,11 +37,8 @@ class RegisteredTag < ApplicationRecord
   def tweet_rate
     return 0 if day_from_first_tweet.zero?
 
-    denominator = if day_from_last_tweet.zero? # 当日のツイートが存在する場合
-                    day_from_first_tweet
-                  else
-                    day_from_first_tweet - 1 # 昨日時点までのデータで計算する
-                  end
+    # 今日のデータがない場合は昨日時点までのデータで計算する
+    denominator = day_from_last_tweet.zero? ? day_from_first_tweet : day_from_first_tweet - 1
     tweeted_day_count * 100 / denominator
   end
 
@@ -84,6 +77,10 @@ class RegisteredTag < ApplicationRecord
   private
 
   def filter_remind_day
-    self.remind_day = remind_day
+    self.remind_day = 0 if remind_day.nil?
+  end
+
+  def user_registered_tags_count_validate
+    errors.add(:base, '登録できるハッシュタグは3つまでです') if user&.registered_tags&.count.to_d >= 3
   end
 end
