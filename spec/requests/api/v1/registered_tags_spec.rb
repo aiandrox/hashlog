@@ -207,12 +207,29 @@ RSpec.describe 'RegisteredTags', type: :request do
       end
       context 'remind_dayが"aaa"（ただの文字列）のとき' do
         let(:remind_day) { 'aaa' }
-        it 'remind_dayは0として保存される' do
+        it '422 UnprocessableEntityを返す' do
           patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
             tag: { privacy: '非公開', remindDay: remind_day }
           }
-          updated_registered_tag = registered_tag.reload
-          expect(updated_registered_tag.remind_day).to eq 0
+          expect(response.status).to eq 422
+        end
+        it 'エラーメッセージのJSONを返す' do
+          patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+            tag: { privacy: '非公開', remindDay: remind_day }
+          }
+          expect(json['error']).to eq({
+            'status' => '422',
+            'title' => '登録内容が適切ではありません',
+            'detail' => '登録内容を確認してください',
+            'messages' => ['リマインダー日数は数値で入力してください']
+          })
+        end
+        it 'registered_tag.remind_dayを変更しない' do
+          expect do
+            patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
+              tag: { privacy: '非公開', remindDay: remind_day }
+            }
+          end.not_to change(registered_tag, :remind_day)
         end
       end
       context 'remind_dayが31のとき' do

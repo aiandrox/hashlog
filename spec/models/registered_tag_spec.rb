@@ -8,7 +8,9 @@ RSpec.describe RegisteredTag, type: :model do
   describe 'validations' do
     before { create(:registered_tag) }
     it { is_expected.to validate_presence_of(:privacy) }
-    it { is_expected.to validate_presence_of(:remind_day) }
+    it do
+      is_expected.to validate_numericality_of(:remind_day).only_integer.is_less_than_or_equal_to(30)
+    end
     it do
       is_expected.to(validate_uniqueness_of(:tag_id)
                     .scoped_to(:user_id)
