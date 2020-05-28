@@ -81,6 +81,6 @@ class RegisteredTag < ApplicationRecord
   end
 
   def user_registered_tags_size_validate
-    errors.add(:base, '登録できるハッシュタグは3つまでです') if user.registered_tags.size > 3
+    errors.add(:base, '登録できるハッシュタグは3つまでです') if user&.registered_tags&.size.to_d > 3
   end
 end
