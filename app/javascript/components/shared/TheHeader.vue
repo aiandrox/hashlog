@@ -5,7 +5,7 @@
     <v-toolbar-items>
       <v-btn text href="/api/v1/oauth/twitter">ログイン</v-btn>
       <v-btn text :to="{ name: 'mypage' }">マイページ</v-btn>
-      <v-btn text :to="{ name: 'user', params: { user_uuid: '9VBQCs4qR4s2' } }">ユーザーページ</v-btn>
+      <v-btn text :to="{ name: 'user', params: { userUuid: 'HTagphtz9-sM' } }">ユーザーページ</v-btn>
       <v-btn text @click="logout">ログアウト</v-btn>
     </v-toolbar-items>
   </v-app-bar>

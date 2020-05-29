@@ -6,7 +6,7 @@
         <v-tab
           v-for="registeredTag in registeredTags"
           :key="registeredTag.id"
-          :to="{ name: 'myTag', params: { tag_id: registeredTag.id } }"
+          :to="{ name: 'myTag', params: { tagId: registeredTag.id } }"
         >#{{ registeredTag.tag.name }}</v-tab>
       </v-tabs>
     </div>

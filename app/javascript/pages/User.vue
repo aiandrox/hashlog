@@ -32,11 +32,12 @@ export default {
   },
   computed: {
     userUrl() {
-      const { user_uuid } = this.$route.params
-      return `/api/v1/users/${user_uuid}`
+      const { userUuid } = this.$route.params
+      return `/api/v1/users/${userUuid}`
     }
   },
   mounted() {
+    this.$store.dispatch("page/setType", "normal")
     this.fetchUserData()
   },
   methods: {
