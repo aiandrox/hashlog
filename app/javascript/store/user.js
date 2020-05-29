@@ -15,11 +15,14 @@ const mutations = {
 }
 
 const actions = {
-  async getCurrentUser({ commit, state }) {
+  getCurrentUser({ dispatch, state }) {
     const currentUser = state.currentUser
     if (currentUser) {
       return currentUser
     }
+    return dispatch("getCurrentUserFromAPI")
+  },
+  async getCurrentUserFromAPI({ commit }) {
     try {
       const response = await axios.get("/api/v1/users/current")
       commit("setCurrentUser", response.data.user)

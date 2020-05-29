@@ -60,7 +60,7 @@ export default {
       this.$refs.profile.finishEdit()
     },
     async cancelEdit() {
-      this.currentUser = this.$store.getters("user/currentUser")
+      this.$store.dispatch("user/getCurrentUserFromAPI")
     },
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
