@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'mypage/dashboard', to: 'static_pages#top'
   get 'mypage/tags/:id', to: 'static_pages#top'
   get 'users/:uuid', to: 'static_pages#top'
+    get 'users/:uuid/tags/:id', to: 'static_pages#top'
 
   namespace :api do
     namespace :v1 do

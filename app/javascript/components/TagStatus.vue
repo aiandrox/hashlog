@@ -11,7 +11,7 @@
     />
     <!-- ビュー部分 -->
     <status-view v-if="!isEditing" :registered-tag="registeredTag" />
-    <v-btn v-if="!isEditing" class="ma-2" outlined @click="pushEdit">
+    <v-btn v-if="isMypage && !isEditing" class="ma-2" outlined @click="pushEdit">
       <v-icon left>mdi-cog</v-icon>設定
     </v-btn>
   </div>
@@ -34,6 +34,12 @@ export default {
   data() {
     return {
       isEditing: false
+    }
+  },
+  computed: {
+    isMypage() {
+      const pageType = this.$store.getters["page/type"]
+      return pageType === "mypage"
     }
   },
   watch: {

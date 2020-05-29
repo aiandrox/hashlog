@@ -22,7 +22,7 @@
       />
     </v-card-text>
     <div>
-      <v-btn class="ma-2" outlined @click="pushEdit">
+      <v-btn class="ma-2" outlined @click="pushEdit" v-if="isMypage">
         <v-icon left>mdi-pencil</v-icon>編集
       </v-btn>
     </div>
@@ -47,6 +47,10 @@ export default {
         "<a href='$1' target='_blank'>$1</a>"
       )
       return replaced
+    },
+    isMypage() {
+      const pageType = this.$store.getters["page/type"]
+      return pageType === "mypage"
     }
   },
   methods: {

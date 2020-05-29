@@ -5,6 +5,7 @@ import Top from "../pages/Top"
 import Mypage from "../pages/Mypage"
 import MyTag from "../pages/MyTag"
 import User from "../pages/User"
+import UserTag from "../pages/UserTag"
 
 const routes = [
   {
@@ -29,9 +30,9 @@ const routes = [
     component: User
   },
   {
-    path: "/users/:user_uuid/tags/:id",
-    name: "userTag"
-    // component: UserTag
+    path: "/users/:userUuid/tags/:tagId",
+    name: "userTag",
+    component: UserTag
   }
 ]
 
