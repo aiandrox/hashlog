@@ -40,9 +40,9 @@ const router = new VueRouter({ mode: "history", routes })
 router.beforeEach((to, from, next) => {
   store.dispatch("user/getCurrentUser").then(currentUser => {
     if (to.matched.some(record => record.meta.requiredLogin) && !currentUser) {
-      // next({ name: "Top" })
+      return next({ name: "Top" })
     }
-    next()
+    return next()
   })
 })
 
