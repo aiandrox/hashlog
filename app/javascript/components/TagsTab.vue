@@ -1,7 +1,7 @@
 <template>
   <v-container row>
     <div col="12" lg="10">
-      <v-tabs>
+      <v-tabs background-color="#e9f1f5" show-arrows>
         <v-tab :to="{ name: 'mypage' }">マイページ</v-tab>
         <v-tab
           v-for="registeredTag in registeredTags"
@@ -40,3 +40,4 @@ export default {
   }
 }
 </script>
+
