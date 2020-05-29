@@ -3,7 +3,7 @@ import VueRouter from "vue-router"
 import store from "../store"
 import Top from "../pages/Top"
 import Mypage from "../pages/Mypage"
-import Tag from "../pages/Tag"
+import MyTag from "../pages/MyTag"
 import User from "../pages/User"
 
 const routes = [
@@ -19,19 +19,19 @@ const routes = [
     meta: { requiredLogin: true }
   },
   {
-    path: "/mypage/tags/:tag_id",
-    name: "mypageTag",
-    component: Tag
+    path: "/mypage/tags/:tagId",
+    name: "myTag",
+    component: MyTag
   },
   {
-    path: "/users/:user_uuid",
+    path: "/users/:userUuid",
     name: "user",
     component: User
   },
   {
     path: "/users/:user_uuid/tags/:id",
-    name: "userTag",
-    component: Tag
+    name: "userTag"
+    // component: UserTag
   }
 ]
 

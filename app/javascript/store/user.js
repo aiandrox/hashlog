@@ -9,35 +9,12 @@ const getters = {
 }
 
 const mutations = {
-  setCurrentUser(state, currentUser) {
-    state.currentUser = currentUser
+  setCurrentUser(state, user) {
+    state.currentUser = user
   }
 }
 
 const actions = {
-  async signup({ commit }, userInfo) {
-    try {
-      const response = await this.$axios.post("/api/v1/users", {
-        user: userInfo
-      })
-      commit("setCurrentUser", response.data.user)
-      return response.data.user
-    } catch (err) {
-      commit("setCurrentUser", null)
-      return Promise.reject(err)
-    }
-  },
-
-  // async login({ commit }, userInfo) {
-  //   try {
-  //     const response = await this.$axios.post("/api/v1/user_session", userInfo)
-  //     commit("setCurrentUser", response.data.user)
-  //   } catch (err) {
-  //     commit("setCurrentUser", null)
-  //     return Promise.reject(err)
-  //   }
-  // },
-
   async getCurrentUser({ commit, state }) {
     const currentUser = state.currentUser
     if (currentUser) {

@@ -18,7 +18,7 @@
       <v-spacer />
       <!-- ツイート -->
       <v-col cols="12" md="6" class="pt-0">
-        <tweets :tweets="tweets" :user="user" />
+        <tweets :tweets="tweets" :user="currentUser" />
       </v-col>
     </v-container>
     <!-- ページネーション -->
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import tagStatus from "../components/TagStatus"
 import tab from "../components/TagsTab"
 import tweets from "../components/TagsTweets"
@@ -59,15 +60,6 @@ export default {
         totalPages: 1,
         requestUrl: ""
       },
-      user: {
-        uuid: "",
-        name: "",
-        description: "",
-        screenName: "",
-        twitterId: "",
-        privacy: "",
-        role: ""
-      },
       registeredTag: {
         id: "",
         tweetedDayCount: "",
@@ -84,9 +76,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({ currentUser: "user/currentUser" }),
     registeredTagUrl() {
-      const { tag_id } = this.$route.params
-      return `/api/v1/registered_tags/${tag_id}`
+      const { tagId } = this.$route.params
+      return `/api/v1/registered_tags/${tagId}`
     }
   },
   watch: {
@@ -102,12 +95,8 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const userRes = await this.$axios.get("/api/v1/users/current")
-        const { user } = userRes.data
-        this.user = user
-
         const registeredTagsRes = await this.$axios.get(
-          `/api/v1/users/${user.uuid}/registered_tags`
+          `/api/v1/users/${this.currentUser.uuid}/registered_tags`
         )
         const { registeredTags } = registeredTagsRes.data
         this.registeredTags = registeredTags
