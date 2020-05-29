@@ -39,7 +39,8 @@ export default {
   computed: {
     ...mapGetters({ currentUser: "user/currentUser" })
   },
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch("page/setType", "mypage")
     this.fetchRegisteredTagsData(this.currentUser)
   },
   methods: {

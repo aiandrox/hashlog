@@ -89,6 +89,7 @@ export default {
     }
   },
   async mounted() {
+    this.$store.dispatch("page/setType", "mypage")
     await this.fetchData()
     document.title = `#${this.registeredTag.tag.name} | Hashlog`
   },

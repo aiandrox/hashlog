@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <the-header />
+      <the-header v-if="pageType !== 'top'" />
       <v-content>
         <v-container>
           <!-- <flash-message /> -->
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import theHeader from "./components/shared/TheHeader.vue"
 import theFooter from "./components/shared/TheFooter.vue"
 // import FlashMessage from "./components/shared/TheFlashMessage.vue"
@@ -24,6 +25,9 @@ export default {
     theHeader,
     theFooter
     // FlashMessage
+  },
+  computed: {
+    ...mapGetters({ pageType: "page/type" })
   }
 }
 </script>
