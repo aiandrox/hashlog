@@ -5,7 +5,7 @@
     <!-- プロフィール -->
     <profile
       ref="profile"
-      :user="user"
+      :user="currentUser"
       @push-update="updateUserData"
       @push-delete="showDeleteDialog"
       @push-cancel="cancelEdit"
@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex"
 import profile from "../components/Profile"
 import tagsTab from "../components/TagsTab"
 import deleteDialog from "../components/shared/TheDeleteDialog"
@@ -32,27 +33,18 @@ export default {
   data() {
     return {
       loading: false,
-      user: {
-        uuid: "",
-        name: "",
-        description: "",
-        screenName: "",
-        twitterId: "",
-        privacy: "",
-        role: ""
-      },
       registeredTags: []
     }
   },
+  computed: {
+    ...mapGetters({ currentUser: "user/currentUser" })
+  },
   mounted() {
-    this.fetchUserData()
+    this.fetchRegisteredTagsData(this.currentUser)
   },
   methods: {
-    async fetchUserData() {
+    async fetchRegisteredTagsData(user) {
       try {
-        const userRes = await this.$axios.get("/api/v1/users/current")
-        const { user } = userRes.data
-        this.user = user
         const registeredTagsRes = await this.$axios.get(
           `/api/v1/users/${user.uuid}/registered_tags`
         )
@@ -62,37 +54,19 @@ export default {
         console.log(error)
       }
     },
-    async updateUserData() {
-      try {
-        const userRes = await this.$axios.patch(
-          `/api/v1/users/${this.user.uuid}`,
-          {
-            user: this.user
-          }
-        )
-        const { user } = userRes.data
-        this.user = user
-        this.$refs.profile.finishEdit()
-      } catch (error) {
-        console.log(error)
-      }
+    updateUserData() {
+      this.$store.dispatch("user/updateCurrentUser", this.currentUser)
+      this.$refs.profile.finishEdit()
     },
-    // TODO: APIを叩かずに実装したい
     async cancelEdit() {
-      const userRes = await this.$axios.get(`/api/v1/users/${this.user.uuid}`)
-      const { user } = userRes.data
-      this.user = user
+      this.currentUser = this.$store.getters("user/currentUser")
     },
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
     },
-    async deleteUser() {
-      try {
-        await this.$axios.delete(`/api/v1/users/${this.user.uuid}`)
-        this.$router.push({ name: "top" })
-      } catch (error) {
-        console.log(error)
-      }
+    deleteUser() {
+      this.$store.dispatch("user/deleteCurrentUser")
+      this.$router.push({ name: "top" })
     }
   }
 }

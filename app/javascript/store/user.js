@@ -1,5 +1,7 @@
+import axios from "axios"
+
 const state = () => ({
-  currentUser: {}
+  currentUser: ""
 })
 
 const getters = {
@@ -41,15 +43,32 @@ const actions = {
     if (currentUser) {
       return currentUser
     }
-
     try {
-      const response = await this.$axios.get("/api/v1/users/current")
+      const response = await axios.get("/api/v1/users/current")
       commit("setCurrentUser", response.data.user)
       return response.data.user
     } catch (err) {
       commit("setCurrentUser", null)
       return null
     }
+  },
+  async updateCurrentUser({ commit, state }, userData) {
+    try {
+      const response = await axios.patch(
+        `/api/v1/users/${state.currentUser.uuid}`,
+        {
+          user: userData
+        }
+      )
+      commit("setCurrentUser", response.data.user)
+      return response.data.user
+    } catch (error) {
+      return null // バリデーションエラー
+    }
+  },
+  async deleteCurrentUser({ commit, state }) {
+    await axios.delete(`/api/v1/users/${state.currentUser.uuid}`)
+    commit("setCurrentUser", null)
   },
   async logout({ commit }) {
     await this.$axios.delete("/api/v1/user_session")

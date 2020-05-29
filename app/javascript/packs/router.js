@@ -1,5 +1,6 @@
 import VueRouter from "vue-router"
 
+import store from "../store"
 import Top from "../pages/Top"
 import Mypage from "../pages/Mypage"
 import Tag from "../pages/Tag"
@@ -14,7 +15,8 @@ const routes = [
   {
     path: "/mypage/dashboard",
     name: "mypage",
-    component: Mypage
+    component: Mypage,
+    meta: { requiredLogin: true }
   },
   {
     path: "/mypage/tags/:tag_id",
@@ -33,4 +35,15 @@ const routes = [
   }
 ]
 
-export default new VueRouter({ mode: "history", routes })
+const router = new VueRouter({ mode: "history", routes })
+
+router.beforeEach((to, from, next) => {
+  store.dispatch("user/getCurrentUser").then(currentUser => {
+    if (to.matched.some(record => record.meta.requiredLogin) && !currentUser) {
+      // next({ name: "Top" })
+    }
+    next()
+  })
+})
+
+export default router
