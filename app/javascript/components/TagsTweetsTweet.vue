@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
+    <v-card flat outlined :ripple="false" max-width="500" class="mt-3" :href="tweetUrl">
       <v-card-title>
         <v-list-item class="pl-0">
-          <v-list-item :href="userUrl">
+          <v-list-item :ripple="false" :href="userUrl">
             <v-list-item-avatar color="grey" size="40">
               <v-img :src="user.avatarUrl" />
             </v-list-item-avatar>
