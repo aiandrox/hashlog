@@ -22,7 +22,8 @@ const routes = [
   {
     path: "/mypage/tags/:tagId",
     name: "myTag",
-    component: MyTag
+    component: MyTag,
+    meta: { requiredLogin: true }
   },
   {
     path: "/users/:userUuid",
