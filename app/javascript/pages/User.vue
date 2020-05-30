@@ -11,7 +11,6 @@ import profile from "../components/Profile"
 import tagsTab from "../components/TagsTab"
 
 export default {
-  title: "マイページ",
   components: {
     profile,
     tagsTab
@@ -36,9 +35,10 @@ export default {
       return `/api/v1/users/${userUuid}`
     }
   },
-  mounted() {
+  async mounted() {
     this.$store.dispatch("page/setType", "normal")
-    this.fetchUserData()
+    await this.fetchUserData()
+    document.title = `${this.user.name}のユーザーページ | Hashlog`
   },
   methods: {
     async fetchUserData() {

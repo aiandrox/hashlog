@@ -85,7 +85,7 @@ export default {
   async mounted() {
     this.$store.dispatch("page/setType", "normal")
     await this.fetchData()
-    document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    document.title = `#${this.registeredTag.tag.name} - ${this.user.name} | Hashlog`
   },
   methods: {
     async fetchData() {
