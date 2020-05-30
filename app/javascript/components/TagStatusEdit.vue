@@ -39,12 +39,12 @@
       </v-list-item>
     </v-container>
     <v-list-item>
-      <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
-      <v-btn class="ma-2" outlined @click="pushUpdate" :disabled="invalid">
+      <v-btn class="ma-2" outlined color="cancel" @click="pushCancel">キャンセル</v-btn>
+      <v-btn class="ma-2" outlined color="primary" @click="pushUpdate" :disabled="invalid">
         <v-icon left>mdi-content-save</v-icon>保存
       </v-btn>
     </v-list-item>
-    <v-list-item>
+    <v-list-item justify="center">
       <v-btn class="ma-2" outlined color="error" @click="pushDelete">
         <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
       </v-btn>

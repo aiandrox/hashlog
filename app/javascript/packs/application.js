@@ -33,7 +33,8 @@ const vuetify = new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: "#0079b5"
+        primary: "#0079b5",
+        cancel: "#678491"
       }
     }
   }

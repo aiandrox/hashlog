@@ -16,11 +16,7 @@
     </v-list-item>
     <v-card-text class="my-0">
       <div class="body-1">
-        <ValidationProvider
-          v-slot="{ errors }"
-          name="プロフィール"
-          rules="max:300"
-        >
+        <ValidationProvider v-slot="{ errors }" name="プロフィール" rules="max:300">
           <v-textarea
             v-model="user.description"
             outlined
@@ -32,8 +28,8 @@
         </ValidationProvider>
       </div>
     </v-card-text>
-    <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
-    <v-btn class="ma-2" outlined @click="pushUpdate" :disabled="invalid">
+    <v-btn class="ma-2" outlined color="cancel" @click="pushCancel">キャンセル</v-btn>
+    <v-btn class="ma-2" outlined color="primary" @click="pushUpdate" :disabled="invalid">
       <v-icon left>mdi-content-save</v-icon>保存
     </v-btn>
     <v-spacer />

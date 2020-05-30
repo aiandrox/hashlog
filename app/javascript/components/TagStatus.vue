@@ -12,7 +12,7 @@
     <!-- ビュー部分 -->
     <status-view v-if="!isEditing" :registered-tag="registeredTag" />
     <v-list-item v-if="isMypage && !isEditing">
-      <v-btn class="ma-2" outlined @click="pushEdit">
+      <v-btn class="ml-2 mb-2" outlined color="primary" @click="pushEdit">
         <v-icon left>mdi-cog</v-icon>設定
       </v-btn>
     </v-list-item>

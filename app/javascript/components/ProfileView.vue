@@ -21,10 +21,16 @@
         v-html="$sanitize(replacedDescription)"
       />
     </v-card-text>
-    <div>
-      <v-btn class="ma-2" outlined @click="pushEdit" v-if="isMypage">
+    <div v-if="isMypage">
+      <v-btn class="ma-2" outlined color="primary" @click="pushEdit">
         <v-icon left>mdi-pencil</v-icon>編集
       </v-btn>
+      <v-btn
+        outlined
+        color="primary"
+        class="ma-2"
+        :to="{ name: 'user', params: { userUuid: user.uuid } }"
+      >ユーザーページを見る</v-btn>
     </div>
   </div>
 </template>
