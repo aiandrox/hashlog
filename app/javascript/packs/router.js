@@ -41,7 +41,8 @@ const router = new VueRouter({ mode: "history", routes })
 router.beforeEach((to, from, next) => {
   store.dispatch("user/getCurrentUser").then(currentUser => {
     if (to.matched.some(record => record.meta.requiredLogin) && !currentUser) {
-      return next({ name: "Top" })
+      store.dispatch("page/setType", "top")
+      return next({ name: "top" })
     }
     return next()
   })
