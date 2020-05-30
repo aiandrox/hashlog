@@ -2,7 +2,7 @@
   <div>
     <!-- タブ -->
     <tab :registered-tags="registeredTags" />
-    <v-container class="d-flex flex-row-reverse pt-0" row>
+    <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col class="hidden-sm-and-down" cols="12" md>
         <v-card flat>
@@ -11,7 +11,7 @@
       </v-col>
       <v-spacer />
       <!-- ツイート -->
-      <v-col cols="12" md="6" class="pt-0">
+      <v-col cols="12" md="8" class="pt-0">
         <tweets :tweets="tweets" :user="user" />
       </v-col>
     </v-container>

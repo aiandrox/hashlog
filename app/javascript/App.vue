@@ -36,4 +36,12 @@ export default {
 .v-application--wrap {
   background-color: #e9f1f5;
 }
+.container.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
 </style>

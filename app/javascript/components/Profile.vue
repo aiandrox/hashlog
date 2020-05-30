@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5">
+  <div class="my-5 main-content">
     <v-card class="mx-auto" outlined>
       <v-container row>
         <v-col cols="12" lg="8">
