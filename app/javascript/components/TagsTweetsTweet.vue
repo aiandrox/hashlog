@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-card flat outlined :ripple="false" max-width="500" class="mt-3" :href="tweetUrl">
+    <v-card
+      flat
+      outlined
+      :ripple="false"
+      max-width="500"
+      class="mt-3"
+      :href="tweetUrl"
+    >
       <v-card-title>
         <v-list-item class="pl-0">
           <v-list-item :ripple="false" :href="userUrl">
@@ -33,7 +40,7 @@
         <v-spacer />
         <span class="body-2 font-weight-light">
           {{
-          $dayjs(tweet.tweetedAt)
+            $dayjs(tweet.tweetedAt)
           }}
         </span>
       </v-card-actions>
@@ -85,10 +92,12 @@ export default {
       return `/api/v1/tweets/${id}`
     }
   }
-  // methods: {
-  //   deleteTweet() {
-  //     this.$axios.delete(this.deleteUrl).then(response => {})
-  //   }
-  // }
+  /*
+   * methods: {
+   *   deleteTweet() {
+   *     this.$axios.delete(this.deleteUrl).then(response => {})
+   *   }
+   * }
+   */
 }
 </script>

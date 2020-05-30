@@ -8,10 +8,10 @@
           <!-- ユーザー編集 -->
           <profile-edit
             v-if="isEditing"
+            :user="user"
             @push-update="pushUpdate"
             @push-delete="pushDelete"
             @push-cencel="pushCancel"
-            :user="user"
           />
         </v-col>
         <v-col cols="9" lg="4">

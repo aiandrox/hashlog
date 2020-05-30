@@ -6,7 +6,7 @@
           <v-system-bar class="pa-5 subtitle-1">ハッシュタグを登録する</v-system-bar>
           <v-card-text class="mt-5">
             <v-container>
-              <v-form v-on:submit.prevent="onSubmit">
+              <v-form @submit.prevent="onSubmit">
                 <ValidationProvider
                   ref="provider"
                   v-slot="{ errors }"
@@ -30,7 +30,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn text @click="resetForm">キャンセル</v-btn>
-            <v-btn text color="primary" @click="sendTagName" :disabled="invalid">登録する</v-btn>
+            <v-btn text color="primary" :disabled="invalid" @click="sendTagName">登録する</v-btn>
           </v-card-actions>
         </v-card>
       </ValidationObserver>

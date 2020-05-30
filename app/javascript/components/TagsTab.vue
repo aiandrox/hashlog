@@ -11,7 +11,7 @@
       </v-tabs>
     </div>
     <v-spacer />
-    <div col="2" v-if="isMypage">
+    <div v-if="isMypage" col="2">
       <v-btn class="ma-2" color="primary" depressed @click="pushRegister">
         <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
       </v-btn>
@@ -50,7 +50,7 @@ export default {
       if (this.pageType === "mypage") {
         return { name: "mypage" }
       }
-      const userUuid = this.$route.params.userUuid
+      const { userUuid } = this.$route.params
       return { name: "user", params: { userUuid } }
     }
   },
@@ -59,7 +59,7 @@ export default {
       if (this.pageType === "mypage") {
         return { name: "myTag", params: { tagId: registeredTag.id } }
       }
-      const userUuid = this.$route.params.userUuid
+      const { userUuid } = this.$route.params
       return { name: "userTag", params: { userUuid, tagId: registeredTag.id } }
     },
     pushRegister() {

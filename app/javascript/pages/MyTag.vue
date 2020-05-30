@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- タブ -->
-    <tab :registered-tags="registeredTags" />
+    <the-tab :registered-tags="registeredTags" />
     <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
 
@@ -18,7 +18,7 @@
       </v-col>
       <!-- ツイート -->
       <v-col cols="12" md="8" class="pt-0">
-        <tweets :tweets="tweets" :user="currentUser" />
+        <tweets-view :tweets="tweets" :user="currentUser" />
       </v-col>
     </v-container>
     <!-- ページネーション -->
@@ -33,7 +33,7 @@
     <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
       保存されていたツイートのデータが
-      <br />全て消えてしまいます。
+      <br>全て消えてしまいます。
     </delete-dialog>
   </div>
 </template>
@@ -41,15 +41,15 @@
 <script>
 import { mapGetters } from "vuex"
 import tagStatus from "../components/TagStatus"
-import tab from "../components/TagsTab"
-import tweets from "../components/TagsTweets"
+import theTab from "../components/TagsTab"
+import tweetsView from "../components/TagsTweets"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
   components: {
     tagStatus,
-    tab,
-    tweets,
+    theTab,
+    tweetsView,
     deleteDialog
   },
   data() {
