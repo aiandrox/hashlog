@@ -38,10 +38,10 @@
         </span>
       </v-card-actions>
     </v-card>
-    <!-- 開発用削除ボタン -->
+    <!-- 開発用削除ボタン
     <v-btn class="ma-2" outlined color="success" @click="deleteTweet">
       <v-icon left>mdi-delete</v-icon>削除
-    </v-btn>
+    </v-btn>-->
   </div>
 </template>
 
@@ -84,11 +84,11 @@ export default {
       const { id } = this.tweet
       return `/api/v1/tweets/${id}`
     }
-  },
-  methods: {
-    deleteTweet() {
-      this.$axios.delete(this.deleteUrl).then(response => {})
-    }
   }
+  // methods: {
+  //   deleteTweet() {
+  //     this.$axios.delete(this.deleteUrl).then(response => {})
+  //   }
+  // }
 }
 </script>
