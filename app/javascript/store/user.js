@@ -24,7 +24,7 @@ const mutations = {
 
 const actions = {
   getCurrentUser({ dispatch, state }) {
-    const currentUser = state.currentUser
+    const { currentUser } = state
     if (currentUser) {
       return currentUser
     }
