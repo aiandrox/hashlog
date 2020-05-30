@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     twitterUrl() {
-      return `https://twitter.com/${this.user.screen_name}`
+      return `https://twitter.com/${this.user.screenName}`
     },
     replacedDescription() {
       const replaced = this.user.description.replace(

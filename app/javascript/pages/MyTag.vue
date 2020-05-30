@@ -27,7 +27,7 @@
         v-model="page.currentPage"
         :length="page.totalPages"
         :total-visible="7"
-        @input="changePage"
+        @input="$changePaginationPage"
       />
     </div>
     <!-- 削除ダイアログ -->
@@ -109,7 +109,7 @@ export default {
         const tweetsRes = await this.$axios.get(
           `/api/v1/registered_tags/${registeredTag.id}/tweets`
         )
-        this.setPageData(tweetsRes)
+        this.$setPaginationData(tweetsRes)
         const { tweets } = tweetsRes.data
         this.tweets = tweets
       } catch (error) {

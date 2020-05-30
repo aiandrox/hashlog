@@ -4,7 +4,7 @@ dayjs.locale("ja")
 
 export default {
   methods: {
-    dayjs(date) {
+    $dayjs(date) {
       return dayjs(date).format("YYYY年M月D日(dd)H時m分")
       // return dayjs(date).format("YYYY-M-D H:m")
     }
