@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <!-- 編集部分 -->
+  <!-- 編集部分 -->
+  <v-list>
     <status-edit
       v-if="isEditing"
       ref="editArea"
@@ -11,10 +11,12 @@
     />
     <!-- ビュー部分 -->
     <status-view v-if="!isEditing" :registered-tag="registeredTag" />
-    <v-btn v-if="isMypage && !isEditing" class="ma-2" outlined @click="pushEdit">
-      <v-icon left>mdi-cog</v-icon>設定
-    </v-btn>
-  </div>
+    <v-list-item v-if="isMypage && !isEditing">
+      <v-btn class="ma-2" outlined @click="pushEdit">
+        <v-icon left>mdi-cog</v-icon>設定
+      </v-btn>
+    </v-list-item>
+  </v-list>
 </template>
 
 <script>

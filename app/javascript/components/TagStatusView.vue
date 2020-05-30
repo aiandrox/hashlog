@@ -1,12 +1,12 @@
 <template>
-  <v-list disabled>
+  <v-container>
     <v-list-item v-for="status in statusArray" :key="status.name">
       <v-list-item-content>
         <v-list-item-subtitle>{{ status.title }}</v-list-item-subtitle>
         <v-list-item-title>{{ status.text }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-  </v-list>
+  </v-container>
 </template>
 
 <script>
