@@ -39,9 +39,16 @@
       </v-list-item>
     </v-container>
     <v-list-item>
-      <v-btn class="ma-2" outlined color="cancel" @click="pushCancel">キャンセル</v-btn>
-      <v-btn class="ma-2" outlined color="primary" @click="pushUpdate" :disabled="invalid">
-        <v-icon left>mdi-content-save</v-icon>保存
+      <v-btn class="ma-2" outlined color="primary" @click="pushCancel">キャンセル</v-btn>
+      <v-btn
+        class="ma-2"
+        depressed
+        dark
+        color="depressedButton"
+        :disabled="invalid"
+        @click="pushUpdate"
+      >
+        <v-icon left>mdi-checkbox-marked-outline</v-icon>保存
       </v-btn>
     </v-list-item>
     <v-list-item justify="center">

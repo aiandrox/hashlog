@@ -34,7 +34,7 @@ const vuetify = new Vuetify({
     themes: {
       light: {
         primary: "#0079b5",
-        cancel: "#678491"
+        depressedButton: "#4e8baf"
       }
     }
   }
