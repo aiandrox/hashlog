@@ -3,16 +3,20 @@
     <v-toolbar-title color="#f0faff">Hashlog</v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
-      <v-btn text href="/api/v1/oauth/twitter">ログイン</v-btn>
-      <v-btn text :to="{ name: 'mypage' }">マイページ</v-btn>
-      <v-btn text :to="{ name: 'user', params: { userUuid: 'HTagphtz9-sM' } }">ユーザーページ</v-btn>
-      <v-btn text @click="logout">ログアウト</v-btn>
+      <v-btn text v-if="!currentUser" href="/api/v1/oauth/twitter">ログイン</v-btn>
+      <v-btn text v-if="currentUser" :to="{ name: 'mypage' }">マイページ</v-btn>
+      <v-btn text v-if="currentUser" @click="logout">ログアウト</v-btn>
     </v-toolbar-items>
   </v-app-bar>
 </template>
 
 <script>
+import { mapGetters } from "vuex"
+
 export default {
+  computed: {
+    ...mapGetters({ currentUser: "user/currentUser" })
+  },
   methods: {
     logout() {
       try {
