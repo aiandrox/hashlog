@@ -1,37 +1,10 @@
 <template>
-  <ValidationObserver ref="observer">
-    <form>
-      <ValidationProvider v-slot="{ errors }" name="Name" rules="required|max:10">
-        <v-text-field v-model="name" :counter="10" :error-messages="errors" label="Name" required />
-      </ValidationProvider>
-      <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
-        <v-text-field v-model="email" :error-messages="errors" label="E-mail" required />
-      </ValidationProvider>
-      <ValidationProvider v-slot="{ errors }" name="select" rules="required">
-        <v-select
-          v-model="select"
-          :items="items"
-          :error-messages="errors"
-          label="Select"
-          data-vv-name="select"
-          required
-        />
-      </ValidationProvider>
-      <ValidationProvider v-slot="{ errors }" rules="required" name="checkbox">
-        <v-checkbox
-          v-model="checkbox"
-          :error-messages="errors"
-          value="1"
-          label="Option"
-          type="checkbox"
-          required
-        />
-      </ValidationProvider>
-
-      <v-btn class="mr-4" @click="submit">submit</v-btn>
-      <v-btn @click="clear">clear</v-btn>
-    </form>
-  </ValidationObserver>
+  <div>
+    <v-btn text href="/api/v1/oauth/twitter">ログイン</v-btn>
+    <v-btn text :to="{ name: 'mypage' }">マイページ</v-btn>
+    <v-btn text :to="{ name: 'user', params: { userUuid: 'HTagphtz9-sM' } }">ユーザーページ</v-btn>
+    <v-btn text>ログアウト</v-btn>
+  </div>
 </template>
 
 <script>
@@ -43,7 +16,9 @@ export default {
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     checkbox: null
   }),
-
+  mounted() {
+    this.$store.dispatch("page/setType", "top")
+  },
   methods: {
     submit() {
       this.$refs.observer.validate()

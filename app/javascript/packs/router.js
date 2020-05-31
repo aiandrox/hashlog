@@ -1,8 +1,11 @@
 import VueRouter from "vue-router"
 
-import Top from "../pages/Top.vue"
-import Mypage from "../pages/Mypage.vue"
-import Tag from "../pages/Tag.vue"
+import store from "../store"
+import Top from "../pages/Top"
+import Mypage from "../pages/Mypage"
+import MyTag from "../pages/MyTag"
+import User from "../pages/User"
+import UserTag from "../pages/UserTag"
 
 const routes = [
   {
@@ -13,18 +16,37 @@ const routes = [
   {
     path: "/mypage/dashboard",
     name: "mypage",
-    component: Mypage
+    component: Mypage,
+    meta: { requiredLogin: true }
   },
   {
-    path: "/mypage/tags/:id",
-    name: "mypageTag",
-    component: Tag
+    path: "/mypage/tags/:tagId",
+    name: "myTag",
+    component: MyTag,
+    meta: { requiredLogin: true }
   },
   {
-    path: "/users/:user_uuid/tags/:id",
+    path: "/users/:userUuid",
+    name: "user",
+    component: User
+  },
+  {
+    path: "/users/:userUuid/tags/:tagId",
     name: "userTag",
-    component: Tag
+    component: UserTag
   }
 ]
 
-export default new VueRouter({ mode: "history", routes })
+const router = new VueRouter({ mode: "history", routes })
+
+router.beforeEach((to, from, next) => {
+  store.dispatch("user/getCurrentUser").then(currentUser => {
+    if (to.matched.some(record => record.meta.requiredLogin) && !currentUser) {
+      store.dispatch("page/setType", "top")
+      return next({ name: "top" })
+    }
+    return next()
+  })
+})
+
+export default router

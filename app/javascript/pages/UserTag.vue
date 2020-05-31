@@ -1,51 +1,46 @@
 <template>
   <div>
-    <tab :registered-tags="registeredTags" />
-    <v-container class="d-flex flex-row-reverse pt-0" row>
-      <v-col cols="12" md>
-        <tag-status
-          ref="tagStatus"
-          :registered-tag="registeredTag"
-          @push-delete="showDeleteDialog"
-          @push-update="updateTagData"
-          @push-cancel="fetchTagData"
-        />
+    <!-- タブ -->
+    <the-tab :registered-tags="registeredTags" />
+    <v-container class="main-content d-flex flex-row-reverse pt-0" row>
+      <!-- ハッシュタグの情報 -->
+      <v-col class="hidden-sm-and-down" cols="12" md>
+        <v-card flat>
+          <tag-status ref="tagStatus" :registered-tag="registeredTag" />
+        </v-card>
       </v-col>
       <v-spacer />
-      <v-col cols="12" md="6" class="pt-0">
-        <tweets :tweets="tweets" :user="user" />
+      <!-- ツイート -->
+      <v-col cols="12" md="8" class="pt-0">
+        <tweets-view :tweets="tweets" :user="user" />
       </v-col>
     </v-container>
+    <!-- ページネーション -->
     <div class="text-center">
       <v-pagination
         v-model="page.currentPage"
         :length="page.totalPages"
         :total-visible="7"
-        @input="changePage"
+        @input="$changePaginationPage"
       />
     </div>
-    <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
-      保存されていたツイートのデータが
-      <br />全て消えてしまいます。
-    </delete-dialog>
   </div>
 </template>
 
 <script>
 import tagStatus from "../components/TagStatus"
-import tab from "../components/TagsTab"
-import tweets from "../components/TagsTweets"
-import deleteDialog from "../components/shared/TheDeleteDialog"
+import theTab from "../components/TagsTab"
+import tweetsView from "../components/TagsTweets"
 
 export default {
   components: {
     tagStatus,
-    tab,
-    tweets,
-    deleteDialog
+    theTab,
+    tweetsView
   },
   data() {
     return {
+      drawer: true,
       page: {
         currentPage: 1,
         totalPages: 1,
@@ -53,12 +48,12 @@ export default {
       },
       user: {
         uuid: "",
-        name: "",
         description: "",
+        name: "",
         screenName: "",
         twitterId: "",
-        privacy: "",
-        role: ""
+        role: "",
+        privacy: ""
       },
       registeredTag: {
         id: "",
@@ -77,8 +72,8 @@ export default {
   },
   computed: {
     registeredTagUrl() {
-      const { id } = this.$route.params
-      return `/api/v1/registered_tags/${id}`
+      const { tagId } = this.$route.params
+      return `/api/v1/registered_tags/${tagId}`
     }
   },
   watch: {
@@ -88,18 +83,20 @@ export default {
     }
   },
   async mounted() {
+    this.$store.dispatch("page/setType", "normal")
     await this.fetchData()
-    document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    document.title = `#${this.registeredTag.tag.name} - ${this.user.name} | Hashlog`
   },
   methods: {
     async fetchData() {
       try {
-        const userRes = await this.$axios.get("/api/v1/users/current")
+        const { userUuid } = this.$route.params
+        const userRes = await this.$axios.get(`/api/v1/users/${userUuid}`)
         const { user } = userRes.data
         this.user = user
 
         const registeredTagsRes = await this.$axios.get(
-          `/api/v1/users/${user.uuid}/registered_tags`
+          `/api/v1/users/${userUuid}/registered_tags`
         )
         const { registeredTags } = registeredTagsRes.data
         this.registeredTags = registeredTags
@@ -111,25 +108,9 @@ export default {
         const tweetsRes = await this.$axios.get(
           `/api/v1/registered_tags/${registeredTag.id}/tweets`
         )
-        this.setPageData(tweetsRes)
+        this.$setPaginationData(tweetsRes)
         const { tweets } = tweetsRes.data
         this.tweets = tweets
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async updateTagData() {
-      try {
-        await this.$axios.patch(
-          `/api/v1/registered_tags/${this.registeredTag.id}`,
-          {
-            tag: this.registeredTag
-          }
-        )
-        this.$refs.tagStatus.finishEdit()
-        const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-        const { registeredTag } = registeredTagRes.data
-        this.registeredTag = registeredTag
       } catch (error) {
         console.log(error)
       }
@@ -138,17 +119,6 @@ export default {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
       const { registeredTag } = registeredTagRes.data
       this.registeredTag = registeredTag
-    },
-    showDeleteDialog() {
-      this.$refs.deleteDialog.open()
-    },
-    deleteTag() {
-      try {
-        this.$axios.delete(this.registeredTagUrl)
-        this.$router.push({ name: "mypage" })
-      } catch (error) {
-        console.log(error)
-      }
     }
   }
 }
