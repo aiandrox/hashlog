@@ -1,30 +1,23 @@
 <template>
-  <div class="my-5">
+  <div class="my-5 main-content">
     <v-card class="mx-auto" outlined>
       <v-container row>
         <v-col cols="12" lg="8">
           <!-- プロフィール -->
-          <profile-view v-if="!isEditing" :user="user" />
+          <profile-view v-if="!isEditing" :user="user" @push-edit="isEditing = true" />
           <!-- ユーザー編集 -->
           <profile-edit
             v-if="isEditing"
+            :user="user"
             @push-update="pushUpdate"
             @push-delete="pushDelete"
             @push-cencel="pushCancel"
-            :user="user"
           />
         </v-col>
         <v-col cols="9" lg="4">
           <!-- ステータス -->
           <profile-status :is-editing="isEditing" :user="user" />
         </v-col>
-        <v-card-actions>
-          <div v-if="!isEditing">
-            <v-btn class="ma-2" outlined @click="pushEdit">
-              <v-icon left>mdi-pencil</v-icon>編集
-            </v-btn>
-          </div>
-        </v-card-actions>
       </v-container>
     </v-card>
   </div>

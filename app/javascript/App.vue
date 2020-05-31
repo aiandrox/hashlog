@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <the-header />
+      <the-header v-if="pageType !== 'top'" />
       <v-content>
         <v-container>
           <!-- <flash-message /> -->
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import theHeader from "./components/shared/TheHeader.vue"
 import theFooter from "./components/shared/TheFooter.vue"
 // import FlashMessage from "./components/shared/TheFlashMessage.vue"
@@ -24,15 +25,23 @@ export default {
     theHeader,
     theFooter
     // FlashMessage
+  },
+  computed: {
+    ...mapGetters({ pageType: "page/type" })
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+.v-application--wrap {
+  background-color: #e9f1f5;
+}
+.container.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
 }
 </style>

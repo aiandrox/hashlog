@@ -1,17 +1,17 @@
 <template>
   <v-container row>
     <div col="12" lg="10">
-      <v-tabs>
-        <v-tab :to="{ name: 'mypage' }">マイページ</v-tab>
+      <v-tabs background-color="#e9f1f5" show-arrows>
+        <v-tab :to="homePositionRoute">{{ homePositionName }}</v-tab>
         <v-tab
           v-for="registeredTag in registeredTags"
           :key="registeredTag.id"
-          :to="{ name: 'mypageTag', params: { id: registeredTag.id } }"
+          :to="registeredTagRoute(registeredTag)"
         >#{{ registeredTag.tag.name }}</v-tab>
       </v-tabs>
     </div>
     <v-spacer />
-    <div col="2">
+    <div v-if="isMypage" col="2">
       <v-btn class="ma-2" color="primary" depressed @click="pushRegister">
         <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
       </v-btn>
@@ -22,7 +22,9 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import registerTagDialog from "../components/TheRegisterTagDialog"
+
 export default {
   components: {
     registerTagDialog
@@ -33,10 +35,37 @@ export default {
       default: () => []
     }
   },
+  computed: {
+    ...mapGetters({ pageType: "page/type" }),
+    isMypage() {
+      return this.pageType === "mypage"
+    },
+    homePositionName() {
+      if (this.pageType === "mypage") {
+        return "マイページ"
+      }
+      return "ユーザーページ"
+    },
+    homePositionRoute() {
+      if (this.pageType === "mypage") {
+        return { name: "mypage" }
+      }
+      const { userUuid } = this.$route.params
+      return { name: "user", params: { userUuid } }
+    }
+  },
   methods: {
+    registeredTagRoute(registeredTag) {
+      if (this.pageType === "mypage") {
+        return { name: "myTag", params: { tagId: registeredTag.id } }
+      }
+      const { userUuid } = this.$route.params
+      return { name: "userTag", params: { userUuid, tagId: registeredTag.id } }
+    },
     pushRegister() {
       this.$refs.registerDialog.open()
     }
   }
 }
 </script>
+

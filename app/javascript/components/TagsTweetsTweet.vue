@@ -1,17 +1,22 @@
 <template>
   <div>
-    <v-card flat outlined max-width="500" class="mt-3" :href="tweetUrl">
+    <v-card
+      flat
+      outlined
+      :ripple="false"
+      max-width="500"
+      class="mt-3"
+      :href="tweetUrl"
+    >
       <v-card-title>
         <v-list-item class="pl-0">
-          <v-list-item :href="userUrl">
+          <v-list-item :ripple="false" :href="userUrl">
             <v-list-item-avatar color="grey" size="40">
               <v-img :src="user.avatarUrl" />
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light"
-                >@{{ user.screenName }}</v-list-item-subtitle
-              >
+              <v-list-item-subtitle class="font-weight-light">@{{ user.screenName }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -33,15 +38,17 @@
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
         <v-spacer />
-        <span class="body-2 font-weight-light">{{
-          dayjs(tweet.tweetedAt)
-        }}</span>
+        <span class="body-2 font-weight-light">
+          {{
+            $dayjs(tweet.tweetedAt)
+          }}
+        </span>
       </v-card-actions>
     </v-card>
-    <!-- 開発用削除ボタン -->
+    <!-- 開発用削除ボタン
     <v-btn class="ma-2" outlined color="success" @click="deleteTweet">
       <v-icon left>mdi-delete</v-icon>削除
-    </v-btn>
+    </v-btn>-->
   </div>
 </template>
 
@@ -84,11 +91,13 @@ export default {
       const { id } = this.tweet
       return `/api/v1/tweets/${id}`
     }
-  },
-  methods: {
-    deleteTweet() {
-      this.$axios.delete(this.deleteUrl).then(response => {})
-    }
   }
+  /*
+   * methods: {
+   *   deleteTweet() {
+   *     this.$axios.delete(this.deleteUrl).then(response => {})
+   *   }
+   * }
+   */
 }
 </script>
