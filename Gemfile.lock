@@ -130,7 +130,6 @@ GEM
     equalizer (0.0.11)
     erubi (1.9.0)
     erubis (2.7.0)
-    execjs (2.7.0)
     factory_bot (5.2.0)
       activesupport (>= 4.2.0)
     factory_bot_rails (5.2.0)
@@ -293,17 +292,6 @@ GEM
     ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     safe_yaml (1.0.5)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.1.0)
-      railties (>= 5.2.0)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
     semantic_range (2.3.0)
     sexp_processor (4.14.1)
     shoulda-matchers (4.3.0)
@@ -331,7 +319,6 @@ GEM
       sprockets (>= 3.0.0)
     thor (1.0.1)
     thread_safe (0.3.6)
-    tilt (2.0.10)
     twitter (7.0.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
@@ -345,8 +332,6 @@ GEM
       simple_oauth (~> 0.3.0)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.7)
@@ -399,7 +384,6 @@ DEPENDENCIES
   rspec-rails (~> 3.9, >= 3.9.1)
   rspec_junit_formatter
   rubocop (~> 0.80.1)
-  sass-rails (~> 5.0)
   shoulda-matchers
   sidekiq (~> 5.0)
   sorcery (>= 0.15.0)
@@ -407,7 +391,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   twitter
   tzinfo-data
-  uglifier (>= 1.3.0)
   vcr
   web-console (>= 3.3.0)
   webmock
