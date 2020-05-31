@@ -1,54 +1,61 @@
 <template>
   <ValidationObserver ref="observer" v-slot="{ invalid }">
-    <v-list>
-      <v-list-item class="pb-0">
-        <v-list-item-content class="pb-0">
+    <v-container>
+      <v-list-item>
+        <v-list-item-content>
           <v-list-item-subtitle>ハッシュタグ</v-list-item-subtitle>
           <v-list-item-title>#{{ registeredTag.tag.name }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
-        <v-list-item-content class="pt-0">
-          <v-form class="pt-0">
-            <v-select
-              v-model="registeredTag.privacy"
-              :items="privacyChoices"
-              prepend-icon="mdi-earth"
-              required
+        <v-form class="pt-0">
+          <v-select
+            v-model="registeredTag.privacy"
+            :items="privacyChoices"
+            prepend-icon="mdi-earth"
+            required
+          />
+          <v-checkbox
+            v-model="isRemind"
+            class="mt-0"
+            messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます"
+            label="リマインダーを使用する"
+          />
+          <validation-provider
+            v-slot="{ errors }"
+            :rules="`${isRemind ? 'remindDay|maxRemindDay|minRemindDay' : ''}`"
+          >
+            <v-text-field
+              v-show="isRemind"
+              v-model="registeredTag.remindDay"
+              :error-messages="errors"
+              placeholder="リマインダー"
+              suffix="日"
+              hint="1〜30日で設定できます"
+              persistent-hint
             />
-            <v-container>
-              <v-checkbox
-                v-model="isRemind"
-                class="mt-0"
-                messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます"
-                label="リマインダーを使用する"
-              />
-              <validation-provider
-                v-slot="{ errors }"
-                :rules="`${isRemind ? 'remindDay|maxRemindDay|minRemindDay' : ''}`"
-              >
-                <v-text-field
-                  v-show="isRemind"
-                  v-model="registeredTag.remindDay"
-                  :error-messages="errors"
-                  placeholder="リマインダー"
-                  suffix="日"
-                  hint="1〜30日で設定できます"
-                  persistent-hint
-                />
-              </validation-provider>
-            </v-container>
-          </v-form>
-        </v-list-item-content>
+          </validation-provider>
+        </v-form>
       </v-list-item>
-    </v-list>
-    <v-btn class="ma-2" outlined @click="pushCancel">キャンセル</v-btn>
-    <v-btn class="ma-2" outlined @click="pushUpdate" :disabled="invalid">
-      <v-icon left>mdi-content-save</v-icon>保存
-    </v-btn>
-    <v-btn class="ma-2" outlined color="error" @click="pushDelete">
-      <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
-    </v-btn>
+    </v-container>
+    <v-list-item>
+      <v-btn class="ma-2" outlined color="primary" @click="pushCancel">キャンセル</v-btn>
+      <v-btn
+        class="ma-2"
+        depressed
+        dark
+        color="depressedButton"
+        :disabled="invalid"
+        @click="pushUpdate"
+      >
+        <v-icon left>mdi-checkbox-marked-outline</v-icon>保存
+      </v-btn>
+    </v-list-item>
+    <v-list-item justify="center">
+      <v-btn class="ma-2" outlined color="error" @click="pushDelete">
+        <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
+      </v-btn>
+    </v-list-item>
   </ValidationObserver>
 </template>
 

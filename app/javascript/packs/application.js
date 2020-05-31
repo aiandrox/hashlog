@@ -5,11 +5,9 @@ import VueRouter from "vue-router"
 import router from "./router"
 Vue.use(VueRouter)
 
-/*
- * import Vuex from "vuex"
- * Import store from './store.js'
- * Vue.use(Vuex)
- */
+import Vuex from "vuex"
+import store from "../store/index.js"
+Vue.use(Vuex)
 
 import Axios from "axios"
 import VueAxiosPlugin from "../plugins/vue-axios"
@@ -35,11 +33,8 @@ const vuetify = new Vuetify({
   theme: {
     themes: {
       light: {
-        /*
-         * primary: "#E53935",
-         * secondary: "#FFCDD2",
-         * accent: "#3F51B5"
-         */
+        primary: "#0079b5",
+        depressedButton: "#4e8baf"
       }
     }
   }
@@ -53,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     el: "#app",
     router,
     vuetify,
-    // Store: store,
+    store,
     render: h => h(App)
   })
   app.$mount("#app")
