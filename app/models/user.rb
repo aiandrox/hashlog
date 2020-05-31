@@ -14,7 +14,6 @@ class User < ApplicationRecord
   validates :description, length: { maximum: 300 }
   validates :privacy, presence: true
   validates :role, presence: true
-  # validates :registered_tags, length: { maximum: 3, message: 'は最大3つまでしか登録できません' }
 
   enum privacy: { published: 0, closed: 1 }
   enum role: { admin: 0, general: 1, guest: 2 }
@@ -28,10 +27,12 @@ class User < ApplicationRecord
     end
   end
 
+  # TODO: サービスクラスにしたい
   def register_tag(tag)
     ActiveRecord::Base.transaction do
       tag.save!
-      registered_tag = registered_tags.create!(tag_id: tag.id)
+      registered_tag = registered_tags.build(tag_id: tag.id)
+      registered_tag.save!
       registered_tag.create_tweets!
       registered_tag.fetch_tweets_data!
       true
