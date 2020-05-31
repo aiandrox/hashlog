@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <v-app>
-      <the-header v-if="pageType !== 'top'" />
+      <the-header />
       <v-content>
-        <v-container>
+        <v-container v-if="pageType !== 'top'">
           <!-- <flash-message /> -->
           <router-view />
         </v-container>
+        <router-view v-if="pageType === 'top'" />
       </v-content>
       <the-footer />
     </v-app>
