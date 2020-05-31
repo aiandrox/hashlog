@@ -6,6 +6,7 @@ import Mypage from "../pages/Mypage"
 import MyTag from "../pages/MyTag"
 import User from "../pages/User"
 import UserTag from "../pages/UserTag"
+import NotFound from "../pages/NotFound"
 
 const routes = [
   {
@@ -34,7 +35,8 @@ const routes = [
     path: "/users/:userUuid/tags/:tagId",
     name: "userTag",
     component: UserTag
-  }
+  },
+  { path: "*", name: "notFound", component: NotFound }
 ]
 
 const router = new VueRouter({ mode: "history", routes })
