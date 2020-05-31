@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def top; end
 
-  def privacy; end
-
-  def terms; end
+  def routing_error
+    render :top, status: 404
+  end
 end

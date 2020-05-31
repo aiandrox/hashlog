@@ -33,7 +33,6 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web, at: '/sidekiq'
 
-  # ルーティングエラーを拾う 404を返すだけなので、必要があるかは要検討
-  # get '*not_found', to: 'api/v1/base#routing_error'
-  # post '*not_found', to: 'api/v1/base#routing_error'
+  # ルーティングエラーを拾う（getのみ）
+  get '*path', to: 'static_pages#routing_error'
 end
