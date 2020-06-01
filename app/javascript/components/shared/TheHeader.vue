@@ -1,8 +1,6 @@
 <template>
   <v-app-bar app flat dark color="#006596">
-    <v-toolbar-title v-if="pageType !== 'top'" color="#f0faff"
-      >Hashlog</v-toolbar-title
-    >
+    <v-toolbar-title v-if="!isTopPage" color="#f0faff">Hashlog</v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
       <v-btn v-if="!currentUser" text href="/api/v1/oauth/twitter"
@@ -20,7 +18,9 @@ import { mapGetters } from "vuex"
 export default {
   computed: {
     ...mapGetters({ currentUser: "user/currentUser" }),
-    ...mapGetters({ pageType: "page/type" })
+    isTopPage() {
+      return this.$route.path === "/"
+    }
   },
   methods: {
     logout() {

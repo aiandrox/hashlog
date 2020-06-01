@@ -13,7 +13,7 @@
 <script>
 export default {
   mounted() {
-    this.$store.dispatch("page/setType", "top")
+    this.$store.dispatch("page/setType", "normal")
   }
 }
 </script>

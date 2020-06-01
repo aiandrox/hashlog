@@ -3,11 +3,11 @@
     <v-app>
       <the-header />
       <v-content>
-        <v-container v-if="pageType !== 'top'">
+        <v-container v-if="!isTopPage">
           <!-- <flash-message /> -->
           <router-view />
         </v-container>
-        <router-view v-if="pageType === 'top'" />
+        <router-view v-if="isTopPage" />
       </v-content>
       <the-footer />
     </v-app>
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
 import theHeader from "./components/shared/TheHeader.vue"
 import theFooter from "./components/shared/TheFooter.vue"
 // import FlashMessage from "./components/shared/TheFlashMessage.vue"
@@ -28,7 +27,9 @@ export default {
     // FlashMessage
   },
   computed: {
-    ...mapGetters({ pageType: "page/type" })
+    isTopPage() {
+      return this.$route.path === "/"
+    }
   }
 }
 </script>

@@ -1,5 +1,5 @@
 const state = () => ({
-  // "normal", "mypage", "top"
+  // "normal", "mypage"
   type: "normal"
 })
 
