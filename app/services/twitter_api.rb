@@ -67,7 +67,7 @@ module TwitterAPI
 
     def standard_search
       @standard_search ||= begin
-        client.search("##{tag_name} from:#{user.screen_name}",
+        client.search("##{tag_name} from:#{user.screen_name} exclude:retweets",
                       result_type: 'recent', count: 100).take(100).map do |result|
           tweeted_ats << result.created_at
           tweet_ids << result.id
@@ -80,6 +80,8 @@ module TwitterAPI
         client.premium_search("##{tag_name} from:#{user.screen_name}",
                               { maxResults: 100 },
                               { product: '30day' }).take(100).map do |result|
+          next if result.retweeted_status.present?
+
           tweeted_ats << result.created_at
           tweet_ids << result.id
         end
@@ -88,7 +90,7 @@ module TwitterAPI
 
     def everyday_search
       @everyday_search ||= begin
-        client.search("##{tag_name} from:#{user.screen_name}",
+        client.search("##{tag_name} from:#{user.screen_name} exclude:retweets",
                       result_type: 'recent', since_id: since_id).take(100).map do |result|
           tweeted_ats << result.created_at
           tweet_ids << result.id

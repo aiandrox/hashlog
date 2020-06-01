@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=%23tag_1%20from:user_1&result_type=recent
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=%23tag_1%20from:user_1%20exclude:retweets&result_type=recent
     body:
       encoding: UTF-8
       string: ''
