@@ -53,11 +53,13 @@ export default {
   props: {
     tweet: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     },
     user: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     }
   },
   computed: {

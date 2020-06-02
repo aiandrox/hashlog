@@ -39,7 +39,9 @@
       </v-list-item>
     </v-container>
     <v-list-item>
-      <v-btn class="ma-2" outlined color="primary" @click="pushCancel">キャンセル</v-btn>
+      <v-btn class="ma-2" outlined color="primary" @click="pushCancel"
+        >キャンセル</v-btn
+      >
       <v-btn
         class="ma-2"
         depressed
@@ -64,7 +66,8 @@ export default {
   props: {
     registeredTag: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     }
   },
   data() {

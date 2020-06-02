@@ -7,7 +7,8 @@
           v-for="registeredTag in registeredTags"
           :key="registeredTag.id"
           :to="registeredTagRoute(registeredTag)"
-        >#{{ registeredTag.tag.name }}</v-tab>
+          >#{{ registeredTag.tag.name }}</v-tab
+        >
       </v-tabs>
     </div>
     <v-spacer />
@@ -32,7 +33,8 @@ export default {
   props: {
     registeredTags: {
       type: Array,
-      default: () => []
+      default: () => [],
+      required: true
     }
   },
   computed: {
@@ -68,4 +70,3 @@ export default {
   }
 }
 </script>
-

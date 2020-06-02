@@ -30,7 +30,8 @@
         color="primary"
         class="ma-2"
         :to="{ name: 'user', params: { userUuid: user.uuid } }"
-      >ユーザーページを見る</v-btn>
+        >ユーザーページを見る</v-btn
+      >
     </div>
   </div>
 </template>
@@ -40,7 +41,8 @@ export default {
   props: {
     user: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     }
   },
   computed: {

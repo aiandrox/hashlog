@@ -30,7 +30,8 @@ export default {
   props: {
     registeredTag: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     }
   },
   data() {
