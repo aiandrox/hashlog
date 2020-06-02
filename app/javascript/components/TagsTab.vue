@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
 import registerTagDialog from "../components/TheRegisterTagDialog"
 
 export default {
@@ -38,18 +37,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ pageType: "page/type" }),
     isMypage() {
-      return this.pageType === "mypage"
+      return this.$route.path.includes("/mypage/")
     },
     homePositionName() {
-      if (this.pageType === "mypage") {
+      if (this.isMypage) {
         return "マイページ"
       }
       return "ユーザーページ"
     },
     homePositionRoute() {
-      if (this.pageType === "mypage") {
+      if (this.isMypage) {
         return { name: "mypage" }
       }
       const { userUuid } = this.$route.params
@@ -58,7 +56,7 @@ export default {
   },
   methods: {
     registeredTagRoute(registeredTag) {
-      if (this.pageType === "mypage") {
+      if (this.isMypage) {
         return { name: "myTag", params: { tagId: registeredTag.id } }
       }
       const { userUuid } = this.$route.params

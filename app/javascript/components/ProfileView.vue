@@ -57,8 +57,7 @@ export default {
       return replaced
     },
     isMypage() {
-      const pageType = this.$store.getters["page/type"]
-      return pageType === "mypage"
+      return this.$route.path.includes("/mypage/")
     }
   },
   methods: {

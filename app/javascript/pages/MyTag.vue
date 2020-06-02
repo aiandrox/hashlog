@@ -83,7 +83,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("page/setType", "mypage")
     this.firstRead()
   },
   watch: {

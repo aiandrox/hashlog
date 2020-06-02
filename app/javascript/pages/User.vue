@@ -36,7 +36,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("page/setType", "normal")
     this.firstRead()
   },
   watch: {
