@@ -35,12 +35,20 @@ export default {
       return `/api/v1/users/${userUuid}`
     }
   },
-  async mounted() {
+  mounted() {
     this.$store.dispatch("page/setType", "normal")
-    await this.fetchUserData()
-    document.title = `${this.user.name}のユーザーページ | Hashlog`
+    this.firstRead()
+  },
+  watch: {
+    $route() {
+      this.firstRead()
+    }
   },
   methods: {
+    async firstRead() {
+      await this.fetchUserData()
+      document.title = `${this.user.name}のユーザーページ | Hashlog`
+    },
     async fetchUserData() {
       try {
         const userRes = await this.$axios.get(this.userUrl)

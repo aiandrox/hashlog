@@ -77,17 +77,19 @@ export default {
     }
   },
   watch: {
-    async $route() {
-      await this.fetchData()
-      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    $route() {
+      this.firstRead()
     }
   },
-  async mounted() {
+  mounted() {
     this.$store.dispatch("page/setType", "normal")
-    await this.fetchData()
-    document.title = `#${this.registeredTag.tag.name} - ${this.user.name} | Hashlog`
+    this.firstRead()
   },
   methods: {
+    async firstRead() {
+      await this.fetchData()
+      document.title = `#${this.registeredTag.tag.name} - ${this.user.name} | Hashlog`
+    },
     async fetchData() {
       try {
         const { userUuid } = this.$route.params

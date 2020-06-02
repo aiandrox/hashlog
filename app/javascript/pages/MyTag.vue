@@ -82,18 +82,20 @@ export default {
       return `/api/v1/registered_tags/${tagId}`
     }
   },
+  mounted() {
+    this.$store.dispatch("page/setType", "mypage")
+    this.firstRead()
+  },
   watch: {
-    async $route() {
-      await this.fetchData()
-      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    $route() {
+      this.firstRead()
     }
   },
-  async mounted() {
-    this.$store.dispatch("page/setType", "mypage")
-    await this.fetchData()
-    document.title = `#${this.registeredTag.tag.name} | Hashlog`
-  },
   methods: {
+    async firstRead() {
+      await this.fetchData()
+      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    },
     async fetchData() {
       try {
         const registeredTagsRes = await this.$axios.get(
