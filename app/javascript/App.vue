@@ -4,7 +4,7 @@
       <the-header v-if="pageType !== 'top'" />
       <v-content>
         <v-container>
-          <the-flash-message />
+          <the-flash-message v-if="isFlash" />
           <router-view />
         </v-container>
       </v-content>
@@ -27,7 +27,8 @@ export default {
     theFlashMessage
   },
   computed: {
-    ...mapGetters({ pageType: "page/type" })
+    ...mapGetters({ pageType: "page/type" }),
+    ...mapGetters({ isFlash: "flash/isFlash" })
   }
 }
 </script>

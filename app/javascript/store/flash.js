@@ -7,7 +7,8 @@ const state = () => ({
 })
 
 const getters = {
-  flash: state => state.flash
+  flash: state => state.flash,
+  isFlash: state => !!state.flash.type
 }
 
 const mutations = {

@@ -125,6 +125,10 @@ export default {
       this.$refs.tagStatus.finishEdit()
       const { registeredTag } = registeredTagRes.data
       this.registeredTag = registeredTag
+      this.$store.dispatch("flash/setFlash", {
+        type: "success",
+        message: "ハッシュタグの設定を更新しました"
+      })
     },
     async fetchTagData() {
       const registeredTagRes = await this.$axios
@@ -140,6 +144,10 @@ export default {
       try {
         this.$axios.delete(this.registeredTagUrl)
         this.$router.push({ name: "mypage" })
+        this.$store.dispatch("flash/setFlash", {
+          type: "success",
+          message: "ハッシュタグを削除しました"
+        })
       } catch (error) {
         this.$handleError(error)
       }

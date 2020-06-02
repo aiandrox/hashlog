@@ -83,6 +83,10 @@ export default {
           )
           const tagId = registeredTagRes.data.registeredTag.id
           this.$router.push({ name: "myTag", params: { tagId } })
+          this.$store.dispatch("flash/setFlash", {
+            type: "success",
+            message: "ハッシュタグを登録しました"
+          })
           this.resetForm()
         } catch (error) {
           switch (error.response.status) {

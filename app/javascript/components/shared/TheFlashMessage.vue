@@ -1,23 +1,29 @@
 <template>
-  <v-fade-transition v-if="isShow">
+  <v-fade-transition>
     <div class="flash">
-      <v-alert dense outlined type="success">更新しました</v-alert>
-      <v-alert dense outlined type="error">エラーが発生しました</v-alert>
+      <v-alert dense outlined :type="flash.type">{{ flash.message }}</v-alert>
     </div>
   </v-fade-transition>
 </template>
 
 <script>
+import { mapGetters } from "vuex"
+
 export default {
   data() {
     return {
-      isShow: true,
-      message: "flash message"
+      isShow: true
     }
+  },
+  computed: {
+    ...mapGetters({ flash: "flash/flash" })
   },
   mounted() {
     setTimeout(() => {
-      this.isShow = false
+      this.$store.dispatch("flash/setFlash", {
+        type: "",
+        message: ""
+      })
     }, 4000)
   }
 }
@@ -28,11 +34,14 @@ export default {
   position: fixed;
   bottom: 10px;
   left: 20px;
-  width: 250px;
   z-index: 5;
+  max-width: 350px;
   /* フッターがz-index: 3なので */
 }
 .v-alert--outlined {
   background: rgba(255, 255, 255, 0.9) !important;
+}
+.v-alert {
+  font-size: 14px;
 }
 </style>
