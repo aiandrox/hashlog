@@ -99,7 +99,7 @@ export default {
               this.$refs.provider.errors.push(errorMessage)
               break
             default:
-              break
+              throw error
           }
         } finally {
           this.isLoading = false
