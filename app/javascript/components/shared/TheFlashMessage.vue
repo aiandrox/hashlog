@@ -35,8 +35,8 @@ export default {
   bottom: 10px;
   left: 20px;
   max-width: 350px;
-  z-index: 201;
-  /* オーバーレイがz-index: 200なので */
+  z-index: 100;
+  /* z-index:は、フッターが3, オーバーレイが200 */
 }
 .v-alert--outlined {
   background: rgba(255, 255, 255, 0.9) !important;

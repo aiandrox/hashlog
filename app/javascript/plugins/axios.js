@@ -27,8 +27,8 @@ const errorMessage = error => {
       return "リソースが見つかりません"
     case 422: // バリデーションメッセージは個別で処理を行う
       return null
-    case 429:
-      return "リクエストが集中しています。15分ほど後に再度試してください"
+    case 429: // フォームにエラーメッセージを表示する（同上）
+      return null
     default:
       return "予期せぬエラーが発生しました"
   }
