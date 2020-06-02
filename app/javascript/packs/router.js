@@ -41,10 +41,13 @@ const routes = [
 
 const router = new VueRouter({ mode: "history", routes })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   store.dispatch("user/getCurrentUser").then(currentUser => {
     if (to.matched.some(record => record.meta.requiredLogin) && !currentUser) {
-      store.dispatch("page/setType", "top")
+      store.dispatch("flash/setFlash", {
+        type: "error",
+        message: "ログインしてください"
+      })
       return next({ name: "top" })
     }
     return next()

@@ -20,7 +20,7 @@ http.interceptors.request.use(request => {
 const errorMessage = error => {
   switch (error.response.status) {
     case 401:
-      return "ログインしてください"
+      return null
     case 403:
       return "アクセスが許可されていません"
     case 404:
