@@ -81,55 +81,48 @@ export default {
       return `/api/v1/registered_tags/${tagId}`
     }
   },
+  mounted() {
+    this.firstRead()
+  },
   watch: {
-    async $route() {
-      await this.fetchData()
-      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    $route() {
+      this.firstRead()
     }
   },
-  async mounted() {
-    this.$store.dispatch("page/setType", "mypage")
-    await this.fetchData()
-    document.title = `#${this.registeredTag.tag.name} | Hashlog`
-  },
   methods: {
+    async firstRead() {
+      await this.fetchData()
+      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    },
     async fetchData() {
-      try {
-        const registeredTagsRes = await this.$axios.get(
-          `/api/v1/users/${this.currentUser.uuid}/registered_tags`
-        )
-        const { registeredTags } = registeredTagsRes.data
-        this.registeredTags = registeredTags
+      const registeredTagsRes = await this.$axios.get(
+        `/api/v1/users/${this.currentUser.uuid}/registered_tags`
+      )
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
 
-        const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-        const { registeredTag } = registeredTagRes.data
-        this.registeredTag = registeredTag
+      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
+      const { registeredTag } = registeredTagRes.data
+      this.registeredTag = registeredTag
 
-        const tweetsRes = await this.$axios.get(
-          `/api/v1/registered_tags/${registeredTag.id}/tweets`
-        )
-        this.$setPaginationData(tweetsRes)
-        const { tweets } = tweetsRes.data
-        this.tweets = tweets
-      } catch (error) {
-        console.log(error)
-      }
+      const tweetsRes = await this.$axios.get(
+        `/api/v1/registered_tags/${registeredTag.id}/tweets`
+      )
+      this.$setPaginationData(tweetsRes)
+      const { tweets } = tweetsRes.data
+      this.tweets = tweets
     },
     async updateTagData() {
-      try {
-        await this.$axios.patch(
-          `/api/v1/registered_tags/${this.registeredTag.id}`,
-          {
-            tag: this.registeredTag
-          }
-        )
-        this.$refs.tagStatus.finishEdit()
-        const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-        const { registeredTag } = registeredTagRes.data
-        this.registeredTag = registeredTag
-      } catch (error) {
-        console.log(error)
-      }
+      const registeredTagRes = await this.$axios.patch(this.registeredTagUrl, {
+        tag: this.registeredTag
+      })
+      this.$refs.tagStatus.finishEdit()
+      const { registeredTag } = registeredTagRes.data
+      this.registeredTag = registeredTag
+      this.$store.dispatch("flash/setFlash", {
+        type: "success",
+        message: "ハッシュタグの設定を更新しました"
+      })
     },
     async fetchTagData() {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
@@ -139,13 +132,13 @@ export default {
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
     },
-    deleteTag() {
-      try {
-        this.$axios.delete(this.registeredTagUrl)
-        this.$router.push({ name: "mypage" })
-      } catch (error) {
-        console.log(error)
-      }
+    async deleteTag() {
+      await this.$axios.delete(this.registeredTagUrl)
+      this.$router.push({ name: "mypage" })
+      this.$store.dispatch("flash/setFlash", {
+        type: "success",
+        message: "ハッシュタグを削除しました"
+      })
     }
   }
 }

@@ -77,43 +77,40 @@ export default {
     }
   },
   watch: {
-    async $route() {
-      await this.fetchData()
-      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+    $route() {
+      this.firstRead()
     }
   },
-  async mounted() {
-    this.$store.dispatch("page/setType", "normal")
-    await this.fetchData()
-    document.title = `#${this.registeredTag.tag.name} - ${this.user.name} | Hashlog`
+  mounted() {
+    this.firstRead()
   },
   methods: {
+    async firstRead() {
+      await this.fetchData()
+      document.title = `#${this.registeredTag.tag.name} - ${this.user.name} | Hashlog`
+    },
     async fetchData() {
-      try {
-        const { userUuid } = this.$route.params
-        const userRes = await this.$axios.get(`/api/v1/users/${userUuid}`)
-        const { user } = userRes.data
-        this.user = user
+      const { userUuid } = this.$route.params
+      const userRes = await this.$axios.get(`/api/v1/users/${userUuid}`)
+      const { user } = userRes.data
+      this.user = user
 
-        const registeredTagsRes = await this.$axios.get(
-          `/api/v1/users/${userUuid}/registered_tags`
-        )
-        const { registeredTags } = registeredTagsRes.data
-        this.registeredTags = registeredTags
+      const registeredTagsRes = await this.$axios.get(
+        `/api/v1/users/${userUuid}/registered_tags`
+      )
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
 
-        const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-        const { registeredTag } = registeredTagRes.data
-        this.registeredTag = registeredTag
+      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
+      const { registeredTag } = registeredTagRes.data
+      this.registeredTag = registeredTag
 
-        const tweetsRes = await this.$axios.get(
-          `/api/v1/registered_tags/${registeredTag.id}/tweets`
-        )
-        this.$setPaginationData(tweetsRes)
-        const { tweets } = tweetsRes.data
-        this.tweets = tweets
-      } catch (error) {
-        console.log(error)
-      }
+      const tweetsRes = await this.$axios.get(
+        `/api/v1/registered_tags/${registeredTag.id}/tweets`
+      )
+      this.$setPaginationData(tweetsRes)
+      const { tweets } = tweetsRes.data
+      this.tweets = tweets
     },
     async fetchTagData() {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)

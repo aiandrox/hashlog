@@ -1,12 +1,4 @@
-import axios from "axios"
-const csrfToken = document
-  .querySelector('meta[name="csrf-token"]')
-  .getAttribute("content")
-
-axios.defaults.headers.common = {
-  "X-Requested-With": "XMLHttpRequest",
-  "X-CSRF-Token": csrfToken
-}
+import axios from "../plugins/axios"
 
 const state = () => ({
   currentUser: ""
@@ -59,7 +51,7 @@ const actions = {
     commit("setCurrentUser", null)
   },
   async logout({ commit }) {
-    await this.$axios.delete("/api/v1/user_session")
+    await axios.delete("/api/v1/logout")
     commit("setCurrentUser", null)
   }
 }

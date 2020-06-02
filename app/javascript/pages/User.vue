@@ -35,25 +35,29 @@ export default {
       return `/api/v1/users/${userUuid}`
     }
   },
-  async mounted() {
-    this.$store.dispatch("page/setType", "normal")
-    await this.fetchUserData()
-    document.title = `${this.user.name}のユーザーページ | Hashlog`
+  mounted() {
+    this.firstRead()
+  },
+  watch: {
+    $route() {
+      this.firstRead()
+    }
   },
   methods: {
+    async firstRead() {
+      await this.fetchUserData()
+      document.title = `${this.user.name}のユーザーページ | Hashlog`
+    },
     async fetchUserData() {
-      try {
-        const userRes = await this.$axios.get(this.userUrl)
-        const { user } = userRes.data
-        this.user = user
-        const registeredTagsRes = await this.$axios.get(
-          `/api/v1/users/${user.uuid}/registered_tags`
-        )
-        const { registeredTags } = registeredTagsRes.data
-        this.registeredTags = registeredTags
-      } catch (error) {
-        console.log(error)
-      }
+      const userRes = await this.$axios.get(this.userUrl)
+      const { user } = userRes.data
+      this.user = user
+
+      const registeredTagsRes = await this.$axios.get(
+        `/api/v1/users/${user.uuid}/registered_tags`
+      )
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
     }
   }
 }

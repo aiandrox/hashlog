@@ -30,7 +30,8 @@ export default {
   props: {
     registeredTag: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     }
   },
   data() {
@@ -40,8 +41,7 @@ export default {
   },
   computed: {
     isMypage() {
-      const pageType = this.$store.getters["page/type"]
-      return pageType === "mypage"
+      return this.$route.path.includes("/mypage/")
     }
   },
   watch: {

@@ -23,13 +23,13 @@ export default {
     }
   },
   methods: {
-    logout() {
-      try {
-        this.$axios.delete("/api/v1/logout", {})
-        this.$router.push({ name: "top" })
-      } catch (error) {
-        console.log(error)
-      }
+    async logout() {
+      await this.$store.dispatch("user/logout")
+      this.$router.push({ name: "top" })
+      this.$store.dispatch("flash/setFlash", {
+        type: "success",
+        message: "ログアウトしました"
+      })
     }
   }
 }

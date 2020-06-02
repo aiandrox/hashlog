@@ -4,7 +4,7 @@
       <the-header />
       <v-content>
         <v-container v-if="!isTopPage">
-          <!-- <flash-message /> -->
+          <the-flash-message v-if="isFlash" />
           <router-view />
         </v-container>
         <router-view v-if="isTopPage" />
@@ -15,18 +15,20 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import theHeader from "./components/shared/TheHeader.vue"
 import theFooter from "./components/shared/TheFooter.vue"
-// import FlashMessage from "./components/shared/TheFlashMessage.vue"
+import theFlashMessage from "./components/shared/TheFlashMessage.vue"
 
 export default {
   name: "MyApp",
   components: {
     theHeader,
-    theFooter
-    // FlashMessage
+    theFooter,
+    theFlashMessage
   },
   computed: {
+    ...mapGetters({ isFlash: "flash/isFlash" }),
     isTopPage() {
       return this.$route.path === "/"
     }

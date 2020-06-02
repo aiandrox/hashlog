@@ -1,6 +1,6 @@
 <template>
   <v-card flat>
-    <v-list :class="{'v-list-item--disabled': !isEditing}">
+    <v-list :class="{ 'v-list-item--disabled': !isEditing }">
       <v-subheader>STATUS</v-subheader>
       <v-list-item @click="togglePrivacy">
         <v-list-item-icon>
@@ -13,7 +13,7 @@
       <v-list-item
         v-for="status in statusArray"
         :key="status.name"
-        :class="{'v-list-item--disabled': isEditing}"
+        :class="{ 'v-list-item--disabled': isEditing }"
       >
         <v-list-item-icon>
           <v-icon>{{ status.icon }}</v-icon>
@@ -31,16 +31,19 @@ export default {
   props: {
     isEditing: {
       type: Boolean,
-      default: false
+      default: false,
+      required: true
     },
     user: {
       role: {
         type: String,
-        default: ""
+        default: "",
+        required: true
       },
       privacy: {
         type: String,
-        default: ""
+        default: "",
+        required: true
       }
     }
   },

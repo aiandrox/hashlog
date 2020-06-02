@@ -4,7 +4,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=%23%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E9%80%B2%E6%8D%97%20from:aiandrox&result_type=recent
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=%23%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E9%80%B2%E6%8D%97%20from:aiandrox%20exclude:retweets&result_type=recent
     body:
       encoding: UTF-8
       string: ''

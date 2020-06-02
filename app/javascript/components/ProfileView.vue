@@ -30,7 +30,8 @@
         color="primary"
         class="ma-2"
         :to="{ name: 'user', params: { userUuid: user.uuid } }"
-      >ユーザーページを見る</v-btn>
+        >ユーザーページを見る</v-btn
+      >
     </div>
   </div>
 </template>
@@ -40,7 +41,8 @@ export default {
   props: {
     user: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     }
   },
   computed: {
@@ -55,8 +57,7 @@ export default {
       return replaced
     },
     isMypage() {
-      const pageType = this.$store.getters["page/type"]
-      return pageType === "mypage"
+      return this.$route.path.includes("/mypage/")
     }
   },
   methods: {
