@@ -99,7 +99,6 @@ export default {
               this.$refs.provider.errors.push(errorMessage)
               break
             default:
-              this.$handleError(error)
               break
           }
         } finally {

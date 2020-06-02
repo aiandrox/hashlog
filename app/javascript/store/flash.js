@@ -8,7 +8,7 @@ const state = () => ({
 
 const getters = {
   flash: state => state.flash,
-  isFlash: state => !!state.flash.type
+  isFlash: state => !!state.flash.message
 }
 
 const mutations = {

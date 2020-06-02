@@ -50,19 +50,15 @@ export default {
       document.title = `${this.user.name}のユーザーページ | Hashlog`
     },
     async fetchUserData() {
-      try {
-        const userRes = await this.$axios.get(this.userUrl)
-        const { user } = userRes.data
-        this.user = user
+      const userRes = await this.$axios.get(this.userUrl)
+      const { user } = userRes.data
+      this.user = user
 
-        const registeredTagsRes = await this.$axios.get(
-          `/api/v1/users/${user.uuid}/registered_tags`
-        )
-        const { registeredTags } = registeredTagsRes.data
-        this.registeredTags = registeredTags
-      } catch (error) {
-        this.$handleError(error)
-      }
+      const registeredTagsRes = await this.$axios.get(
+        `/api/v1/users/${user.uuid}/registered_tags`
+      )
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
     }
   }
 }

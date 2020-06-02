@@ -4,7 +4,11 @@
       <v-container row>
         <v-col cols="12" lg="8">
           <!-- プロフィール -->
-          <profile-view v-if="!isEditing" :user="user" @push-edit="isEditing = true" />
+          <profile-view
+            v-if="!isEditing"
+            :user="user"
+            @push-edit="isEditing = true"
+          />
           <!-- ユーザー編集 -->
           <profile-edit
             v-if="isEditing"

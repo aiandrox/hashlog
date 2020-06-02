@@ -45,14 +45,15 @@ export default {
   },
   methods: {
     async fetchRegisteredTagsData(user) {
-      const registeredTagsRes = await this.$axios
-        .get(`/api/v1/users/${user.uuid}/registered_tags`)
-        .catch(this.$handleError)
+      const registeredTagsRes = await this.$axios.get(
+        `/api/v1/users/${user.uuid}/registered_tags`
+      )
+
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
     },
-    updateUserData() {
-      this.$store.dispatch("user/updateCurrentUser", this.currentUser)
+    async updateUserData() {
+      await this.$store.dispatch("user/updateCurrentUser", this.currentUser)
       this.$refs.profile.finishEdit()
       this.$store.dispatch("flash/setFlash", {
         type: "success",
@@ -65,8 +66,8 @@ export default {
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
     },
-    deleteUser() {
-      this.$store.dispatch("user/deleteCurrentUser")
+    async deleteUser() {
+      await this.$store.dispatch("user/deleteCurrentUser")
       this.$router.push({ name: "top" })
       this.$store.dispatch("flash/setFlash", {
         type: "success",

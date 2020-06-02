@@ -1,4 +1,5 @@
 import Axios from "axios"
+import store from "../store/index"
 
 const http = Axios.create({
   // for cors
@@ -16,25 +17,29 @@ http.interceptors.request.use(request => {
   return request
 })
 
+const errorMessage = error => {
+  switch (error.response.status) {
+    case 401:
+      return "ログインしてください"
+    case 403:
+      return "アクセスが許可されていません"
+    case 404:
+      return "リソースが見つかりません"
+    case 422: // バリデーションメッセージは個別で処理を行う
+      console.log("入力データが不適です")
+      return null
+    default:
+      return "予期せぬエラーが発生しました"
+  }
+}
+
 http.interceptors.response.use(
   response => response,
   error => {
-    switch (error.response.status) {
-      case 401:
-        console.log(error.response.data.error.detail)
-        break
-      case 403:
-        console.log("アクセスが許可されていません")
-        break
-      case 404:
-        console.log("リソースが見つかりません")
-        break
-      case 422: // バリデーションメッセージは個別で処理を行う
-        console.log("入力データが不適です")
-        break
-      default:
-        console.log("エラーが発生しました")
-    }
+    store.dispatch("flash/setFlash", {
+      type: "error",
+      message: errorMessage(error)
+    })
     return Promise.reject(error)
   }
 )

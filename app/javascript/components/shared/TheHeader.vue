@@ -21,12 +21,12 @@ export default {
   },
   methods: {
     logout() {
-      try {
-        this.$axios.delete("/api/v1/logout", {})
-        this.$router.push({ name: "top" })
-      } catch (error) {
-        this.$handleError(error)
-      }
+      this.$axios.delete("/api/v1/logout", {})
+      this.$router.push({ name: "top" })
+      this.$store.dispatch("set/flash", {
+        type: "success",
+        message: "ログアウトしました"
+      })
     }
   }
 }
