@@ -6,12 +6,10 @@ import router from "./router"
 Vue.use(VueRouter)
 
 import Vuex from "vuex"
-import store from "../store/index.js"
+import store from "../store/index"
 Vue.use(Vuex)
 
-import Axios from "axios"
-import VueAxiosPlugin from "../plugins/vue-axios"
-Vue.use(VueAxiosPlugin, { axios: Axios })
+import Axios from "../plugins/axios"
 Vue.prototype.$axios = Axios
 
 import customPlugin from "../plugins/custom-plugins"
