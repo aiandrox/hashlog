@@ -20,13 +20,16 @@ http.interceptors.request.use(request => {
 const errorMessage = error => {
   switch (error.response.status) {
     case 401:
-      return null
+      return "ログインしてください"
     case 403:
       return "アクセスが許可されていません"
     case 404:
       return "リソースが見つかりません"
     case 422: // バリデーションメッセージは個別で処理を行う
       console.log("入力データが不適です")
+      return null
+    case 429:
+      console.log("TwitterAPI制限です")
       return null
     default:
       return "予期せぬエラーが発生しました"
