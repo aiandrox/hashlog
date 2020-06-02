@@ -1,25 +1,26 @@
 RSpec.describe 'Base', type: :request do
-  let(:user) { create(:user) }
-
-  xdescribe '#rescue_limited_twitter_requests' do
-    context 'TwitterAPIのリクエストが上限に達した場合' do
-      let(:client) { TwitterAPI::Search.new(user, 'ハッシュタグ') }
+  let(:user) { create(:user, screen_name: 'user') }
+  describe '#rescue_limited_twitter_requests' do
+    context 'TwitterAPIのリクエストが上限に達した場合',
+      vcr: { cassette_name: 'twitter_api/standard_search/Twitter::Error::TooManyRequests' } do
+      before do
+        login_as(user)
+        post '/api/v1/registered_tags', params: { tag: { name: 'ハッシュタグ' } }
+      end
       it '429 TooManyRequestsを返す' do
-        allow(client).to receive(:tweets_data).and_raise(Twitter::Error::TooManyRequests)
-        client.tweets_data('standard')
         expect(response.status).to eq 429
       end
       it 'エラーメッセージのJSONを返す' do
         expect(json['error']).to eq({
           'status' => '429',
           'title' => 'Twitter APIが制限されています。',
-          'detail' => '15分後に再度試してください。',
+          'detail' => '現在リクエストが集中しています。15分後に再度試してください。'
         })
       end
     end
   end
 
-  xdescribe '#rescue_not_found' do # 元々404を返す気がする
+  describe '#rescue_not_found' do
     context '定義されていないエンドポイントにアクセスした場合' do
       it '404 Not Foundを返す' do
         get '/api/v1/hogehoge'
@@ -27,10 +28,11 @@ RSpec.describe 'Base', type: :request do
       end
     end
     context '自分以外のユーザーのリソースにアクセスした場合' do
-      let(:other_user) { create(:user) }
+      let(:other_registered_tag) { create(:registered_tag) }
       before do
         login_as(user)
-        post "/api/v1/users/#{other_user.uuid}/registered_tags", params: { tag: { name: 'hashtag' } }
+        patch "/api/v1/registered_tags/#{other_registered_tag.id}",
+          params: { tag: { remind_day: '10' } }
       end
       it '404 Not Foundを返す' do
         expect(response.status).to eq 404
@@ -39,7 +41,7 @@ RSpec.describe 'Base', type: :request do
         expect(json['error']).to eq({
           'status' => '404',
           'title' => 'リソースが見つかりませんでした。',
-          'detail' => 'アドレスを確認してください。'
+          'detail' => 'データが見つかりませんでした。アドレスを確認してください。'
         })
       end
     end
@@ -47,7 +49,7 @@ RSpec.describe 'Base', type: :request do
 
   describe '#not_authenticated' do
     context 'ログインしていない場合' do
-      before { get '/api/v1/users/current' }
+      before { delete "/api/v1/users/#{user.uuid}" }
       it '401 Unauthorizedを返す' do
         expect(response.status).to eq 401
       end
