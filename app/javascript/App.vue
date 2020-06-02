@@ -16,9 +16,9 @@
 
 <script>
 import { mapGetters } from "vuex"
-import theHeader from "./components/shared/TheHeader.vue"
-import theFooter from "./components/shared/TheFooter.vue"
-import theFlashMessage from "./components/shared/TheFlashMessage.vue"
+import theHeader from "./components/shared/TheHeader"
+import theFooter from "./components/shared/TheFooter"
+import theFlashMessage from "./components/shared/TheFlashMessage"
 
 export default {
   name: "MyApp",
