@@ -24,7 +24,7 @@ export default {
         type: "",
         message: ""
       })
-    }, 4000)
+    }, 3000)
   }
 }
 </script>
