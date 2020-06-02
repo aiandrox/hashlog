@@ -26,11 +26,9 @@ const errorMessage = error => {
     case 404:
       return "リソースが見つかりません"
     case 422: // バリデーションメッセージは個別で処理を行う
-      console.log("入力データが不適です")
       return null
     case 429:
-      console.log("TwitterAPI制限です")
-      return null
+      return "リクエストが集中しています。15分ほど後に再度試してください"
     default:
       return "予期せぬエラーが発生しました"
   }
