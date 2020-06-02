@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  title: "404 NotFound"
+  title: "ページが見つかりません"
 }
 </script>
 

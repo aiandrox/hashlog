@@ -18,7 +18,7 @@ const routes = [
     path: "/mypage/dashboard",
     name: "mypage",
     component: Mypage,
-    meta: { requiredLogin: true }
+    meta: { requiredLogin: true, title: "マイページ" }
   },
   {
     path: "/mypage/tags/:tagId",
@@ -36,7 +36,12 @@ const routes = [
     name: "userTag",
     component: UserTag
   },
-  { path: "*", name: "notFound", component: NotFound }
+  {
+    path: "*",
+    name: "notFound",
+    component: NotFound,
+    meta: { title: "ページが見つかりません" }
+  }
 ]
 
 const router = new VueRouter({ mode: "history", routes })
