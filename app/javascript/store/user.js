@@ -51,7 +51,7 @@ const actions = {
     commit("setCurrentUser", null)
   },
   async logout({ commit }) {
-    await axios.delete("/api/v1/user_session")
+    await axios.delete("/api/v1/logout")
     commit("setCurrentUser", null)
   }
 }

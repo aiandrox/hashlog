@@ -20,10 +20,10 @@ export default {
     ...mapGetters({ currentUser: "user/currentUser" })
   },
   methods: {
-    logout() {
-      this.$axios.delete("/api/v1/logout", {})
+    async logout() {
+      await this.$store.dispatch("user/logout")
       this.$router.push({ name: "top" })
-      this.$store.dispatch("set/flash", {
+      this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ログアウトしました"
       })
