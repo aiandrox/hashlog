@@ -13,7 +13,7 @@
     <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
       ツイートを含む全てのデータが消えて
-      <br>復活できなくなります。
+      <br />復活できなくなります。
     </delete-dialog>
   </div>
 </template>
@@ -45,15 +45,11 @@ export default {
   },
   methods: {
     async fetchRegisteredTagsData(user) {
-      try {
-        const registeredTagsRes = await this.$axios.get(
-          `/api/v1/users/${user.uuid}/registered_tags`
-        )
-        const { registeredTags } = registeredTagsRes.data
-        this.registeredTags = registeredTags
-      } catch (error) {
-        console.log(error)
-      }
+      const registeredTagsRes = await this.$axios
+        .get(`/api/v1/users/${user.uuid}/registered_tags`)
+        .catch(this.$handleError)
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
     },
     updateUserData() {
       this.$store.dispatch("user/updateCurrentUser", this.currentUser)

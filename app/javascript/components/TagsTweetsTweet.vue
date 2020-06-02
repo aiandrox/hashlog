@@ -16,7 +16,9 @@
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light">@{{ user.screenName }}</v-list-item-subtitle>
+              <v-list-item-subtitle class="font-weight-light"
+                >@{{ user.screenName }}</v-list-item-subtitle
+              >
             </v-list-item-content>
           </v-list-item>
           <v-spacer />
@@ -39,16 +41,10 @@
         </v-btn>
         <v-spacer />
         <span class="body-2 font-weight-light">
-          {{
-            $dayjs(tweet.tweetedAt)
-          }}
+          {{ $dayjs(tweet.tweetedAt) }}
         </span>
       </v-card-actions>
     </v-card>
-    <!-- 開発用削除ボタン
-    <v-btn class="ma-2" outlined color="success" @click="deleteTweet">
-      <v-icon left>mdi-delete</v-icon>削除
-    </v-btn>-->
   </div>
 </template>
 
@@ -92,12 +88,5 @@ export default {
       return `/api/v1/tweets/${id}`
     }
   }
-  /*
-   * methods: {
-   *   deleteTweet() {
-   *     this.$axios.delete(this.deleteUrl).then(response => {})
-   *   }
-   * }
-   */
 }
 </script>

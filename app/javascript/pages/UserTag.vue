@@ -112,11 +112,13 @@ export default {
         const { tweets } = tweetsRes.data
         this.tweets = tweets
       } catch (error) {
-        console.log(error)
+        this.$handleError(error)
       }
     },
     async fetchTagData() {
-      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
+      const registeredTagRes = await this.$axios
+        .get(this.registeredTagUrl)
+        .catch(this.$handleError)
       const { registeredTag } = registeredTagRes.data
       this.registeredTag = registeredTag
     }

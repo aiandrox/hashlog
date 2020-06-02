@@ -18,10 +18,26 @@ export default {
     // ページネーション。ボタンを押したときに表示するデータを変更する
     async $changePaginationPage(val) {
       goTo(0)
-      const res = await this.$axios.get(`${this.page.requestUrl}?page=${val}`)
+      const res = await this.$axios
+        .get(`${this.page.requestUrl}?page=${val}`)
+        .catch(this.$handleError)
       // TODO: 増えたらメソッドに切り出す
       const { tweets } = res.data
       this.tweets = tweets
+    },
+    // 例外処理
+    $handleError(error) {
+      switch (error.response.status) {
+        case 422:
+          console.log("入力データが不適です") // 基本的にはここには流れてこないはず
+          break
+        case 404:
+          console.log("リソースが見つかりませんでした")
+          break
+        default:
+          console.log("エラーが発生しました")
+          break
+      }
     }
   }
 }

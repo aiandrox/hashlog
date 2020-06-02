@@ -33,7 +33,7 @@
     <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
       保存されていたツイートのデータが
-      <br>全て消えてしまいます。
+      <br />全て消えてしまいます。
     </delete-dialog>
   </div>
 </template>
@@ -113,27 +113,23 @@ export default {
         const { tweets } = tweetsRes.data
         this.tweets = tweets
       } catch (error) {
-        console.log(error)
+        this.$handleError(error)
       }
     },
     async updateTagData() {
-      try {
-        await this.$axios.patch(
-          `/api/v1/registered_tags/${this.registeredTag.id}`,
-          {
-            tag: this.registeredTag
-          }
-        )
-        this.$refs.tagStatus.finishEdit()
-        const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-        const { registeredTag } = registeredTagRes.data
-        this.registeredTag = registeredTag
-      } catch (error) {
-        console.log(error)
-      }
+      const registeredTagRes = await this.$axios
+        .patch(this.registeredTagUrl, {
+          tag: this.registeredTag
+        })
+        .catch(this.$handleError)
+      this.$refs.tagStatus.finishEdit()
+      const { registeredTag } = registeredTagRes.data
+      this.registeredTag = registeredTag
     },
     async fetchTagData() {
-      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
+      const registeredTagRes = await this.$axios
+        .get(this.registeredTagUrl)
+        .catch(this.$handleError)
       const { registeredTag } = registeredTagRes.data
       this.registeredTag = registeredTag
     },
@@ -145,7 +141,7 @@ export default {
         this.$axios.delete(this.registeredTagUrl)
         this.$router.push({ name: "mypage" })
       } catch (error) {
-        console.log(error)
+        this.$handleError(error)
       }
     }
   }

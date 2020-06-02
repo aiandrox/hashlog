@@ -46,13 +46,14 @@ export default {
         const userRes = await this.$axios.get(this.userUrl)
         const { user } = userRes.data
         this.user = user
+
         const registeredTagsRes = await this.$axios.get(
           `/api/v1/users/${user.uuid}/registered_tags`
         )
         const { registeredTags } = registeredTagsRes.data
         this.registeredTags = registeredTags
       } catch (error) {
-        console.log(error)
+        this.$handleError(error)
       }
     }
   }
