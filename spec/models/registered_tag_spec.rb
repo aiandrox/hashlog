@@ -47,22 +47,6 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'methods' do
-    describe '.by_user(user_uuid)' do
-      let(:user) { create(:user, :with_tags) }
-      before { create_list(:registered_tag, 3) }
-      context 'user_uuidが定義されていないとき' do
-        it 'RegisteredTag.allを返す' do
-          expect(RegisteredTag.by_user(nil)).to eq RegisteredTag.all
-        end
-      end
-      context 'user_uuidがあるとき' do
-        let(:user_uuid) { user.uuid }
-        it 'User.find_by(uuid: user_uuid).registered_tagsを返す' do
-          expect(RegisteredTag.by_user(user_uuid)).to eq User.find_by(uuid: user_uuid).registered_tags
-        end
-      end
-    end
-
     describe '#last_tweeted_at' do
       let(:registered_tag) { create(:registered_tag) }
       context 'ツイートがあるとき' do

@@ -45,6 +45,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       expect(tags_json.last['id']).to eq latest_registered_tag.id
     end
   end
+
   describe 'GET /api/v1/users/:user_uuid/registered_tags' do
     let(:user) { create(:user) }
     let!(:latest_registered_tag) { create(:registered_tag, user: user, created_at: Date.tomorrow) }

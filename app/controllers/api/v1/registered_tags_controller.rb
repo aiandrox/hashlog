@@ -2,7 +2,15 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   before_action :require_login, only: %i[create update destroy]
 
   def index
-    registered_tags = RegisteredTag.by_user(params[:user_uuid]).asc.includes(:tag, :tweets)
+    registered_tags = RegisteredTag.asc.includes(:tag, :tweets)
+    @pagy, registered_tags = pagy(registered_tags)
+    render json: registered_tags
+  end
+
+  # '/api/v1/users/:user_uuid/registered_tags'
+  def users
+    user = User.find_by(uuid: params[:user_uuid])
+    registered_tags = user.registered_tags.asc.includes(:tag, :tweets)
     @pagy, registered_tags = pagy(registered_tags)
     render json: registered_tags
   end
