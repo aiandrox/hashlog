@@ -42,6 +42,11 @@ class User < ApplicationRecord
     end
   end
 
+  # has_manyが増えたら引数を汎用的（object）にすること
+  def my_object?(registered_tag)
+    registered_tag.user == self
+  end
+
   private
 
   def set_uuid
