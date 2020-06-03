@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :require_login, only: %i[update destroy current]
+  before_action :require_login, only: %i[update destroy]
 
   def index
     @pagy, users = pagy(User.all)
@@ -40,7 +40,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def current
-    user = current_user
+    user = current_user if logged_in?
     render json: user
   end
 

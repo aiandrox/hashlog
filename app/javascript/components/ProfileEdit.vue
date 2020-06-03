@@ -16,7 +16,11 @@
     </v-list-item>
     <v-card-text class="my-0">
       <div class="body-1">
-        <ValidationProvider v-slot="{ errors }" name="プロフィール" rules="max:300">
+        <ValidationProvider
+          v-slot="{ errors }"
+          name="プロフィール"
+          rules="max:300"
+        >
           <v-textarea
             v-model="user.description"
             outlined
@@ -28,7 +32,9 @@
         </ValidationProvider>
       </div>
     </v-card-text>
-    <v-btn class="ma-2" outlined color="primary" @click="pushCancel">キャンセル</v-btn>
+    <v-btn class="ma-2" outlined color="primary" @click="pushCancel"
+      >キャンセル</v-btn
+    >
     <v-btn
       class="ma-2"
       depressed
@@ -36,7 +42,8 @@
       color="depressedButton"
       :disabled="invalid"
       @click="pushUpdate"
-    >保存する</v-btn>
+      >保存する</v-btn
+    >
     <v-spacer />
     <v-btn class="ma-2" color="error" outlined @click="pushDelete">
       <v-icon left>mdi-account-off</v-icon>ユーザー削除
@@ -49,7 +56,8 @@ export default {
   props: {
     user: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     }
   },
   computed: {

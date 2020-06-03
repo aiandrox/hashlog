@@ -18,7 +18,7 @@ const routes = [
     path: "/mypage/dashboard",
     name: "mypage",
     component: Mypage,
-    meta: { requiredLogin: true }
+    meta: { requiredLogin: true, title: "マイページ" }
   },
   {
     path: "/mypage/tags/:tagId",
@@ -36,15 +36,23 @@ const routes = [
     name: "userTag",
     component: UserTag
   },
-  { path: "*", name: "notFound", component: NotFound }
+  {
+    path: "*",
+    name: "notFound",
+    component: NotFound,
+    meta: { title: "ページが見つかりません" }
+  }
 ]
 
 const router = new VueRouter({ mode: "history", routes })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   store.dispatch("user/getCurrentUser").then(currentUser => {
     if (to.matched.some(record => record.meta.requiredLogin) && !currentUser) {
-      store.dispatch("page/setType", "top")
+      store.dispatch("flash/setFlash", {
+        type: "error",
+        message: "ログインしてください"
+      })
       return next({ name: "top" })
     }
     return next()

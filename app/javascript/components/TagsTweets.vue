@@ -17,11 +17,13 @@ export default {
   props: {
     user: {
       type: Object,
-      default: () => {}
+      default: () => {},
+      required: true
     },
     tweets: {
       type: Array,
-      default: () => []
+      default: () => [],
+      required: true
     }
   }
 }

@@ -38,7 +38,7 @@ class Api::V1::BaseController < ApplicationController
     error_json = {
       'status' => '404',
       'title' => 'リソースが見つかりませんでした。',
-      'detail' => 'アドレスを確認してください。'
+      'detail' => 'データが見つかりませんでした。アドレスを確認してください。'
     }
     render json: { 'error': error_json }, status: 404 # NotFound
   end
