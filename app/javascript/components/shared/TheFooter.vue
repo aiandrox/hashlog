@@ -2,7 +2,7 @@
   <v-footer app absolute dark color="primary">
     <v-spacer />
     <div>
-      <v-btn text :to="{ name: 'terms' }">利用規約</v-btn>
+      <v-btn dense text :to="{ name: 'terms' }">利用規約</v-btn>
       <v-btn icon href="https://twitter.com/Hash1og">
         <v-icon>mdi-twitter</v-icon>
       </v-btn>
@@ -31,3 +31,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+small {
+  margin-left: 20px;
+}
+.v-btn:not(.v-btn--round).v-size--default {
+  padding: 0 5px;
+}
+</style>
