@@ -17,7 +17,9 @@
 
 <script>
 export default {
-  title: "ページが見つかりません"
+  mounted() {
+    document.title = "ページが見つかりません | Hashlog"
+  }
 }
 </script>
 

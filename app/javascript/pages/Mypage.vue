@@ -24,7 +24,6 @@ import tagsTab from "../components/TagsTab"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
-  title: "マイページ",
   components: {
     profile,
     tagsTab,
@@ -47,6 +46,7 @@ export default {
       })
       document.cookie = "logged_in=;path=/;max-age=0;"
     }
+    document.title = "マイページ | Hashlog"
     this.fetchRegisteredTagsData(this.currentUser)
   },
   methods: {

@@ -18,6 +18,9 @@ export default {
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     checkbox: null
   }),
+  mounted() {
+    document.title = "Hashlog"
+  },
   methods: {
     submit() {
       this.$refs.observer.validate()
