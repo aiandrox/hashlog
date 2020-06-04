@@ -39,7 +39,14 @@ export default {
   computed: {
     ...mapGetters({ currentUser: "user/currentUser" })
   },
-  async mounted() {
+  mounted() {
+    if (document.cookie.includes("logged_in=1")) {
+      this.$store.dispatch("flash/setFlash", {
+        type: "success",
+        message: "ログインしました"
+      })
+      document.cookie = "logged_in=;path=/;max-age=0;"
+    }
     this.fetchRegisteredTagsData(this.currentUser)
   },
   methods: {
