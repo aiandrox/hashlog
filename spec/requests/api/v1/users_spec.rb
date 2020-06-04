@@ -1,7 +1,8 @@
 RSpec.describe 'Users', type: :request do
   describe 'GET /api/v1/users' do
-    let(:users) { User.all }
+    let(:users) { User.published }
     let(:users_json) { json['users'] }
+    let!(:closed_user) { create(:user, :closed) }
     before do
       create_list(:user, 50)
       get '/api/v1/users'
@@ -31,6 +32,11 @@ RSpec.describe 'Users', type: :request do
           'avatarUrl' => user.avatar_url,
         })
       end
+    end
+    it '非公開ユーザーを返さない' do
+      expect(users_json).not_to include 'uuid' => closed_user.uuid
+      get '/api/v1/users?page=2'
+      expect(users_json).not_to include 'uuid' => closed_user.uuid
     end
   end
 

@@ -2,7 +2,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   before_action :require_login, only: %i[create update destroy]
 
   def index
-    registered_tags = RegisteredTag.asc.includes(:tag, :tweets)
+    registered_tags = RegisteredTag.published.asc.includes(:tag, :tweets)
     @pagy, registered_tags = pagy(registered_tags)
     render json: registered_tags
   end
