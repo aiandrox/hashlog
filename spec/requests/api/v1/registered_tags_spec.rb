@@ -83,15 +83,6 @@ RSpec.describe 'RegisteredTags', type: :request do
         })
       end
     end
-    xcontext '非公開の場合' do
-      let(:registered_tag) { create(:registered_tag, :closed) }
-      it '403 Forbiddenを返す' do
-        expect(response.status).to eq 403
-      end
-      it 'アクセス制限エラーのJSONレスポンスを返す' do
-        p json
-      end
-    end
   end
 
   describe 'POST /api/v1/registered_tags' do
