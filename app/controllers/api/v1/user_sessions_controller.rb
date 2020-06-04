@@ -6,6 +6,6 @@ class Api::V1::UserSessionsController < Api::V1::BaseController
   def guest_login
     user = User.find_by!(role: :guest)
     auto_login(user)
-    head 204
+    render json: user, status: 200
   end
 end

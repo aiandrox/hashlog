@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       get 'oauth/:provider', to: 'oauths#oauth'
       delete 'logout', to: 'user_sessions#destroy'
       # ゲストユーザーログイン
-      get 'guest_login', to: 'user_sessions#guest_login'
+      post 'guest_login', to: 'user_sessions#guest_login'
     end
   end
 
