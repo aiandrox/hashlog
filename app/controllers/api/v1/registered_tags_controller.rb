@@ -9,6 +9,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
 
   def show
     registered_tag = RegisteredTag.includes(:tag, :tweets).find(params[:id])
+    authorize!(registered_tag)
     render json: registered_tag
   end
 
