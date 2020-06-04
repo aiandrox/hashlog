@@ -3,19 +3,23 @@
     <v-toolbar-title color="#f0faff">Hashlog</v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
-      <v-btn v-if="!currentUser" text href="/api/v1/oauth/twitter"
-        >ログイン</v-btn
-      >
+      <v-btn v-if="!currentUser" text @click="pushLogin">ログイン</v-btn>
       <v-btn v-if="currentUser" text :to="{ name: 'mypage' }">マイページ</v-btn>
       <v-btn v-if="currentUser" text @click="logout">ログアウト</v-btn>
     </v-toolbar-items>
+    <!-- 利用規約ダイアログ -->
+    <the-terms-dialog ref="termsDialog" />
   </v-app-bar>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
+import theTermsDialog from "../TheTermsDialog"
 
 export default {
+  components: {
+    theTermsDialog
+  },
   computed: {
     ...mapGetters({ currentUser: "user/currentUser" })
   },
@@ -27,6 +31,9 @@ export default {
         type: "success",
         message: "ログアウトしました"
       })
+    },
+    pushLogin() {
+      this.$refs.termsDialog.open()
     }
   }
 }
