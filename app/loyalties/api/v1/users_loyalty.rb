@@ -8,6 +8,10 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
     user == current_user || user.published?
   end
 
+  def destroy?
+    !user.guest?
+  end
+
   private
 
   attr_reader :current_user, :user

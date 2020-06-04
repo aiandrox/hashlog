@@ -21,4 +21,14 @@ RSpec.describe 'UsersLoyalty', type: :request do
       end
     end
   end
+
+  describe 'DELETE /api/v1/users/:uuid' do
+    context 'ゲストユーザーの場合' do
+      let(:guest) { create(:user, :guest) }
+      it 'ユーザーを削除できない' do
+        delete "/api/v1/users/#{guest.uuid}"
+        expect(response.status).to eq 403
+      end
+    end
+  end
 end
