@@ -224,5 +224,14 @@ RSpec.describe RegisteredTag, type: :model do
         end.to change { registered_tag.reload.first_tweeted_at }.to(oldest_tweet.tweeted_at)
       end
     end
+
+    describe '#filter_remind_day' do
+      context 'remind_day = nilのとき' do
+        let(:registered_tag) { create(:registered_tag, remind_day: nil) }
+        it 'remind_dayは0として保存される' do
+          expect(registered_tag.remind_day).to eq 0
+        end
+      end
+    end
   end
 end

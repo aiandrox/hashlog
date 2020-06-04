@@ -47,7 +47,7 @@ class Api::V1::BaseController < ApplicationController
     error_json = {
       'status' => '429',
       'title' => 'Twitter APIが制限されています。',
-      'detail' => '15分後に再度試してください。'
+      'detail' => '現在リクエストが集中しています。15分後に再度試してください。'
     }
     render json: { 'error': error_json }, status: 429 # TooManyRequests
   end
