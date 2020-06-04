@@ -1,4 +1,4 @@
-RSpec.describe 'RegisteredTagsLoyalty', type: :request do
+RSpec.describe 'UsersLoyalty', type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
   before { login_as(user) }
