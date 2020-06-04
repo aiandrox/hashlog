@@ -183,8 +183,11 @@ RSpec.describe 'Users', type: :request do
     before { create_list(:user, 3) }
     context 'ログインしていない場合' do
       before { get '/api/v1/users/current' }
-      it '401 Unauthorizedを返す' do
-        expect(response.status).to eq 401
+      it '200 OKを返す' do
+        expect(response.status).to eq 200
+      end
+      it 'response.bodyは"null"を返す' do
+        expect(response.body).to eq "null"
       end
     end
     context 'ログインしている場合' do

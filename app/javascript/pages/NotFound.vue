@@ -17,9 +17,8 @@
 
 <script>
 export default {
-  title: "404 NotFound",
   mounted() {
-    this.$store.dispatch("page/setType", "normal")
+    document.title = "ページが見つかりません | Hashlog"
   }
 }
 </script>

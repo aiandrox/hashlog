@@ -2,9 +2,9 @@
   <v-layout justify-center>
     <v-dialog v-model="dialog" max-width="380px">
       <v-card>
-        <v-system-bar
-          class="pa-5 subtitle-1"
-        >本当に削除しますか？</v-system-bar>
+        <v-system-bar class="pa-5 subtitle-1"
+          >本当に削除しますか？</v-system-bar
+        >
         <v-card-text class="mt-8">
           <slot />
         </v-card-text>
@@ -38,6 +38,7 @@ export default {
     },
     pushDelete() {
       this.$emit("push-delete")
+      this.dialog = false
     }
   }
 }

@@ -10,6 +10,8 @@ class Api::V1::OauthsController < Api::V1::BaseController
       return
     end
     create_user_from(provider) unless (@user = login_from(provider))
+    # ログイン判定用。JSでフラッシュメッセージが表示されたら削除する
+    cookies[:logged_in] = { value: 1, expires: 3.minute.from_now }
     redirect_to mypage_dashboard_path
   end
 

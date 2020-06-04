@@ -2,7 +2,9 @@
   <div>
     <v-btn text href="/api/v1/oauth/twitter">ログイン</v-btn>
     <v-btn text :to="{ name: 'mypage' }">マイページ</v-btn>
-    <v-btn text :to="{ name: 'user', params: { userUuid: 'HTagphtz9-sM' } }">ユーザーページ</v-btn>
+    <v-btn text :to="{ name: 'user', params: { userUuid: 'HTagphtz9-sM' } }"
+      >ユーザーページ</v-btn
+    >
     <v-btn text>ログアウト</v-btn>
   </div>
 </template>
@@ -17,7 +19,7 @@ export default {
     checkbox: null
   }),
   mounted() {
-    this.$store.dispatch("page/setType", "top")
+    document.title = "Hashlog"
   },
   methods: {
     submit() {

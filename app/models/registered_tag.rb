@@ -8,7 +8,7 @@ class RegisteredTag < ApplicationRecord
   validates :privacy, presence: true
   validates :remind_day, numericality: { only_integer: true, less_than_or_equal_to: 30 }
   validates :tag_id, uniqueness: { scope: :user_id, message: 'は既に登録しています' }
-  validate :user_registered_tags_count_validate
+  validate :user_registered_tags_count_validate, on: :create
 
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
