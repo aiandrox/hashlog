@@ -6,7 +6,7 @@ RSpec.describe 'RegisteredTagsLoyalty', type: :request do
     let(:other_registered_tag) { create(:registered_tag, user: other_user) }
     before { login_as(user) }
     context '自分のタグのとき' do
-      it 'ユーザーの公開設定に関わらず取得できる' do
+      it 'ユーザーの公開設定にかかわらず取得できる' do
         user.published!
         get "/api/v1/registered_tags/#{my_registered_tag.id}"
         expect(response.status).to eq 200

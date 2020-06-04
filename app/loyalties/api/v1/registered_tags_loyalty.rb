@@ -5,7 +5,8 @@ class Api::V1::RegisteredTagsLoyalty < ApplicationLoyalty
   end
 
   def show?
-    registered_tag.user == current_user || (registered_tag.user.published? && !registered_tag.closed?)
+    registered_tag.user == current_user ||
+      (registered_tag.user.published? && !registered_tag.closed?)
   end
 
   private

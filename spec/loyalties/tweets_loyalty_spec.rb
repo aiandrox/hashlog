@@ -1,12 +1,12 @@
 RSpec.describe 'TweetsLoyalty', type: :request do
-  describe 'GET /api/v1/registered_tags/:registered_tag_id/tweets' do
+  describe 'GET /api/v1/registered_tags/:id/tweets' do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
     let(:my_registered_tag) { create(:registered_tag, user: user) }
     let(:other_registered_tag) { create(:registered_tag, user: other_user) }
     before { login_as(user) }
     context '自分のタグのツイートのとき' do
-      it 'ユーザーの公開設定に関わらず取得できる' do
+      it 'ユーザーの公開設定にかかわらず取得できる' do
         user.published!
         get "/api/v1/registered_tags/#{my_registered_tag.id}/tweets"
         expect(response.status).to eq 200
