@@ -8,14 +8,19 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, param: :uuid, only: %i[index show update destroy] do
-        get 'current', on: :collection
-        get 'registered_tags', to: 'registered_tags#users'
+        collection do
+          get 'current'
+          get 'current/registered_tags', to: 'current_registered_tags#index'
+        end
+        member do
+          get 'registered_tags', to: 'user_registered_tags#index'
+        end
       end
       resources :registered_tags, only: %i[index show create update destroy] do
-        resources :tweets, only: :index
+        resources :tweets, only: %i[index]
       end
-      resources :tags, only: :index
-      resources :tweets, only: :destroy
+      resources :tags, only: %i[index]
+      resources :tweets, only: %i[destroy] # そのうち消す
       # ログイン、ログアウト
       post 'oauth/callback', to: 'oauths#callback'
       get 'oauth/callback', to: 'oauths#callback'

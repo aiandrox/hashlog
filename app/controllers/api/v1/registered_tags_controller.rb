@@ -7,14 +7,6 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
     render json: registered_tags
   end
 
-  # '/api/v1/users/:user_uuid/registered_tags'
-  def users
-    user = User.find_by(uuid: params[:user_uuid])
-    registered_tags = user.registered_tags.asc.includes(:tag, :tweets)
-    @pagy, registered_tags = pagy(registered_tags)
-    render json: registered_tags
-  end
-
   def show
     registered_tag = RegisteredTag.includes(:tag, :tweets).find(params[:id])
     render json: registered_tag
