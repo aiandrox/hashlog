@@ -1,11 +1,11 @@
-class Api::V1::RegisteredTagsLoyalty < ApplicationLoyalty
+class Api::V1::TweetsLoyalty < ApplicationLoyalty
   def initialize(current_user, registered_tag)
     @current_user = current_user
     @registered_tag = registered_tag
   end
 
-  def show?
-    registered_tag.user == current_user || (registered_tag.user.published? && !registered_tag.closed?)
+  def index?
+    Api::V1::RegisteredTagsLoyalty.new(current_user, registered_tag).show?
   end
 
   private
