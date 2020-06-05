@@ -1,14 +1,6 @@
 import goTo from "vuetify/es5/services/goto"
 
 export default {
-  mounted() {
-    // ページタイトル。動的なページタイトルはコンポーネントで定義すること
-    let { title } = this.$options
-    if (title) {
-      title = typeof title === "function" ? title.call(this) : title
-      document.title = `${title} | Hashlog`
-    }
-  },
   methods: {
     // ページネーション。ページ用コンポーネントでpageオブジェクトを定義しておくこと。
     $setPaginationData(response) {

@@ -51,6 +51,8 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
     ast (2.4.0)
+    banken (1.0.3)
+      activesupport (>= 3.0.0)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.6)
@@ -365,6 +367,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
+  banken
   bootsnap (>= 1.1.0)
   bullet (~> 6.1)
   capybara (~> 3.31)

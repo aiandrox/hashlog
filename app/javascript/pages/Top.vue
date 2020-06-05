@@ -28,15 +28,26 @@
 
 <script>
 export default {
+  data: () => ({
+    tags: []
+  }),
+  mounted() {
+    document.title = "Hashlog"
+    this.fetchTagsData()
+  },
   methods: {
-    async guestLogin() {
+    async fetchTagsData() {
+      const tagsRes = await this.$axios.get("/api/v1/tags?count=3")
+      const { tags } = tagsRes.data
+      this.tags = tags
+    },
+        async guestLogin() {
       await this.$axios.post("/api/v1/guest_login")
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ゲストユーザーとしてログインしました"
       })
       this.$router.push({ name: "mypage" })
-    }
   }
 }
 </script>

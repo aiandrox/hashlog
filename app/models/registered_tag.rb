@@ -14,10 +14,6 @@ class RegisteredTag < ApplicationRecord
 
   scope :asc, -> { order(created_at: :asc) }
 
-  def self.by_user(user_uuid)
-    user_uuid ? includes(:user).where(users: { uuid: user_uuid }) : all
-  end
-
   def last_tweeted_at
     @last_tweeted_at ||= tweets.latest&.tweeted_at
   end
