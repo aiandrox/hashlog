@@ -59,7 +59,3 @@ RSpec.describe 'TweetsLoyalty', type: :request do
     end
   end
 end
-
-# GET    /api/v1/registered_tags/:id(.:format)                                                    api/v1/registered_tags#show
-# 　指定のregistered_tagを返す
-#   制限あり / registered_tag.user == current_user || (registered_tag.user.published? && !registered_tag.closed?)
