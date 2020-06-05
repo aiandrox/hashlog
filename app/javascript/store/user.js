@@ -39,8 +39,9 @@ const actions = {
           user: userData
         }
       )
-      commit("setCurrentUser", response.data.user)
-      return response.data.user
+      const user = response.data.user
+      commit("setCurrentUser", user)
+      return user
     } catch (error) {
       return null // バリデーションエラー
     }
@@ -48,6 +49,12 @@ const actions = {
   async deleteCurrentUser({ commit, state }) {
     await axios.delete(`/api/v1/users/${state.currentUser.uuid}`)
     commit("setCurrentUser", null)
+  },
+  async guestLogin({ commit }) {
+    const response = await axios.post("/api/v1/guest_login")
+    const user = response.data.user
+    commit("setCurrentUser", user)
+    return user
   },
   async logout({ commit }) {
     await axios.delete("/api/v1/logout")
