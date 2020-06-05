@@ -18,37 +18,37 @@ class Api::V1::BaseController < ApplicationController
 
   def not_authenticated
     error_json = {
-      'status' => '401',
+      'code' => '401',
       'title' => '認証されていません。',
-      'detail' => 'ログインしてください。'
+      'message' => 'ログインしてください。'
     }
-    render json: { 'error': error_json }, status: 401 # Unauthorized
+    render json: { 'error': error_json }, status: :unauthorized
   end
 
   def not_authorized
     error_json = {
-      'status' => '403',
+      'code' => '403',
       'title' => '閲覧できません。',
-      'detail' => 'リソースへのアクセスが許可されていません。'
+      'message' => 'リソースへのアクセスが許可されていません。'
     }
-    render json: { 'error': error_json }, status: 403 # Forbidden
+    render json: { 'error': error_json }, status: :forbidden
   end
 
   def rescue_not_found
     error_json = {
-      'status' => '404',
+      'code' => '404',
       'title' => 'リソースが見つかりませんでした。',
-      'detail' => 'データが見つかりませんでした。アドレスを確認してください。'
+      'message' => 'データが見つかりませんでした。アドレスを確認してください。'
     }
-    render json: { 'error': error_json }, status: 404 # NotFound
+    render json: { 'error': error_json }, status: :not_found
   end
 
   def rescue_limited_twitter_requests
     error_json = {
-      'status' => '429',
+      'code' => '429',
       'title' => 'Twitter APIが制限されています。',
-      'detail' => '現在リクエストが集中しています。15分後に再度試してください。'
+      'message' => '現在リクエストが集中しています。15分後に再度試してください。'
     }
-    render json: { 'error': error_json }, status: 429 # TooManyRequests
+    render json: { 'error': error_json }, status: :too_many_requests
   end
 end

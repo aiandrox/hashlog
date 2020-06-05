@@ -108,7 +108,7 @@ RSpec.describe 'Users', type: :request do
             user: { name: '', description: '新しい詳細', privacy: '非公開' }
           }
           expect(json['error']).to eq({
-            'status' => '422',
+            'code' => '422',
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
             'messages' => ['名前を入力してください']

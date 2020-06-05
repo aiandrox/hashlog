@@ -3,9 +3,7 @@
     <v-dialog v-model="dialog" max-width="600px">
       <ValidationObserver ref="observer" v-slot="{ invalid }">
         <v-card>
-          <v-system-bar class="pa-5 subtitle-1"
-            >ハッシュタグを登録する</v-system-bar
-          >
+          <v-system-bar class="pa-5 subtitle-1">ハッシュタグを登録する</v-system-bar>
           <v-card-text class="mt-5">
             <v-container>
               <v-form @submit.prevent="onSubmit">
@@ -32,9 +30,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn text @click="resetForm">キャンセル</v-btn>
-            <v-btn text color="primary" :disabled="invalid" @click="sendTagName"
-              >登録する</v-btn
-            >
+            <v-btn text color="primary" :disabled="invalid" @click="sendTagName">登録する</v-btn>
           </v-card-actions>
         </v-card>
       </ValidationObserver>
@@ -95,7 +91,7 @@ export default {
               this.$refs.provider.errors.push(errorMessages[0])
               break
             case 429:
-              const errorMessage = error.response.data.error.detail
+              const errorMessage = error.response.data.error.message
               this.$refs.provider.errors.push(errorMessage)
               break
             default:
