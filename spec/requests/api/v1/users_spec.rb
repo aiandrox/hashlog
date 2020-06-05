@@ -160,9 +160,9 @@ RSpec.describe 'Users', type: :request do
     context '自分以外のuserの場合' do
       let(:other_user) { create(:user) }
       before { login_as(other_user) }
-      it '404 NotFoundを返す' do
+      it '403 Unautorizedを返す' do
         delete "/api/v1/users/#{user.uuid}"
-        expect(response.status).to eq 404
+        expect(response.status).to eq 403
       end
       it 'Userを削除しない' do
         expect do

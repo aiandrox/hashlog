@@ -34,11 +34,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   def destroy
     user = User.find_by!(uuid: params[:uuid])
     authorize!(user)
-    if user == current_user
-      user.destroy!
-    else
-      head :not_found
-    end
+    user.destroy!
   end
 
   def current

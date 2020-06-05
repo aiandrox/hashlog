@@ -9,7 +9,7 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
   end
 
   def destroy?
-    !user.guest?
+    user == current_user && !user.guest?
   end
 
   private
