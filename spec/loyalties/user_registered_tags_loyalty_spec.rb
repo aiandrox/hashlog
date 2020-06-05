@@ -9,6 +9,7 @@ RSpec.describe 'UserRegisteredTagsLoyalty', type: :request do
         user.closed!
         get "/api/v1/users/#{user.uuid}/registered_tags"
         expect(response.status).to eq 403
+
         other_user.closed!
         get "/api/v1/users/#{other_user.uuid}/registered_tags"
         expect(response.status).to eq 403
@@ -19,6 +20,7 @@ RSpec.describe 'UserRegisteredTagsLoyalty', type: :request do
         user.published!
         get "/api/v1/users/#{user.uuid}/registered_tags"
         expect(response.status).to eq 200
+
         other_user.published!
         get "/api/v1/users/#{other_user.uuid}/registered_tags"
         expect(response.status).to eq 200

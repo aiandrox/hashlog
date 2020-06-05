@@ -10,6 +10,7 @@ RSpec.describe 'TweetsLoyalty', type: :request do
         user.published!
         get "/api/v1/registered_tags/#{my_registered_tag.id}/tweets"
         expect(response.status).to eq 200
+
         user.closed!
         get "/api/v1/registered_tags/#{my_registered_tag.id}/tweets"
         expect(response.status).to eq 200
@@ -18,9 +19,11 @@ RSpec.describe 'TweetsLoyalty', type: :request do
         my_registered_tag.published!
         get "/api/v1/registered_tags/#{my_registered_tag.id}/tweets"
         expect(response.status).to eq 200
+
         my_registered_tag.limited!
         get "/api/v1/registered_tags/#{my_registered_tag.id}/tweets"
         expect(response.status).to eq 200
+
         my_registered_tag.closed!
         get "/api/v1/registered_tags/#{my_registered_tag.id}/tweets"
         expect(response.status).to eq 200
@@ -32,6 +35,7 @@ RSpec.describe 'TweetsLoyalty', type: :request do
           other_registered_tag.published!
           get "/api/v1/registered_tags/#{other_registered_tag.id}/tweets"
           expect(response.status).to eq 200
+
           other_registered_tag.limited!
           get "/api/v1/registered_tags/#{other_registered_tag.id}/tweets"
           expect(response.status).to eq 200
@@ -48,9 +52,11 @@ RSpec.describe 'TweetsLoyalty', type: :request do
           other_registered_tag.published!
           get "/api/v1/registered_tags/#{other_registered_tag.id}/tweets"
           expect(response.status).to eq 403
+
           other_registered_tag.limited!
           get "/api/v1/registered_tags/#{other_registered_tag.id}/tweets"
           expect(response.status).to eq 403
+
           other_registered_tag.published!
           get "/api/v1/registered_tags/#{other_registered_tag.id}/tweets"
           expect(response.status).to eq 403
@@ -59,7 +65,3 @@ RSpec.describe 'TweetsLoyalty', type: :request do
     end
   end
 end
-
-# GET    /api/v1/registered_tags/:id(.:format)                                                    api/v1/registered_tags#show
-# 　指定のregistered_tagを返す
-#   制限あり / registered_tag.user == current_user || (registered_tag.user.published? && !registered_tag.closed?)
