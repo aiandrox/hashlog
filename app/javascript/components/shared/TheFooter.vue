@@ -2,7 +2,7 @@
   <v-footer app absolute dark color="primary">
     <v-spacer />
     <div>
-      <v-btn dense text :to="{ name: 'terms' }">利用規約</v-btn>
+      <v-btn dense text @click="pushTerms">利用規約</v-btn>
       <v-btn icon href="https://twitter.com/Hash1og">
         <v-icon>mdi-twitter</v-icon>
       </v-btn>
@@ -27,6 +27,12 @@ export default {
         return `${this.thisYear} Hashlog`
       }
       return `${this.startYear} - ${this.thisYear} Hashlog`
+    }
+  },
+  methods: {
+    pushTerms() {
+      this.$router.push({ name: "terms" })
+      this.$toTop()
     }
   }
 }

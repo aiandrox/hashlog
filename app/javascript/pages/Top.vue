@@ -18,7 +18,26 @@
     </div>
     <v-container>
       <v-row>
-        <v-col>あああ</v-col>
+        <v-col>
+          あ
+          <br />あ
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />あ
+        </v-col>
         <v-col>いいい</v-col>
         <v-col>ううう</v-col>
       </v-row>
@@ -41,13 +60,15 @@ export default {
       const { tags } = tagsRes.data
       this.tags = tags
     },
-        async guestLogin() {
+    async guestLogin() {
       await this.$axios.post("/api/v1/guest_login")
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ゲストユーザーとしてログインしました"
       })
       this.$router.push({ name: "mypage" })
+      this.$toTop()
+    }
   }
 }
 </script>

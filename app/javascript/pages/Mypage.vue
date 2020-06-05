@@ -75,6 +75,7 @@ export default {
     async deleteUser() {
       await this.$store.dispatch("user/deleteCurrentUser")
       this.$router.push({ name: "top" })
+      this.$toTop()
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ユーザーを削除しました"

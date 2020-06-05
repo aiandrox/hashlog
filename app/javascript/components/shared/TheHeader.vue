@@ -30,6 +30,7 @@ export default {
     async logout() {
       await this.$store.dispatch("user/logout")
       this.$router.push({ name: "top" })
+      this.$toTop()
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ログアウトしました"
