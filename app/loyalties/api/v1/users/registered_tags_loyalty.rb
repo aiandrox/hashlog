@@ -1,4 +1,4 @@
-class Api::V1::UserRegisteredTagsLoyalty < ApplicationLoyalty
+class Api::V1::Users::RegisteredTagsLoyalty < ApplicationLoyalty
   def initialize(current_user, user)
     @current_user = current_user
     @user = user

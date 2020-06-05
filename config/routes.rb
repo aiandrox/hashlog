@@ -9,12 +9,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, param: :uuid, only: %i[index show update destroy] do
         collection do
-          get 'current'
-          get 'current/registered_tags', to: 'current_registered_tags#index'
+          resource :current, only: %i[show], module: :users do
+            resources :registered_tags, only: %i[index], module: :current
+          end
         end
-        member do
-          get 'registered_tags', to: 'user_registered_tags#index'
-        end
+        resources :registered_tags, only: %i[index], module: :users
       end
       resources :registered_tags, only: %i[index show create update destroy] do
         resources :tweets, only: %i[index]

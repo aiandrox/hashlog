@@ -37,11 +37,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     user.destroy!
   end
 
-  def current
-    user = current_user if logged_in?
-    render json: user
-  end
-
   private
 
   def user_params
