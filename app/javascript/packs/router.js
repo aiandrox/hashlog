@@ -2,7 +2,6 @@ import VueRouter from "vue-router"
 
 import store from "../store"
 import Top from "../pages/Top"
-import Terms from "../pages/Terms"
 import Mypage from "../pages/Mypage"
 import MyTag from "../pages/MyTag"
 import User from "../pages/User"
@@ -14,11 +13,6 @@ const routes = [
     path: "/",
     name: "top",
     component: Top
-  },
-  {
-    path: "/terms",
-    name: "terms",
-    component: Terms
   },
   {
     path: "/mypage/dashboard",

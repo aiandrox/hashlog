@@ -29,6 +29,12 @@ export default {
       registeredTags: []
     }
   },
+  computed: {
+    userUrl() {
+      const { userUuid } = this.$route.params
+      return `/api/v1/users/${userUuid}`
+    }
+  },
   mounted() {
     this.firstRead()
   },
@@ -43,8 +49,7 @@ export default {
       document.title = `${this.user.name}のユーザーページ | Hashlog`
     },
     async fetchUserData() {
-      const { userUuid } = this.$route.params
-      const userRes = await this.$axios.get(`/api/v1/users/${userUuid}`)
+      const userRes = await this.$axios.get(this.userUrl)
       const { user } = userRes.data
       this.user = user
 

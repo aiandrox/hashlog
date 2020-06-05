@@ -2,6 +2,6 @@ class StaticPagesController < ApplicationController
   def top; end
 
   def routing_error
-    render :top, status: :not_found
+    render :top, status: 404
   end
 end

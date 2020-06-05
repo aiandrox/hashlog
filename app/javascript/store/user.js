@@ -28,6 +28,7 @@ const actions = {
       commit("setCurrentUser", response.data.user)
       return response.data.user
     } catch (err) {
+      commit("setCurrentUser", null)
       return null
     }
   },

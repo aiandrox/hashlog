@@ -2,14 +2,13 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   before_action :require_login, only: %i[create update destroy]
 
   def index
-    registered_tags = RegisteredTag.published.asc.includes(:tag, :tweets)
+    registered_tags = RegisteredTag.by_user(params[:user_uuid]).asc.includes(:tag, :tweets)
     @pagy, registered_tags = pagy(registered_tags)
     render json: registered_tags
   end
 
   def show
     registered_tag = RegisteredTag.includes(:tag, :tweets).find(params[:id])
-    authorize!(registered_tag)
     render json: registered_tag
   end
 
@@ -17,15 +16,15 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
     tag = Tag.find_or_initialize_by(name: tag_params[:name])
     if current_user.register_tag(tag)
       registered_tag = current_user.registered_tag(tag)
-      render status: :created, json: { registeredTag: { id: registered_tag.id } }
+      render status: 201, json: { registeredTag: { id: registered_tag.id } }
     else
       error_json = {
-        'code' => '422',
+        'status' => '422',
         'title' => '登録内容が適切ではありません',
         'detail' => '登録内容を確認してください',
         'messages' => tag.errors.full_messages
       }
-      render json: { 'error': error_json }, status: :unprocessable_entity
+      render json: { 'error': error_json }, status: 422
     end
   end
 
@@ -38,12 +37,12 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
       render json: registered_tag
     else
       error_json = {
-        'code' => '422',
+        'status' => '422',
         'title' => '登録内容が適切ではありません',
         'detail' => '登録内容を確認してください',
         'messages' => registered_tag.errors.full_messages
       }
-      render json: { 'error': error_json }, status: :unprocessable_entity
+      render json: { 'error': error_json }, status: 422
     end
   end
 

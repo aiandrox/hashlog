@@ -24,6 +24,7 @@ import tagsTab from "../components/TagsTab"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
+  title: "マイページ",
   components: {
     profile,
     tagsTab,
@@ -38,21 +39,13 @@ export default {
   computed: {
     ...mapGetters({ currentUser: "user/currentUser" })
   },
-  mounted() {
-    if (document.cookie.includes("logged_in=1")) {
-      this.$store.dispatch("flash/setFlash", {
-        type: "success",
-        message: "ログインしました"
-      })
-      document.cookie = "logged_in=;path=/;max-age=0;"
-    }
-    document.title = "マイページ | Hashlog"
+  async mounted() {
     this.fetchRegisteredTagsData(this.currentUser)
   },
   methods: {
     async fetchRegisteredTagsData(user) {
       const registeredTagsRes = await this.$axios.get(
-        "/api/v1/users/current/registered_tags"
+        `/api/v1/users/${user.uuid}/registered_tags`
       )
 
       const { registeredTags } = registeredTagsRes.data

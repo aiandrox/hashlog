@@ -7,6 +7,10 @@ class RegisteredTagSerializer < ActiveModel::Serializer
   end
 
   def remind_day
-    object.remind_day.zero? ? nil : object.remind_day
+    if object.remind_day.zero?
+      nil
+    else
+      object.remind_day
+    end
   end
 end
