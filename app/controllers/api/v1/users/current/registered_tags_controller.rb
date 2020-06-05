@@ -1,4 +1,6 @@
 class Api::V1::Users::Current::RegisteredTagsController < Api::V1::BaseController
+  before_action :require_login
+
   def index
     registered_tags = current_user.registered_tags.asc.includes(:tag)
     @pagy, registered_tags = pagy(registered_tags)
