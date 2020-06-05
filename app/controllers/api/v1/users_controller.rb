@@ -7,13 +7,13 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def show
-    user = User.find_by(uuid: params[:uuid])
+    user = User.find_by!(uuid: params[:uuid])
     authorize!(user)
     render json: user
   end
 
   def update
-    user = User.find_by(uuid: params[:uuid])
+    user = User.find_by!(uuid: params[:uuid])
     return head 404 unless user == current_user
 
     user.assign_attributes(user_params)
@@ -32,7 +32,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def destroy
-    user = User.find_by(uuid: params[:uuid])
+    user = User.find_by!(uuid: params[:uuid])
     authorize!(user)
     if user == current_user
       user.destroy!

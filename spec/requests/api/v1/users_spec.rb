@@ -49,7 +49,7 @@ RSpec.describe 'Users', type: :request do
     it '200 OKを返す' do
       expect(response.status).to eq 200
     end
-    it 'User.find_by(uuid: params[:uuid])のJSONを返す' do
+    it 'User.find_by!(uuid: params[:uuid])のJSONを返す' do
       expect(user_json).to eq({
         'uuid' => user.uuid,
         'name' => user.name,

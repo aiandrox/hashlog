@@ -1,7 +1,7 @@
 class Api::V1::UserRegisteredTagsController < Api::V1::BaseController
   # '/api/v1/users/:uuid/registered_tags'
   def index
-    user = User.find_by(uuid: params[:uuid])
+    user = User.find_by!(uuid: params[:uuid])
     registered_tags = user.registered_tags.published.asc.includes(:tag)
     authorize!(registered_tags[0])
     @pagy, registered_tags = pagy(registered_tags)

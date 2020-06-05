@@ -23,6 +23,7 @@ class User < ApplicationRecord
     @registered_tag ||= begin
       return nil if tag.invalid?
 
+      # 存在しない場合はnilを返すので!は付けない
       registered_tags.find_by(tag_id: tag.id)
     end
   end
