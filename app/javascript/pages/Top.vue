@@ -7,7 +7,7 @@
           <v-col class="header-left text-right align-self-center" :md="5">
             <v-img class="logo" alt="Hashlog" max-width="300" src="/img/logo.png" />
             <p>いい感じのキャッチコピー</p>
-            <v-btn color="primary" x-large depressed>今すぐ始める</v-btn>
+            <v-btn color="primary" x-large depressed @click="pushLogin">今すぐ始める</v-btn>
 
             <p>人気のハッシュタグ</p>
             <p>
@@ -53,11 +53,18 @@
         </v-col>
       </v-row>
     </v-container>
+    <!-- 利用規約ダイアログ -->
+    <the-terms-dialog ref="termsDialog" />
   </div>
 </template>
 
 <script>
+import theTermsDialog from "../components/TheTermsDialog"
+
 export default {
+  components: {
+    theTermsDialog
+  },
   data() {
     return {
       tags: []
@@ -68,6 +75,9 @@ export default {
     this.fetchTagsData()
   },
   methods: {
+    pushLogin() {
+      this.$refs.termsDialog.open()
+    },
     async fetchTagsData() {
       const tagsRes = await this.$axios.get("/api/v1/tags?count=3")
       const { tags } = tagsRes.data
@@ -93,5 +103,8 @@ export default {
 .main-header {
   background-color: #fff;
   border-bottom: 20px solid #006596;
+}
+.main-content p {
+  line-height: 1.8rem;
 }
 </style>
