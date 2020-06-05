@@ -55,14 +55,5 @@ RSpec.describe 'RegisteredTags', type: :request do
         end
       end
     end
-    context '作成ユーザーが非公開設定のとき' do
-      before do
-        user.closed!
-        get "/api/v1/users/#{user.uuid}/registered_tags"
-      end
-      it 'リソースが見つからないので404 NotFoundを返す' do
-        expect(response.status).to eq 404
-      end
-    end
   end
 end
