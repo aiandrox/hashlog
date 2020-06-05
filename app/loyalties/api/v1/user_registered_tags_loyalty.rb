@@ -1,14 +1,14 @@
 class Api::V1::UserRegisteredTagsLoyalty < ApplicationLoyalty
-  def initialize(current_user, registered_tag)
+  def initialize(current_user, user)
     @current_user = current_user
-    @registered_tag = registered_tag
+    @user = user
   end
 
   def index?
-    registered_tag.nil? || registered_tag.user.published?
+    user.published?
   end
 
   private
 
-  attr_reader :current_user, :registered_tag
+  attr_reader :current_user, :user
 end
