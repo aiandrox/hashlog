@@ -23,6 +23,7 @@ class User < ApplicationRecord
     @registered_tag ||= begin
       return nil if tag.invalid?
 
+      # 存在しない場合はnilを返すので!は付けない
       registered_tags.find_by(tag_id: tag.id)
     end
   end
@@ -40,6 +41,11 @@ class User < ApplicationRecord
       tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?
       false
     end
+  end
+
+  # has_manyが増えたら引数を汎用的（object）にすること
+  def my_object?(registered_tag)
+    registered_tag.user == self
   end
 
   private

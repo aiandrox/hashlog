@@ -96,6 +96,24 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#my_object?(object)' do
+      context 'userのregistered_tagの場合' do
+        let(:user) { create(:user) }
+        let(:registered_tag) { create(:registered_tag, user: user) }
+        it 'trueを返す' do
+          expect(user.my_object?(registered_tag)).to be_truthy
+        end
+      end
+      context 'userのregistered_tagではない場合' do
+        let(:user) { create(:user) }
+        let(:other_registered_tag) { create(:registered_tag) }
+        it 'falseを返す' do
+          expect(user.my_object?(other_registered_tag)).to be_falsey
+        end
+      end
+      
+    end
+
     describe '#replace_user_data' do
       let(:user) { create(:user) }
       it '保存時にdescriptionの最後の空白文字/改行が削除される' do

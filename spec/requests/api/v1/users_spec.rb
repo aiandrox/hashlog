@@ -1,7 +1,8 @@
 RSpec.describe 'Users', type: :request do
   describe 'GET /api/v1/users' do
-    let(:users) { User.all }
+    let(:users) { User.published }
     let(:users_json) { json['users'] }
+    let!(:closed_user) { create(:user, :closed) }
     before do
       create_list(:user, 50)
       get '/api/v1/users'
@@ -32,6 +33,11 @@ RSpec.describe 'Users', type: :request do
         })
       end
     end
+    it '非公開ユーザーを返さない' do
+      expect(users_json).not_to include 'uuid' => closed_user.uuid
+      get '/api/v1/users?page=2'
+      expect(users_json).not_to include 'uuid' => closed_user.uuid
+    end
   end
 
   describe 'GET /api/v1/users/:uuid' do
@@ -43,7 +49,7 @@ RSpec.describe 'Users', type: :request do
     it '200 OKを返す' do
       expect(response.status).to eq 200
     end
-    it 'User.find_by(uuid: params[:uuid])のJSONを返す' do
+    it 'User.find_by!(uuid: params[:uuid])のJSONを返す' do
       expect(user_json).to eq({
         'uuid' => user.uuid,
         'name' => user.name,
@@ -102,7 +108,7 @@ RSpec.describe 'Users', type: :request do
             user: { name: '', description: '新しい詳細', privacy: '非公開' }
           }
           expect(json['error']).to eq({
-            'status' => '422',
+            'code' => '422',
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
             'messages' => ['名前を入力してください']
@@ -154,9 +160,9 @@ RSpec.describe 'Users', type: :request do
     context '自分以外のuserの場合' do
       let(:other_user) { create(:user) }
       before { login_as(other_user) }
-      it '404 NotFoundを返す' do
+      it '403 Unautorizedを返す' do
         delete "/api/v1/users/#{user.uuid}"
-        expect(response.status).to eq 404
+        expect(response.status).to eq 403
       end
       it 'Userを削除しない' do
         expect do
@@ -173,42 +179,6 @@ RSpec.describe 'Users', type: :request do
         expect do
           delete "/api/v1/users/#{user.uuid}"
         end.not_to change(User, :count)
-      end
-    end
-  end
-
-  describe 'GET /api/v1/users/current' do
-    let(:user) { User.all.sample }
-    let(:user_json) { json['user'] }
-    before { create_list(:user, 3) }
-    context 'ログインしていない場合' do
-      before { get '/api/v1/users/current' }
-      it '200 OKを返す' do
-        expect(response.status).to eq 200
-      end
-      it 'response.bodyは"null"を返す' do
-        expect(response.body).to eq "null"
-      end
-    end
-    context 'ログインしている場合' do
-      before do
-        login_as(user)
-        get '/api/v1/users/current'
-      end
-      it '200 OKを返す' do
-        expect(response.status).to eq 200
-      end
-      it 'current_userのJSONを返す' do
-        expect(user_json).to eq({
-          'uuid' => current_user.uuid,
-          'name' => current_user.name,
-          'twitterId' => current_user.twitter_id,
-          'screenName' => current_user.screen_name,
-          'description' => current_user.description,
-          'privacy' => current_user.privacy_i18n,
-          'role' => current_user.role_i18n,
-          'avatarUrl' => current_user.avatar_url,
-        })
       end
     end
   end
