@@ -143,10 +143,10 @@ RSpec.describe 'RegisteredTags', type: :request do
     let(:user) { create(:user) }
     let(:registered_tag) { create(:registered_tag, remind_day: 1, user: user) }
     let(:registered_tag_json) { json['tag'] }
-    let(:remind_day) { rand(0..30).to_s }
+    let(:remind_day) { rand(1..30).to_s }
     context '自分の場合' do
       before { login_as(user) }
-      context '正常系 remind_dayが0〜30のいずれかの数字（文字列）のとき' do
+      context '正常系 remind_dayが1〜30のいずれかの数字（文字列）のとき' do
         before do
           patch "/api/v1/registered_tags/#{registered_tag.id}", params: {
             tag: { privacy: '非公開', remindDay: remind_day }
