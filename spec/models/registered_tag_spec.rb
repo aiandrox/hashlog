@@ -36,7 +36,7 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'scopes' do
-    describe 'asc' do
+    describe '.asc' do
       let!(:latest_tag) { create(:registered_tag) }
       let!(:oldest_tag) { create(:registered_tag, :created_yesterday) }
       it 'created_atを基準に昇順に並ぶこと' do
