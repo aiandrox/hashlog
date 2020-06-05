@@ -86,14 +86,16 @@ export default {
           this.resetForm()
         } catch (error) {
           switch (error.response.status) {
-            case 422:
-              const errorMessages = error.response.data.error.messages
-              this.$refs.provider.errors.push(errorMessages[0])
-              break
-            case 429:
-              const errorMessage = error.response.data.error.message
+            case 422: {
+              const errorMessage = error.response.data.error.messages[0]
               this.$refs.provider.errors.push(errorMessage)
               break
+            }
+            case 429: {
+              const errorMessage = error.response.data.error.messages[0]
+              this.$refs.provider.errors.push(errorMessage)
+              break
+            }
             default:
               throw error
           }

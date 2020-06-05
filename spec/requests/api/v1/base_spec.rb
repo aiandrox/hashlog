@@ -14,7 +14,7 @@ RSpec.describe 'Base', type: :request do
         expect(json['error']).to eq({
           'code' => '429',
           'title' => 'Twitter APIが制限されています。',
-          'message' => '現在リクエストが集中しています。15分後に再度試してください。'
+          'messages' => ['現在リクエストが集中しています。15分後に再度試してください。']
         })
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe 'Base', type: :request do
         expect(json['error']).to eq({
           'code' => '404',
           'title' => 'リソースが見つかりませんでした。',
-          'message' => 'データが見つかりませんでした。アドレスを確認してください。'
+          'messages' => ['データが見つかりませんでした。アドレスを確認してください。']
         })
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe 'Base', type: :request do
         expect(json['error']).to eq({
           'code' => '401',
           'title' => '認証されていません。',
-          'message' => 'ログインしてください。'
+          'messages' => ['ログインしてください。']
         })
       end
     end

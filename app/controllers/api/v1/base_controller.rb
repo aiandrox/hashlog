@@ -20,7 +20,7 @@ class Api::V1::BaseController < ApplicationController
     error_json = {
       'code' => '401',
       'title' => '認証されていません。',
-      'message' => 'ログインしてください。'
+      'messages' => ['ログインしてください。']
     }
     render json: { 'error': error_json }, status: :unauthorized
   end
@@ -29,7 +29,7 @@ class Api::V1::BaseController < ApplicationController
     error_json = {
       'code' => '403',
       'title' => '閲覧できません。',
-      'message' => 'リソースへのアクセスが許可されていません。'
+      'messages' => ['リソースへのアクセスが許可されていません。']
     }
     render json: { 'error': error_json }, status: :forbidden
   end
@@ -38,7 +38,7 @@ class Api::V1::BaseController < ApplicationController
     error_json = {
       'code' => '404',
       'title' => 'リソースが見つかりませんでした。',
-      'message' => 'データが見つかりませんでした。アドレスを確認してください。'
+      'messages' => ['データが見つかりませんでした。アドレスを確認してください。']
     }
     render json: { 'error': error_json }, status: :not_found
   end
@@ -47,7 +47,7 @@ class Api::V1::BaseController < ApplicationController
     error_json = {
       'code' => '429',
       'title' => 'Twitter APIが制限されています。',
-      'message' => '現在リクエストが集中しています。15分後に再度試してください。'
+      'messages' => ['現在リクエストが集中しています。15分後に再度試してください。']
     }
     render json: { 'error': error_json }, status: :too_many_requests
   end
