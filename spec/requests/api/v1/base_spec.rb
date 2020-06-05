@@ -49,7 +49,7 @@ RSpec.describe 'Base', type: :request do
 
   describe '#not_authenticated' do
     context 'ログインしていない場合' do
-      before { delete "/api/v1/users/#{user.uuid}" }
+      before { delete "/api/v1/users/current" }
       it '401 Unauthorizedを返す' do
         expect(response.status).to eq 401
       end
