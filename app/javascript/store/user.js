@@ -33,12 +33,9 @@ const actions = {
   },
   async updateCurrentUser({ commit, state }, userData) {
     try {
-      const response = await axios.patch(
-        `/api/v1/users/${state.currentUser.uuid}`,
-        {
-          user: userData
-        }
-      )
+      const response = await axios.patch("/api/v1/users/current", {
+        user: userData
+      })
       const user = response.data.user
       commit("setCurrentUser", user)
       return user
@@ -47,7 +44,7 @@ const actions = {
     }
   },
   async deleteCurrentUser({ commit, state }) {
-    await axios.delete(`/api/v1/users/${state.currentUser.uuid}`)
+    await axios.delete("/api/v1/users/current")
     commit("setCurrentUser", null)
   },
   async guestLogin({ commit }) {
