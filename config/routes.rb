@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :authentications
+    resources :registered_tags
+    resources :tags
+    resources :tweets
+    resources :users
+
+    root to: 'authentications#index'
+  end
+
   root 'static_pages#top'
   get 'mypage/dashboard', to: 'static_pages#top'
   get 'mypage/tags/:id', to: 'static_pages#top'

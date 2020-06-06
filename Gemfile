@@ -15,6 +15,7 @@ gem 'enum_help'
 gem 'rails-i18n'
 # 機能
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'administrate'
 gem 'banken'
 gem 'config'
 gem 'pagy', '~> 3.5'
