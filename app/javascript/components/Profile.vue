@@ -2,7 +2,7 @@
   <div class="my-5 main-content">
     <v-card class="mx-auto" outlined>
       <v-container row>
-        <v-col cols="12" lg="8">
+        <v-col cols="12" md="9">
           <!-- プロフィール -->
           <profile-view
             v-if="!isEditing"
@@ -18,7 +18,7 @@
             @push-cencel="pushCancel"
           />
         </v-col>
-        <v-col cols="9" lg="4">
+        <v-col cols="9" md="3">
           <!-- ステータス -->
           <profile-status :is-editing="isEditing" :user="user" />
         </v-col>

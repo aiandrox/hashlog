@@ -44,6 +44,25 @@ RSpec.describe RegisteredTag, type: :model do
         expect(RegisteredTag.asc.last).to eq latest_tag
       end
     end
+    describe '.opened' do
+      let(:user) { create(:user) }
+      let(:published_tag) { create(:registered_tag, user: user) }
+      let(:limited_tag) { create(:registered_tag, :limited, user: user) }
+      let(:closed_tag) { create(:registered_tag, :closed, user: user) }
+      it '限定公開、非公開のタグを含まない' do
+        expect(RegisteredTag.opened).to include published_tag
+        expect(RegisteredTag.opened).not_to include limited_tag
+        expect(RegisteredTag.opened).not_to include closed_tag
+      end
+      context 'ユーザーが非公開の場合' do
+        it '公開、限定公開、非公開のタグを含まない' do
+          user.closed!
+          expect(RegisteredTag.opened).not_to include published_tag
+          expect(RegisteredTag.opened).not_to include limited_tag
+          expect(RegisteredTag.opened).not_to include closed_tag
+        end
+      end
+    end
   end
 
   describe 'methods' do

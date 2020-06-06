@@ -1,10 +1,10 @@
-class Api::V1::UsersLoyalty < ApplicationLoyalty
+class Api::V1::Users::RegisteredTagsLoyalty < ApplicationLoyalty
   def initialize(current_user, user)
     @current_user = current_user
     @user = user
   end
 
-  def show?
+  def index?
     user == current_user || user.published?
   end
 

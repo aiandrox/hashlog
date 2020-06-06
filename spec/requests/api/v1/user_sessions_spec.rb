@@ -13,11 +13,23 @@ RSpec.describe 'UserSessions', type: :request do
     end
   end
 
-  describe 'GET /guest_login' do
+  describe 'POST /guest_login' do
     let!(:guest) { create(:user, :guest) }
-    before { get '/api/v1/guest_login' }
-    it '204 NoContentを返す' do
-      expect(response.status).to eq 204
+    before { post '/api/v1/guest_login' }
+    it '200 OKを返す' do
+      expect(response.status).to eq 200
+    end
+    it 'ゲストユーザーのJSONを返す' do
+      expect(json['user']).to eq({
+        'uuid' => guest.uuid,
+        'name' => guest.name,
+        'twitterId' => guest.twitter_id,
+        'screenName' => guest.screen_name,
+        'description' => guest.description,
+        'privacy' => guest.privacy_i18n,
+        'role' => 'ゲストユーザー',
+        'avatarUrl' => guest.avatar_url,
+      })
     end
     it 'ゲストユーザーとしてログインする' do
       expect(current_user).to eq guest

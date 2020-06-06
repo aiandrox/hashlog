@@ -1,6 +1,8 @@
 <template>
   <v-app-bar app flat dark color="#006596">
-    <v-toolbar-title color="#f0faff">Hashlog</v-toolbar-title>
+    <v-toolbar-title v-if="!isTopPage">
+      <div class="logo mt-2" @click="toTopPage" />
+    </v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
       <v-btn v-if="!currentUser" text @click="pushLogin">ログイン</v-btn>
@@ -21,12 +23,16 @@ export default {
     theTermsDialog
   },
   computed: {
-    ...mapGetters({ currentUser: "user/currentUser" })
+    ...mapGetters({ currentUser: "user/currentUser" }),
+    isTopPage() {
+      return this.$route.path === "/"
+    }
   },
   methods: {
     async logout() {
       await this.$store.dispatch("user/logout")
       this.$router.push({ name: "top" })
+      this.$toTop()
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ログアウトしました"
@@ -34,7 +40,21 @@ export default {
     },
     pushLogin() {
       this.$refs.termsDialog.open()
+    },
+    toTopPage() {
+      this.$router.push({ name: "top" })
+      this.$toTop()
     }
   }
 }
 </script>
+
+<style scoped>
+.logo {
+  height: 80%;
+  width: 170px;
+  background-size: contain;
+  background-image: url("/img/logo-w.png");
+  cursor: pointer;
+}
+</style>

@@ -39,8 +39,10 @@
     </v-dialog>
   </v-row>
 </template>
+
 <script>
 import loadingCircle from "./shared/TheLoading"
+
 export default {
   components: {
     loadingCircle
@@ -79,6 +81,7 @@ export default {
           )
           const tagId = registeredTagRes.data.registeredTag.id
           this.$router.push({ name: "myTag", params: { tagId } })
+          this.$toTop()
           this.$store.dispatch("flash/setFlash", {
             type: "success",
             message: "ハッシュタグを登録しました"

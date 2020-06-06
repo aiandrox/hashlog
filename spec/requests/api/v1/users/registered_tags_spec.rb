@@ -26,13 +26,18 @@ RSpec.describe 'RegisteredTags', type: :request do
               'tweetedDayCount' => registered_tag.tweeted_day_count,
               'privacy' => registered_tag.privacy_i18n,
               'remindDay' => nil,
+              'tweetRate' => 0,
               'firstTweetedAt' => registered_tag.first_tweeted_at,
               'lastTweetedAt' => registered_tag.last_tweeted_at,
               'tag' => {
                 'id' => registered_tag.tag.id,
                 'name' => registered_tag.tag.name,
-                },
-              })
+              },
+              'user' => {
+                'name' => registered_tag.user.name,
+                'uuid' => registered_tag.user.uuid
+              }
+            })
           end
         end
       end
@@ -53,15 +58,6 @@ RSpec.describe 'RegisteredTags', type: :request do
           get "/api/v1/users/#{user.uuid}/registered_tags"
           expect(tags_json.length).to eq 1
         end
-      end
-    end
-    context '作成ユーザーが非公開設定のとき' do
-      before do
-        user.closed!
-        get "/api/v1/users/#{user.uuid}/registered_tags"
-      end
-      it 'リソースが見つからないので404 NotFoundを返す' do
-        expect(response.status).to eq 404
       end
     end
   end

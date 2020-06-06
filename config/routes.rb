@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, param: :uuid, only: %i[index show update destroy] do
+      resources :users, param: :uuid, only: %i[index show] do
         collection do
-          resource :current, only: %i[show], module: :users do
+          resource :current, only: %i[show update destroy], module: :users do
             resources :registered_tags, only: %i[index], module: :current
           end
         end
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       get 'oauth/:provider', to: 'oauths#oauth'
       delete 'logout', to: 'user_sessions#destroy'
       # ゲストユーザーログイン
-      get 'guest_login', to: 'user_sessions#guest_login'
+      post 'guest_login', to: 'user_sessions#guest_login'
     end
   end
 

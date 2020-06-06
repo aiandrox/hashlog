@@ -14,6 +14,9 @@ export default {
       // TODO: 増えたらメソッドに切り出す
       const { tweets } = res.data
       this.tweets = tweets
+    },
+    $toTop() {
+      goTo(0)
     }
   }
 }

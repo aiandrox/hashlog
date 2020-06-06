@@ -10,54 +10,80 @@ RSpec.describe 'RegisteredTags', type: :request do
       create_list(:registered_tag, 50)
       get '/api/v1/registered_tags'
     end
-    describe 'pagy' do
-      it 'pageクエリがないとき 20件返す' do
-        expect(tags_json.length).to eq 20
+    describe '全般的なこと' do
+      it '200 OKを返す' do
+        expect(response.status).to eq 200
       end
-      it 'page=2のとき 10件返す' do
+      it 'RegisteredTag.ascのJSONを返す' do
+        tags_json.zip(registered_tags).each do |tag_json, registered_tag|
+          expect(tag_json).to eq({
+            'id' => registered_tag.id,
+            'tweetedDayCount' => registered_tag.tweeted_day_count,
+            'privacy' => registered_tag.privacy_i18n,
+            'remindDay' => nil,
+            'tweetRate' => 0,
+            'firstTweetedAt' => registered_tag.first_tweeted_at,
+            'lastTweetedAt' => registered_tag.last_tweeted_at,
+            'tag' => {
+              'id' => registered_tag.tag.id,
+              'name' => registered_tag.tag.name,
+            },
+            'user' => {
+              'name' => registered_tag.user.name,
+              'uuid' => registered_tag.user.uuid
+            }
+          })
+        end
+      end
+    end
+    describe 'ソート' do
+      it '降順に並ぶ（最古のregistered_tagが最初になる）' do
+        expect(tags_json.first['id']).to eq oldest_registered_tag.id
+      end
+      it '降順に並ぶ（最新のregistered_tagが最後になる）' do
+        get '/api/v1/registered_tags?page=3'
+        expect(tags_json.last['id']).to eq latest_registered_tag.id
+      end
+    end
+    describe '公開設定' do
+      it '限定公開のタグを返さない' do
+        expect(tags_json).not_to include 'id' => limited_registered_tag.id
         get '/api/v1/registered_tags?page=2'
-        expect(tags_json.length).to eq 20
+        expect(tags_json).not_to include 'id' => limited_registered_tag.id
+        get '/api/v1/registered_tags?page=3'
+        expect(tags_json).not_to include 'id' => limited_registered_tag.id
+      end
+      it '非公開のタグを返さない' do
+        expect(tags_json).not_to include 'id' => closed_registered_tag.id
+        get '/api/v1/registered_tags?page=2'
+        expect(tags_json).not_to include 'id' => closed_registered_tag.id
+        get '/api/v1/registered_tags?page=3'
+        expect(tags_json).not_to include 'id' => closed_registered_tag.id
       end
     end
-    it '200 OKを返す' do
-      expect(response.status).to eq 200
-    end
-    it 'RegisteredTag.ascのJSONを返す' do
-      tags_json.zip(registered_tags).each do |tag_json, registered_tag|
-        expect(tag_json).to eq({
-          'id' => registered_tag.id,
-          'tweetedDayCount' => registered_tag.tweeted_day_count,
-          'privacy' => registered_tag.privacy_i18n,
-          'remindDay' => nil,
-          'firstTweetedAt' => registered_tag.first_tweeted_at,
-          'lastTweetedAt' => registered_tag.last_tweeted_at,
-          'tag' => {
-            'id' => registered_tag.tag.id,
-            'name' => registered_tag.tag.name,
-          },
-        })
+    context 'countクエリがないとき' do
+      describe 'pagy' do
+        it 'pageクエリがないとき 20件返す' do
+          expect(tags_json.length).to eq 20
+        end
+        it 'page=2のとき 10件返す' do
+          get '/api/v1/registered_tags?page=2'
+          expect(tags_json.length).to eq 20
+        end
       end
     end
-    it '降順に並ぶ（最古のregistered_tagが最初になる）' do
-      expect(tags_json.first['id']).to eq oldest_registered_tag.id
-    end
-    it '降順に並ぶ（最新のregistered_tagが最後になる）' do
-      get '/api/v1/registered_tags?page=3'
-      expect(tags_json.last['id']).to eq latest_registered_tag.id
-    end
-    it '限定公開のタグを返さない' do
-      expect(tags_json).not_to include 'id' => limited_registered_tag.id
-      get '/api/v1/registered_tags?page=2'
-      expect(tags_json).not_to include 'id' => limited_registered_tag.id
-      get '/api/v1/registered_tags?page=3'
-      expect(tags_json).not_to include 'id' => limited_registered_tag.id
-    end
-    it '非公開のタグを返さない' do
-      expect(tags_json).not_to include 'id' => closed_registered_tag.id
-      get '/api/v1/registered_tags?page=2'
-      expect(tags_json).not_to include 'id' => closed_registered_tag.id
-      get '/api/v1/registered_tags?page=3'
-      expect(tags_json).not_to include 'id' => closed_registered_tag.id
+    context 'countクエリがあるとき' do
+      let(:count) { rand(1..5) }
+      before do
+        create_list(:registered_tag, 10)
+        get "/api/v1/registered_tags?count=#{count}"
+      end
+      it '200 OKを返す' do
+        expect(response.status).to eq 200
+      end
+      it 'countで指定したレコード数を返す' do
+        expect(tags_json.length).to eq count
+      end
     end
   end
 
@@ -74,11 +100,16 @@ RSpec.describe 'RegisteredTags', type: :request do
           'tweetedDayCount' => registered_tag.tweeted_day_count,
           'privacy' => registered_tag.privacy_i18n,
           'remindDay' => nil,
+          'tweetRate' => 0,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {
             'id' => registered_tag.tag.id,
             'name' => registered_tag.tag.name,
+          },
+          'user' => {
+            'name' => registered_tag.user.name,
+            'uuid' => registered_tag.user.uuid
           }
         })
       end
@@ -166,11 +197,16 @@ RSpec.describe 'RegisteredTags', type: :request do
             'tweetedDayCount' => registered_tag.tweeted_day_count,
             'privacy' => '非公開',
             'remindDay' => remind_day.to_i,
+            'tweetRate' => 0,
             'firstTweetedAt' => registered_tag.first_tweeted_at,
             'lastTweetedAt' => registered_tag.last_tweeted_at,
             'tag' => {
               'id' => registered_tag.tag.id,
               'name' => registered_tag.tag.name,
+            },
+            'user' => {
+              'name' => registered_tag.user.name,
+              'uuid' => registered_tag.user.uuid
             }
           })
         end
