@@ -22,6 +22,7 @@ RSpec.describe 'RegisteredTags', type: :request do
           'tweetedDayCount' => registered_tag.tweeted_day_count,
           'privacy' => registered_tag.privacy_i18n,
           'remindDay' => nil,
+          'tweetRate' => 0,
           'firstTweetedAt' => registered_tag.first_tweeted_at,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {

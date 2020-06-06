@@ -29,7 +29,7 @@ export default {
         {
           name: "tweetedDayCount",
           title: "ツイート総日数",
-          text: `${this.registeredTag.tweetedDayCount}日`
+          text: `${this.registeredTag.tweetedDayCount}日（${this.registeredTag.tweetRate}%）`
         },
         {
           name: "firstTweetedAt",
