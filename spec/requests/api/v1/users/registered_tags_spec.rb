@@ -32,8 +32,12 @@ RSpec.describe 'RegisteredTags', type: :request do
               'tag' => {
                 'id' => registered_tag.tag.id,
                 'name' => registered_tag.tag.name,
-                },
-              })
+              },
+              'user' => {
+                'name' => registered_tag.user.name,
+                'uuid' => registered_tag.user.uuid
+              }
+            })
           end
         end
       end

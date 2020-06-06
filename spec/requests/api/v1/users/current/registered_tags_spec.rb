@@ -29,7 +29,11 @@ RSpec.describe 'RegisteredTags', type: :request do
             'id' => registered_tag.tag.id,
             'name' => registered_tag.tag.name,
             },
-          })
+          'user' => {
+            'name' => registered_tag.user.name,
+            'uuid' => registered_tag.user.uuid
+          }
+        })
       end
     end
     it '降順に並ぶ' do
