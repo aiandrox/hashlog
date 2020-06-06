@@ -135,7 +135,6 @@ export default {
     async deleteTag() {
       await this.$axios.delete(this.registeredTagUrl)
       this.$router.push({ name: "mypage" })
-      this.$toTop()
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ハッシュタグを削除しました"
