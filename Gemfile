@@ -28,6 +28,7 @@ gem 'twitter'
 
 group :development, :test do
   gem 'bullet', '~> 6.1'
+  gem 'foreman'
   gem 'pry-byebug', '~> 3.9'
   gem 'pry-rails'
   gem 'rails_best_practices', '~> 1.20'
