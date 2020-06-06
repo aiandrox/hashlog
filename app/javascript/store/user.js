@@ -36,7 +36,7 @@ const actions = {
       const response = await axios.patch("/api/v1/users/current", {
         user: userData
       })
-      const user = response.data.user
+      const { user } = response.data
       commit("setCurrentUser", user)
       return user
     } catch (error) {
@@ -49,7 +49,7 @@ const actions = {
   },
   async guestLogin({ commit }) {
     const response = await axios.post("/api/v1/guest_login")
-    const user = response.data.user
+    const { user } = response.data
     commit("setCurrentUser", user)
     return user
   },
