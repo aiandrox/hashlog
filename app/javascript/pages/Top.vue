@@ -1,30 +1,83 @@
 <template>
   <div class="top">
     <!-- メインヘッダー -->
-    <div class="main-header white-zone">
+    <div class="white-zone">
       <v-container>
-        <v-row class="mt-md-10">
+        <v-row>
           <v-col class="text-right align-self-center" :md="5">
             <v-img class="logo" alt="Hashlog" src="/img/logo.png" />
             <p class="title">
               ハッシュタグで
               <br class="d-block d-sm-none" />あなたの学びをキチンとする
             </p>
-            <v-btn color="primary" x-large depressed @click="pushLogin">今すぐ始める</v-btn>
+            <v-btn color="primary" x-large depressed @click="pushLogin"
+              >今すぐ始める</v-btn
+            >
             <div class="d-none d-sm-block">
               <p class="mt-10 mb-1 title">人気のハッシュタグ</p>
-              <span v-for="tag in popularTags" :key="tag.id">#{{ tag.name + " " }}</span>
+              <span v-for="tag in popularTags" :key="tag.id"
+                >#{{ tag.name + " " }}</span
+              >
             </div>
             <v-btn
               class="register-btn"
-              color="#42a9db"
+              color="#74accc"
               dark
               depressed
               @click="guestLogin"
-            >ゲストとして試してみる</v-btn>
+              >ゲストとして試してみる</v-btn
+            >
           </v-col>
           <v-col>
-            <v-img class="register-btn" max-width="600" src="/img/main-image.png" />
+            <v-img
+              class="register-btn"
+              max-width="600"
+              src="/img/main-image.png"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+    <!-- 最近登録されたハッシュタグ -->
+    <div class="tag-zone pb-3">
+      <v-container>
+        <h2 class="text-center my-5">最近登録されたハッシュタグ</h2>
+        <v-row>
+          <v-col cols="12" md="4" v-for="tag in recentTags" :key="tag.id">
+            <v-card
+              flat
+              hover
+              color="rgba(255, 255, 255, 0.8)"
+              :to="{
+                name: 'userTag',
+                params: { tagId: tag.id, userUuid: tag.user.uuid }
+              }"
+            >
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title class="headline mb-1 mt-3"
+                    >#{{ tag.tag.name }}</v-list-item-title
+                  >
+
+                  <v-list-item-subtitle class="mb-3 text-right"
+                    >by {{ tag.user.name }}</v-list-item-subtitle
+                  >
+
+                  <v-list-item-text>
+                    <p>
+                      初めてのツイート：
+                      <br />
+                      {{ date(tag.firstTweetedAt) }}
+                    </p>
+                    <p>
+                      ツイート総日数：{{ tag.tweetedDayCount }}日（{{
+                        tag.tweetRate
+                      }}%）
+                    </p>
+                  </v-list-item-text>
+                </v-list-item-content>
+              </v-list-item>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -34,10 +87,10 @@
       <v-row
         v-for="(description, index) in descriptions"
         :key="index"
-        :class="'flex-row'+description.line"
+        :class="'flex-row' + description.line"
       >
         <v-col class="align-self-center" :md="7">
-          <h2 class="mb-5">{{description.title}}</h2>
+          <h2 class="mb-5">{{ description.title }}</h2>
           <div v-html="description.text" />
         </v-col>
         <v-col :md="5">
@@ -45,37 +98,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <!-- 最近登録されたハッシュタグ -->
-    <div class="white-zone pb-10">
-      <v-container>
-        <h2 class="text-center mb-5 mt-8">最近登録されたハッシュタグ</h2>
-        <v-row>
-          <v-col cols="12" md="4" v-for="tag in recentTags" :key="tag.id">
-            <v-card
-              outlined
-              :to="{name: 'userTag', params: {tagId: tag.id, userUuid: tag.user.uuid}}"
-            >
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title class="headline mb-1 mt-3">#{{tag.tag.name}}</v-list-item-title>
-
-                  <v-list-item-subtitle class="mb-3 text-right">by {{tag.user.name}}</v-list-item-subtitle>
-
-                  <v-list-item-text>
-                    <p>
-                      初めてのツイート:
-                      <br />
-                      {{date(tag.firstTweetedAt)}}
-                    </p>
-                    <p>ツイート総日数: {{tag.tweetedDayCount}}日（{{tag.tweetRate}}%）</p>
-                  </v-list-item-text>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
     <!-- 利用規約ダイアログ -->
     <the-terms-dialog ref="termsDialog" />
   </div>
@@ -172,9 +194,11 @@ export default {
 .white-zone {
   background-color: #fff;
 }
-.main-header {
-  min-height: 100vh;
-  border-bottom: 20px solid #006596;
+.tag-zone {
+  background-color: #5f98b9;
+}
+.tag-zone h2 {
+  color: #fff;
 }
 .features p {
   line-height: 1.8rem;
