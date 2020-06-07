@@ -16,8 +16,8 @@ class UserDashboard < Administrate::BaseDashboard
     uuid: Field::String,
     name: Field::String,
     description: Field::Text,
-    privacy: Field::String.with_options(searchable: false),
-    role: Field::String.with_options(searchable: false),
+    privacy: Field::Select.with_options(collection: %i[publish closed]),
+    role: Field::Select.with_options(collection: %i[genaral admin guest]),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     screen_name: Field::String,
@@ -30,46 +30,47 @@ class UserDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-  authentications
-  registered_tags
-  tags
   id
+  name
+  screen_name
+  description
+  privacy
+  role
+  tags
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-  authentications
-  registered_tags
-  tags
-  id
-  twitter_id
-  uuid
-  name
-  description
-  privacy
-  role
-  created_at
-  updated_at
-  screen_name
-  avatar_url
+    id
+    uuid
+    twitter_id
+    name
+    screen_name
+    description
+    privacy
+    role
+    avatar_url
+    created_at
+    updated_at
+    registered_tags
+    tags
+    authentications
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-  authentications
-  registered_tags
-  tags
-  twitter_id
-  uuid
-  name
-  description
-  privacy
-  role
-  screen_name
-  avatar_url
+    twitter_id
+    name
+    screen_name
+    description
+    privacy
+    role
+    avatar_url
+    authentications
+    tags
   ].freeze
 
   # COLLECTION_FILTERS

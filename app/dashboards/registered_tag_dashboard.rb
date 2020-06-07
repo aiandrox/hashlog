@@ -14,7 +14,7 @@ class RegisteredTagDashboard < Administrate::BaseDashboard
     id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    privacy: Field::String.with_options(searchable: false),
+    privacy: Field::Select.with_options(collection: %i[published limited closed]),
     remind_day: Field::Number,
     first_tweeted_at: Field::DateTime,
   }.freeze
@@ -25,36 +25,38 @@ class RegisteredTagDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-  tweets
-  user
-  tag
-  id
+    id
+    privacy
+    remind_day
+    user
+    tweets
+    tag
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
-  tweets
-  user
-  tag
-  id
-  created_at
-  updated_at
-  privacy
-  remind_day
-  first_tweeted_at
+    id
+    privacy
+    remind_day
+    first_tweeted_at
+    created_at
+    updated_at
+    user
+    tag
+    tweets
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-  tweets
-  user
-  tag
-  privacy
-  remind_day
-  first_tweeted_at
+    tweets
+    user
+    tag
+    privacy
+    remind_day
+    first_tweeted_at
   ].freeze
 
   # COLLECTION_FILTERS
