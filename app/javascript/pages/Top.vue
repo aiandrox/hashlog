@@ -4,18 +4,29 @@
     <div class="white-zone">
       <v-container>
         <v-row>
-          <v-col class="text-right align-self-center" :md="4">
+          <v-col class="text-right align-self-center" :md="5">
             <v-img class="logo" alt="Hashlog" src="/img/logo.png" />
-            <p style="font-size: 28px;">
-              <b>
-                ハッシュタグで
-                <br />あなたの学びをキチンとする</b
+            <p class="title">
+              ハッシュタグで
+              <br class="d-block d-sm-none" />あなたの学びをキチンとする
+            </p>
+            <v-btn color="primary" x-large depressed @click="pushLogin"
+              >今すぐ始める</v-btn
+            >
+            <div class="d-none d-sm-block">
+              <p class="mt-10 mb-1 title">人気のハッシュタグ</p>
+              <span v-for="tag in popularTags" :key="tag.id"
+                >#{{ tag.name + " " }}</span
               >
-            </p>
-            <br />
-            <p style="font-size: 20px;">
-              ハッシュタグを登録するだけで<br />あなたの継続を可視化できる<br />学習記録サービス
-            </p>
+            </div>
+            <v-btn
+              class="register-btn"
+              color="#74accc"
+              dark
+              depressed
+              @click="guestLogin"
+              >ゲストとして試してみる</v-btn
+            >
           </v-col>
           <v-col>
             <v-img
@@ -182,8 +193,6 @@ export default {
 }
 .white-zone {
   background-color: #fff;
-  border-top: #006596 solid 50px;
-  border-bottom: #006596 solid 50px;
 }
 .tag-zone {
   background-color: #5f98b9;
