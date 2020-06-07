@@ -3,7 +3,7 @@
     <!-- タブ -->
     <the-tab :registered-tags="registeredTags" />
     <!-- カレンダー -->
-    <the-calendar :tweets="tweets" />
+    <the-calendar :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
     <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col class="hidden-sm-and-down" cols="12" md="4">
@@ -57,7 +57,6 @@ export default {
   },
   data() {
     return {
-      drawer: true,
       page: {
         currentPage: 1,
         totalPages: 1,
@@ -75,7 +74,8 @@ export default {
         }
       },
       registeredTags: [],
-      tweets: []
+      tweets: [],
+      tweetDates: []
     }
   },
   computed: {
@@ -94,28 +94,54 @@ export default {
     }
   },
   methods: {
+    // 描画時の処理
     async firstRead() {
-      await this.fetchData()
+      this.fetchRegisteredTagsData()
+      this.fetchTweetDates()
+      this.fetchTweetsData()
+      await this.fetchTagData()
       document.title = `#${this.registeredTag.tag.name} | Hashlog`
     },
-    async fetchData() {
-      const registeredTagsRes = await this.$axios.get(
-        "/api/v1/users/current/registered_tags"
-      )
-      const { registeredTags } = registeredTagsRes.data
-      this.registeredTags = registeredTags
-
+    async fetchTagData() {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
       const { registeredTag } = registeredTagRes.data
       this.registeredTag = registeredTag
-
+    },
+    async fetchTweetsData() {
       const tweetsRes = await this.$axios.get(
-        `/api/v1/registered_tags/${registeredTag.id}/tweets`
+        `${this.registeredTagUrl}/tweets?page=1`
       )
       this.$setPaginationData(tweetsRes)
       const { tweets } = tweetsRes.data
       this.tweets = tweets
     },
+    // タプ用ユーザーの全てのタグ
+    async fetchRegisteredTagsData() {
+      const registeredTagsRes = await this.$axios.get(
+        "/api/v1/users/current/registered_tags"
+      )
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
+    },
+    // カレンダー用全てのツイート
+    async fetchTweetDates() {
+      this.tweetDates = []
+      const { tagId } = this.$route.params
+      const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweets`)
+      const { tweets } = tweetsRes.data
+      tweets.forEach(t => this.tweetDates.push(t.tweetedAt.substr(0, 10)))
+      this.date = ""
+    },
+    // カレンダーの日付の変更
+    async fetchDateTweets(date) {
+      const tweetsRes = await this.$axios.get(
+        `${this.registeredTagUrl}/tweets?page=1&date=${date}`
+      )
+      this.$setPaginationData(tweetsRes)
+      const { tweets } = tweetsRes.data
+      this.tweets = tweets
+    },
+    // データ更新
     async updateTagData() {
       const registeredTagRes = await this.$axios.patch(this.registeredTagUrl, {
         tag: this.registeredTag
@@ -128,11 +154,7 @@ export default {
         message: "ハッシュタグの設定を更新しました"
       })
     },
-    async fetchTagData() {
-      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-      const { registeredTag } = registeredTagRes.data
-      this.registeredTag = registeredTag
-    },
+    // データ削除
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
     },

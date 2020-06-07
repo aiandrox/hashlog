@@ -7,16 +7,18 @@
       color="primary"
       event-color="green"
       :landscape="$vuetify.breakpoint.smAndUp"
-      :events="tweetedDates"
+      :events="tweetDates"
+      @input="inputDate"
       class="mt-4"
     ></v-date-picker>
+    {{ date }}
   </v-container>
 </template>
 
 <script>
 export default {
   props: {
-    tweets: {
+    tweetDates: {
       type: Array,
       default: () => [],
       required: true
@@ -24,12 +26,17 @@ export default {
   },
   data() {
     return {
-      date: new Date().toISOString().substr(0, 10)
+      date: ""
     }
   },
-  computed: {
-    tweetedDates() {
-      return this.tweets.map(t => t.tweetedAt.substr(0, 10))
+  methods: {
+    inputDate(date) {
+      this.$emit("input-date", date)
+    }
+  },
+  watch: {
+    $route() {
+      this.date = ""
     }
   }
 }
