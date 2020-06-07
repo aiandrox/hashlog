@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class RegisteredTagDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -16,7 +16,7 @@ class RegisteredTagDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     privacy: Field::Select.with_options(collection: %i[published limited closed]),
     remind_day: Field::Number,
-    first_tweeted_at: Field::DateTime,
+    first_tweeted_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

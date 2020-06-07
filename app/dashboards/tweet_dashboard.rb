@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class TweetDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -14,7 +14,7 @@ class TweetDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     oembed: Field::Text,
     tweeted_at: Field::DateTime,
-    tweet_id: Field::String,
+    tweet_id: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -23,11 +23,11 @@ class TweetDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-  id
-  oembed
-  tweet_id
-  tweeted_at
-  registered_tag
+    id
+    oembed
+    tweet_id
+    tweeted_at
+    registered_tag
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

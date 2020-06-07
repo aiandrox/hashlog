@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class UserDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -21,7 +21,7 @@ class UserDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     screen_name: Field::String,
-    avatar_url: Field::String,
+    avatar_url: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -30,13 +30,13 @@ class UserDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
-  id
-  name
-  screen_name
-  description
-  privacy
-  role
-  tags
+    id
+    name
+    screen_name
+    description
+    privacy
+    role
+    tags
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

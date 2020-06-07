@@ -12,7 +12,6 @@ class Admin::ApplicationController < Administrate::ApplicationController
     redirect_to root_path unless Admin::ApplicationLoyalty.new(current_user).authenticate_admin?
   end
 
-
   # Override this value to specify the number of elements to display at a time
   # on index pages. Defaults to 20.
   # def records_per_page
