@@ -7,6 +7,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.12'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
+gem 'sprockets', '~> 3.7.2' # 4.0だとassetsがないときにエラーが発生するため
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker'
 
