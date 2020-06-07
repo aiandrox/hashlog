@@ -347,6 +347,10 @@ GEM
       rack (< 2.1.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    sidekiq-failures (1.0.0)
+      sidekiq (>= 4.0.0)
+    sidekiq-history (0.0.11)
+      sidekiq (>= 3.0.0)
     simple_oauth (0.3.1)
     sorcery (0.15.0)
       bcrypt (~> 3.1)
@@ -436,6 +440,8 @@ DEPENDENCIES
   rubocop (~> 0.80.1)
   shoulda-matchers
   sidekiq (~> 5.0)
+  sidekiq-failures
+  sidekiq-history
   sorcery (>= 0.15.0)
   spring
   spring-watcher-listen (~> 2.0.0)

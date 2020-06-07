@@ -24,6 +24,8 @@ gem 'sorcery', '>= 0.15.0'
 # 定期実行
 gem 'redis-namespace'
 gem 'sidekiq', '~> 5.0'
+gem 'sidekiq-failures'
+gem 'sidekiq-history'
 gem 'whenever', require: false
 # 外部API
 gem 'twitter'
