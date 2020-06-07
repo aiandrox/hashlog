@@ -59,12 +59,12 @@ export default {
       this.registeredTags = registeredTags
     },
     async updateUserData() {
-      await this.$store.dispatch("user/updateCurrentUser", this.currentUser)
-      this.$refs.profile.finishEdit()
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ユーザー情報を更新しました"
       })
+      await this.$store.dispatch("user/updateCurrentUser", this.currentUser)
+      this.$refs.profile.finishEdit()
     },
     async cancelEdit() {
       this.$store.dispatch("user/getCurrentUserFromAPI")

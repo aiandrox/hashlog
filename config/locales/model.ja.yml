@@ -2,9 +2,11 @@ ja:
   activerecord:
     # User.model_name.human
     models:
-      user: ユーザー情報
+      authentication: 外部認証
+      user: ユーザー
       registered_tag: ハッシュタグ
-      tag: ハッシュタグ
+      tag: タグ
+      tweet: ツイート
     # User.human_attributes_name(:name)
     attributes:
       id: ID
@@ -13,9 +15,12 @@ ja:
       user:
         twitter_id: Twitter ID
         name: 名前
+        screen_name: "@ユーザーネーム"
         description: プロフィール
         role: 権限
         privacy: 公開設定
+        avatar_url: プロフィール画像URL
+        authentication_id: 外部認証
       registered_tag:
         tweeted_day_count: 累計ツイート日数
         remind_day: リマインダー日数
@@ -23,10 +28,19 @@ ja:
         first_tweeted_at: 初ツイート日時
         last_tweeted_at: 最終ツイート日時
         tag_id: ハッシュタグ
+        user_id: ユーザー
+        tweet_id: ツイート
       tag:
         name: 名前
         tag_id: ハッシュタグ
-      tweet: ツイート
+      tweet:
+        tweet_id: ツイートID
+        registered_tag_id: タグ設定
+        oembed: ツイート本文
+        tweeted_at: ツイート日時
+      authentication:
+        user_id: ユーザー
+        provider: 外部認証サービス
 
   enums:
     user:

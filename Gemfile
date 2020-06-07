@@ -7,6 +7,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.12'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
+gem 'sprockets', '~> 3.7.2' # 4.0だとassetsがないときにエラーが発生するため
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'webpacker'
 
@@ -15,6 +16,7 @@ gem 'enum_help'
 gem 'rails-i18n'
 # 機能
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'administrate'
 gem 'banken'
 gem 'config'
 gem 'pagy', '~> 3.5'
@@ -22,12 +24,17 @@ gem 'sorcery', '>= 0.15.0'
 # 定期実行
 gem 'redis-namespace'
 gem 'sidekiq', '~> 5.0'
+gem 'sidekiq-failures'
+gem 'sidekiq-history'
 gem 'whenever', require: false
 # 外部API
 gem 'twitter'
+# seedファイル
+gem 'seed-fu'
 
 group :development, :test do
   gem 'bullet', '~> 6.1'
+  gem 'foreman'
   gem 'pry-byebug', '~> 3.9'
   gem 'pry-rails'
   gem 'rails_best_practices', '~> 1.20'

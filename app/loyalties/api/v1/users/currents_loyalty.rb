@@ -4,6 +4,10 @@ class Api::V1::Users::CurrentsLoyalty < ApplicationLoyalty
     @user = user
   end
 
+  def update?
+    !user.guest?
+  end
+
   def destroy?
     !user.guest?
   end

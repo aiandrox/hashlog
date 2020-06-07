@@ -40,7 +40,7 @@ RSpec.describe 'Currents', type: :request do
     context 'ログインしていない場合' do
       it '401 Unauthorizedを返す' do
         patch '/api/v1/users/current', params: {
-          user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+          user: { description: '新しい詳細', privacy: '非公開' }
         }
         expect(response.status).to eq 401
       end
@@ -50,7 +50,7 @@ RSpec.describe 'Currents', type: :request do
       context '正常系' do
         before do
           patch '/api/v1/users/current', params: {
-            user: { name: '新しいユーザー名', description: '新しい詳細', privacy: '非公開' }
+            user: { description: '新しい詳細', privacy: '非公開' }
           }
         end
         it '200 OKを返す' do
@@ -58,14 +58,13 @@ RSpec.describe 'Currents', type: :request do
         end
         it 'userのデータが変更される' do
           updated_user = user.reload
-          expect(updated_user.name).to eq '新しいユーザー名'
           expect(updated_user.description).to eq '新しい詳細'
           expect(updated_user.privacy).to eq 'closed'
         end
         it 'userのJSONを返す' do
           expect(user_json).to eq({
             'uuid' => user.uuid,
-            'name' => '新しいユーザー名',
+            'name' => user.name,
             'twitterId' => user.twitter_id,
             'screenName' => user.screen_name,
             'description' => '新しい詳細',
@@ -78,25 +77,25 @@ RSpec.describe 'Currents', type: :request do
       context '値が不適な場合' do
         it '422 UnprocessableEntityを返す' do
           patch '/api/v1/users/current', params: {
-            user: { name: '', description: '新しい詳細', privacy: '非公開' }
+            user: { description: '新しい詳細', privacy: '不適な値' }
           }
           expect(response.status).to eq 422
         end
         it 'エラーメッセージのJSONを返す' do
           patch '/api/v1/users/current', params: {
-            user: { name: '', description: '新しい詳細', privacy: '非公開' }
+            user: { description: '新しい詳細', privacy: '不適な値' }
           }
           expect(json['error']).to eq({
             'code' => '422',
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
-            'messages' => ['名前を入力してください']
+            'messages' => ['公開設定を入力してください']
           })
         end
-        it 'user.nameを変更しない' do
+        it 'user.descriptionを変更しない' do
           expect do
             patch '/api/v1/users/current', params: {
-              user: { name: '', description: '新しい詳細', privacy: '非公開' }
+              user: { description: '新しい詳細', privacy: '非公開' }
             }
           end.not_to change(user, :name)
         end
