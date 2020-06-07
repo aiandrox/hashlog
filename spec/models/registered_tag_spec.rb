@@ -44,6 +44,14 @@ RSpec.describe RegisteredTag, type: :model do
         expect(RegisteredTag.asc.last).to eq latest_tag
       end
     end
+    describe '.desc' do
+      let!(:latest_tag) { create(:registered_tag) }
+      let!(:oldest_tag) { create(:registered_tag, :created_yesterday) }
+      it 'created_atを基準に降順に並ぶこと' do
+        expect(RegisteredTag.desc.first).to eq latest_tag
+        expect(RegisteredTag.desc.last).to eq oldest_tag
+      end
+    end
     describe '.opened' do
       let(:user) { create(:user) }
       let(:published_tag) { create(:registered_tag, user: user) }

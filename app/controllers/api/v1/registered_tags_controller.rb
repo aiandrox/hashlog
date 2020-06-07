@@ -2,7 +2,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
   before_action :require_login, only: %i[create update destroy]
 
   def index
-    registered_tags = RegisteredTag.opened.asc.includes(:user, :tag)
+    registered_tags = RegisteredTag.opened.desc.includes(:user, :tag)
     if (count = params[:count])
       registered_tags.limit!(count)
     else
