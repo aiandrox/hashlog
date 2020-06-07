@@ -24,8 +24,9 @@ class TweetDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
   id
-  created_at
-  updated_at
+  oembed
+  tweet_id
+  tweeted_at
   registered_tag
   ].freeze
 

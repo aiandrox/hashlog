@@ -26,11 +26,11 @@ class RegisteredTagDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
+    tag
+    user
     privacy
     remind_day
-    user
     tweets
-    tag
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -74,7 +74,7 @@ class RegisteredTagDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how registered tags are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(registered_tag)
-  #   "RegisteredTag ##{registered_tag.id}"
-  # end
+  def display_resource(registered_tag)
+    "##{registered_tag.tag.name} by #{registered_tag.user.name}"
+  end
 end
