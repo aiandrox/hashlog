@@ -1,12 +1,13 @@
 class Api::V1::Users::CurrentsController < Api::V1::BaseController
   before_action :require_login, only: %i[update destroy]
 
+  # ページ遷移するたびにcurrentUserを取得しようとアクセスするので、200を返すようにする
   def show
-    user = current_user if logged_in?
-    render json: user
+    render json: current_user
   end
 
   def update
+    authorize!(current_user)
     current_user.assign_attributes(user_params)
     current_user.privacy = User.privacies_i18n.invert[params[:user][:privacy]]
     if current_user.save
@@ -23,7 +24,6 @@ class Api::V1::Users::CurrentsController < Api::V1::BaseController
   end
 
   def destroy
-    current_user
     authorize!(current_user)
     current_user.destroy!
   end
@@ -31,6 +31,6 @@ class Api::V1::Users::CurrentsController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:name, :description)
+    params.require(:user).permit(:description)
   end
 end
