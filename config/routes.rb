@@ -1,12 +1,15 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   namespace :admin do
-    resources :authentications
+    root 'users#index'
+    resources :users
     resources :registered_tags
     resources :tags
     resources :tweets
-    resources :users
-
-    root to: 'authentications#index'
+    resources :authentications
+    # sidekiq
+    mount Sidekiq::Web, at: '/sidekiq'
   end
 
   root 'static_pages#top'
@@ -42,10 +45,6 @@ Rails.application.routes.draw do
 
   # 開発/テスト用ログイン
   get '/login_as/:user_id', to: 'development/sessions#login_as' unless Rails.env.production?
-
-  # sidekiq
-  require 'sidekiq/web'
-  mount Sidekiq::Web, at: '/sidekiq'
 
   # ルーティングエラーを拾う（getのみ）
   get '*path', to: 'static_pages#routing_error'
