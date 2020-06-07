@@ -55,7 +55,7 @@
             >
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title class="headline mb-1 mt-3"
+                  <v-list-item-title class="mb-1 mt-3"
                     >#{{ tag.tag.name }}</v-list-item-title
                   >
 
@@ -65,9 +65,9 @@
 
                   <v-list-item-text>
                     <p>
-                      初めてのツイート：
+                      最新のツイート：
                       <br />
-                      {{ date(tag.firstTweetedAt) }}
+                      {{ date(tag.lastTweetedAt) }}
                     </p>
                     <p>
                       ツイート総日数：{{ tag.tweetedDayCount }}日（{{
@@ -202,5 +202,11 @@ export default {
 }
 .features p {
   line-height: 1.8rem;
+}
+.v-list-item__title {
+  font-size: 1.3rem;
+}
+v-list-item-text p {
+  line-height: 1.5rem;
 }
 </style>
