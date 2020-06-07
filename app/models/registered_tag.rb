@@ -13,6 +13,7 @@ class RegisteredTag < ApplicationRecord
   enum privacy: { published: 0, closed: 1, limited: 2 }
 
   scope :asc, -> { order(created_at: :asc) }
+  scope :desc, -> { order(created_at: :desc) }
   scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
 
   def last_tweeted_at

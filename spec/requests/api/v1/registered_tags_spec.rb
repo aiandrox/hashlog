@@ -1,10 +1,6 @@
 RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags' do
-    let(:oldest_registered_tag) { registered_tags.first }
-    let(:latest_registered_tag) { registered_tags.last }
-    let(:registered_tags) { RegisteredTag.published.asc }
-    let!(:limited_registered_tag) { create(:registered_tag, :limited) }
-    let!(:closed_registered_tag) { create(:registered_tag, :closed) }
+    let(:registered_tags) { RegisteredTag.published.desc }
     let(:tags_json) { json['registeredTags'] }
     before do
       create_list(:registered_tag, 50)
@@ -37,15 +33,20 @@ RSpec.describe 'RegisteredTags', type: :request do
       end
     end
     describe 'ソート' do
-      it '降順に並ぶ（最古のregistered_tagが最初になる）' do
-        expect(tags_json.first['id']).to eq oldest_registered_tag.id
+      let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
+      let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
+      it '昇順に並ぶ（最新のregistered_tagが最初になる）' do
+        get '/api/v1/registered_tags'
+        expect(tags_json.first['id']).to eq latest_registered_tag.id
       end
-      it '降順に並ぶ（最新のregistered_tagが最後になる）' do
+      it '昇順に並ぶ（最古のregistered_tagが最後になる）' do
         get '/api/v1/registered_tags?page=3'
-        expect(tags_json.last['id']).to eq latest_registered_tag.id
+        expect(tags_json.last['id']).to eq oldest_registered_tag.id
       end
     end
     describe '公開設定' do
+      let!(:limited_registered_tag) { create(:registered_tag, :limited) }
+      let!(:closed_registered_tag) { create(:registered_tag, :closed) }
       it '限定公開のタグを返さない' do
         expect(tags_json).not_to include 'id' => limited_registered_tag.id
         get '/api/v1/registered_tags?page=2'

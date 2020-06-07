@@ -3,12 +3,6 @@ RSpec.describe 'Tweets', type: :request do
     let(:registered_tag) { create(:registered_tag) }
     let(:tweets_json) { json['tweets'] }
     let(:tweets) { registered_tag.tweets.desc }
-    let!(:latest_registered_tweet) {
-      create(:tweet, registered_tag: registered_tag, tweeted_at: Date.tomorrow)
-    }
-    let!(:oldest_registered_tweet) {
-      create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
-    }
     before do
       create_list(:tweet, 30, registered_tag: registered_tag)
       get "/api/v1/registered_tags/#{registered_tag.id}/tweets"
@@ -36,12 +30,21 @@ RSpec.describe 'Tweets', type: :request do
         })
       end
     end
-    it 'tweetsが昇順に並ぶ（最新のtweetが最初になる）' do
-      expect(tweets_json.first['id']).to eq latest_registered_tweet.id
-    end
-    it 'tweetsが昇順に並ぶ（最古のtweetが最後になる）' do
-      get "/api/v1/registered_tags/#{registered_tag.id}/tweets?page=4"
-      expect(tweets_json.last['id']).to eq oldest_registered_tweet.id
+    describe 'ソート' do
+      let!(:latest_registered_tweet) {
+        create(:tweet, registered_tag: registered_tag, tweeted_at: Date.tomorrow)
+      }
+      let!(:oldest_registered_tweet) {
+        create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
+      }
+      it 'tweetsが昇順に並ぶ（最新のtweetが最初になる）' do
+        get "/api/v1/registered_tags/#{registered_tag.id}/tweets"
+        expect(tweets_json.first['id']).to eq latest_registered_tweet.id
+      end
+      it 'tweetsが昇順に並ぶ（最古のtweetが最後になる）' do
+        get "/api/v1/registered_tags/#{registered_tag.id}/tweets?page=4"
+        expect(tweets_json.last['id']).to eq oldest_registered_tweet.id
+      end
     end
   end
 end
