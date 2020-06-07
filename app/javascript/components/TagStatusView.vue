@@ -27,6 +27,11 @@ export default {
           text: `#${this.registeredTag.tag.name}`
         },
         {
+          name: "privacy",
+          title: "公開設定",
+          text: this.registeredTag.privacy
+        },
+        {
           name: "tweetedDayCount",
           title: "ツイート総日数",
           text: `${this.registeredTag.tweetedDayCount}日（${this.registeredTag.tweetRate}%）`
