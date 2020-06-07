@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import theCalendar from "../TheCalendar"
-import tagStatus from "../TagStatus"
-import theTab from "../TagsTab"
-import tweetsView from "../TagsTweets"
+import theCalendar from "./TheCalendar"
+import tagStatus from "./TagStatus"
+import theTab from "./TagsTab"
+import tweetsView from "./TagsTweets"
 
 export default {
   components: {

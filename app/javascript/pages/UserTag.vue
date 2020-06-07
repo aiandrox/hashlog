@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import theTagWrapper from "../components/shared/TheTagWrapper"
+import theTagWrapper from "../components/TheTagWrapper"
 
 export default {
   components: {

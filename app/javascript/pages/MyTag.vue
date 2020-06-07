@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import theTagWrapper from "../components/shared/TheTagWrapper"
+import theTagWrapper from "../components/TheTagWrapper"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
