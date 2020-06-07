@@ -14,7 +14,7 @@ ja:
       updated_at: 更新日時
       user:
         twitter_id: Twitter ID
-        name: 表示名
+        name: 名前
         screen_name: "@ユーザーネーム"
         description: プロフィール
         role: 権限
