@@ -314,7 +314,7 @@
     "multiline-ternary": ["error", "always-multiline"],
     "new-cap": ["error"],
     "new-parens": ["error"],
-    "newline-per-chained-call": ["error"],
+    "newline-per-chained-call": ["warn"],
     "no-array-constructor": ["error"],
     "no-bitwise": ["error"],
     "no-continue": "off",

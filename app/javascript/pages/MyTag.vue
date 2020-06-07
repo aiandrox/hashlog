@@ -2,6 +2,8 @@
   <div>
     <!-- タブ -->
     <the-tab :registered-tags="registeredTags" />
+    <!-- カレンダー -->
+    <the-calendar :tweets="tweets" />
     <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col class="hidden-sm-and-down" cols="12" md="4">
@@ -39,6 +41,7 @@
 
 <script>
 import { mapGetters } from "vuex"
+import theCalendar from "../components/TheCalendar"
 import tagStatus from "../components/TagStatus"
 import theTab from "../components/TagsTab"
 import tweetsView from "../components/TagsTweets"
@@ -46,6 +49,7 @@ import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
   components: {
+    theCalendar,
     tagStatus,
     theTab,
     tweetsView,
