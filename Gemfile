@@ -29,6 +29,8 @@ gem 'sidekiq-history'
 gem 'whenever', require: false
 # 外部API
 gem 'twitter'
+# seedファイル
+gem 'seed-fu'
 
 group :development, :test do
   gem 'bullet', '~> 6.1'

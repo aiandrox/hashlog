@@ -337,6 +337,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    seed-fu (2.3.9)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
     selectize-rails (0.12.6)
     semantic_range (2.3.0)
     sexp_processor (4.14.1)
@@ -438,6 +441,7 @@ DEPENDENCIES
   rspec-rails (~> 3.9, >= 3.9.1)
   rspec_junit_formatter
   rubocop (~> 0.80.1)
+  seed-fu
   shoulda-matchers
   sidekiq (~> 5.0)
   sidekiq-failures
