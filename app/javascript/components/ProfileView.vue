@@ -32,6 +32,14 @@
         :to="{ name: 'user', params: { userUuid: user.uuid } }"
         >ユーザーページを見る</v-btn
       >
+      <v-btn
+        outlined
+        color="primary"
+        class="ma-2"
+        href="/admin"
+        v-if="user.role === '管理ユーザー'"
+        >管理ページ</v-btn
+      >
     </div>
   </div>
 </template>
