@@ -1,17 +1,25 @@
 RSpec.describe RegisteredTag, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:tag) }
-    it { is_expected.to have_many(:tweets).dependent(:destroy) }
+    it 'belongs_to :user' do
+      is_expected.to belong_to(:user)
+    end
+    it 'belongs_to :tag' do
+      is_expected.to belong_to(:tag)
+    end
+    it 'has_many :tweets, destroy' do
+      is_expected.to have_many(:tweets).dependent(:destroy)
+    end
   end
 
   describe 'validations' do
     before { create(:registered_tag) }
-    it { is_expected.to validate_presence_of(:privacy) }
-    it do
+    it 'privacy: presence' do
+      is_expected.to validate_presence_of(:privacy)
+    end
+    it 'remind_day: numericality, only integer, <=30' do
       is_expected.to validate_numericality_of(:remind_day).only_integer.is_less_than_or_equal_to(30)
     end
-    it do
+    it 'tag_id: uniqueness, scoped user_id' do
       is_expected.to(validate_uniqueness_of(:tag_id)
                     .scoped_to(:user_id)
                     .with_message('は既に登録しています'))

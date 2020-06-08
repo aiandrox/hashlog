@@ -1,13 +1,21 @@
 RSpec.describe Tag, type: :model do
   describe 'associations' do
-    it { is_expected.to have_many(:registered_tags).dependent(:restrict_with_error) }
+    it 'has_many :registered_tags, restrict_with_error' do
+      is_expected.to have_many(:registered_tags).dependent(:restrict_with_error)
+    end
   end
 
   describe 'validations' do
     before { create(:tag) }
-    it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.to validate_uniqueness_of(:name) }
-    it { is_expected.to validate_length_of(:name).is_at_most(100) }
+    it 'name: presence' do
+      is_expected.to validate_presence_of(:name)
+    end
+    it 'name: uniqueness' do
+      is_expected.to validate_uniqueness_of(:name)
+    end
+    it 'name: length <100' do
+      is_expected.to validate_length_of(:name).is_at_most(100)
+    end
   end
 
   describe 'scope' do
