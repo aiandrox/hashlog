@@ -1,17 +1,25 @@
 RSpec.describe Tweet, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:registered_tag) }
+    it 'belongs_to registered_tag' do
+      is_expected.to belong_to(:registered_tag)
+    end
   end
 
   describe 'validations' do
     before { create(:registered_tag, :with_tweets) }
-    it { is_expected.to validate_presence_of(:oembed) }
-    it { is_expected.to validate_presence_of(:tweet_id) }
-    it { is_expected.to validate_presence_of(:tweeted_at) }
-    it do
+    it 'oembed: presence' do
+      is_expected.to validate_presence_of(:oembed)
+    end
+    it 'tweet_id: presence' do
+      is_expected.to validate_presence_of(:tweet_id)
+    end
+    it 'tweet_id: uniqueness, scoped registered_tag_id' do
       is_expected.to(validate_uniqueness_of(:tweet_id)
                     .scoped_to(:registered_tag_id)
                     .case_insensitive)
+    end
+    it 'tweeted_at: presence' do
+      is_expected.to validate_presence_of(:tweeted_at)
     end
   end
 
