@@ -54,7 +54,7 @@ export default {
       if (date === null) {
         return "まだツイートはありません"
       }
-      return this.$dayjs(date)
+      return this.$fullDateFormat(date)
     }
   }
 }

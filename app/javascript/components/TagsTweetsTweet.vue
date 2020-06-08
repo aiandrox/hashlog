@@ -41,7 +41,7 @@
         </v-btn>
         <v-spacer />
         <span class="body-2 font-weight-light">
-          {{ $dayjs(tweet.tweetedAt) }}
+          {{ $fullDateFormat(tweet.tweetedAt) }}
         </span>
       </v-card-actions>
     </v-card>
