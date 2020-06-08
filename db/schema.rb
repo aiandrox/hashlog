@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_19_035839) do
+ActiveRecord::Schema.define(version: 2020_06_08_020446) do
 
   create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2020_05_19_035839) do
     t.datetime "updated_at", null: false
     t.integer "privacy", default: 0, null: false
     t.integer "remind_day", default: 0, null: false
-    t.datetime "first_tweeted_at"
+    t.datetime "first_tweeted_at", default: "2999-12-31 00:00:00"
     t.index ["tag_id"], name: "index_registered_tags_on_tag_id"
     t.index ["user_id"], name: "index_registered_tags_on_user_id"
   end

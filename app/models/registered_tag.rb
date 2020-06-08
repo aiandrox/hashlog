@@ -16,6 +16,14 @@ class RegisteredTag < ApplicationRecord
   scope :desc, -> { order(created_at: :desc) }
   scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
 
+  def first_tweeted_at
+    @first_tweeted_at = if @first_tweeted_at.nil? || @first_tweeted_at > Date.today
+                          nil
+                        else
+                          @first_tweeted_at
+                        end
+  end
+
   def last_tweeted_at
     @last_tweeted_at ||= tweets.latest&.tweeted_at
   end

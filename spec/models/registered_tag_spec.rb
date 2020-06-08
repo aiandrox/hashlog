@@ -74,6 +74,21 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'methods' do
+    describe '#first_tweeted_at' do
+      context '過去の日付のとき' do
+        let(:registered_tag) { create(:registered_tag, first_tweeted_at: Time.now.prev_day) }
+        it '指定した日時を返す' do
+          expect(registered_tag.first_tweeted_at).to eq registered_tag.first_tweeted_at
+        end
+      end
+      context '何も入力せずに作成したとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        it 'nilを返す' do
+          expect(registered_tag.first_tweeted_at).to eq nil
+        end
+      end
+    end
+
     describe '#last_tweeted_at' do
       let(:registered_tag) { create(:registered_tag) }
       context 'ツイートがあるとき' do
