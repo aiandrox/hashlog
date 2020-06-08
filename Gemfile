@@ -56,6 +56,7 @@ group :test do
   gem 'capybara', '~> 3.31'
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
+  gem 'simplecov', require: false
   # モック
   gem 'vcr', require: false
   gem 'webmock', require: false
