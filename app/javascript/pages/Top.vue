@@ -4,37 +4,34 @@
     <div class="white-zone">
       <v-container>
         <v-row>
-          <v-col class="text-right align-self-center" :md="5">
-            <v-img class="logo" alt="Hashlog" src="/img/logo.png" />
+          <v-spacer />
+          <v-col class="text-right align-self-center " cols="12" md="5">
+            <v-img class="mb-8 " alt="Hashlog" src="/img/logo.png" />
             <p class="title">
               ハッシュタグで
               <br class="d-block d-sm-none" />あなたの学びをキチンとする
             </p>
-            <v-btn color="primary" x-large depressed @click="pushLogin"
+            <v-btn
+              class="mb-5"
+              color="primary"
+              x-large
+              depressed
+              @click="pushLogin"
               >今すぐ始める</v-btn
             >
-            <div class="d-none d-sm-block">
-              <p class="mt-10 mb-1 title">人気のハッシュタグ</p>
-              <span v-for="tag in popularTags" :key="tag.id"
-                >#{{ tag.name + " " }}</span
-              >
-            </div>
-            <v-btn
-              class="register-btn"
-              color="#74accc"
-              dark
-              depressed
-              @click="guestLogin"
+            <br class="d-block d-sm-none" />
+            <p class="mb-5 d-none d-sm-block features">
+              ハッシュタグを登録するだけで<br />あなたの継続を可視化できる<br />Twitter連携型
+              学習記録サービス
+            </p>
+            <v-btn color="#74accc" dark depressed @click="guestLogin"
               >ゲストとして試してみる</v-btn
             >
           </v-col>
-          <v-col>
-            <v-img
-              class="register-btn"
-              max-width="600"
-              src="/img/main-image.png"
-            />
+          <v-col cols="12" md="6">
+            <v-img max-width="600" src="/img/main-image.png" />
           </v-col>
+          <v-spacer />
         </v-row>
       </v-container>
     </div>
@@ -112,7 +109,6 @@ export default {
   },
   data() {
     return {
-      popularTags: [],
       recentTags: []
     }
   },
@@ -152,9 +148,6 @@ export default {
       this.$refs.termsDialog.open()
     },
     async fetchTagsData() {
-      const popularTagsRes = await this.$axios.get("/api/v1/tags?count=3")
-      const popularTags = popularTagsRes.data.tags
-      this.popularTags = popularTags
       const recentTagsRes = await this.$axios.get(
         "/api/v1/registered_tags?count=3"
       )
@@ -182,14 +175,6 @@ export default {
 <style scoped>
 .top {
   color: #3b394d;
-}
-.logo {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.register-btn {
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 .white-zone {
   background-color: #fff;
