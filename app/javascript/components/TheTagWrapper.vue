@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- タブ -->
-    <the-tab :registered-tags="registeredTags" />
+    <the-tab
+      :registered-tags="registeredTags"
+      @select-tab="firstRead"
+      @create-tag="firstRead"
+    />
     <!-- カレンダー -->
     <the-calendar
       ref="calendar"
