@@ -14,7 +14,7 @@
     />
     <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
-      <v-col class="hidden-sm-and-down" cols="12" md="4">
+      <v-col cols="12" md="4">
         <v-card flat>
           <tag-status
             ref="tagStatus"
