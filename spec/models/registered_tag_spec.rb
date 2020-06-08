@@ -121,11 +121,11 @@ RSpec.describe RegisteredTag, type: :model do
     end
 
     describe '#day_from_first_tweet' do
-      context '最初のツイートが7日前で計3日分のツイートがあるとき' do
+      context '最初のツイートが7日前のとき' do
         let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
-        it '7を返す' do
+        it '8を返す（今日と最初のツイート日を含めた日数）' do
           registered_tag.fetch_tweets_data!
-          expect(registered_tag.day_from_first_tweet).to eq 7
+          expect(registered_tag.day_from_first_tweet).to eq 8
         end
       end
       context 'ツイートを取得していないとき' do
@@ -139,8 +139,8 @@ RSpec.describe RegisteredTag, type: :model do
     describe '#tweet_rate' do
       context '最初のツイートが7日前で計3日分のツイートがあるとき' do
         let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
-        it '3 / (7-1) * 100 = 50(%)を返す' do
-          expect(registered_tag.tweet_rate).to eq 50
+        it '3 / 7 * 100 = 42.9(%)を返す（小数第二位）' do
+          expect(registered_tag.tweet_rate).to eq 42.9
         end
       end
       context 'ツイートを取得していないとき' do
