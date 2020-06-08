@@ -1,5 +1,5 @@
 User.seed(
-  id: 2,
+  id: 3,
   twitter_id: 'none',
   screen_name: 'hash1og',
   name: 'ゲストユーザー',
@@ -16,6 +16,6 @@ Tag.seed(
 
 RegisteredTag.seed(
   id: 1,
-  user_id: 2,
+  user_id: 3,
   tag_id: 1,
 )

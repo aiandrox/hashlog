@@ -14,3 +14,19 @@ Authentication.seed_once(
   provider: "twitter",
   uid: "1242379749650907137"
 )
+
+User.seed_once(
+  id: 2,
+  twitter_id: '1048451188209770497',
+  screen_name: 'aiandrox',
+  name: 'END',
+  description: '管理ユーザーです。',
+  privacy: :published,
+  role: :admin,
+  avatar_url: 'https://pbs.twimg.com/profile_images/1250601087318413313/yMmfgkOX.jpg',
+)
+Authentication.seed_once(
+  user_id: 2,
+  provider: "twitter",
+  uid: "1048451188209770497"
+)
