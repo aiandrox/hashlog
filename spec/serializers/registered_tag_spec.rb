@@ -1,6 +1,6 @@
 RSpec.describe 'RegisteredTag', type: :request do
   let(:tag_json) { json['registeredTag'] }
-  describe 'remind_day' do
+  describe '#remind_day' do
     context '0のとき' do
       let(:registered_tag) { create(:registered_tag, remind_day: 0) }
       it 'nilを返す' do
@@ -11,7 +11,7 @@ RSpec.describe 'RegisteredTag', type: :request do
           'privacy' => registered_tag.privacy_i18n,
           'remindDay' => nil,
           'tweetRate' => 0,
-          'firstTweetedAt' => registered_tag.first_tweeted_at,
+          'firstTweetedAt' => nil,
           'lastTweetedAt' => registered_tag.last_tweeted_at,
           'tag' => {
             'id' => registered_tag.tag.id,

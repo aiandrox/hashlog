@@ -32,7 +32,6 @@ Rails.application.routes.draw do
         resources :tweets, only: %i[index]
       end
       resources :tags, only: %i[index]
-      resources :tweets, only: %i[destroy] # そのうち消す
       # ログイン、ログアウト
       post 'oauth/callback', to: 'oauths#callback'
       get 'oauth/callback', to: 'oauths#callback'

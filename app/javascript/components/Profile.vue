@@ -13,8 +13,8 @@
           <profile-edit
             v-if="isEditing"
             :user="user"
-            @push-update="pushUpdate"
-            @push-delete="pushDelete"
+            @push-update="$emit('push-update')"
+            @push-delete="$emit('push-delete')"
             @push-cencel="pushCancel"
           />
         </v-col>
@@ -59,12 +59,6 @@ export default {
     pushEdit() {
       this.isEditing = true
       this.beforeUserData = this.user
-    },
-    pushDelete() {
-      this.$emit("push-delete")
-    },
-    pushUpdate() {
-      this.$emit("push-update")
     },
     pushCancel() {
       this.isEditing = false

@@ -1,34 +1,12 @@
 <template>
   <div>
-    <!-- タブ -->
-    <the-tab :registered-tags="registeredTags" />
-    <v-container class="main-content d-flex flex-row-reverse pt-0" row>
-      <!-- ハッシュタグの情報 -->
-      <v-col class="hidden-sm-and-down" cols="12" md="4">
-        <v-card flat>
-          <tag-status
-            ref="tagStatus"
-            :registered-tag="registeredTag"
-            @push-delete="showDeleteDialog"
-            @push-update="updateTagData"
-            @push-cancel="fetchTagData"
-          />
-        </v-card>
-      </v-col>
-      <!-- ツイート -->
-      <v-col cols="12" md="8" class="pt-0">
-        <tweets-view :tweets="tweets" :user="currentUser" />
-      </v-col>
-    </v-container>
-    <!-- ページネーション -->
-    <div class="text-center">
-      <v-pagination
-        v-model="page.currentPage"
-        :length="page.totalPages"
-        :total-visible="7"
-        @input="$changePaginationPage"
-      />
-    </div>
+    <the-tag-wrapper
+      ref="tagWrapper"
+      :user="currentUser"
+      :registered-tags="registeredTags"
+      @push-delete="showDeleteDialog"
+      @push-update="updateTagData"
+    />
     <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
       保存されていたツイートのデータが
@@ -39,39 +17,17 @@
 
 <script>
 import { mapGetters } from "vuex"
-import tagStatus from "../components/TagStatus"
-import theTab from "../components/TagsTab"
-import tweetsView from "../components/TagsTweets"
+import theTagWrapper from "../components/TheTagWrapper"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 
 export default {
   components: {
-    tagStatus,
-    theTab,
-    tweetsView,
+    theTagWrapper,
     deleteDialog
   },
   data() {
     return {
-      drawer: true,
-      page: {
-        currentPage: 1,
-        totalPages: 1,
-        requestUrl: ""
-      },
-      registeredTag: {
-        id: "",
-        tweetedDayCount: "",
-        privacy: "",
-        remindDay: "",
-        firstTweetedAt: "",
-        lastTweetedAt: "",
-        tag: {
-          name: ""
-        }
-      },
-      registeredTags: [],
-      tweets: []
+      registeredTags: []
     }
   },
   computed: {
@@ -82,53 +38,30 @@ export default {
     }
   },
   mounted() {
-    this.firstRead()
-  },
-  watch: {
-    $route() {
-      this.firstRead()
-    }
+    this.fetchRegisteredTagsData()
   },
   methods: {
-    async firstRead() {
-      await this.fetchData()
-      document.title = `#${this.registeredTag.tag.name} | Hashlog`
-    },
-    async fetchData() {
+    // タプ用ユーザーの全てのタグ
+    async fetchRegisteredTagsData() {
       const registeredTagsRes = await this.$axios.get(
         "/api/v1/users/current/registered_tags"
       )
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
-
-      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-      const { registeredTag } = registeredTagRes.data
-      this.registeredTag = registeredTag
-
-      const tweetsRes = await this.$axios.get(
-        `/api/v1/registered_tags/${registeredTag.id}/tweets`
-      )
-      this.$setPaginationData(tweetsRes)
-      const { tweets } = tweetsRes.data
-      this.tweets = tweets
     },
-    async updateTagData() {
+    // データ更新
+    async updateTagData(updateRegisteredTag) {
       const registeredTagRes = await this.$axios.patch(this.registeredTagUrl, {
-        tag: this.registeredTag
+        tag: updateRegisteredTag
       })
-      this.$refs.tagStatus.finishEdit()
+      this.$refs.tagWrapper.$refs.tagStatus.finishEdit()
       const { registeredTag } = registeredTagRes.data
-      this.registeredTag = registeredTag
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ハッシュタグの設定を更新しました"
       })
     },
-    async fetchTagData() {
-      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-      const { registeredTag } = registeredTagRes.data
-      this.registeredTag = registeredTag
-    },
+    // データ削除
     showDeleteDialog() {
       this.$refs.deleteDialog.open()
     },

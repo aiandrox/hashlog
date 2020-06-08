@@ -1,51 +1,16 @@
 <template>
-  <div>
-    <!-- タブ -->
-    <the-tab :registered-tags="registeredTags" />
-    <v-container class="main-content d-flex flex-row-reverse pt-0" row>
-      <!-- ハッシュタグの情報 -->
-      <v-col class="hidden-sm-and-down" cols="12" md="4">
-        <v-card flat>
-          <tag-status ref="tagStatus" :registered-tag="registeredTag" />
-        </v-card>
-      </v-col>
-      <v-spacer />
-      <!-- ツイート -->
-      <v-col cols="12" md="8" class="pt-0">
-        <tweets-view :tweets="tweets" :user="user" />
-      </v-col>
-    </v-container>
-    <!-- ページネーション -->
-    <div class="text-center">
-      <v-pagination
-        v-model="page.currentPage"
-        :length="page.totalPages"
-        :total-visible="7"
-        @input="$changePaginationPage"
-      />
-    </div>
-  </div>
+  <the-tag-wrapper :user="user" :registered-tags="registeredTags" />
 </template>
 
 <script>
-import tagStatus from "../components/TagStatus"
-import theTab from "../components/TagsTab"
-import tweetsView from "../components/TagsTweets"
+import theTagWrapper from "../components/TheTagWrapper"
 
 export default {
   components: {
-    tagStatus,
-    theTab,
-    tweetsView
+    theTagWrapper
   },
   data() {
     return {
-      drawer: true,
-      page: {
-        currentPage: 1,
-        totalPages: 1,
-        requestUrl: ""
-      },
       user: {
         uuid: "",
         description: "",
@@ -55,40 +20,18 @@ export default {
         role: "",
         privacy: ""
       },
-      registeredTag: {
-        id: "",
-        tweetedDayCount: "",
-        privacy: "",
-        remindDay: "",
-        firstTweetedAt: "",
-        lastTweetedAt: "",
-        tag: {
-          name: ""
-        }
-      },
-      registeredTags: [],
-      tweets: []
-    }
-  },
-  computed: {
-    registeredTagUrl() {
-      const { tagId } = this.$route.params
-      return `/api/v1/registered_tags/${tagId}`
+      registeredTags: []
     }
   },
   watch: {
     $route() {
-      this.firstRead()
+      this.fetchData()
     }
   },
   mounted() {
-    this.firstRead()
+    this.fetchData()
   },
   methods: {
-    async firstRead() {
-      await this.fetchData()
-      document.title = `#${this.registeredTag.tag.name} - ${this.user.name} | Hashlog`
-    },
     async fetchData() {
       const { userUuid } = this.$route.params
       const userRes = await this.$axios.get(`/api/v1/users/${userUuid}`)
@@ -100,22 +43,6 @@ export default {
       )
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
-
-      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-      const { registeredTag } = registeredTagRes.data
-      this.registeredTag = registeredTag
-
-      const tweetsRes = await this.$axios.get(
-        `/api/v1/registered_tags/${registeredTag.id}/tweets`
-      )
-      this.$setPaginationData(tweetsRes)
-      const { tweets } = tweetsRes.data
-      this.tweets = tweets
-    },
-    async fetchTagData() {
-      const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
-      const { registeredTag } = registeredTagRes.data
-      this.registeredTag = registeredTag
     }
   }
 }

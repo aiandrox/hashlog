@@ -29,7 +29,7 @@ class RegisteredTag < ApplicationRecord
   end
 
   def day_from_first_tweet
-    first_tweeted_at.nil? ? 0 : (Date.today - first_tweeted_at.to_date).to_i
+    first_tweeted_at.nil? ? 0 : (Date.today - first_tweeted_at.to_date).to_i + 1
   end
 
   def tweet_rate
@@ -37,7 +37,7 @@ class RegisteredTag < ApplicationRecord
 
     # 今日のデータがない場合は昨日時点までのデータで計算する
     denominator = day_from_last_tweet.zero? ? day_from_first_tweet : day_from_first_tweet - 1
-    tweeted_day_count * 100 / denominator
+    (tweeted_day_count.to_f / denominator * 100).round(1)
   end
 
   def cron_tweets

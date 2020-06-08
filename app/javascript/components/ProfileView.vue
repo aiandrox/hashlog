@@ -22,7 +22,7 @@
       />
     </v-card-text>
     <div v-if="isMypage">
-      <v-btn class="ma-2" outlined color="primary" @click="pushEdit">
+      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-edit')">
         <v-icon left>mdi-pencil</v-icon>編集
       </v-btn>
       <v-btn
@@ -66,11 +66,6 @@ export default {
     },
     isMypage() {
       return this.$route.path.includes("/mypage/")
-    }
-  },
-  methods: {
-    pushEdit() {
-      this.$emit("push-edit")
     }
   }
 }
