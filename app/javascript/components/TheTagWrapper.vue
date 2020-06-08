@@ -3,7 +3,11 @@
     <!-- タブ -->
     <the-tab :registered-tags="registeredTags" />
     <!-- カレンダー -->
-    <the-calendar :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
+    <the-calendar
+      ref="calendar"
+      :tweet-dates="tweetDates"
+      @input-date="fetchDateTweets"
+    />
     <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col class="hidden-sm-and-down" cols="12" md="4">
@@ -28,7 +32,7 @@
         v-model="page.currentPage"
         :length="page.totalPages"
         :total-visible="7"
-        @input="$changePaginationPage"
+        @input="changePaginationPage"
       />
     </div>
   </div>
@@ -111,7 +115,7 @@ export default {
       const tweetsRes = await this.$axios.get(
         `${this.registeredTagUrl}/tweets?page=1`
       )
-      this.$setPaginationData(tweetsRes)
+      this.setPaginationData(tweetsRes)
       const { tweets } = tweetsRes.data
       this.tweets = tweets
     },
@@ -126,12 +130,30 @@ export default {
     },
     // カレンダーの日付の変更
     async fetchDateTweets(date) {
+      this.page.currentPage = 1
       const tweetsRes = await this.$axios.get(
         `${this.registeredTagUrl}/tweets?page=1&date=${date}`
       )
-      this.$setPaginationData(tweetsRes)
+      this.setPaginationData(tweetsRes)
       const { tweets } = tweetsRes.data
       this.tweets = tweets
+    },
+    // ページネーション
+    setPaginationData(response) {
+      this.page.totalPages = Number(response.headers["total-pages"])
+      this.page.requestUrl = response.headers["request-url"]
+    },
+    async changePaginationPage(val) {
+      this.$toTop(0)
+      const res = await this.$axios.get(this.paginationUrl(val))
+      const { tweets } = res.data
+      this.tweets = tweets
+    },
+    paginationUrl(page) {
+      if (this.$refs.calendar.date) {
+        return `${this.page.requestUrl}?date=${this.$refs.calendar.date}&page=${page}`
+      }
+      return `${this.page.requestUrl}?page=${page}`
     }
   }
 }
