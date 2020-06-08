@@ -71,9 +71,6 @@ export default {
       }
       const { userUuid } = this.$route.params
       return { name: "userTag", params: { userUuid, tagId: registeredTag.id } }
-    },
-    pushRegister() {
-      this.$refs.registerDialog.open()
     }
   }
 }

@@ -5,9 +5,9 @@
       v-if="isEditing"
       ref="editArea"
       :registered-tag="registeredTag"
-      @push-update="pushUpdate"
+      @push-update="$emit('push-update')"
       @push-cancel="pushCancel"
-      @push-delete="pushDelete"
+      @push-delete="$emit('push-delete')"
     />
     <!-- ビュー部分 -->
     <status-view v-if="!isEditing" :registered-tag="registeredTag" />
@@ -59,12 +59,6 @@ export default {
     async pushEdit() {
       await (this.isEditing = true)
       this.$refs.editArea.fetchSelectFromRemindDay()
-    },
-    pushDelete() {
-      this.$emit("push-delete")
-    },
-    pushUpdate() {
-      this.$emit("push-update")
     },
     pushCancel() {
       this.isEditing = false

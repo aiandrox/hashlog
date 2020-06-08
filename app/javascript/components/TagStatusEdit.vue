@@ -39,7 +39,7 @@
       </v-list-item>
     </v-container>
     <v-list-item>
-      <v-btn class="ma-2" outlined color="primary" @click="pushCancel"
+      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')"
         >キャンセル</v-btn
       >
       <v-btn
@@ -54,7 +54,7 @@
       </v-btn>
     </v-list-item>
     <v-list-item justify="center">
-      <v-btn class="ma-2" outlined color="error" @click="pushDelete">
+      <v-btn class="ma-2" outlined color="error" @click="$emit('push-delete')">
         <v-icon left>mdi-delete</v-icon>ハッシュタグを削除
       </v-btn>
     </v-list-item>
@@ -105,15 +105,9 @@ export default {
       const number = Number(result) < 0 ? 0 : Number(result)
       return number
     },
-    pushDelete() {
-      this.$emit("push-delete")
-    },
     pushUpdate() {
       this.fetchRemindDayFromForm()
       this.$emit("push-update")
-    },
-    pushCancel() {
-      this.$emit("push-cancel")
     }
   }
 }
