@@ -95,11 +95,6 @@ export default {
       return `/api/v1/registered_tags/${tagId}`
     }
   },
-  watch: {
-    $route() {
-      this.firstRead()
-    }
-  },
   mounted() {
     this.firstRead()
   },

@@ -40,11 +40,6 @@ export default {
   mounted() {
     this.fetchRegisteredTagsData()
   },
-  watch: {
-    $route() {
-      this.fetchRegisteredTagsData()
-    }
-  },
   methods: {
     // タプ用ユーザーの全てのタグ
     async fetchRegisteredTagsData() {
