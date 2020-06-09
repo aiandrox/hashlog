@@ -1,0 +1,72 @@
+<template>
+  <div class="my-5 main-content">
+    <v-card class="mx-auto" outlined>
+      <v-container row>
+        <v-col cols="12" md="9">
+          <!-- プロフィール -->
+          <profile-view
+            v-if="!isEditing"
+            :user="user"
+            @push-edit="isEditing = true"
+          />
+          <!-- ユーザー編集 -->
+          <profile-edit
+            v-if="isEditing"
+            :user="user"
+            @push-update="$emit('push-update')"
+            @push-delete="$emit('push-delete')"
+            @push-cencel="pushCancel"
+          />
+        </v-col>
+        <v-col cols="9" md="3">
+          <!-- ステータス -->
+          <profile-status :is-editing="isEditing" :user="user" />
+        </v-col>
+      </v-container>
+    </v-card>
+  </div>
+</template>
+
+<script>
+import profileStatus from "./ProfileStatus"
+import profileEdit from "./ProfileEdit"
+import profileView from "./ProfileView"
+export default {
+  components: {
+    profileView,
+    profileEdit,
+    profileStatus
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => {},
+      required: true
+    }
+  },
+  data() {
+    return {
+      isEditing: false,
+      beforeUserData: {}
+    }
+  },
+  computed: {
+    twitterUrl() {
+      return `https://twitter.com/${this.user.screen_name}`
+    }
+  },
+  methods: {
+    pushEdit() {
+      this.isEditing = true
+      this.beforeUserData = this.user
+    },
+    pushCancel() {
+      this.isEditing = false
+      this.$emit("push-cancel")
+    },
+    finishEdit() {
+      this.isEditing = false
+    }
+  }
+}
+</script>

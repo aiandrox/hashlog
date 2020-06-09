@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=%23absent_tag%20from:aiandrox%20exclude:retweets&result_type=recent&since_id=1255854602626330624
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="8e4f24ac0ffd918c92456d2522e2cbb5",
+        oauth_signature="Jmd3gydyeDhsNCYD43%2Bexh8P1l8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588676716", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '357'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Tue, 05 May 2020 11:05:16 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Tue, 05 May 2020 11:05:16 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158867671689289294; Max-Age=63072000; Expires=Thu, 5 May 2022
+        11:05:16 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=ja; Path=/
+      - personalization_id="v1_yv41NyRgurq5EwY5zyYwtw=="; Max-Age=63072000; Expires=Thu,
+        5 May 2022 11:05:16 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write
+      X-Connection-Hash:
+      - 2936c86ac8085eabd0764a0f99be62bb
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '178'
+      X-Rate-Limit-Reset:
+      - '1588677233'
+      X-Response-Time:
+      - '121'
+      X-Transaction:
+      - 007adece0025c131
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[],"search_metadata":{"completed_in":0.01,"max_id":1257627413099327490,"max_id_str":"1257627413099327490","query":"%23absent_tag+from%3Aaiandrox","refresh_url":"?since_id=1257627413099327490&q=%23absent_tag%20from%3Aaiandrox&result_type=recent&include_entities=1","count":100,"since_id":1255854602626330624,"since_id_str":"1255854602626330624"}}'
+    http_version: null
+  recorded_at: Tue, 05 May 2020 11:05:17 GMT
+recorded_with: VCR 5.1.0

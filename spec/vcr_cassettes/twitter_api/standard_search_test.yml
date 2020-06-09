@@ -1,0 +1,692 @@
+# #テスト
+# tweeted_day_count 4日
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&q=%23%E3%83%86%E3%82%B9%E3%83%88%20from:aiandrox%20exclude:retweets&result_type=recent
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="0ab497377650716b0fa0bd2689936b16",
+        oauth_signature="3x0twoYwQcqcwI4A0wCSXwDibrg%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337725", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '20150'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:26 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:26 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772653758175; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:26 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=ja; Path=/
+      - personalization_id="v1_vQIZhIWC46WKYmcEdfLtPQ=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:26 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write
+      X-Connection-Hash:
+      - 3afb7d93c8012a4fae27ef86675f9481
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1588338626'
+      X-Response-Time:
+      - '231'
+      X-Transaction:
+      - 0073af3500ee048f
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[{"created_at":"Tue Apr 28 05:57:25 +0000 2020","id":1255013230675546112,"id_str":"1255013230675546112","text":"\u308f\u304b\u3089\u3093of\u308f\u304b\u3089\u3093\n\u3053\u308c\u30c7\u30d7\u30ed\u30a4\u3067\u6b7b\u306c\u4e88\u611f\u3057\u304b\u306a\u3044\u304b\u3089\u3001\u3042\u308b\u7a0b\u5ea6\u3067\u304d\u305f\u3089\u4e00\u65e6\u30c7\u30d7\u30ed\u30a4\u3057\u305f\u307b\u3046\u304c\u3044\u3044\u306a\u3042\n#\u30c6\u30b9\u30c8","truncated":false,"entities":{"hashtags":[{"text":"\u30c6\u30b9\u30c8","indices":[53,57]}],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"ja","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1048451188209770497,"id_str":"1048451188209770497","name":"END","screen_name":"aiandrox","location":"\u5ca1\u5c71\u2192\u5c71\u68a8\u2192\u6771\u4eac","description":"\u5c0f\u5b66\u6821\u306e\u5148\u751f\u304b\u3089\u30a8\u30f3\u30b8\u30cb\u30a2\u76ee\u6307\u3057\u3066Rails\u3068\u304b\u9811\u5f35\u3063\u3066\u308b\u4eba\u3067\u3059\u3002\u96d1\u591a\u306b\u545f\u304f\u3002#RUNTEQ
+        1\u6708\u751f\u3002\u8b0e\u89e3\u304d\u597d\u304d\u3002","url":"https:\/\/t.co\/TyyKszsTB0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/TyyKszsTB0","expanded_url":"https:\/\/lapras.com\/public\/CQMWEEQ","display_url":"lapras.com\/public\/CQMWEEQ","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":113,"friends_count":122,"listed_count":3,"created_at":"Sat
+        Oct 06 05:53:37 +0000 2018","favourites_count":265,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":838,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1048451188209770497\/1585461723","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"ja"},{"created_at":"Tue
+        Apr 28 03:25:58 +0000 2020","id":1254975116057776128,"id_str":"1254975116057776128","text":"15\u5206\u5f8c\u306b\u3053\u306e\u30c4\u30a4\u30fc\u30c8\u304c\u53ce\u96c6\u3055\u308c\u308b\u306f\u305a
+        #\u30c6\u30b9\u30c8 #\u30c6\u30b9\u30c8\u30e9\u30ca\u30a4","truncated":false,"entities":{"hashtags":[{"text":"\u30c6\u30b9\u30c8","indices":[20,24]},{"text":"\u30c6\u30b9\u30c8\u30e9\u30ca\u30a4","indices":[25,32]}],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"ja","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1048451188209770497,"id_str":"1048451188209770497","name":"END","screen_name":"aiandrox","location":"\u5ca1\u5c71\u2192\u5c71\u68a8\u2192\u6771\u4eac","description":"\u5c0f\u5b66\u6821\u306e\u5148\u751f\u304b\u3089\u30a8\u30f3\u30b8\u30cb\u30a2\u76ee\u6307\u3057\u3066Rails\u3068\u304b\u9811\u5f35\u3063\u3066\u308b\u4eba\u3067\u3059\u3002\u96d1\u591a\u306b\u545f\u304f\u3002#RUNTEQ
+        1\u6708\u751f\u3002\u8b0e\u89e3\u304d\u597d\u304d\u3002","url":"https:\/\/t.co\/TyyKszsTB0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/TyyKszsTB0","expanded_url":"https:\/\/lapras.com\/public\/CQMWEEQ","display_url":"lapras.com\/public\/CQMWEEQ","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":113,"friends_count":122,"listed_count":3,"created_at":"Sat
+        Oct 06 05:53:37 +0000 2018","favourites_count":265,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":838,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1048451188209770497\/1585461723","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":2,"favorited":false,"retweeted":false,"lang":"ja"},{"created_at":"Mon
+        Apr 27 08:51:11 +0000 2020","id":1254694571264471040,"id_str":"1254694571264471040","text":"\u3053\u308c\u3084\u308b\uff01\u3063\u3066\u6c7a\u3081\u305f\u306e\u306b\u300c\u3042\u3001\u3061\u3087\u3063\u3068\u3053\u3053\u76f4\u3057\u3066\u300d\u3068\u304b\u300c\u3053\u3053\u66f8\u304d\u65b9\u5909\u3048\u3089\u308c\u308b\u306a\uff1f\u300d\u3068\u304b\u5bc4\u308a\u9053\u3057\u305f\u7d50\u679c\u3001\u672c\u7b4b\u3069\u3053\u307e\u3067\u3084\u3063\u305f\u304b\u5fd8\u308c\u308b\u306e\u3092\u3084\u3081\u305f\u3044\u3002\u3000#\u30c6\u30b9\u30c8","truncated":false,"entities":{"hashtags":[{"text":"\u30c6\u30b9\u30c8","indices":[72,76]}],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"ja","result_type":"recent"},"source":"\u003ca
+        href=\"http:\/\/twitter.com\/download\/android\" rel=\"nofollow\"\u003eTwitter
+        for Android\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1048451188209770497,"id_str":"1048451188209770497","name":"END","screen_name":"aiandrox","location":"\u5ca1\u5c71\u2192\u5c71\u68a8\u2192\u6771\u4eac","description":"\u5c0f\u5b66\u6821\u306e\u5148\u751f\u304b\u3089\u30a8\u30f3\u30b8\u30cb\u30a2\u76ee\u6307\u3057\u3066Rails\u3068\u304b\u9811\u5f35\u3063\u3066\u308b\u4eba\u3067\u3059\u3002\u96d1\u591a\u306b\u545f\u304f\u3002#RUNTEQ
+        1\u6708\u751f\u3002\u8b0e\u89e3\u304d\u597d\u304d\u3002","url":"https:\/\/t.co\/TyyKszsTB0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/TyyKszsTB0","expanded_url":"https:\/\/lapras.com\/public\/CQMWEEQ","display_url":"lapras.com\/public\/CQMWEEQ","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":113,"friends_count":122,"listed_count":3,"created_at":"Sat
+        Oct 06 05:53:37 +0000 2018","favourites_count":265,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":838,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1048451188209770497\/1585461723","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":2,"favorited":false,"retweeted":false,"lang":"ja"},{"created_at":"Sun
+        Apr 26 04:57:12 +0000 2020","id":1254273298231291907,"id_str":"1254273298231291907","text":"cron\u306e\u78ba\u8a8d\u3059\u308b\u306e\u3048\u3063\u3050\u3044\u3093\u3060\u3051\u3069\uff1f\uff1f\n\u3044\u3061\u3044\u3061\u305d\u306e\u305f\u3081\u306b\u30c4\u30a4\u30fc\u30c8\u3059\u308b\u306e\u3082\u9762\u5012\u3060\u304b\u3089\u3001\u3053\u308c\u304b\u3089\u5168\u767a\u8a00\u306b\u30cf\u30c3\u30b7\u30e5\u30bf\u30b0\u3064\u3051\u308c\u3070\u3044\u3044\u306e\u304b\u3002\u5929\u624d\u304b\u3088\u3002\n#\u30c6\u30b9\u30c8","truncated":false,"entities":{"hashtags":[{"text":"\u30c6\u30b9\u30c8","indices":[73,77]}],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"ja","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1048451188209770497,"id_str":"1048451188209770497","name":"END","screen_name":"aiandrox","location":"\u5ca1\u5c71\u2192\u5c71\u68a8\u2192\u6771\u4eac","description":"\u5c0f\u5b66\u6821\u306e\u5148\u751f\u304b\u3089\u30a8\u30f3\u30b8\u30cb\u30a2\u76ee\u6307\u3057\u3066Rails\u3068\u304b\u9811\u5f35\u3063\u3066\u308b\u4eba\u3067\u3059\u3002\u96d1\u591a\u306b\u545f\u304f\u3002#RUNTEQ
+        1\u6708\u751f\u3002\u8b0e\u89e3\u304d\u597d\u304d\u3002","url":"https:\/\/t.co\/TyyKszsTB0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/TyyKszsTB0","expanded_url":"https:\/\/lapras.com\/public\/CQMWEEQ","display_url":"lapras.com\/public\/CQMWEEQ","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":113,"friends_count":122,"listed_count":3,"created_at":"Sat
+        Oct 06 05:53:37 +0000 2018","favourites_count":265,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":838,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1048451188209770497\/1585461723","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"ja"},{"created_at":"Sat
+        Apr 25 12:32:38 +0000 2020","id":1254025525514735622,"id_str":"1254025525514735622","text":"4jhze\u00a5st@d(shw@gykd@''
+        #\u30c6\u30b9\u30c8","truncated":false,"entities":{"hashtags":[{"text":"\u30c6\u30b9\u30c8","indices":[22,26]}],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"nl","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1048451188209770497,"id_str":"1048451188209770497","name":"END","screen_name":"aiandrox","location":"\u5ca1\u5c71\u2192\u5c71\u68a8\u2192\u6771\u4eac","description":"\u5c0f\u5b66\u6821\u306e\u5148\u751f\u304b\u3089\u30a8\u30f3\u30b8\u30cb\u30a2\u76ee\u6307\u3057\u3066Rails\u3068\u304b\u9811\u5f35\u3063\u3066\u308b\u4eba\u3067\u3059\u3002\u96d1\u591a\u306b\u545f\u304f\u3002#RUNTEQ
+        1\u6708\u751f\u3002\u8b0e\u89e3\u304d\u597d\u304d\u3002","url":"https:\/\/t.co\/TyyKszsTB0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/TyyKszsTB0","expanded_url":"https:\/\/lapras.com\/public\/CQMWEEQ","display_url":"lapras.com\/public\/CQMWEEQ","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":113,"friends_count":122,"listed_count":3,"created_at":"Sat
+        Oct 06 05:53:37 +0000 2018","favourites_count":265,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":838,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1048451188209770497\/1585461723","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"nl"},{"created_at":"Sat
+        Apr 25 08:46:57 +0000 2020","id":1253968729697746945,"id_str":"1253968729697746945","text":"4\/25
+        17:46\n\u3067\u3059\u3002 #\u30c6\u30b9\u30c8","truncated":false,"entities":{"hashtags":[{"text":"\u30c6\u30b9\u30c8","indices":[15,19]}],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"ja","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1048451188209770497,"id_str":"1048451188209770497","name":"END","screen_name":"aiandrox","location":"\u5ca1\u5c71\u2192\u5c71\u68a8\u2192\u6771\u4eac","description":"\u5c0f\u5b66\u6821\u306e\u5148\u751f\u304b\u3089\u30a8\u30f3\u30b8\u30cb\u30a2\u76ee\u6307\u3057\u3066Rails\u3068\u304b\u9811\u5f35\u3063\u3066\u308b\u4eba\u3067\u3059\u3002\u96d1\u591a\u306b\u545f\u304f\u3002#RUNTEQ
+        1\u6708\u751f\u3002\u8b0e\u89e3\u304d\u597d\u304d\u3002","url":"https:\/\/t.co\/TyyKszsTB0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/TyyKszsTB0","expanded_url":"https:\/\/lapras.com\/public\/CQMWEEQ","display_url":"lapras.com\/public\/CQMWEEQ","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":113,"friends_count":122,"listed_count":3,"created_at":"Sat
+        Oct 06 05:53:37 +0000 2018","favourites_count":265,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":838,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1048451188209770497\/1585461723","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"ja"},{"created_at":"Sat
+        Apr 25 07:17:39 +0000 2020","id":1253946258395246592,"id_str":"1253946258395246592","text":"\u3066\u3059\u3068\u3067\u3059\u3088\u3093\u3000#\u30c6\u30b9\u30c8","truncated":false,"entities":{"hashtags":[{"text":"\u30c6\u30b9\u30c8","indices":[8,12]}],"symbols":[],"user_mentions":[],"urls":[]},"metadata":{"iso_language_code":"ja","result_type":"recent"},"source":"\u003ca
+        href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_reply_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":1048451188209770497,"id_str":"1048451188209770497","name":"END","screen_name":"aiandrox","location":"\u5ca1\u5c71\u2192\u5c71\u68a8\u2192\u6771\u4eac","description":"\u5c0f\u5b66\u6821\u306e\u5148\u751f\u304b\u3089\u30a8\u30f3\u30b8\u30cb\u30a2\u76ee\u6307\u3057\u3066Rails\u3068\u304b\u9811\u5f35\u3063\u3066\u308b\u4eba\u3067\u3059\u3002\u96d1\u591a\u306b\u545f\u304f\u3002#RUNTEQ
+        1\u6708\u751f\u3002\u8b0e\u89e3\u304d\u597d\u304d\u3002","url":"https:\/\/t.co\/TyyKszsTB0","entities":{"url":{"urls":[{"url":"https:\/\/t.co\/TyyKszsTB0","expanded_url":"https:\/\/lapras.com\/public\/CQMWEEQ","display_url":"lapras.com\/public\/CQMWEEQ","indices":[0,23]}]},"description":{"urls":[]}},"protected":false,"followers_count":113,"friends_count":122,"listed_count":3,"created_at":"Sat
+        Oct 06 05:53:37 +0000 2018","favourites_count":265,"utc_offset":null,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":838,"lang":null,"contributors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1250601087318413313\/yMmfgkOX_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1048451188209770497\/1585461723","profile_link_color":"1DA1F2","profile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profile_use_background_image":true,"has_extended_profile":false,"default_profile":true,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translator_type":"none"},"geo":null,"coordinates":null,"place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"retweeted":false,"lang":"ja"}],"search_metadata":{"completed_in":0.112,"max_id":1255013230675546112,"max_id_str":"1255013230675546112","next_results":"?max_id=1253946258395246591&q=%23%E3%83%86%E3%82%B9%E3%83%88%20from%3Aaiandrox&count=100&include_entities=1&result_type=recent","query":"%23%E3%83%86%E3%82%B9%E3%83%88+from%3Aaiandrox","refresh_url":"?since_id=1255013230675546112&q=%23%E3%83%86%E3%82%B9%E3%83%88%20from%3Aaiandrox&result_type=recent&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:27 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/search/tweets.json?count=100&include_entities=1&max_id=1253946258395246591&q=%23%E3%83%86%E3%82%B9%E3%83%88%20from:aiandrox&result_type=recent
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="3cd65265e3d4e4f2b84e52c63c5e8409",
+        oauth_signature="MEBvhzx2th5QlVFiHzOLkry1gcQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337727", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, pre-check=0, post-check=0
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '355'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Expires:
+      - Tue, 31 Mar 1981 05:00:00 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772825296884; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - lang=ja; Path=/
+      - personalization_id="v1_ArftkwLmT6xq1IVhN8RkUg=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Access-Level:
+      - read-write
+      X-Connection-Hash:
+      - 8454532d02f8f4080207618bd84a52c5
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '178'
+      X-Rate-Limit-Reset:
+      - '1588338626'
+      X-Response-Time:
+      - '144'
+      X-Transaction:
+      - 0076abd800881c83
+      X-Twitter-Response-Tags:
+      - BouncerCompliant
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"statuses":[],"search_metadata":{"completed_in":0.01,"max_id":1253946258395246591,"max_id_str":"1253946258395246591","query":"%23%E3%83%86%E3%82%B9%E3%83%88+from%3Aaiandrox","refresh_url":"?since_id=1253946258395246591&q=%23%E3%83%86%E3%82%B9%E3%83%88%20from%3Aaiandrox&result_type=recent&include_entities=1","count":100,"since_id":0,"since_id_str":"0"}}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:28 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/oembed.json?hide_thread=true&id=1254025525514735622&lang=ja&omit_script=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="1e3a8242536cf2acc03891a35b02ccca",
+        oauth_signature="04soGg2MTbep86d2ylTHaNzoEik%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337728", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - must-revalidate, max-age=3153600000
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '759'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Expires:
+      - Sun, 07 Apr 2120 12:55:28 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772876650479; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_lnMmentHTpRYkUMmCVEVjQ=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - edb3e5f37e18db6a1a092de42a73e080
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '179'
+      X-Rate-Limit-Reset:
+      - '1588338628'
+      X-Response-Time:
+      - '114'
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"url":"https:\/\/twitter.com\/aiandrox\/status\/1254025525514735622","author_name":"END","author_url":"https:\/\/twitter.com\/aiandrox","html":"\u003Cblockquote
+        class=\"twitter-tweet\" data-lang=\"ja\"\u003E\u003Cp lang=\"nl\" dir=\"ltr\"\u003E4jhze¥st@d(shw@gykd@&#39;
+        \u003Ca href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テスト\u003C\/a\u003E\u003C\/p\u003E&mdash;
+        END (@aiandrox) \u003Ca href=\"https:\/\/twitter.com\/aiandrox\/status\/1254025525514735622?ref_src=twsrc%5Etfw\"\u003E2020年4月25日\u003C\/a\u003E\u003C\/blockquote\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:28 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/oembed.json?hide_thread=true&id=1254694571264471040&lang=ja&omit_script=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="013e6c94eb3247ef61c562eb9f05c370",
+        oauth_signature="j%2FeVmrUlGcmJ3t0Nk1b0fY66IXQ%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337728", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - must-revalidate, max-age=3153600000
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '948'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Expires:
+      - Sun, 07 Apr 2120 12:55:28 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772877047566; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_iQnyoEb1otX1owei52FoQg=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - '04834f7f1a13c8209f9f05a32d175f3d'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '178'
+      X-Rate-Limit-Reset:
+      - '1588338628'
+      X-Response-Time:
+      - '115'
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"url":"https:\/\/twitter.com\/aiandrox\/status\/1254694571264471040","author_name":"END","author_url":"https:\/\/twitter.com\/aiandrox","html":"\u003Cblockquote
+        class=\"twitter-tweet\" data-lang=\"ja\"\u003E\u003Cp lang=\"ja\" dir=\"ltr\"\u003Eこれやる！って決めたのに「あ、ちょっとここ直して」とか「ここ書き方変えられるな？」とか寄り道した結果、本筋どこまでやったか忘れるのをやめたい。　\u003Ca
+        href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テスト\u003C\/a\u003E\u003C\/p\u003E&mdash;
+        END (@aiandrox) \u003Ca href=\"https:\/\/twitter.com\/aiandrox\/status\/1254694571264471040?ref_src=twsrc%5Etfw\"\u003E2020年4月27日\u003C\/a\u003E\u003C\/blockquote\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:28 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/oembed.json?hide_thread=true&id=1253968729697746945&lang=ja&omit_script=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="e808d0682346ed79a2dcca8fd232425d",
+        oauth_signature="RozZ4%2BTgwg%2FW1x0v8h1t%2FLwUVW4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337728", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - must-revalidate, max-age=3153600000
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '767'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Expires:
+      - Sun, 07 Apr 2120 12:55:28 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772879011820; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_tFpEQX1OnWQopBCFAOIN0g=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 0b39b0e82f28dbebfad65567808227e8
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '177'
+      X-Rate-Limit-Reset:
+      - '1588338628'
+      X-Response-Time:
+      - '114'
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"url":"https:\/\/twitter.com\/aiandrox\/status\/1253968729697746945","author_name":"END","author_url":"https:\/\/twitter.com\/aiandrox","html":"\u003Cblockquote
+        class=\"twitter-tweet\" data-lang=\"ja\"\u003E\u003Cp lang=\"ja\" dir=\"ltr\"\u003E4\/25
+        17:46\u003Cbr\u003Eです。 \u003Ca href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テスト\u003C\/a\u003E\u003C\/p\u003E&mdash;
+        END (@aiandrox) \u003Ca href=\"https:\/\/twitter.com\/aiandrox\/status\/1253968729697746945?ref_src=twsrc%5Etfw\"\u003E2020年4月25日\u003C\/a\u003E\u003C\/blockquote\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:28 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/oembed.json?hide_thread=true&id=1253946258395246592&lang=ja&omit_script=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="e685748161f4406b9ba28996409f60fd",
+        oauth_signature="nUTBK9ZVoIiiC5lgWanYZ3kUrx4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337728", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - must-revalidate, max-age=3153600000
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '756'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Expires:
+      - Sun, 07 Apr 2120 12:55:28 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772879298751; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_TJf3U9njm+GmhI/c94e0hw=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 213e044a9ff1db5e7563c27f0deae177
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '176'
+      X-Rate-Limit-Reset:
+      - '1588338628'
+      X-Response-Time:
+      - '115'
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"url":"https:\/\/twitter.com\/aiandrox\/status\/1253946258395246592","author_name":"END","author_url":"https:\/\/twitter.com\/aiandrox","html":"\u003Cblockquote
+        class=\"twitter-tweet\" data-lang=\"ja\"\u003E\u003Cp lang=\"ja\" dir=\"ltr\"\u003Eてすとですよん　\u003Ca
+        href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テスト\u003C\/a\u003E\u003C\/p\u003E&mdash;
+        END (@aiandrox) \u003Ca href=\"https:\/\/twitter.com\/aiandrox\/status\/1253946258395246592?ref_src=twsrc%5Etfw\"\u003E2020年4月25日\u003C\/a\u003E\u003C\/blockquote\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:28 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/oembed.json?hide_thread=true&id=1254273298231291907&lang=ja&omit_script=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="a14064abdebc3fced4a39f441edb0872",
+        oauth_signature="Ddw8Ca2vNTQ4MVXGEZh9klmLV3I%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337728", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - must-revalidate, max-age=3153600000
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '951'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Expires:
+      - Sun, 07 Apr 2120 12:55:28 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:28 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772888732549; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_bBfoECSk01SuZO/Nyx8/Hg=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:28 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 71bc5aae4126347defd293239e59360a
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '175'
+      X-Rate-Limit-Reset:
+      - '1588338628'
+      X-Response-Time:
+      - '115'
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"url":"https:\/\/twitter.com\/aiandrox\/status\/1254273298231291907","author_name":"END","author_url":"https:\/\/twitter.com\/aiandrox","html":"\u003Cblockquote
+        class=\"twitter-tweet\" data-lang=\"ja\"\u003E\u003Cp lang=\"ja\" dir=\"ltr\"\u003Ecronの確認するのえっぐいんだけど？？\u003Cbr\u003Eいちいちそのためにツイートするのも面倒だから、これから全発言にハッシュタグつければいいのか。天才かよ。\u003Ca
+        href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テスト\u003C\/a\u003E\u003C\/p\u003E&mdash;
+        END (@aiandrox) \u003Ca href=\"https:\/\/twitter.com\/aiandrox\/status\/1254273298231291907?ref_src=twsrc%5Etfw\"\u003E2020年4月26日\u003C\/a\u003E\u003C\/blockquote\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:28 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/oembed.json?hide_thread=true&id=1254975116057776128&lang=ja&omit_script=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="cc9df9a9761ead685adea85a96249807",
+        oauth_signature="DQ2uMakm8CJEpPX89WKnfIPem6E%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337728", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - must-revalidate, max-age=3153600000
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '963'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:29 GMT
+      Expires:
+      - Sun, 07 Apr 2120 12:55:29 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:29 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772908263904; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:29 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_ZH3fPO7dpFZkDHRT0dANFw=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:29 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 916b682f5e923418364b9805d7141fe1
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '174'
+      X-Rate-Limit-Reset:
+      - '1588338628'
+      X-Response-Time:
+      - '115'
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"url":"https:\/\/twitter.com\/aiandrox\/status\/1254975116057776128","author_name":"END","author_url":"https:\/\/twitter.com\/aiandrox","html":"\u003Cblockquote
+        class=\"twitter-tweet\" data-lang=\"ja\"\u003E\u003Cp lang=\"ja\" dir=\"ltr\"\u003E15分後にこのツイートが収集されるはず
+        \u003Ca href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テスト\u003C\/a\u003E
+        \u003Ca href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88%E3%83%A9%E3%83%8A%E3%82%A4?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テストラナイ\u003C\/a\u003E\u003C\/p\u003E&mdash;
+        END (@aiandrox) \u003Ca href=\"https:\/\/twitter.com\/aiandrox\/status\/1254975116057776128?ref_src=twsrc%5Etfw\"\u003E2020年4月28日\u003C\/a\u003E\u003C\/blockquote\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:29 GMT
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/statuses/oembed.json?hide_thread=true&id=1255013230675546112&lang=ja&omit_script=true
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="407ce513e6aca8e4924da1744d7aa2d6",
+        oauth_signature="RaMNdNjpkdDgJmXVzOpymXgo77w%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1588337728", oauth_token="<ACCESS TOKEN>", oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - must-revalidate, max-age=3153600000
+      Connection:
+      - close
+      Content-Disposition:
+      - attachment; filename=json.json
+      Content-Length:
+      - '895'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 May 2020 12:55:29 GMT
+      Expires:
+      - Sun, 07 Apr 2120 12:55:29 GMT
+      Last-Modified:
+      - Fri, 01 May 2020 12:55:29 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A158833772935182221; Max-Age=63072000; Expires=Sun, 1 May 2022
+        12:55:29 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_6oXPta+JS+zEU5FMw/3m8g=="; Max-Age=63072000; Expires=Sun,
+        1 May 2022 12:55:29 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - 1ced80b8ea5448897641b9ead9d11091
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Rate-Limit-Limit:
+      - '180'
+      X-Rate-Limit-Remaining:
+      - '173'
+      X-Rate-Limit-Reset:
+      - '1588338628'
+      X-Response-Time:
+      - '116'
+      X-Xss-Protection:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"url":"https:\/\/twitter.com\/aiandrox\/status\/1255013230675546112","author_name":"END","author_url":"https:\/\/twitter.com\/aiandrox","html":"\u003Cblockquote
+        class=\"twitter-tweet\" data-lang=\"ja\"\u003E\u003Cp lang=\"ja\" dir=\"ltr\"\u003Eわからんofわからん\u003Cbr\u003Eこれデプロイで死ぬ予感しかないから、ある程度できたら一旦デプロイしたほうがいいなあ\u003Ca
+        href=\"https:\/\/twitter.com\/hashtag\/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#テスト\u003C\/a\u003E\u003C\/p\u003E&mdash;
+        END (@aiandrox) \u003Ca href=\"https:\/\/twitter.com\/aiandrox\/status\/1255013230675546112?ref_src=twsrc%5Etfw\"\u003E2020年4月28日\u003C\/a\u003E\u003C\/blockquote\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"}'
+    http_version: null
+  recorded_at: Fri, 01 May 2020 12:55:29 GMT
+recorded_with: VCR 5.1.0
