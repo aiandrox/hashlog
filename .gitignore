@@ -42,3 +42,6 @@ config/environments/*.local.yml
 
 # Ignore simplecov
 coverage/*
+
+# Ignore database.yml
+config/database.yml

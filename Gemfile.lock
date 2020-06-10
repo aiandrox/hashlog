@@ -297,7 +297,7 @@ GEM
     redis (4.1.4)
     redis-namespace (1.7.0)
       redis (>= 3.0.4)
-    regexp_parser (1.7.0)
+    regexp_parser (1.7.1)
     require_all (3.0.0)
     rexml (3.2.4)
     rspec-core (3.9.2)
