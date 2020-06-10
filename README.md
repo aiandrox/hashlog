@@ -1,8 +1,8 @@
 # Hashlog（ハッシュログ）
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/aiandrox/hashlog)
-![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-red)
-![Vue.js](https://img.shields.io/badge/Vue.js-v2.6.11-brightgreen)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/aiandrox/hashlog)](https://github.com/aiandrox/hashlog/releases)
+[![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-red)](https://rubygems.org/gems/rails/versions/5.2.4.3)
+[![Vue](https://img.shields.io/badge/Vue-v2.6.11-brightgreen)](https://www.npmjs.com/package/vue/v/2.6.11)
 [![CircleCI](https://circleci.com/gh/aiandrox/hashlog.svg?style=shield)](https://circleci.com/gh/aiandrox/hashlog)
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
 
@@ -23,15 +23,21 @@ Twitter 連携型 学習記録サービスです。
 | <img src="https://i.gyazo.com/3b1ed1fc55683c17d73c9d5c96643673.png"> | <img src="https://i.gyazo.com/a5df36426cae3326b9813cb2afb6eacf.png">                                 |
 | 最近登録されたハッシュタグ 3 件と機能の紹介を表示する。              | ユーザー登録/ログイン前に利用規約を表示し、ユーザーが同意した上で Twitter 認証ページへジャンプする。 |
 
+<br>
+
 | マイページ                                                                                                                 | ハッシュタグ登録画面                                                                                                        |
 | :------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://i.gyazo.com/bd2b43a7a36d58c52bb49e9dccce47e0.png">                                                       | <img src="https://i.gyazo.com/4374e41c4f1c5cc06d2df89dcbf65c3b.png">                                                        |
 | ユーザープロフィールと公開設定のみ編集できる。<br>非公開設定の場合、自分以外によるユーザーページへのアクセスが制限される。 | ハッシュタグを登録することで、自動でツイートを取得する。<br>登録後はサービス側で自動で 1 日ごとにツイートを収集し更新する。 |
 
+<br>
+
 | ツイート一覧ページ（マイページ）                                                                 | ツイート一覧ページ（ユーザーページ）                                  |
 | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------- |
 | <img src="https://i.gyazo.com/30e89befc5afee6f425363b231d00ea2.png">                             | <img src="https://i.gyazo.com/99d91739e9c979287781ac9af848f53e.png">  |
 | 該当のハッシュタグのツイートが表示される。<br>カレンダーにはツイートした日にマークが付いている。 | 限定公開/非公開設定にしたハッシュタグはユーザーページに表示されない。 |
+
+<br>
 
 | ハッシュタグの設定                                                                                                                    | 日付選択時                                                           |
 | :------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------- |
@@ -43,8 +49,8 @@ Twitter 連携型 学習記録サービスです。
 ### バックエンド
 
 - Ruby 2.6.6
-- Ruby on Rails 5.2.4.3
-- RSpec
+- Rails 5.2.4.3
+- RSpec 3.9
 - Twitter API（外部 API）
 
 #### 機能における主要な Gem
@@ -63,7 +69,7 @@ Twitter 連携型 学習記録サービスです。
 
 ### フロントエンド
 
-- Vue.js 2.6.11
+- Vue 2.6.11
 - axios 0.19.2
 - Vuex 3.1.3
 - Vee-Validate 3.3.0
