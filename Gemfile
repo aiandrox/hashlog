@@ -54,9 +54,9 @@ end
 
 group :test do
   gem 'capybara', '~> 3.31'
+  gem 'coveralls', require: false
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
   # モック
   gem 'vcr', require: false
   gem 'webmock', require: false
