@@ -109,7 +109,7 @@ Rails.application.config.sorcery.configure do |config|
 
   config.twitter.key = Rails.application.credentials.dig(:twitter, :key)
   config.twitter.secret = Rails.application.credentials.dig(:twitter, :secret_key)
-  config.twitter.callback_url = 'http://127.0.0.1:3000/api/v1/oauth/callback?provider=twitter'
+  config.twitter.callback_url = 'http://http.hashlog.work/api/v1/oauth/callback?provider=twitter'
   config.twitter.user_info_mapping = {
     twitter_id: 'id',
     screen_name: 'screen_name',
