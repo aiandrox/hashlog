@@ -6,6 +6,8 @@
 [![CircleCI](https://circleci.com/gh/aiandrox/hashlog.svg?style=shield)](https://circleci.com/gh/aiandrox/hashlog)
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
 
+http://hashlog.work
+
 ## サービス概要
 
 **ハッシュタグであなたの学びをキチンとする**
@@ -44,6 +46,8 @@ Twitter 連携型 学習記録サービスです。
 | <img src="https://i.gyazo.com/06af34d7b35b912ddb6c95765fc8fd23.png">                                                                  | <img src="https://i.gyazo.com/aa81ebd3412dfd89508b545767924fb1.png"> |
 | 公開設定・リマインダーを設定する。<br>リマインダーで設定した日数ツイートがない場合、Bot から Twitter アカウントにリプライが送られる。 | カレンダーの日付を選択することで、その日のツイートだけを表示する。   |
 
+<br>
+
 ## 使用技術
 
 ### バックエンド
@@ -78,6 +82,7 @@ Twitter 連携型 学習記録サービスです。
 ### インフラストラクチャー
 
 - CircleCI
+- Nginx
 - AWS
   - VPC
   - EC2
@@ -98,7 +103,7 @@ $ bundle install --path vendor/bundle
 $ yarn install
 $ rails db:create
 $ rails db:migrate
-$ rake db:seed_fu
+$ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーとして設定してください。
 ```
 
 ### サーバー起動
@@ -110,12 +115,40 @@ $ rails server
 $ bin/webpack-dev-server
 ```
 
-上記のコマンドは`$ foreman start`で代替可能。
+上記のコマンドは`$ bundle exec foreman start`で代替可能。
 
 ### テスト実行
 
 ```shell
 $ bundle exec rspec spec
+```
+
+### Twitter API の設定
+
+See `app/services/twitter_api_client.rb`
+
+```rb
+  def client
+    @client ||= begin
+      Twitter::REST::Client.new do |config|
+        config.consumer_key        = Rails.application.credentials.twitter[:key]
+        config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
+        config.access_token        = Rails.application.credentials.twitter[:access_token]
+        config.access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
+        config.dev_environment     = 'premium'  # Search Tweets: 30-Days / Sandboxの名前
+      end
+    end
+  end
+```
+
+事前に Twitter Developer で API キーとアクセストークンを取得した上で、`$ rails credentials:edit`を実行し、以下のように記述してください。
+
+```
+twitter:
+  key: # API key
+  secret_key: # API secret key
+  access_token: # Access token
+  access_token_secret: # Access token secret
 ```
 
 ### 開発者用 自動ログイン
