@@ -1,12 +1,13 @@
 # Hashlog（ハッシュログ）
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/aiandrox/hashlog)](https://github.com/aiandrox/hashlog/releases)
-[![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-red)](https://rubygems.org/gems/rails/versions/5.2.4.3)
-[![Vue](https://img.shields.io/badge/Vue-v2.6.11-brightgreen)](https://www.npmjs.com/package/vue/v/2.6.11)
+[![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-%23a72332)](https://rubygems.org/gems/rails/versions/5.2.4.3)
+[![Vue](https://img.shields.io/badge/Vue-v2.6.11-%2342b77c)](https://www.npmjs.com/package/vue/v/2.6.11)
 [![CircleCI](https://circleci.com/gh/aiandrox/hashlog.svg?style=shield)](https://circleci.com/gh/aiandrox/hashlog)
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d31e5fff03ec3ea494fa/maintainability)](https://codeclimate.com/github/aiandrox/hashlog/maintainability)
 
-http://hashlog.work
+https://hashlog.work
 
 ## サービス概要
 
@@ -69,7 +70,8 @@ Twitter 連携型 学習記録サービスです。
 
 #### ER 図
 
-[ER 図](https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing)
+[![Image from Gyazo](https://i.gyazo.com/c47dd93c5c633a3afb332851a627993a.png)](https://gyazo.com/c47dd93c5c633a3afb332851a627993a)
+https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
 
 ### フロントエンド
 
@@ -81,14 +83,19 @@ Twitter 連携型 学習記録サービスです。
 
 ### インフラストラクチャー
 
+- Sider
 - CircleCI
-- Nginx
+- Nginx 1.12.2
 - AWS
   - VPC
   - EC2
     - Amazon Linux 2
+  - ALB
+  - CloudWatch
   - RDS
     - MySQL 8.0.19
+  - Route53
+  - ACM
 
 #### インフラ構成
 
