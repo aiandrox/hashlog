@@ -1,4 +1,4 @@
 sidekiq:
   url: 'redis://hashlog.work:6379'
 sorcery:
-  callback_url: 'http://hashlog.work/api/v1/oauth/callback?provider=twitter'
+  callback_url: 'https://hashlog.work/api/v1/oauth/callback?provider=twitter'
