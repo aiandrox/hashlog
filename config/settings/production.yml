@@ -1,2 +1,4 @@
 sidekiq:
-  url: 'redis://prd.redis-example.com:6379'
+  url: 'redis://hashlog.work:6379'
+sorcery:
+  callback_url: 'http://hashlog.work/api/v1/oauth/callback?provider=twitter'
