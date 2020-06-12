@@ -33,7 +33,8 @@ class RegisteredTag < ApplicationRecord
   end
 
   def tweet_rate
-    return 0 if day_from_first_tweet.zero?
+    return 0 if first_tweeted_at.nil?
+    return 1 if (day_from_first_tweet - day_from_last_tweet).zero?
 
     # 今日のデータがない場合は昨日時点までのデータで計算する
     denominator = day_from_last_tweet.zero? ? day_from_first_tweet : day_from_first_tweet - 1

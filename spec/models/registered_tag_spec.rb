@@ -153,8 +153,15 @@ RSpec.describe RegisteredTag, type: :model do
       end
       context 'ツイートを取得していないとき' do
         let(:registered_tag) { create(:registered_tag) }
-        it '0を返す' do
+        it '0(%)を返す' do
           expect(registered_tag.tweet_rate).to eq 0
+        end
+      end
+      context '最初のツイートと最後のツイートが今日のとき' do
+        let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet)]) }
+        before { registered_tag.fetch_tweets_data! }
+        it '100(%)を返す' do
+          expect(registered_tag.tweet_rate).to eq 100
         end
       end
     end
