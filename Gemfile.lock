@@ -154,6 +154,9 @@ GEM
     equalizer (0.0.11)
     erubi (1.9.0)
     erubis (2.7.0)
+    exception_notification (4.4.0)
+      actionmailer (>= 4.0, < 7)
+      activesupport (>= 4.0, < 7)
     execjs (2.7.0)
     factory_bot (5.2.0)
       activesupport (>= 4.2.0)
@@ -367,6 +370,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    slack-notifier (2.3.2)
     sorcery (0.15.0)
       bcrypt (~> 3.1)
       oauth (~> 0.4, >= 0.4.4)
@@ -444,6 +448,7 @@ DEPENDENCIES
   config
   coveralls
   enum_help
+  exception_notification
   factory_bot_rails (~> 5.1, >= 5.1.1)
   foreman
   listen (>= 3.0.5, < 3.2)
@@ -464,6 +469,7 @@ DEPENDENCIES
   sidekiq (~> 5.0)
   sidekiq-failures
   sidekiq-history
+  slack-notifier
   sorcery (>= 0.15.0)
   spring
   spring-watcher-listen (~> 2.0.0)

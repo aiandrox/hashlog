@@ -40,5 +40,5 @@ config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 
-# Ignore database.yml
-config/database.yml
+# Ignore coverage
+coverage/*

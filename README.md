@@ -1,10 +1,13 @@
 # Hashlog（ハッシュログ）
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/aiandrox/hashlog)](https://github.com/aiandrox/hashlog/releases)
-[![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-red)](https://rubygems.org/gems/rails/versions/5.2.4.3)
-[![Vue](https://img.shields.io/badge/Vue-v2.6.11-brightgreen)](https://www.npmjs.com/package/vue/v/2.6.11)
+[![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-%23a72332)](https://rubygems.org/gems/rails/versions/5.2.4.3)
+[![Vue](https://img.shields.io/badge/Vue-v2.6.11-%2342b77c)](https://www.npmjs.com/package/vue/v/2.6.11)
 [![CircleCI](https://circleci.com/gh/aiandrox/hashlog.svg?style=shield)](https://circleci.com/gh/aiandrox/hashlog)
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d31e5fff03ec3ea494fa/maintainability)](https://codeclimate.com/github/aiandrox/hashlog/maintainability)
+
+https://hashlog.work
 
 ## サービス概要
 
@@ -44,6 +47,8 @@ Twitter 連携型 学習記録サービスです。
 | <img src="https://i.gyazo.com/06af34d7b35b912ddb6c95765fc8fd23.png">                                                                  | <img src="https://i.gyazo.com/aa81ebd3412dfd89508b545767924fb1.png"> |
 | 公開設定・リマインダーを設定する。<br>リマインダーで設定した日数ツイートがない場合、Bot から Twitter アカウントにリプライが送られる。 | カレンダーの日付を選択することで、その日のツイートだけを表示する。   |
 
+<br>
+
 ## 使用技術
 
 ### バックエンド
@@ -65,7 +70,8 @@ Twitter 連携型 学習記録サービスです。
 
 #### ER 図
 
-[ER 図](https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing)
+[![Image from Gyazo](https://i.gyazo.com/c47dd93c5c633a3afb332851a627993a.png)](https://gyazo.com/c47dd93c5c633a3afb332851a627993a)
+https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
 
 ### フロントエンド
 
@@ -77,13 +83,19 @@ Twitter 連携型 学習記録サービスです。
 
 ### インフラストラクチャー
 
+- Sider
 - CircleCI
+- Nginx 1.12.2
 - AWS
   - VPC
   - EC2
     - Amazon Linux 2
+  - ALB
+  - CloudWatch
   - RDS
     - MySQL 8.0.19
+  - Route53
+  - ACM
 
 #### インフラ構成
 
@@ -98,7 +110,7 @@ $ bundle install --path vendor/bundle
 $ yarn install
 $ rails db:create
 $ rails db:migrate
-$ rake db:seed_fu
+$ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーとして設定してください。
 ```
 
 ### サーバー起動
@@ -110,12 +122,40 @@ $ rails server
 $ bin/webpack-dev-server
 ```
 
-上記のコマンドは`$ foreman start`で代替可能。
+上記のコマンドは`$ bundle exec foreman start`で代替可能。
 
 ### テスト実行
 
 ```shell
 $ bundle exec rspec spec
+```
+
+### Twitter API の設定
+
+See `app/services/twitter_api_client.rb`
+
+```rb
+  def client
+    @client ||= begin
+      Twitter::REST::Client.new do |config|
+        config.consumer_key        = Rails.application.credentials.twitter[:key]
+        config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
+        config.access_token        = Rails.application.credentials.twitter[:access_token]
+        config.access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
+        config.dev_environment     = 'premium'  # Search Tweets: 30-Days / Sandboxの名前
+      end
+    end
+  end
+```
+
+事前に Twitter Developer で API キーとアクセストークンを取得した上で、`$ rails credentials:edit`を実行し、以下のように記述してください。
+
+```
+twitter:
+  key: # API key
+  secret_key: # API secret key
+  access_token: # Access token
+  access_token_secret: # Access token secret
 ```
 
 ### 開発者用 自動ログイン
