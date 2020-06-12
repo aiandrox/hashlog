@@ -59,7 +59,6 @@ RSpec.describe TwitterAPI do
           let(:type) { 'standard' }
           let(:client) { TwitterAPI::Search.new(user, tag.name) }
           it '#standard_searchを実行する' do
-            set_twitter_mock(user, tag.name)
             expect(client).to receive(:standard_search).once
             client.tweets_data(type)
           end
@@ -69,7 +68,6 @@ RSpec.describe TwitterAPI do
           let(:type) { 'premium' }
           let(:client) { TwitterAPI::Search.new(user, tag.name) }
           it '#premiun_searchを実行する' do
-            set_twitter_mock(user, tag.name)
             expect(client).to receive(:premium_search).once
             client.tweets_data(type)
           end
@@ -80,7 +78,6 @@ RSpec.describe TwitterAPI do
           let(:since_id) { '1255854602626330624' }
           let(:client) { TwitterAPI::Search.new(user, tag.name, since_id) }
           it '#everyday_searchを実行する' do
-            set_twitter_mock(user, tag.name, since_id)
             expect(client).to receive(:everyday_search).once
             client.tweets_data(type)
           end
