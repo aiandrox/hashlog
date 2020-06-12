@@ -4,10 +4,10 @@ module ErrorsHandler
   protected
 
   def notify_500(exception)
-    if Rails.env.production?
+    # if Rails.env.production?
       logger.error "500 error: #{exception.message}\n#{exception.backtrace}"
       ExceptionNotifier.notify_exception(exception, env: request.env)
-    end
+    # end
     raise exception
   end
 
@@ -39,6 +39,7 @@ module ErrorsHandler
   end
 
   def rescue_limited_twitter_requests
+    logger.error "429 error: #{exception.message}\n#{exception.backtrace}"
     error_json = {
       'code' => '429',
       'title' => 'Twitter APIが制限されています。',

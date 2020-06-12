@@ -1,9 +1,11 @@
 module TwitterAPI
   class RemindReply
     include TwitterAPIClient
+    attr_reader :notify_logs
 
     def initialize
       @registered_tags = RegisteredTag.all.includes(:user, :tag)
+      @notify_logs = []
     end
 
     def call
@@ -18,7 +20,9 @@ module TwitterAPI
 
     def send_tweet(r_tag)
       client.update(remind_message(r_tag))
-      Rails.logger.info("@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信")
+      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信"
+      Rails.logger.info(message)
+      notify_logs << message
     end
 
     def remind_message(r_tag)
