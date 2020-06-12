@@ -31,12 +31,11 @@ export default {
   methods: {
     async logout() {
       await this.$store.dispatch("user/logout")
-      this.$router.push({ name: "top" })
-      this.$toTop()
-      this.$store.dispatch("flash/setFlash", {
+      await this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ログアウトしました"
       })
+      location.reload()
     },
     pushLogin() {
       this.$refs.termsDialog.open()

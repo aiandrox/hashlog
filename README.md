@@ -70,7 +70,7 @@ Twitter 連携型 学習記録サービスです。
 
 #### ER 図
 
-[![Image from Gyazo](https://i.gyazo.com/c47dd93c5c633a3afb332851a627993a.png)](https://gyazo.com/c47dd93c5c633a3afb332851a627993a)
+![Image from Gyazo](https://i.gyazo.com/c47dd93c5c633a3afb332851a627993a.png)
 https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
 
 ### フロントエンド
@@ -94,6 +94,8 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
   - CloudWatch
   - RDS
     - MySQL 8.0.19
+  - ElastiCache
+    - Redis 5.0
   - Route53
   - ACM
 
