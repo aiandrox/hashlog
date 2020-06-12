@@ -1,2 +1,4 @@
 sidekiq:
   url: 'redis://127.0.0.1:6379'
+sorcery:
+  callback_url: 'http://127.0.0.1:3000/api/v1/oauth/callback?provider=twitter'

@@ -52,5 +52,5 @@ test:
 production:
   <<: *default
   database: hashlog_production
-  username: hashlog
-  password: <%= ENV['HASHLOG_DATABASE_PASSWORD'] %>
+  username: <%= Rails.application.credentials.production[:database][:username] || 'hashlog' %>
+  password: <%= Rails.application.credentials.production[:database][:password] %>
