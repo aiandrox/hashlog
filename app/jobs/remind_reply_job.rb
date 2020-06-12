@@ -9,6 +9,9 @@ class RemindReplyJob < ApplicationJob
 
   def perform
     logger.info("\n#{Time.now} : RemindReplyJob")
-    TwitterAPI::RemindReply.new.call
+    remind_reply = TwitterAPI::RemindReply.new
+    remind_reply.call
+    message = remind_reply.notify_logs.join("\n")
+    slack_notify(message)
   end
 end
