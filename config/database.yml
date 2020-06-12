@@ -15,9 +15,9 @@ default: &default
   charset: utf8mb4
   collation: utf8mb4_unicode_ci
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: admin
-  password: adminjampt19950715
-  host: database-1.cwywibfxqfpp.ap-northeast-1.rds.amazonaws.com
+  username: root
+  password:
+  host: localhost
 
 development:
   <<: *default
@@ -52,4 +52,6 @@ test:
 production:
   <<: *default
   database: hashlog_production
+  username: <%= Rails.application.credentials.production[:database][:username] || 'hashlog' %>
+  password: <%= Rails.application.credentials.production[:database][:password] %>
 
