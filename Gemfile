@@ -31,6 +31,9 @@ gem 'whenever', require: false
 gem 'twitter'
 # seedファイル
 gem 'seed-fu'
+# slack通知
+gem 'exception_notification'
+gem 'slack-notifier'
 
 group :development, :test do
   gem 'bullet', '~> 6.1'
