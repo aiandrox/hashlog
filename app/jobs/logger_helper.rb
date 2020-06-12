@@ -1,5 +1,6 @@
 module LoggerHelper
   private
+
   attr_reader :slack_notifier
 
   def logger
@@ -13,7 +14,7 @@ module LoggerHelper
 
   def slack_notify(logs)
     notifier = Slack::Notifier.new(Rails.application.credentials.slack_notifier[:webhook_url],
-                                   channel: "#hashlog通知",
+                                   channel: '#hashlog通知',
                                    username: '定期実行通知')
     notifier.ping(logs)
   end
