@@ -31,6 +31,9 @@ gem 'whenever', require: false
 gem 'twitter'
 # seedファイル
 gem 'seed-fu'
+# slack通知
+gem 'exception_notification'
+gem 'slack-notifier'
 
 group :development, :test do
   gem 'bullet', '~> 6.1'
@@ -54,9 +57,9 @@ end
 
 group :test do
   gem 'capybara', '~> 3.31'
+  gem 'coveralls', require: false
   gem 'rspec_junit_formatter'
   gem 'shoulda-matchers'
-  gem 'simplecov', require: false
   # モック
   gem 'vcr', require: false
   gem 'webmock', require: false

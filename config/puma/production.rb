@@ -1,7 +1,7 @@
-environment "production"
+environment 'production'
 
 # UNIX
-tmp_path = "#{File.expand_path("../../..", __FILE__)}/tmp"
+tmp_path = "#{File.expand_path('../..', __dir__)}/tmp"
 bind "unix://#{tmp_path}/sockets/puma.sock"
 
 threads 3, 3
