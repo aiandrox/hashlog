@@ -1,2 +1,2 @@
 sidekiq:
-  url: 'redis://prd.redis-example.com:6379'
+  url: 'hashlog-redis-ro.fxhyxf.ng.0001.apne1.cache.amazonaws.com:6379'

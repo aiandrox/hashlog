@@ -60,18 +60,18 @@
                     >by {{ tag.user.name }}</v-list-item-subtitle
                   >
 
-                  <v-list-item-text>
+                  <v-card-text class="body-1 my-0">
                     <p>
                       最新のツイート：
                       <br />
                       {{ date(tag.lastTweetedAt) }}
                     </p>
-                    <p>
+                    <p class="mb-0">
                       ツイート総日数：{{ tag.tweetedDayCount }}日（{{
                         tag.tweetRate
                       }}%）
                     </p>
-                  </v-list-item-text>
+                  </v-card-text>
                 </v-list-item-content>
               </v-list-item>
             </v-card>
@@ -191,7 +191,7 @@ export default {
 .v-list-item__title {
   font-size: 1.3rem;
 }
-v-list-item-text p {
+.tag-zone p {
   line-height: 1.5rem;
 }
 </style>
