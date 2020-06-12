@@ -39,7 +39,6 @@ module ErrorsHandler
   end
 
   def rescue_limited_twitter_requests
-    logger.error "429 error: #{exception.message}\n#{exception.backtrace}"
     error_json = {
       'code' => '429',
       'title' => 'Twitter APIが制限されています。',
