@@ -13,6 +13,6 @@ class RegisteredTagSerializer < ActiveModel::Serializer
   end
 
   class UserSerializer < ActiveModel::Serializer
-    attributes :uuid, :name
+    attributes :uuid, :name, :avatar_url
   end
 end

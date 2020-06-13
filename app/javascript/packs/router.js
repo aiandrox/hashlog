@@ -2,6 +2,7 @@ import VueRouter from "vue-router"
 
 import store from "../store"
 import Top from "../pages/Top"
+import TagRanking from "../pages/TagRanking"
 import Terms from "../pages/Terms"
 import Mypage from "../pages/Mypage"
 import MyTag from "../pages/MyTag"
@@ -19,6 +20,11 @@ const routes = [
     path: "/terms",
     name: "terms",
     component: Terms
+  },
+  {
+    path: "/ranking/persistence",
+    name: "tagRanking",
+    component: TagRanking
   },
   {
     path: "/mypage/dashboard",

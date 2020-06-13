@@ -10,4 +10,5 @@ VCR.configure do |c|
   c.filter_sensitive_data('<ACCESS TOKEN>') { Rails.application.credentials[:twitter][:access_token] }
   c.filter_sensitive_data('<ACCESS TOKEN SECRET>') { Rails.application.credentials[:twitter][:access_token_secret] }
   c.filter_sensitive_data('<OAUTH SIGNATURE>') { Rails.application.credentials[:twitter][:oauth_signature] }
+  c.filter_sensitive_data('<WEBHOOK URL>') { Rails.application.credentials[:slack_notifier][:webhook_url] }
 end
