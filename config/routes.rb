@@ -28,6 +28,10 @@ Rails.application.routes.draw do
         end
         resources :registered_tags, only: %i[index], module: :users
       end
+      # resources :registered_tagsより上に書く
+      namespace :registered_tags do
+        resources :persistences, only: %i[index]
+      end
       resources :registered_tags, only: %i[index show create update destroy] do
         resources :tweets, only: %i[index]
       end

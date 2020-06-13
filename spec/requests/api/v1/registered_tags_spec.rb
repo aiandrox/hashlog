@@ -1,6 +1,6 @@
 RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags' do
-    let(:registered_tags) { RegisteredTag.published.desc }
+    let(:registered_tags) { RegisteredTag.opened.desc }
     let(:tags_json) { json['registeredTags'] }
     before do
       create_list(:registered_tag, 50)
