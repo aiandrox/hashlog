@@ -35,7 +35,8 @@ RSpec.describe 'RegisteredTags', type: :request do
               },
               'user' => {
                 'name' => registered_tag.user.name,
-                'uuid' => registered_tag.user.uuid
+                'uuid' => registered_tag.user.uuid,
+                'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
               }
             })
           end
@@ -70,7 +71,8 @@ RSpec.describe 'RegisteredTags', type: :request do
               },
               'user' => {
                 'name' => published_registered_tag.user.name,
-                'uuid' => published_registered_tag.user.uuid
+                'uuid' => published_registered_tag.user.uuid,
+                'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
               }
             })
         end
