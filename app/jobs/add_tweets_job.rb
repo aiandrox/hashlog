@@ -8,7 +8,9 @@ class AddTweetsJob < ApplicationJob
 
   def perform
     logger.info("\n#{Time.now} : AddTweetsJob")
-    registered_tags = RegisteredTag.all.includes(:user, :tag)
-    registered_tags.each(&:cron_tweets)
+    add_tweets = TwitterAPI::AddTweets.new
+    add_tweets.call
+    message = add_tweets.notify_logs.join("\n")
+    slack_notify(message)
   end
 end
