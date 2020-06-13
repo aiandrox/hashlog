@@ -82,6 +82,23 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'methods' do
+    describe '.persistence_sort' do
+      let!(:tag_with_42_per) { create(:registered_tag, :with_3_7_days_tweets) }
+      let(:today_tweet) { create(:tweet) }
+      let!(:tag_with_100_per) { today_tweet.registered_tag }
+      before { tag_with_100_per.fetch_tweets_data! }
+      let!(:tag_with_0_per) { create(:registered_tag) }
+      it 'tweet_rate100%のタグが最初になる' do
+        expect(RegisteredTag.persistence_sort[0]).to eq tag_with_100_per
+      end
+      it 'tweet_rate42%のタグが二番目になる' do
+        expect(RegisteredTag.persistence_sort[1]).to eq tag_with_42_per
+      end
+      it 'tweet_rate0%のタグが最後になる' do
+        expect(RegisteredTag.persistence_sort[-1]).to eq tag_with_0_per
+      end
+    end
+
     describe '#last_tweeted_at' do
       let(:registered_tag) { create(:registered_tag) }
       context 'ツイートがあるとき' do
