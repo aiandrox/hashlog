@@ -22,7 +22,13 @@ class Api::V1::OauthsController < Api::V1::BaseController
   end
 
   def create_user_from(provider)
-    @user = create_from(provider)
+    @user = build_from(provider)
+    @user.authentication.build(user_id: @user.id,
+                               uid: @user_hash[:uid],
+                               provider: provider,
+                               access_token: @access_token.token,
+                               access_token_secret: @access_token.secret)
+    @user.save!
     reset_session
     auto_login(@user)
   end
