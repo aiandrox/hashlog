@@ -26,10 +26,10 @@ class Api::V1::OauthsController < Api::V1::BaseController
     user = User.find_or_initialize_by(twitter_id: user_from_provider.twitter_id)
     user = User.new(user_from_provider.attributes) if user.new_record?
     user.build_authentication(user_id: user.id,
-                               uid: @user_hash[:uid],
-                               provider: provider,
-                               access_token: @access_token.token,
-                               access_token_secret: @access_token.secret)
+                              uid: @user_hash[:uid],
+                              provider: provider,
+                              access_token: @access_token.token,
+                              access_token_secret: @access_token.secret)
     user.save!
     reset_session
     auto_login(user)

@@ -28,7 +28,6 @@ class User < ApplicationRecord
     end
   end
 
-  # TODO: サービスクラスにしたい
   def register_tag(tag)
     ActiveRecord::Base.transaction do
       tag.save!
