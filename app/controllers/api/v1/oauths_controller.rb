@@ -22,7 +22,8 @@ class Api::V1::OauthsController < Api::V1::BaseController
   end
 
   def create_user_from(provider)
-    @user = build_from(provider)
+    @user_from_provider = build_from(provider)
+    @user = User.find_or_initialize_by(twitter_id: @user_from_provider.twitter_id)
     @user.build_authentication(user_id: @user.id,
                                uid: @user_hash[:uid],
                                provider: provider,
