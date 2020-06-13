@@ -45,20 +45,6 @@ class RegisteredTag < ApplicationRecord
     (tweeted_day_count.to_f / denominator * 100).round(1)
   end
 
-  def cron_tweets
-    last_tweet = tweets.latest
-
-    unless last_tweet
-      create_tweets!
-      return
-    end
-
-    return if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
-
-    since_id = last_tweet.tweet_id.to_i
-    add_tweets(since_id).any? && Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
-  end
-
   def create_tweets!(type = 'standard')
     client = TwitterAPI::Search.new(user, tag.name)
     client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
