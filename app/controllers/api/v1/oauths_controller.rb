@@ -23,7 +23,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
 
   def create_user_from(provider)
     @user = build_from(provider)
-    @user.authentication.build(user_id: @user.id,
+    @user.build_authentication(user_id: @user.id,
                                uid: @user_hash[:uid],
                                provider: provider,
                                access_token: @access_token.token,
