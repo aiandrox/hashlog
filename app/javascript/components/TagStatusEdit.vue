@@ -39,9 +39,7 @@
       </v-list-item>
     </v-container>
     <v-list-item>
-      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')"
-        >キャンセル</v-btn
-      >
+      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')">キャンセル</v-btn>
       <v-btn
         class="ma-2"
         depressed
@@ -90,7 +88,7 @@ export default {
         this.registeredTag.remindDay = 0
       }
     },
-    // TODO: vee-validate.jsと同じメソッド
+    // TODO: vee-validate.jsと同じメソッドになっている
     filter(remindDay) {
       if (remindDay === null) {
         return 0

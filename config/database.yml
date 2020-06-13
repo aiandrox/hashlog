@@ -54,3 +54,4 @@ production:
   database: hashlog_production
   username: <%= Rails.application.credentials.production[:database][:username] || 'hashlog' %>
   password: <%= Rails.application.credentials.production[:database][:password] %>
+  host: database-1.cwywibfxqfpp.ap-northeast-1.rds.amazonaws.com

@@ -82,6 +82,23 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'methods' do
+    describe '.persistence_sort' do
+      let!(:tag_with_42_per) { create(:registered_tag, :with_3_7_days_tweets) }
+      let(:today_tweet) { create(:tweet) }
+      let!(:tag_with_100_per) { today_tweet.registered_tag }
+      before { tag_with_100_per.fetch_tweets_data! }
+      let!(:tag_with_0_per) { create(:registered_tag) }
+      it 'tweet_rate100%のタグが最初になる' do
+        expect(RegisteredTag.persistence_sort[0]).to eq tag_with_100_per
+      end
+      it 'tweet_rate42%のタグが二番目になる' do
+        expect(RegisteredTag.persistence_sort[1]).to eq tag_with_42_per
+      end
+      it 'tweet_rate0%のタグが最後になる' do
+        expect(RegisteredTag.persistence_sort[-1]).to eq tag_with_0_per
+      end
+    end
+
     describe '#last_tweeted_at' do
       let(:registered_tag) { create(:registered_tag) }
       context 'ツイートがあるとき' do
@@ -153,54 +170,15 @@ RSpec.describe RegisteredTag, type: :model do
       end
       context 'ツイートを取得していないとき' do
         let(:registered_tag) { create(:registered_tag) }
-        it '0を返す' do
+        it '0(%)を返す' do
           expect(registered_tag.tweet_rate).to eq 0
         end
       end
-    end
-
-    describe '#cron_tweets' do
-      let(:user) { create(:user, :real_value) }
-      let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
-      let(:registered_tag) { user.registered_tag(tag) }
-      before 'タグ登録時にツイートを取得' do
-        VCR.use_cassette('twitter_api/standard_search') do
-          user.register_tag(tag)
-        end
-      end
-
-      context '正常系 前日のツイートを取得したとき',
-        vcr: { cassette_name: 'twitter_api/everyday_search/正常系 前日のツイートを取得したとき' } do
-        it '取得したツイートを保存する' do
-          expect do
-            registered_tag.cron_tweets
-          end.to change(Tweet, :count).by(3)
-        end
-        it 'ログを出力する' do
-          expect(Rails.logger).to receive(:info).with('@aiandrox の #ポートフォリオ進捗 にツイートを追加')
-          registered_tag.cron_tweets
-        end
-      end
-
-      context '既に前日のツイートを取得しているとき' do
-        it '#add_tweetsを実行しない' do
-          create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
-          registered_tag.fetch_tweets_data!
-          expect(registered_tag).not_to receive(:add_tweets)
-          registered_tag.cron_tweets
-        end
-      end
-      context '前日のツイートがなかったとき', vcr: { cassette_name: 'twitter_api/everyday_search/前日のツイートがなかったとき' } do
-        it 'Rails.logger.infoを実行しない' do
-          expect(Rails.logger).not_to receive(:info)
-          registered_tag.cron_tweets
-        end
-      end
-      context 'ツイートが1件も保存されていないとき' do
-        before { registered_tag.tweets.each(&:destroy) }
-        it '#create_tweets!を実行する' do
-          expect(registered_tag).to receive(:create_tweets!).once
-          registered_tag.cron_tweets
+      context '最初のツイートと最後のツイートが今日のとき' do
+        let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet)]) }
+        before { registered_tag.fetch_tweets_data! }
+        it '100(%)を返す' do
+          expect(registered_tag.tweet_rate).to eq 100
         end
       end
     end

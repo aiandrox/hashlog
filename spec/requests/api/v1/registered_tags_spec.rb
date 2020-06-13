@@ -1,6 +1,6 @@
 RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags' do
-    let(:registered_tags) { RegisteredTag.published.desc }
+    let(:registered_tags) { RegisteredTag.opened.desc }
     let(:tags_json) { json['registeredTags'] }
     before do
       create_list(:registered_tag, 50)
@@ -26,14 +26,15 @@ RSpec.describe 'RegisteredTags', type: :request do
             },
             'user' => {
               'name' => registered_tag.user.name,
-              'uuid' => registered_tag.user.uuid
+              'uuid' => registered_tag.user.uuid,
+              'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
             }
           })
         end
       end
     end
     describe 'ソート' do
-      let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
+      let!(:latest_registered_tag) { create(:registered_tag, created_at: Time.now.since(3.day)) }
       let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
       it '昇順に並ぶ（最新のregistered_tagが最初になる）' do
         get '/api/v1/registered_tags'
@@ -110,7 +111,8 @@ RSpec.describe 'RegisteredTags', type: :request do
           },
           'user' => {
             'name' => registered_tag.user.name,
-            'uuid' => registered_tag.user.uuid
+            'uuid' => registered_tag.user.uuid,
+            'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
           }
         })
       end
@@ -207,7 +209,8 @@ RSpec.describe 'RegisteredTags', type: :request do
             },
             'user' => {
               'name' => registered_tag.user.name,
-              'uuid' => registered_tag.user.uuid
+              'uuid' => registered_tag.user.uuid,
+              'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
             }
           })
         end

@@ -11,16 +11,20 @@ RSpec.describe AddTweetsJob, type: :job do
   end
 
   # TODO: 実行されているが……なぜ通らない
-  xdescribe 'AddTweetsJob#perform',
-    vcr: { cassette_name: 'twitter_api/everyday_search/全てのタグのツイートを取得' } do
+  describe 'AddTweetsJob#perform',
+    vcr: { cassette_name: 'add_tweets_job TwitterAPIとWebhooks' } do
     let(:job) { AddTweetsJob.new }
-    let(:registered_tag) { create(:registered_tag) }
-    it 'ログを出力する' do
+    let(:add_tweets) { TwitterAPI::AddTweets.new }
+    xit 'ログを出力する' do
       expect(Rails.logger).to receive(:info)
       job.perform
     end
-    it 'Registeredtag#cron_tweetsを実行する' do
-      expect(registered_tag).to receive(:cron_tweets)
+    xit 'TwitterAPI::AddTweets#callを実行する' do
+      expect(add_tweets).to receive(:call)
+      job.perform
+    end
+    it 'slack_notofyが実行される' do
+      expect(job).to receive(:slack_notify)
       job.perform
     end
   end

@@ -16,6 +16,10 @@ class RegisteredTag < ApplicationRecord
   scope :desc, -> { order(created_at: :desc) }
   scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
 
+  def self.persistence_sort
+    all.sort_by(&:tweet_rate).reverse
+  end
+
   def last_tweeted_at
     @last_tweeted_at ||= tweets.latest&.tweeted_at
   end
@@ -33,25 +37,12 @@ class RegisteredTag < ApplicationRecord
   end
 
   def tweet_rate
-    return 0 if day_from_first_tweet.zero?
+    return 0 if first_tweeted_at.nil?
+    return 1 if (day_from_first_tweet - day_from_last_tweet).zero?
 
     # 今日のデータがない場合は昨日時点までのデータで計算する
     denominator = day_from_last_tweet.zero? ? day_from_first_tweet : day_from_first_tweet - 1
     (tweeted_day_count.to_f / denominator * 100).round(1)
-  end
-
-  def cron_tweets
-    last_tweet = tweets.latest
-
-    unless last_tweet
-      create_tweets!
-      return
-    end
-
-    return if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
-
-    since_id = last_tweet.tweet_id.to_i
-    add_tweets(since_id).any? && Rails.logger.info("@#{user.screen_name} の ##{tag.name} にツイートを追加")
   end
 
   def create_tweets!(type = 'standard')
