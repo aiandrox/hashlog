@@ -4,8 +4,6 @@ class Authentication < ApplicationRecord
 
   validates :uid, presence: true
   validates :provider, presence: true
-  validates :access_token, presence: true
-  validates :access_token_secret, presence: true
 
   def encrypt_access_token
     key_len = ActiveSupport::MessageEncryptor.key_len

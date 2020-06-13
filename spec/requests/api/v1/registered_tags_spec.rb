@@ -34,7 +34,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       end
     end
     describe 'ソート' do
-      let!(:latest_registered_tag) { create(:registered_tag, created_at: Date.tomorrow) }
+      let!(:latest_registered_tag) { create(:registered_tag, created_at: Time.now.since(3.day)) }
       let!(:oldest_registered_tag) { create(:registered_tag, :created_yesterday) }
       it '昇順に並ぶ（最新のregistered_tagが最初になる）' do
         get '/api/v1/registered_tags'

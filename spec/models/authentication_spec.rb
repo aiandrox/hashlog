@@ -12,11 +12,5 @@ RSpec.describe Authentication, type: :model do
     it 'provider: presence' do
       is_expected.to validate_presence_of(:provider)
     end
-    it 'access_token: presence' do
-      is_expected.to validate_presence_of(:access_token)
-    end
-    it 'access_token: presence' do
-      is_expected.to validate_presence_of(:access_token_secret)
-    end
   end
 end
