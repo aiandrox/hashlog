@@ -3,8 +3,8 @@ class User < ApplicationRecord
   before_save :replace_user_data
 
   authenticates_with_sorcery!
-  has_many :authentications, dependent: :destroy
-  accepts_nested_attributes_for :authentications
+  has_one :authentication, dependent: :destroy
+  accepts_nested_attributes_for :authentication
   has_many :registered_tags, dependent: :destroy
   has_many :tags, through: :registered_tags
 
