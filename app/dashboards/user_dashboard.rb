@@ -8,7 +8,7 @@ class UserDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    authentications: Field::HasMany,
+    authentication: Field::HasOne,
     registered_tags: Field::HasMany,
     tags: Field::HasMany,
     id: Field::Number,
@@ -55,7 +55,7 @@ class UserDashboard < Administrate::BaseDashboard
     updated_at
     registered_tags
     tags
-    authentications
+    authentication
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -69,7 +69,7 @@ class UserDashboard < Administrate::BaseDashboard
     privacy
     role
     avatar_url
-    authentications
+    authentication
     tags
   ].freeze
 
