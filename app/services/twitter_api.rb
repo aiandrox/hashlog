@@ -82,9 +82,9 @@ module TwitterAPI
       when 'everyday'
         everyday_search
       end
-      client.oembeds(tweet_ids, omit_script: true, hide_thread: true, lang: :ja)
-            .take(100)
-            .map do |oembed|
+      client(user).oembeds(tweet_ids, omit_script: true, hide_thread: true, lang: :ja)
+                  .take(100)
+                  .map do |oembed|
         oembed.html =~ %r{\" dir=\"ltr\">(.+)</p>}
         $+
       end.zip(tweeted_ats, tweet_ids)
@@ -96,8 +96,8 @@ module TwitterAPI
 
     def standard_search
       @standard_search ||= begin
-        client.search("##{tag_name} from:#{user.screen_name} exclude:retweets",
-                      result_type: 'recent', count: 100).take(100).each do |result|
+        client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
+                            result_type: 'recent', count: 100).take(100).each do |result|
           tweeted_ats << result.created_at
           tweet_ids << result.id
         end
@@ -106,9 +106,9 @@ module TwitterAPI
 
     def premium_search
       @premium_search ||= begin
-        client.premium_search("##{tag_name} from:#{user.screen_name}",
-                              { maxResults: 100 },
-                              { product: '30day' }).take(100).each do |result|
+        client(user).premium_search("##{tag_name} from:#{user.screen_name}",
+                                    { maxResults: 100 },
+                                    { product: '30day' }).take(100).each do |result|
           next if result.retweeted_status.present?
 
           tweeted_ats << result.created_at
@@ -119,8 +119,8 @@ module TwitterAPI
 
     def everyday_search
       @everyday_search ||= begin
-        client.search("##{tag_name} from:#{user.screen_name} exclude:retweets",
-                      result_type: 'recent', since_id: since_id).take(100).each do |result|
+        client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
+                            result_type: 'recent', since_id: since_id).take(100).each do |result|
           tweeted_ats << result.created_at
           tweet_ids << result.id
         end

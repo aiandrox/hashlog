@@ -4,6 +4,9 @@ FactoryBot.define do
     sequence(:name) { |n| "user_#{n}" }
     sequence(:screen_name) { |n| "user_#{n}" }
     description { '' }
+    after(:build) do |user|
+      create(:authentication, user: user)
+    end
   end
 
   trait :real_value do
