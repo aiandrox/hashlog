@@ -5,6 +5,9 @@
     </v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
+      <v-btn v-if="isTopPage" text :to="{ name: 'tagRanking' }"
+        >継続率ランキング</v-btn
+      >
       <v-btn v-if="!currentUser" text @click="pushLogin">ログイン</v-btn>
       <v-btn v-if="currentUser" text :to="{ name: 'mypage' }">マイページ</v-btn>
       <v-btn v-if="currentUser" text @click="logout">ログアウト</v-btn>
