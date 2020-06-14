@@ -27,6 +27,9 @@
                   </v-text-field>
                 </ValidationProvider>
               </v-form>
+              <p class="ml-md-10 mt-5">
+                登録時に直近1週間のツイートを取得します。<br />ハッシュタグは3つまで登録できます。
+              </p>
             </v-container>
           </v-card-text>
           <v-card-actions>
