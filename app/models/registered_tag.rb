@@ -15,6 +15,7 @@ class RegisteredTag < ApplicationRecord
   scope :asc, -> { order(created_at: :asc) }
   scope :desc, -> { order(created_at: :desc) }
   scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
+  scope :have_tweets, -> { where('first_tweeted_at < ?', Time.now) }
 
   def self.persistence_sort
     all.sort_by(&:tweet_rate).reverse

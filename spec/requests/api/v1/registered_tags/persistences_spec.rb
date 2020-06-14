@@ -1,6 +1,6 @@
 RSpec.describe 'RegisteredTags', type: :request do
-  describe 'GET /api/v1/registered_tags/persistences' do
-    let(:registered_tags) { RegisteredTag.opened.includes(:user, :tag).persistence_sort }
+  fdescribe 'GET /api/v1/registered_tags/persistences' do
+    let(:registered_tags) { RegisteredTag.opened.includes(:user, :tag).have_tweets.persistence_sort }
     let(:tags_json) { json['registeredTags'] }
     before do
       create_list(:registered_tag, 50)
@@ -34,14 +34,37 @@ RSpec.describe 'RegisteredTags', type: :request do
       end
     end
     describe 'ソート' do
+      let!(:registered_tag_with_no_tweets) { create(:registered_tag) }
       let!(:tag_with_42_per) { create(:registered_tag, :with_3_7_days_tweets) }
       let(:today_tweet) { create(:tweet) }
       let!(:tag_with_100_per) { today_tweet.registered_tag }
-      before { tag_with_100_per.fetch_tweets_data! }
-      it 'ツイートの割合が多い順に並ぶ' do
+      before do
+        tag_with_100_per.fetch_tweets_data!
         get '/api/v1/registered_tags/persistences'
+      end
+      it 'ツイートの割合が多い順に並ぶ' do
         expect(tags_json.first['id']).to eq tag_with_100_per.id
         expect(tags_json.second['id']).to eq tag_with_42_per.id
+      end
+      it 'ツイートがないregistered_tagを含めない' do
+        expect(tags_json).to include({
+          'id' => registered_tag_with_no_tweets.id,
+          'tweetedDayCount' => registered_tag_with_no_tweets.tweeted_day_count,
+          'privacy' => registered_tag_with_no_tweets.privacy_i18n,
+          'remindDay' => nil,
+          'tweetRate' => 0,
+          'firstTweetedAt' => registered_tag_with_no_tweets.first_tweeted_at,
+          'lastTweetedAt' => registered_tag_with_no_tweets.last_tweeted_at,
+          'tag' => {
+            'id' => registered_tag_with_no_tweets.tag.id,
+            'name' => registered_tag_with_no_tweets.tag.name,
+          },
+          'user' => {
+            'name' => registered_tag_with_no_tweets.user.name,
+            'uuid' => registered_tag_with_no_tweets.user.uuid,
+            'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
+          }
+        })
       end
     end
     describe '公開設定' do
