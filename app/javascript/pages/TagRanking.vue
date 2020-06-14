@@ -13,7 +13,7 @@
           }"
         >
           <v-list-item-avatar>
-            <v-icon>{{ index + 1 }}</v-icon>
+            <v-icon>{{ rank(index) }}</v-icon>
           </v-list-item-avatar>
 
           <v-list-item-avatar color="grey" size="50" class="mr-7">
@@ -26,9 +26,7 @@
           </v-list-item-content>
 
           <v-list-item-action>{{ tag.tweetRate }}%</v-list-item-action>
-          <v-list-item-action class="d-none d-md-flex"
-            >（{{ tag.tweetedDayCount }}日）</v-list-item-action
-          >
+          <v-list-item-action class="d-none d-md-flex">（{{ tag.tweetedDayCount }}日）</v-list-item-action>
         </v-list-item>
       </v-list>
     </v-card>
@@ -61,6 +59,10 @@ export default {
     document.title = "継続率ランキング | Hashlog"
   },
   methods: {
+    rank(index) {
+      const increase = (this.page.currentPage - 1) * 20
+      return increase + index + 1
+    },
     async fetchRegisteredTagsData() {
       const registeredTagsRes = await this.$axios.get(
         "/api/v1/registered_tags/persistences"
