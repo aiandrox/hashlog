@@ -34,4 +34,30 @@ RSpec.describe Tag, type: :model do
       end
     end
   end
+
+  describe 'methods' do
+    describe '#remove_first_hashtag_mark' do
+      context '先頭に#が入っているとき' do
+        let(:tag) { build(:tag, name: '#ハッシュタグ') }
+        it '#を消した文字列になる' do
+          tag.save!
+          expect(tag.name).to eq 'ハッシュタグ'
+        end
+      end
+      context '先頭に###が入っているとき' do
+        let(:tag) { build(:tag, name: '###ハッシュタグ') }
+        it '###を消した文字列になる' do
+          tag.save!
+          expect(tag.name).to eq 'ハッシュタグ'
+        end
+      end
+      context 'aa#aaのように文の途中で#が入っているとき' do
+        let(:tag) { build(:tag, name: 'ハッシュ##タグ') }
+        it '#を消さない' do
+          tag.save!
+          expect(tag.name).to eq 'ハッシュ##タグ'
+        end
+      end
+    end
+  end
 end
