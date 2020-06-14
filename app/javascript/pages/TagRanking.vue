@@ -56,7 +56,7 @@ export default {
   },
   mounted() {
     this.fetchRegisteredTagsData()
-    document.title = "継続率ランキング | Hashlog"
+    document.title = "継続率ランキング - Hashlog"
   },
   methods: {
     rank(index) {

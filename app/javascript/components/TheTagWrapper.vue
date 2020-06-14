@@ -1,17 +1,9 @@
 <template>
   <div>
     <!-- タブ -->
-    <the-tab
-      :registered-tags="registeredTags"
-      @select-tab="firstRead"
-      @create-tag="firstRead"
-    />
+    <the-tab :registered-tags="registeredTags" @select-tab="firstRead" @create-tag="firstRead" />
     <!-- カレンダー -->
-    <the-calendar
-      ref="calendar"
-      :tweet-dates="tweetDates"
-      @input-date="fetchDateTweets"
-    />
+    <the-calendar ref="calendar" :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
     <v-container class="main-content d-flex flex-row-reverse pt-0 px-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col cols="12" md="4">
@@ -103,7 +95,7 @@ export default {
       this.fetchTweetDates()
       this.fetchTweetsData()
       await this.fetchTagData()
-      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+      document.title = `#${this.registeredTag.tag.name} - Hashlog`
     },
     async fetchTagData() {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
