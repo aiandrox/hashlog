@@ -7,11 +7,13 @@
       <v-list-item-content>
         <v-list-item-title class="title">
           {{ user.name }}
+        </v-list-item-title>
+        <v-list-item-subtitle
+          >@{{ user.screenName }}
           <v-btn icon color="blue" :href="twitterUrl">
             <v-icon>mdi-twitter</v-icon>
           </v-btn>
-        </v-list-item-title>
-        <v-list-item-subtitle>@{{ user.screenName }}</v-list-item-subtitle>
+        </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
     <v-card-text>
@@ -30,14 +32,16 @@
         color="primary"
         class="ma-2"
         :to="{ name: 'user', params: { userUuid: user.uuid } }"
-      >ユーザーページを見る</v-btn>
+        >ユーザーページを見る</v-btn
+      >
       <v-btn
         depressed
         color="primary"
         class="ma-2"
         href="/admin"
         v-if="user.role === '管理ユーザー'"
-      >管理ページ</v-btn>
+        >管理ページ</v-btn
+      >
     </div>
   </div>
 </template>
