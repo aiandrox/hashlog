@@ -18,7 +18,7 @@ class RegisteredTag < ApplicationRecord
   scope :have_tweets, -> { where('first_tweeted_at < ?', Time.now) }
 
   def self.persistence_sort
-    all.sort_by(&:tweet_rate).reverse
+    all.sort_by { |tag| [tag.tweet_rate, tag.tweeted_day_count] }.reverse
   end
 
   def last_tweeted_at
@@ -50,7 +50,7 @@ class RegisteredTag < ApplicationRecord
     client = TwitterAPI::Search.new(user, tag.name)
     client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
-    end
+    end.any? && fetch_tweets_data!
   end
 
   def add_tweets(since_id)
