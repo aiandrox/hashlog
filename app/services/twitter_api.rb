@@ -9,7 +9,7 @@ module TwitterAPI
     end
 
     def call
-      registered_tags.each do |tag|
+      registered_tags.find_each do |tag|
         send_tweet(tag) if tag.remind_day.positive? && tag.remind_day < tag.day_from_last_tweet
       end
     end
@@ -43,7 +43,7 @@ module TwitterAPI
     end
 
     def call
-      registered_tags.each do |r_tag|
+      registered_tags.find_each do |r_tag|
         last_tweet = r_tag.tweets.latest
         r_tag.create_tweets! && next unless last_tweet
 
