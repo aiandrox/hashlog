@@ -15,7 +15,7 @@ module TwitterData
 
     private
 
-    attr_reader :user, :twitter_data
+    attr_reader :user
 
     def twitter_data
       @twitter_data ||= client(user).user(user_id: user.twitter_id)
