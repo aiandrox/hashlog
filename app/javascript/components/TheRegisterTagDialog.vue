@@ -13,7 +13,7 @@
                   ref="provider"
                   v-slot="{ errors }"
                   name="ハッシュタグ"
-                  rules="required"
+                  rules="required|tagNameFormat"
                 >
                   <v-text-field
                     v-model="tagName"
@@ -27,6 +27,9 @@
                   </v-text-field>
                 </ValidationProvider>
               </v-form>
+              <p class="ml-md-10 mt-5">
+                登録時に直近1週間のツイートを取得します。<br />ハッシュタグは3つまで登録できます。
+              </p>
             </v-container>
           </v-card-text>
           <v-card-actions>
@@ -92,13 +95,15 @@ export default {
           })
           this.resetForm()
         } catch (error) {
+          const unprocessableEntityStatus = 422
+          const tooManyRequestsStatus = 429
           switch (error.response.status) {
-            case 422: {
+            case unprocessableEntityStatus: {
               const errorMessage = error.response.data.error.messages[0]
               this.$refs.provider.errors.push(errorMessage)
               break
             }
-            case 429: {
+            case tooManyRequestsStatus: {
               const errorMessage = error.response.data.error.messages[0]
               this.$refs.provider.errors.push(errorMessage)
               break

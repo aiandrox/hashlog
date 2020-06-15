@@ -6,9 +6,11 @@
 import theTerms from "../components/TheTerms"
 
 export default {
-  title: "利用規約",
   components: {
     theTerms
+  },
+  mounted() {
+    document.title = "利用規約 - Hashlog"
   }
 }
 </script>

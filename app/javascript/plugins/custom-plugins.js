@@ -3,7 +3,8 @@ import goTo from "vuetify/es5/services/goto"
 export default {
   methods: {
     $toTop() {
-      goTo(0)
+      const pageTop = 0
+      goTo(pageTop)
     }
   }
 }

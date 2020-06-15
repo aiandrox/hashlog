@@ -18,16 +18,21 @@ http.interceptors.request.use(request => {
 })
 
 const errorMessage = error => {
+  const unauthorized = 402
+  const forbidden = 403
+  const notFound = 404
+  const unprocessableEntity = 422
+  const tooManyRequests = 429
   switch (error.response.status) {
-    case 401:
+    case unauthorized:
       return "ログインしてください"
-    case 403:
+    case forbidden:
       return "アクセスが許可されていません"
-    case 404:
+    case notFound:
       return "リソースが見つかりません"
-    case 422: // バリデーションメッセージは個別で処理を行う
+    case unprocessableEntity: // バリデーションメッセージは個別で処理を行う
       return null
-    case 429: // フォームにエラーメッセージを表示する（同上）
+    case tooManyRequests: // フォームにエラーメッセージを表示する（同上）
       return null
     default:
       return "予期せぬエラーが発生しました"
