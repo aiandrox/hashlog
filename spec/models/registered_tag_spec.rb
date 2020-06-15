@@ -206,6 +206,9 @@ RSpec.describe RegisteredTag, type: :model do
         it '取得したツイートを保存する' do
           expect { present_tag.create_tweets! }.to change(Tweet, :count).by(3)
         end
+        it 'fetch_tweets_data!を実行する' do
+          expect(present_tag).to receive(:fetch_tweets_data!).once
+        end
       end
       context 'ハッシュタグのツイートがTwitterに存在しないとき',
         vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
@@ -214,6 +217,9 @@ RSpec.describe RegisteredTag, type: :model do
         end
         it 'ツイートを取得しないので保存しない' do
           expect { absent_tag.create_tweets! }.not_to change(Tweet, :count)
+        end
+        it 'fetch_tweets_data!を実行しない' do
+          expect(absent_tag).not_to receive(:fetch_tweets_data!)
         end
       end
     end
