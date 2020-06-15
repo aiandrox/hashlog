@@ -59,8 +59,8 @@ RSpec.describe Tag, type: :model do
 
   describe 'scope' do
     describe '.popular' do
-      let(:popular_tag) { create(:tag, name: 'the most popular tag') }
-      let(:not_popular_tag) { create(:tag, name: 'not most popular tag') }
+      let(:popular_tag) { create(:tag, name: 'the_most_popular_tag') }
+      let(:not_popular_tag) { create(:tag, name: 'not_most_popular_tag') }
       before do
         create_list(:registered_tag, 5, tag: popular_tag)
         create_list(:registered_tag, 1, tag: not_popular_tag)
@@ -94,7 +94,7 @@ RSpec.describe Tag, type: :model do
       context 'aa#aaのように文の途中で#が入っているとき' do
         let(:tag) { build(:tag, name: 'ハッシュ##タグ') }
         it '#を消さない' do
-          tag.save!
+          tag.valid?
           expect(tag.name).to eq 'ハッシュ##タグ'
         end
       end
