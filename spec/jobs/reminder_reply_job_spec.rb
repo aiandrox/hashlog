@@ -18,7 +18,7 @@ RSpec.describe RemindReplyJob, type: :job do
       expect(Rails.logger).to receive(:info)
       job.perform
     end
-    it 'TwitterAPI::RemindReply#callを実行する' do
+    it 'TwitterAPIJob::RemindReply#callを実行する' do
       expect(remind_reply).to receive(:call)
       job.perform(remind_reply)
     end

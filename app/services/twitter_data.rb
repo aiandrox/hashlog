@@ -1,17 +1,29 @@
-module TwitterAPI
-  class Update
+module TwitterData
+  class User
     include TwitterAPIClient
 
     def initialize(user)
       @user = user
     end
 
+    def call
+      avatar = twitter_data.profile_image_url_https
+      avatar_url = avatar.scheme + '://' + avatar.host + avatar.path
+      { name: twitter_data.name, screen_name: twitter_data.screen_name,
+        description: twitter_data.description, avatar_url: avatar_url }
+    end
+    # Twitter::Error::Forbidden例外処理よろりん
+
     private
 
-    attr_reader :user
+    attr_reader :user, :twitter_data
+
+    def twitter_data
+      @twitter_data ||= client(user).user(user_id: user.twitter_id)
+    end
   end
 
-  class Search
+  class UserTweets
     include TwitterAPIClient
 
     def initialize(user, tag_name, since_id = nil)
@@ -24,7 +36,7 @@ module TwitterAPI
 
     # return [["<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-13 07:13:39 UTC, 1249596597479956481],
     #         ["あ<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-12 01:54:07 UTC, 1249153794946011137]]
-    def tweets_data(type = 'standard')
+    def call(type = 'standard')
       case type
       when 'standard'
         standard_search
