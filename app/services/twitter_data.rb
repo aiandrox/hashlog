@@ -12,7 +12,6 @@ module TwitterData
       { name: twitter_data.name, screen_name: twitter_data.screen_name,
         description: twitter_data.description, avatar_url: avatar_url }
     end
-    # Twitter::Error::Forbidden例外処理よろりん
 
     private
 

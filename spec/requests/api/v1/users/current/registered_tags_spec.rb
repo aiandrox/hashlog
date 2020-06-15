@@ -3,7 +3,7 @@ RSpec.describe 'RegisteredTags', type: :request do
     let(:user) { create(:user) }
     let(:registered_tags) { user.registered_tags.asc }
     let(:tags_json) { json['registeredTags'] }
-    before { login_as(user)}
+    before { login_as(user) }
 
     describe '全般的なこと' do
       before do
