@@ -52,6 +52,7 @@ RSpec.describe RegisteredTag, type: :model do
         expect(RegisteredTag.asc.last).to eq latest_tag
       end
     end
+
     describe '.desc' do
       let!(:latest_tag) { create(:registered_tag) }
       let!(:oldest_tag) { create(:registered_tag, :created_yesterday) }
@@ -60,6 +61,7 @@ RSpec.describe RegisteredTag, type: :model do
         expect(RegisteredTag.desc.last).to eq oldest_tag
       end
     end
+
     describe '.opened' do
       let(:user) { create(:user) }
       let(:published_tag) { create(:registered_tag, user: user) }
@@ -77,6 +79,17 @@ RSpec.describe RegisteredTag, type: :model do
           expect(RegisteredTag.opened).not_to include limited_tag
           expect(RegisteredTag.opened).not_to include closed_tag
         end
+      end
+    end
+
+    describe '.have_tweets' do
+      let(:registered_tag_with_tweets) { create(:registered_tag, :with_tweets) }
+      let(:registered_tag_has_no_tweets) { create(:registered_tag) }
+      it 'ツイートを持つregistered_tagを含む' do
+        expect(RegisteredTag.have_tweets).to include registered_tag_with_tweets
+      end
+      it 'ツイートを持たないregistered_tagは含まない' do
+        expect(RegisteredTag.have_tweets).not_to include registered_tag_has_no_tweets
       end
     end
   end
@@ -193,6 +206,10 @@ RSpec.describe RegisteredTag, type: :model do
         it '取得したツイートを保存する' do
           expect { present_tag.create_tweets! }.to change(Tweet, :count).by(3)
         end
+        it 'fetch_tweets_data!を実行する' do
+          expect(present_tag).to receive(:fetch_tweets_data!).once
+          present_tag.create_tweets!
+        end
       end
       context 'ハッシュタグのツイートがTwitterに存在しないとき',
         vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
@@ -201,6 +218,10 @@ RSpec.describe RegisteredTag, type: :model do
         end
         it 'ツイートを取得しないので保存しない' do
           expect { absent_tag.create_tweets! }.not_to change(Tweet, :count)
+        end
+        it 'fetch_tweets_data!を実行しない' do
+          expect(absent_tag).not_to receive(:fetch_tweets_data!)
+          absent_tag.create_tweets!
         end
       end
     end

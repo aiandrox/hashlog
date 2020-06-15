@@ -46,7 +46,7 @@ export default {
       })
       document.cookie = "logged_in=;path=/;max-age=0;"
     }
-    document.title = "マイページ | Hashlog"
+    document.title = "マイページ - Hashlog"
     this.fetchRegisteredTagsData(this.currentUser)
   },
   methods: {

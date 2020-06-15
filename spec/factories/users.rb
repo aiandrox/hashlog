@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
     twitter_id { rand(10 ** 19).to_s }
-    sequence(:name) { |n| "user_#{n}" }
-    sequence(:screen_name) { |n| "user_#{n}" }
+    sequence(:name, 'user_1')
+    sequence(:screen_name, 'user_1')
     description { '' }
     after(:build) do |user|
       create(:authentication, user: user)

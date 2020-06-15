@@ -13,7 +13,7 @@
           }"
         >
           <v-list-item-avatar>
-            <v-icon>{{ index + 1 }}</v-icon>
+            <v-icon>{{ rank(index) }}</v-icon>
           </v-list-item-avatar>
 
           <v-list-item-avatar color="grey" size="50" class="mr-7">
@@ -58,9 +58,15 @@ export default {
   },
   mounted() {
     this.fetchRegisteredTagsData()
-    document.title = "継続率ランキング | Hashlog"
+    document.title = "継続率ランキング - Hashlog"
   },
   methods: {
+    rank(index) {
+      const tagCountPerPage = 20
+      const increase = (this.page.currentPage - 1) * tagCountPerPage
+      const rank = increase + index + 1
+      return rank
+    },
     async fetchRegisteredTagsData() {
       const registeredTagsRes = await this.$axios.get(
         "/api/v1/registered_tags/persistences"
@@ -75,7 +81,7 @@ export default {
       this.page.requestUrl = response.headers["request-url"]
     },
     async changePaginationPage(val) {
-      this.$toTop(0)
+      this.$toTop()
       const res = await this.$axios.get(`${this.page.requestUrl}?page=${val}`)
       const { registeredTags } = res.data
       this.registeredTags = registeredTags

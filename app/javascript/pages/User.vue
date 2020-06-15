@@ -40,7 +40,7 @@ export default {
   methods: {
     async firstRead() {
       await this.fetchUserData()
-      document.title = `${this.user.name}のユーザーページ | Hashlog`
+      document.title = `${this.user.name}のユーザーページ - Hashlog`
     },
     async fetchUserData() {
       const { userUuid } = this.$route.params
