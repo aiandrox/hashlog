@@ -7,7 +7,7 @@ class RemindReplyJob < ApplicationJob
   #   retry_job wait: 3.hours, queue: :low_priority
   # end
 
-  def perform(remind_reply = TwitterAPI::RemindReply.new)
+  def perform(remind_reply = TwitterAPIJob::RemindReply.new)
     logger.info("\n#{Time.now} : RemindReplyJob")
     remind_reply.call
     message = remind_reply.notify_logs.join("\n")

@@ -58,16 +58,17 @@ class RegisteredTag < ApplicationRecord
     (tweeted_day_count.to_f / denominator * FULL_PER).round(1)
   end
 
-  def create_tweets!(type = 'standard')
-    client = TwitterAPI::Search.new(user, tag.name)
-    client.tweets_data(type).each do |oembed, tweeted_at, tweet_id|
+  # ここのtypeを変更することでプランが変わる。standard / premium
+  def create_tweets!(type = 'premium')
+    tweets_data = TwitterData::UserTweets.new(user, tag.name)
+    tweets_data.call(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end.any? && fetch_tweets_data!
   end
 
   def add_tweets(since_id)
-    client = TwitterAPI::Search.new(user, tag.name, since_id)
-    client.tweets_data('everyday').each do |oembed, tweeted_at, tweet_id|
+    tweets_data = TwitterData::UserTweets.new(user, tag.name, since_id)
+    tweets_data.call('everyday').each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
   end
