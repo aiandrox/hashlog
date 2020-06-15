@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tweet do
-    sequence(:oembed) { |n| "HTML #{n} <a href=\"https://twitter.com/hashtag/hast_#{n}?src=hash&amp;ref_src=twsrc%5Etfw\">#</a>" }
+    sequence(:oembed, 'HTML 1')
     tweeted_at { Time.now }
     tweet_id { rand(10 ** 19).to_s }
     registered_tag
@@ -12,5 +12,9 @@ FactoryBot.define do
 
   trait :tweeted_7days_ago do
     tweeted_at { Time.now.ago(7.day) }
+  end
+
+  trait :tweeted_every_day do
+    sequence(:tweeted_at) { |n| Time.current.ago(n.day) + 1.day }
   end
 end

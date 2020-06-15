@@ -41,7 +41,7 @@ export default {
     this.fetchRegisteredTagsData()
   },
   methods: {
-    // タプ用ユーザーの全てのタグ
+    // タブ用ユーザーの全てのタグ
     async fetchRegisteredTagsData() {
       const registeredTagsRes = await this.$axios.get(
         "/api/v1/users/current/registered_tags"

@@ -3,7 +3,7 @@ RSpec.describe 'RegisteredTags', type: :request do
     let(:user) { create(:user) }
     let(:registered_tags) { user.registered_tags.asc }
     let(:tags_json) { json['registeredTags'] }
-    before { login_as(user)}
+    before { login_as(user) }
 
     describe '全般的なこと' do
       before do
@@ -32,7 +32,8 @@ RSpec.describe 'RegisteredTags', type: :request do
               },
             'user' => {
               'name' => registered_tag.user.name,
-              'uuid' => registered_tag.user.uuid
+              'uuid' => registered_tag.user.uuid,
+              'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
             }
           })
         end

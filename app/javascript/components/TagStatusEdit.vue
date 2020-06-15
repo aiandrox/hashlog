@@ -23,7 +23,9 @@
           />
           <validation-provider
             v-slot="{ errors }"
-            :rules="`${isRemind ? 'remindDay|maxRemindDay|minRemindDay' : ''}`"
+            :rules="
+              `${isRemind ? 'remindDayFormat|maxRemindDay|minRemindDay' : ''}`
+            "
           >
             <v-text-field
               v-show="isRemind"
@@ -90,7 +92,7 @@ export default {
         this.registeredTag.remindDay = 0
       }
     },
-    // TODO: vee-validate.jsと同じメソッド
+    // TODO: vee-validate.jsと同じメソッドになっている
     filter(remindDay) {
       if (remindDay === null) {
         return 0
