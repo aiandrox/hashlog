@@ -37,15 +37,18 @@ module TwitterAPI
     include TwitterAPIClient
     attr_reader :notify_logs
 
-    def initialize
-      @registered_tags = RegisteredTag.all.includes(:user, :tag)
+    def initialize(registered_tags = RegisteredTag.all.includes(:user, :tag))
+      @registered_tags = registered_tags
       @notify_logs = []
     end
 
     def call
       registered_tags.each do |r_tag|
         last_tweet = r_tag.tweets.latest
-        r_tag.create_tweets! && next unless last_tweet
+        unless last_tweet
+          r_tag.create_tweets!
+          next
+        end
 
         next if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
 

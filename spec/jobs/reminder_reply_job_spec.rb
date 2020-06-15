@@ -10,7 +10,6 @@ RSpec.describe RemindReplyJob, type: :job do
     end
   end
 
-  # TODO: 実行されているが……なぜ通らない
   describe 'RemindReplyJob#perform',
     vcr: { cassette_name: 'remind_reply_job Webhooks' } do
     let(:job) { RemindReplyJob.new }
@@ -19,9 +18,9 @@ RSpec.describe RemindReplyJob, type: :job do
       expect(Rails.logger).to receive(:info)
       job.perform
     end
-    xit 'TwitterAPI::RemindReply#callを実行する' do
+    it 'TwitterAPI::RemindReply#callを実行する' do
       expect(remind_reply).to receive(:call)
-      job.perform
+      job.perform(remind_reply)
     end
     it 'slack_notofyが実行される' do
       expect(job).to receive(:slack_notify)
