@@ -14,12 +14,12 @@ RSpec.describe AddTweetsJob, type: :job do
   describe 'AddTweetsJob#perform',
     vcr: { cassette_name: 'add_tweets_job TwitterAPIとWebhooks' } do
     let(:job) { AddTweetsJob.new }
-    let(:add_tweets) { TwitterAPI::AddTweets.new }
+    let(:add_tweets) { TwitterAPIJob::AddTweets.new }
     xit 'ログを出力する' do
       expect(Rails.logger).to receive(:info)
       job.perform(add_tweets)
     end
-    it 'TwitterAPI::AddTweets#callを実行する' do
+    it 'TwitterAPIJob::AddTweets#callを実行する' do
       expect(add_tweets).to receive(:call)
       job.perform(add_tweets)
     end

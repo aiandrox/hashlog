@@ -13,7 +13,7 @@ RSpec.describe RemindReplyJob, type: :job do
   describe 'RemindReplyJob#perform',
     vcr: { cassette_name: 'remind_reply_job Webhooks' } do
     let(:job) { RemindReplyJob.new }
-    let(:remind_reply) { TwitterAPI::RemindReply.new }
+    let(:remind_reply) { TwitterAPIJob::RemindReply.new }
     xit 'ログを出力する' do
       expect(Rails.logger).to receive(:info)
       job.perform

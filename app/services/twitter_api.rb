@@ -1,69 +1,14 @@
 module TwitterAPI
-  MAX_RESULTS = 100
-  MAX_RESULTS.freeze
-
-  class RemindReply
+  class Update
     include TwitterAPIClient
-    attr_reader :notify_logs
 
-    def initialize
-      @registered_tags = RegisteredTag.all.includes(:user, :tag)
-      @notify_logs = []
-    end
-
-    def call
-      registered_tags.each do |tag|
-        send_tweet(tag) if tag.remind_day.positive? && tag.remind_day < tag.day_from_last_tweet
-      end
+    def initialize(user)
+      @user = user
     end
 
     private
 
-    attr_reader :registered_tags
-
-    def send_tweet(r_tag)
-      client.update(remind_message(r_tag))
-      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信"
-      Rails.logger.info(message)
-      notify_logs << message
-    end
-
-    def remind_message(r_tag)
-      day = r_tag.day_from_last_tweet == 1 ? '丸1日' : "#{r_tag.day_from_last_tweet}日間"
-      url = "https://hashlog.work/mypage/tags/#{r_tag.id}"
-      "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{day}途絶えているようです。調子はいかがですか？
-\n通知を解除する場合は以下のリンクから設定してください。\n#{url}"
-    end
-  end
-
-  class AddTweets
-    include TwitterAPIClient
-    attr_reader :notify_logs
-
-    def initialize(registered_tags = RegisteredTag.all.includes(:user, :tag))
-      @registered_tags = registered_tags
-      @notify_logs = []
-    end
-
-    def call
-      registered_tags.each do |r_tag|
-        last_tweet = r_tag.tweets.latest
-        unless last_tweet
-          r_tag.create_tweets!
-          next
-        end
-
-        next if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
-
-        since_id = last_tweet.tweet_id.to_i
-        message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にツイートを追加"
-        r_tag.add_tweets(since_id).any? && notify_logs << message && Rails.logger.info(message)
-      end
-    end
-
-    private
-
-    attr_reader :registered_tags
+    attr_reader :user
   end
 
   class Search
@@ -88,9 +33,9 @@ module TwitterAPI
       when 'everyday'
         everyday_search
       end
-      client.oembeds(tweet_ids, omit_script: true, hide_thread: true, lang: :ja)
-            .take(MAX_RESULTS)
-            .map do |oembed|
+      client(user).oembeds(tweet_ids, omit_script: true, hide_thread: true, lang: :ja)
+                  .take(100)
+                  .map do |oembed|
         oembed.html =~ %r{\" dir=\"ltr\">(.+)</p>}
         $+
       end.zip(tweeted_ats, tweet_ids)
@@ -102,8 +47,8 @@ module TwitterAPI
 
     def standard_search
       @standard_search ||= begin
-        client.search("##{tag_name} from:#{user.screen_name} exclude:retweets",
-                      result_type: 'recent', count: MAX_RESULTS).take(MAX_RESULTS).each do |result|
+        client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
+                            result_type: 'recent', count: 100).take(100).each do |result|
           tweeted_ats << result.created_at
           tweet_ids << result.id
         end
@@ -112,9 +57,9 @@ module TwitterAPI
 
     def premium_search
       @premium_search ||= begin
-        client.premium_search("##{tag_name} from:#{user.screen_name}",
-                              { maxResults: MAX_RESULTS },
-                              { product: '30day' }).take(MAX_RESULTS).each do |result|
+        client(user).premium_search("##{tag_name} from:#{user.screen_name}",
+                                    { maxResults: 100 },
+                                    { product: '30day' }).take(100).each do |result|
           next if result.retweeted_status.present?
 
           tweeted_ats << result.created_at
@@ -125,8 +70,8 @@ module TwitterAPI
 
     def everyday_search
       @everyday_search ||= begin
-        client.search("##{tag_name} from:#{user.screen_name} exclude:retweets",
-                      result_type: 'recent', since_id: since_id).take(MAX_RESULTS).each do |result|
+        client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
+                            result_type: 'recent', since_id: since_id).take(100).each do |result|
           tweeted_ats << result.created_at
           tweet_ids << result.id
         end

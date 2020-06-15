@@ -6,7 +6,7 @@ class AddTweetsJob < ApplicationJob
     retry_job wait: 15.minutes, queue: :low_priority
   end
 
-  def perform(add_tweets = TwitterAPI::AddTweets.new)
+  def perform(add_tweets = TwitterAPIJob::AddTweets.new)
     logger.info("\n#{Time.now} : AddTweetsJob")
     add_tweets.call
     message = add_tweets.notify_logs.join("\n")
