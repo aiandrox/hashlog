@@ -17,11 +17,11 @@ RSpec.describe AddTweetsJob, type: :job do
     let(:add_tweets) { TwitterAPI::AddTweets.new }
     xit 'ログを出力する' do
       expect(Rails.logger).to receive(:info)
-      job.perform
+      job.perform(add_tweets)
     end
-    xit 'TwitterAPI::AddTweets#callを実行する' do
+    it 'TwitterAPI::AddTweets#callを実行する' do
       expect(add_tweets).to receive(:call)
-      job.perform
+      job.perform(add_tweets)
     end
     it 'slack_notofyが実行される' do
       expect(job).to receive(:slack_notify)
