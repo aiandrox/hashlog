@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tweet do
-    sequence(:oembed) { |n| "HTML #{n} <a href=\"https://twitter.com/hashtag/hast_#{n}?src=hash&amp;ref_src=twsrc%5Etfw\">#</a>" }
+    sequence(:oembed, 'HTML 1')
     tweeted_at { Time.now }
     tweet_id { rand(10 ** 19).to_s }
     registered_tag
