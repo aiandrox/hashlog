@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :users, param: :uuid, only: %i[index show] do
         collection do
           resource :current, only: %i[show update destroy], module: :users do
+            resource :twitter_data, only: %i[update], module: :current
             resources :registered_tags, only: %i[index], module: :current
           end
         end

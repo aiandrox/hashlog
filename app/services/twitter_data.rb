@@ -1,66 +1,28 @@
-module TwitterAPI
-  class RemindReply
+module TwitterData
+  class User
     include TwitterAPIClient
-    attr_reader :notify_logs
 
-    def initialize
-      @registered_tags = RegisteredTag.all.includes(:user, :tag)
-      @notify_logs = []
+    def initialize(user)
+      @user = user
     end
 
     def call
-      registered_tags.each do |tag|
-        send_tweet(tag) if tag.remind_day.positive? && tag.remind_day < tag.day_from_last_tweet
-      end
+      avatar = twitter_data.profile_image_url_https
+      avatar_url = avatar.scheme + '://' + avatar.host + avatar.path
+      { name: twitter_data.name, screen_name: twitter_data.screen_name,
+        description: twitter_data.description, avatar_url: avatar_url }
     end
 
     private
 
-    attr_reader :registered_tags
+    attr_reader :user
 
-    def send_tweet(r_tag)
-      client.update(remind_message(r_tag))
-      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信"
-      Rails.logger.info(message)
-      notify_logs << message
-    end
-
-    def remind_message(r_tag)
-      day = r_tag.day_from_last_tweet == 1 ? '丸1日' : "#{r_tag.day_from_last_tweet}日間"
-      url = "https://hashlog.work/mypage/tags/#{r_tag.id}"
-      "@#{r_tag.user.screen_name}\n##{r_tag.tag.name} のツイートが#{day}途絶えているようです。調子はいかがですか？
-\n通知を解除する場合は以下のリンクから設定してください。\n#{url}"
+    def twitter_data
+      @twitter_data ||= client(user).user(user_id: user.twitter_id)
     end
   end
 
-  class AddTweets
-    include TwitterAPIClient
-    attr_reader :notify_logs
-
-    def initialize
-      @registered_tags = RegisteredTag.all.includes(:user, :tag)
-      @notify_logs = []
-    end
-
-    def call
-      registered_tags.each do |r_tag|
-        last_tweet = r_tag.tweets.latest
-        r_tag.create_tweets! && next unless last_tweet
-
-        next if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
-
-        since_id = last_tweet.tweet_id.to_i
-        message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にツイートを追加"
-        r_tag.add_tweets(since_id).any? && notify_logs << message && Rails.logger.info(message)
-      end
-    end
-
-    private
-
-    attr_reader :registered_tags
-  end
-
-  class Search
+  class UserTweets
     include TwitterAPIClient
 
     def initialize(user, tag_name, since_id = nil)
@@ -73,7 +35,7 @@ module TwitterAPI
 
     # return [["<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-13 07:13:39 UTC, 1249596597479956481],
     #         ["あ<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-12 01:54:07 UTC, 1249153794946011137]]
-    def tweets_data(type = 'standard')
+    def call(type = 'standard')
       case type
       when 'standard'
         standard_search

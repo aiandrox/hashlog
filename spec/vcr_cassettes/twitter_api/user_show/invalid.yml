@@ -1,0 +1,97 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.twitter.com/1.1/account/verify_credentials.json?user_id=invalid
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - TwitterRubyGem/7.0.0
+      Authorization:
+      - OAuth oauth_consumer_key="<API KEY>", oauth_nonce="bd92dec67ecf171eedc23622f652cb4b",
+        oauth_signature="9YMUk9UF%2FH8Zf6OyWA%2FybxXrQr4%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1592224405", oauth_token="p%2Fb4x0VJVTzC9w%3D%3D--7af4LRn1xae0gT6u--JTgxBYzNADlffciVn%2FS8dA%3D%3D",
+        oauth_version="1.0"
+      Connection:
+      - close
+      Host:
+      - api.twitter.com
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '62'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 15 Jun 2020 12:33:26 GMT
+      Server:
+      - tsa_m
+      Set-Cookie:
+      - guest_id=v1%3A159222440674953614; Max-Age=63072000; Expires=Wed, 15 Jun 2022
+        12:33:26 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      - personalization_id="v1_tkpUQxLvPzU+8rPc979BuA=="; Max-Age=63072000; Expires=Wed,
+        15 Jun 2022 12:33:26 GMT; Path=/; Domain=.twitter.com; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=631138519
+      X-Connection-Hash:
+      - '08ddbf36b0e902bc1892bc7ee3333a97'
+      X-Response-Time:
+      - '106'
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"code":215,"message":"Bad Authentication data."}]}'
+  recorded_at: Mon, 15 Jun 2020 12:33:26 GMT
+- request:
+    method: post
+    uri: "<WEBHOOK URL>"
+    body:
+      encoding: US-ASCII
+      string: payload=%7B%22webhook_url%22%3A%22https%3A%2F%2Fhooks.slack.com%2Fservices%2F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%22%2C%22channel%22%3A%22%23hashlog%E9%80%9A%E7%9F%A5%22%2C%22text%22%3A%22%22%2C%22attachments%22%3A%5B%7B%22color%22%3A%22danger%22%2C%22text%22%3A%22*A*+%60Twitter%3A%3AError%3A%3ABadRequest%60+*occurred+while*+%60PATCH+%5Cu003c%2Fapi%2Fv1%2Fusers%2Fcurrent%2Ftwitter_data%5Cu003e%60+*was+processed+by*+%60twitter_data%23update%60%5Cn%22%2C%22fields%22%3A%5B%7B%22title%22%3A%22Exception%22%2C%22value%22%3A%22Bad+Authentication+data.%22%7D%2C%7B%22title%22%3A%22Hostname%22%2C%22value%22%3A%22k-end.local%22%7D%2C%7B%22title%22%3A%22Backtrace%22%2C%22value%22%3A%22%60%60%60app%2Fservices%2Ftwitter_data.rb%3A21%3Ain+%60twitter_data%27%5Cnapp%2Fservices%2Ftwitter_data.rb%3A10%3Ain+%60call%27%5Cnapp%2Fcontrollers%2Fapi%2Fv1%2Fusers%2Fcurrent%2Ftwitter_data_controller.rb%3A5%3Ain+%60update%27%60%60%60%22%7D%5D%2C%22mrkdwn_in%22%3A%5B%22text%22%2C%22fields%22%5D%7D%5D%7D
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 15 Jun 2020 12:33:27 GMT
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Referrer-Policy:
+      - no-referrer
+      X-Slack-Backend:
+      - r
+      X-Frame-Options:
+      - SAMEORIGIN
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Length:
+      - '22'
+      Content-Type:
+      - text/html
+      X-Via:
+      - haproxy-www-3g5k
+    body:
+      encoding: ASCII-8BIT
+      string: ok
+  recorded_at: Mon, 15 Jun 2020 12:33:27 GMT
+recorded_with: VCR 6.0.0

@@ -23,6 +23,14 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <v-btn
+      class="ma-2"
+      color="primary"
+      outlined
+      @click="$emit('push-twitter-update')"
+    >
+      <v-icon left>mdi-twitter</v-icon>ユーザー情報更新
+    </v-btn>
   </v-card>
 </template>
 

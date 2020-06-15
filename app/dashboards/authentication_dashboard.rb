@@ -10,8 +10,10 @@ class AuthenticationDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     user: Field::BelongsTo,
     id: Field::Number,
-    provider: Field::String,
+    provider: Field::Select.with_options(collection: %i[twitter]),
     uid: Field::String,
+    access_token: Field::String,
+    access_token_secret: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -26,6 +28,8 @@ class AuthenticationDashboard < Administrate::BaseDashboard
     provider
     user
     uid
+    access_token
+    access_token_secret
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -46,6 +50,8 @@ class AuthenticationDashboard < Administrate::BaseDashboard
     user
     provider
     uid
+    access_token
+    access_token_secret
   ].freeze
 
   # COLLECTION_FILTERS

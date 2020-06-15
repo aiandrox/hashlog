@@ -150,7 +150,7 @@ RSpec.describe 'RegisteredTags', type: :request do
             'code' => '422',
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
-            'messages' => ['名前を入力してください']
+            'messages' => %w[名前の入力形式が不適です 名前を入力してください]
           })
         end
         it 'current_user.registered_tagsを作成しない' do

@@ -11,8 +11,8 @@ User.seed_once(
 
 Authentication.seed_once(
   user_id: 1,
-  provider: "twitter",
-  uid: "1242379749650907137"
+  provider: 'twitter',
+  uid: '1242379749650907137'
 )
 
 User.seed_once(
@@ -27,6 +27,6 @@ User.seed_once(
 )
 Authentication.seed_once(
   user_id: 2,
-  provider: "twitter",
-  uid: "1048451188209770497"
+  provider: 'twitter',
+  uid: '1048451188209770497'
 )

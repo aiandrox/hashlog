@@ -1,8 +1,8 @@
-RSpec.describe TwitterAPI do
+RSpec.describe TwitterAPIJob do
   let(:user) { create(:user, :real_value) }
   describe '::RemindReply' do
     let(:registered_tag) { create(:registered_tag, user: user) }
-    let(:remind_reply) { TwitterAPI::RemindReply.new }
+    let(:remind_reply) { TwitterAPIJob::RemindReply.new }
     before { create_list(:registered_tag, 3) }
     describe '#call' do
       it 'remind_dayが0のtagに対してsend_tweetメソッドを実行しない' do
@@ -25,11 +25,10 @@ RSpec.describe TwitterAPI do
     end
   end
 
-  # TODO: モックのテストが通らない…
   describe '::AddTweets' do
     let(:registered_tag) { user.registered_tags.first }
     let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
-    let(:add_tweets) { TwitterAPI::AddTweets.new }
+    let(:add_tweets) { TwitterAPIJob::AddTweets.new }
     describe '#call' do
       context 'ツイートを既に取得しているとき' do
         before 'タグ登録時にツイートを取得' do
@@ -44,13 +43,14 @@ RSpec.describe TwitterAPI do
               add_tweets.call
             end.to change(Tweet, :count).by(3)
           end
-          xit 'Rails.logger.infoでログを出力する' do
+          it 'Rails.logger.infoでログを出力する' do
             expect(Rails.logger).to receive(:info).with('@aiandrox の #ポートフォリオ進捗 にツイートを追加')
             add_tweets.call
           end
         end
         context '既に前日のツイートを取得しているとき' do
-          xit 'RegisteredTag#add_tweetsを実行しない' do
+          let(:add_tweets) { TwitterAPIJob::AddTweets.new([registered_tag]) }
+          it 'RegisteredTag#add_tweetsを実行しない' do
             create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
             registered_tag.fetch_tweets_data!
             expect(registered_tag).not_to receive(:add_tweets)
@@ -59,7 +59,7 @@ RSpec.describe TwitterAPI do
         end
         context '前日のツイートがなかったとき',
           vcr: { cassette_name: 'twitter_api/everyday_search/前日のツイートがなかったとき' } do
-          xit 'Rails.logger.infoを実行しない' do
+          it 'Rails.logger.infoを実行しない' do
             expect(Rails.logger).not_to receive(:info)
             add_tweets.call
           end
@@ -70,71 +70,10 @@ RSpec.describe TwitterAPI do
         let!(:registered_tag) {
           create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
         }
-        xit 'RegisteredTag#create_tweets!を実行する' do
+        let(:add_tweets) { TwitterAPIJob::AddTweets.new([registered_tag]) }
+        it 'RegisteredTag#create_tweets!を実行する' do
           expect(registered_tag).to receive(:create_tweets!)
           add_tweets.call
-        end
-      end
-    end
-  end
-
-  describe '::Search' do
-    describe '#tweets_data' do
-      context '該当のツイートがない場合',
-        vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
-        let(:tag) { create(:tag, name: 'absent_tag') }
-        let(:client) { TwitterAPI::Search.new(user, tag.name) }
-        it '空の配列を返す' do
-          expect(client.tweets_data).to eq([])
-        end
-      end
-
-      context 'ツイートを取得できる場合' do
-        let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
-        shared_examples :return_value do
-          it '配列を返す' do
-            expect(
-              VCR.use_cassette("twitter_api/#{type}_search") do
-                client.tweets_data(type)
-              end.is_a?(Array)
-            ).to be_truthy
-          end
-          it '配列の中の要素が[tweet_oembed, tweeted_at, tweet_id]である' do
-            array = VCR.use_cassette("twitter_api/#{type}_search") do
-                      client.tweets_data(type)
-                    end.sample
-            expect(array).to(match([be_kind_of(String),
-                                    be_kind_of(Time),
-                                    be_kind_of(Integer)]))
-          end
-        end
-        context '"standard"を引数に渡すとき' do
-          let(:type) { 'standard' }
-          let(:client) { TwitterAPI::Search.new(user, tag.name) }
-          it '#standard_searchを実行する' do
-            expect(client).to receive(:standard_search).once
-            client.tweets_data(type)
-          end
-          it_behaves_like :return_value
-        end
-        context '"premium"を引数に渡すとき' do
-          let(:type) { 'premium' }
-          let(:client) { TwitterAPI::Search.new(user, tag.name) }
-          it '#premiun_searchを実行する' do
-            expect(client).to receive(:premium_search).once
-            client.tweets_data(type)
-          end
-          it_behaves_like :return_value
-        end
-        context '"everyday"を引数に渡すとき' do
-          let(:type) { 'everyday' }
-          let(:since_id) { '1255854602626330624' }
-          let(:client) { TwitterAPI::Search.new(user, tag.name, since_id) }
-          it '#everyday_searchを実行する' do
-            expect(client).to receive(:everyday_search).once
-            client.tweets_data(type)
-          end
-          it_behaves_like :return_value
         end
       end
     end

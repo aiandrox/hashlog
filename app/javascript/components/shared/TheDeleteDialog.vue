@@ -15,21 +15,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!-- ローディング -->
-    <loading v-if="loading" />
   </v-layout>
 </template>
 
 <script>
 import loading from "./TheLoading"
 export default {
-  components: {
-    loading
-  },
   data() {
     return {
-      dialog: false,
-      loading: false
+      dialog: false
     }
   },
   methods: {
