@@ -13,7 +13,7 @@
                   ref="provider"
                   v-slot="{ errors }"
                   name="ハッシュタグ"
-                  rules="required"
+                  rules="required|tagNameFormat"
                 >
                   <v-text-field
                     v-model="tagName"

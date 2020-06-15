@@ -5,13 +5,25 @@ extend("required", {
   ...required,
   message: "{_field_}を入力してください"
 })
+
 extend("max", {
   ...max,
   message: "{_field_}は最大{length}文字です"
 })
 
-const filter = remindDay => {
-  const stringRemindDay = String(remindDay)
+const filterTagName = value => value.replace(/^#+/, "")
+
+extend("tagNameFormat", {
+  validate(value) {
+    return filterTagName(value).match(
+      /^[Ａ-Ｚａ-ｚA-Za-z一-龠々0-9０-９ぁ-ヶｦ-ﾟー゛゜_]+$/
+    )
+  },
+  message: "入力形式が不適です"
+})
+
+const filterRemindDay = value => {
+  const stringRemindDay = String(value)
   if (stringRemindDay === null) {
     return null
   }
@@ -23,16 +35,16 @@ const filter = remindDay => {
   return Number(result)
 }
 
-extend("remindDay", {
+extend("remindDayFormat", {
   validate(value) {
-    return !isNaN(filter(value))
+    return !isNaN(filterRemindDay(value))
   },
   message: "入力形式が不適です"
 })
 
 extend("maxRemindDay", {
   validate(value) {
-    if (filter(value) > 30) {
+    if (filterRemindDay(value) > 30) {
       return false
     }
     return true
@@ -42,7 +54,7 @@ extend("maxRemindDay", {
 
 extend("minRemindDay", {
   validate(value) {
-    if (filter(value) < 1) {
+    if (filterRemindDay(value) < 1) {
       return false
     }
     return true

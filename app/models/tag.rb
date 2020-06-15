@@ -4,7 +4,7 @@ class Tag < ApplicationRecord
   has_many :registered_tags, dependent: :restrict_with_error
   has_many :users, through: :registered_tags
 
-  validates :name, format: { with: /\A[Ａ-Ｚａ-ｚA-Za-z一-龠々0-9０-９ぁ-ヶｦ-ﾟー゛゜_]+\Z/, message: 'が不適な形式です' }
+  validates :name, format: { with: /\A[Ａ-Ｚａ-ｚA-Za-z一-龠々0-9０-９ぁ-ヶｦ-ﾟー゛゜_]+\Z/, message: 'の入力形式が不適です' }
   validates :name, presence: true, uniqueness: true, length: { maximum: 100 }
 
   # TODO: 警告を直す

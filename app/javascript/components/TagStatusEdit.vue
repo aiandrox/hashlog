@@ -23,7 +23,9 @@
           />
           <validation-provider
             v-slot="{ errors }"
-            :rules="`${isRemind ? 'remindDay|maxRemindDay|minRemindDay' : ''}`"
+            :rules="
+              `${isRemind ? 'remindDayFormat|maxRemindDay|minRemindDay' : ''}`
+            "
           >
             <v-text-field
               v-show="isRemind"
@@ -39,7 +41,9 @@
       </v-list-item>
     </v-container>
     <v-list-item>
-      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')">キャンセル</v-btn>
+      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')"
+        >キャンセル</v-btn
+      >
       <v-btn
         class="ma-2"
         depressed
