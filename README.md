@@ -70,8 +70,7 @@ Twitter 連携型 学習記録サービスです。
 
 #### ER 図
 
-[![Image from Gyazo](https://i.gyazo.com/c47dd93c5c633a3afb332851a627993a.png)](https://gyazo.com/c47dd93c5c633a3afb332851a627993a)
-https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
+[![Image from Gyazo](https://i.gyazo.com/45f2b59b8d02283fe6a7fa0748578745.png)](https://gyazo.com/45f2b59b8d02283fe6a7fa0748578745)https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
 
 ### フロントエンド
 
