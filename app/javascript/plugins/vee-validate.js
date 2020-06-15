@@ -44,7 +44,8 @@ extend("remindDayFormat", {
 
 extend("maxRemindDay", {
   validate(value) {
-    if (filterRemindDay(value) > 30) {
+    const maxDayCount = 30
+    if (filterRemindDay(value) > maxDayCount) {
       return false
     }
     return true
@@ -54,7 +55,8 @@ extend("maxRemindDay", {
 
 extend("minRemindDay", {
   validate(value) {
-    if (filterRemindDay(value) < 1) {
+    const minDayCount
+    if (filterRemindDay(value) < minDayCount) {
       return false
     }
     return true

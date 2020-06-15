@@ -26,7 +26,9 @@
           </v-list-item-content>
 
           <v-list-item-action>{{ tag.tweetRate }}%</v-list-item-action>
-          <v-list-item-action class="d-none d-md-flex">（{{ tag.tweetedDayCount }}日）</v-list-item-action>
+          <v-list-item-action class="d-none d-md-flex"
+            >（{{ tag.tweetedDayCount }}日）</v-list-item-action
+          >
         </v-list-item>
       </v-list>
     </v-card>
@@ -60,8 +62,10 @@ export default {
   },
   methods: {
     rank(index) {
-      const increase = (this.page.currentPage - 1) * 20
-      return increase + index + 1
+      const tagCountPerPage = 20
+      const increase = (this.page.currentPage - 1) * tagCountPerPage
+      const rank = increase + index + 1
+      return rank
     },
     async fetchRegisteredTagsData() {
       const registeredTagsRes = await this.$axios.get(
@@ -77,7 +81,7 @@ export default {
       this.page.requestUrl = response.headers["request-url"]
     },
     async changePaginationPage(val) {
-      this.$toTop(0)
+      this.$toTop()
       const res = await this.$axios.get(`${this.page.requestUrl}?page=${val}`)
       const { registeredTags } = res.data
       this.registeredTags = registeredTags

@@ -95,13 +95,15 @@ export default {
           })
           this.resetForm()
         } catch (error) {
+          const unprocessableEntityStatus = 422
+          const tooManyRequestsStatus = 429
           switch (error.response.status) {
-            case 422: {
+            case unprocessableEntityStatus: {
               const errorMessage = error.response.data.error.messages[0]
               this.$refs.provider.errors.push(errorMessage)
               break
             }
-            case 429: {
+            case tooManyRequestsStatus: {
               const errorMessage = error.response.data.error.messages[0]
               this.$refs.provider.errors.push(errorMessage)
               break
