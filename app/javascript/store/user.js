@@ -43,6 +43,12 @@ const actions = {
       return null // バリデーションエラー
     }
   },
+  async fetchTwitterDataToCurrentUser({ commit, state }) {
+    const response = await axios.patch("/api/v1/users/current/twitter_data")
+    const { user } = response.data
+    commit("setCurrentUser", user)
+    return user
+  },
   async deleteCurrentUser({ commit, state }) {
     await axios.delete("/api/v1/users/current")
     commit("setCurrentUser", null)

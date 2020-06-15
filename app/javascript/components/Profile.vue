@@ -37,7 +37,11 @@
         </v-col>
         <v-col cols="9" md="3">
           <!-- ステータス -->
-          <profile-status :is-editing="isEditing" :user="user" />
+          <profile-status
+            :is-editing="isEditing"
+            :user="user"
+            @push-twitter-update="$emit('push-twitter-update')"
+          />
         </v-col>
       </v-container>
     </v-card>
@@ -48,6 +52,7 @@
 import profileStatus from "./ProfileStatus"
 import profileEdit from "./ProfileEdit"
 import profileView from "./ProfileView"
+
 export default {
   components: {
     profileView,

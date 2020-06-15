@@ -7,14 +7,17 @@
       ref="profile"
       :user="currentUser"
       @push-update="updateUserData"
-      @push-delete="showDeleteDialog"
+      @push-delete="$refs.deleteDialog.open()"
       @push-cancel="cancelEdit"
+      @push-twitter-update="$refs.updateDialog.open()"
     />
     <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
       ツイートを含む全てのデータが消えて
       <br />復活できなくなります。
     </delete-dialog>
+    <!-- Twitterデータ更新ダイアログ -->
+    <update-dialog ref="updateDialog" @push-update="fetchTwitterData" />
   </div>
 </template>
 <script>
@@ -22,12 +25,14 @@ import { mapGetters } from "vuex"
 import profile from "../components/Profile"
 import tagsTab from "../components/TagsTab"
 import deleteDialog from "../components/shared/TheDeleteDialog"
+import updateDialog from "../components/TheProfileUpdateDialog"
 
 export default {
   components: {
     profile,
     tagsTab,
-    deleteDialog
+    deleteDialog,
+    updateDialog
   },
   data() {
     return {
@@ -54,7 +59,6 @@ export default {
       const registeredTagsRes = await this.$axios.get(
         "/api/v1/users/current/registered_tags"
       )
-
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
     },
@@ -69,8 +73,22 @@ export default {
     async cancelEdit() {
       this.$store.dispatch("user/getCurrentUserFromAPI")
     },
-    showDeleteDialog() {
-      this.$refs.deleteDialog.open()
+    async fetchTwitterData() {
+      try {
+        await this.$store.dispatch("user/fetchTwitterDataToCurrentUser")
+        this.$store.dispatch("flash/setFlash", {
+          type: "success",
+          message: "ユーザー情報を更新しました"
+        })
+      } catch (error) {
+        const errorMessage = error.response.data.error.messages[0]
+        this.$store.dispatch("flash/setFlash", {
+          type: "error",
+          message: errorMessage
+        })
+      } finally {
+        this.$refs.updateDialog.close()
+      }
     },
     async deleteUser() {
       await this.$store.dispatch("user/deleteCurrentUser")
