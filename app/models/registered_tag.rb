@@ -83,8 +83,8 @@ class RegisteredTag < ApplicationRecord
   end
 
   def user_registered_tags_count_validate
-    if user&.registered_tags&.count.to_d >= USER_REGISTERED_TAGS_COUNT
-      errors.add(:base, '登録できるハッシュタグは3つまでです')
-    end
+    return unless user&.registered_tags&.count.to_d >= USER_REGISTERED_TAGS_COUNT
+
+    errors.add(:base, '登録できるハッシュタグは3つまでです')
   end
 end

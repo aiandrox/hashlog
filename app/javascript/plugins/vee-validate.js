@@ -55,7 +55,7 @@ extend("maxRemindDay", {
 
 extend("minRemindDay", {
   validate(value) {
-    const minDayCount
+    const minDayCount = 1
     if (filterRemindDay(value) < minDayCount) {
       return false
     }
