@@ -24,6 +24,7 @@
       </v-list-item>
     </v-list>
     <v-btn
+      v-if="isMypage"
       class="ma-2"
       color="primary"
       outlined
@@ -64,6 +65,9 @@ export default {
           text: this.user.role
         }
       ]
+    },
+    isMypage() {
+      return this.$route.path.includes("/mypage/")
     }
   },
   methods: {
