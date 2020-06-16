@@ -11,12 +11,13 @@
             name: 'userTag',
             params: { tagId: tag.id, userUuid: tag.user.uuid }
           }"
+          class="pl-0 px-sm-4"
         >
-          <v-list-item-avatar>
+          <v-list-item-avatar size="40" class="mr-sm-7 mr-2">
             <v-icon>{{ rank(index) }}</v-icon>
           </v-list-item-avatar>
 
-          <v-list-item-avatar color="grey" size="50" class="mr-7">
+          <v-list-item-avatar color="grey" size="50" class="mr-sm-7 mr-2">
             <v-img :src="tag.user.avatarUrl" />
           </v-list-item-avatar>
 
@@ -25,8 +26,10 @@
             <v-list-item-subtitle class="mt-1" v-text="'by ' + tag.user.name" />
           </v-list-item-content>
 
-          <v-list-item-action>{{ tag.tweetRate }}%</v-list-item-action>
-          <v-list-item-action class="d-none d-md-flex"
+          <v-list-item-action class="ml-2"
+            >{{ tag.tweetRate }}%</v-list-item-action
+          >
+          <v-list-item-action class="d-none d-sm-flex"
             >（{{ tag.tweetedDayCount }}日）</v-list-item-action
           >
         </v-list-item>
