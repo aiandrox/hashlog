@@ -2,7 +2,7 @@ require 'twitter'
 
 module TwitterAPIClient
   def client(user = nil)
-    set_token(user)
+    @user = user
     @client ||= begin
       Twitter::REST::Client.new do |config|
         config.consumer_key        = Rails.application.credentials.twitter[:key]
@@ -16,16 +16,22 @@ module TwitterAPIClient
 
   private
 
-  attr_reader :access_token, :access_token_secret
+  attr_reader :user
 
-  def set_token(user)
-    if user.nil?
-      @access_token = Rails.application.credentials.twitter[:access_token]
-      @access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
-    else
-      @access_token = crypt.decrypt_and_verify(user.authentication&.access_token)
-      @access_token_secret = crypt.decrypt_and_verify(user.authentication&.access_token_secret)
-    end
+  def access_token
+    @access_token = if user&.authentication&.access_token
+                      crypt.decrypt_and_verify(user.authentication.access_token)
+                    else
+                      Rails.application.credentials.twitter[:access_token]
+                    end
+  end
+
+  def access_token_secret
+    @access_token_secret = if user&.authentication&.access_token
+                             crypt.decrypt_and_verify(user.authentication.access_token_secret)
+                           else
+                             Rails.application.credentials.twitter[:access_token_secret]
+                           end
   end
 
   def crypt
