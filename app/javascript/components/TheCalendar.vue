@@ -1,5 +1,5 @@
 <template>
-  <v-container class="main-content">
+  <div class="main-content">
     <v-date-picker
       ref="picker"
       v-model="date"
@@ -13,7 +13,7 @@
       @input="inputDate"
       class="mt-4"
     ></v-date-picker>
-  </v-container>
+  </div>
 </template>
 
 <script>

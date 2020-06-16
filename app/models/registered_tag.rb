@@ -59,7 +59,7 @@ class RegisteredTag < ApplicationRecord
   end
 
   # ここのtypeを変更することでプランが変わる。standard / premium
-  def create_tweets!(type = 'premium')
+  def create_tweets!(type = 'standard')
     tweets_data = TwitterData::UserTweets.new(user, tag.name)
     tweets_data.call(type).each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
