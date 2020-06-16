@@ -9,16 +9,25 @@
           :key="registeredTag.id"
           :to="registeredTagRoute(registeredTag)"
           @click="$emit('select-tab')"
-        >#{{ registeredTag.tag.name }}</v-tab>
+          >#{{ registeredTag.tag.name }}</v-tab
+        >
       </v-tabs>
     </div>
     <v-spacer />
     <div v-if="isMypage" col="2">
-      <v-btn class="ma-2" color="primary" depressed @click="$refs.registerDialog.open()">
+      <v-btn
+        class="ma-2"
+        color="primary"
+        depressed
+        @click="$refs.registerDialog.open()"
+      >
         <v-icon left>mdi-pound</v-icon>ハッシュタグを登録する
       </v-btn>
       <!-- ダイアログ -->
-      <register-tag-dialog ref="registerDialog" @create-tag="$emit('create-tag')" />
+      <register-tag-dialog
+        ref="registerDialog"
+        @create-tag="$emit('create-tag')"
+      />
     </div>
   </v-container>
 </template>
