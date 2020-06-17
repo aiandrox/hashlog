@@ -21,31 +21,38 @@ Twitter 連携型 学習記録サービスです。
 
 ## 使用画面と機能紹介
 
-| トップページ                                                         | 利用規約                                                                                             |
-| :------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------- |
-| <img src="https://i.gyazo.com/3b1ed1fc55683c17d73c9d5c96643673.png"> | <img src="https://i.gyazo.com/a5df36426cae3326b9813cb2afb6eacf.png">                                 |
-| 最近登録されたハッシュタグ 3 件と機能の紹介を表示する。              | ユーザー登録/ログイン前に利用規約を表示し、ユーザーが同意した上で Twitter 認証ページへジャンプする。 |
+| トップページ                                                         | 利用規約                                                                                               |
+| :------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
+| <img src="https://i.gyazo.com/288cfef35a4c404a57b9ed80803b9f77.png"> | <img src="https://i.gyazo.com/a5df36426cae3326b9813cb2afb6eacf.png">                                   |
+| 最近登録されたハッシュタグ 3 件と機能の紹介を表示する。              | ユーザー登録 / ログイン前に利用規約を表示し、ユーザーが同意した上で Twitter 認証ページへジャンプする。 |
 
 <br>
 
 | マイページ                                                                                                                 | ハッシュタグ登録画面                                                                                                        |
 | :------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://i.gyazo.com/bd2b43a7a36d58c52bb49e9dccce47e0.png">                                                       | <img src="https://i.gyazo.com/4374e41c4f1c5cc06d2df89dcbf65c3b.png">                                                        |
+| <img src="https://i.gyazo.com/bd2b43a7a36d58c52bb49e9dccce47e0.png">                                                       | <img src="https://i.gyazo.com/5264cb248f86022f6d5fef549460ee34.png">                                                        |
 | ユーザープロフィールと公開設定のみ編集できる。<br>非公開設定の場合、自分以外によるユーザーページへのアクセスが制限される。 | ハッシュタグを登録することで、自動でツイートを取得する。<br>登録後はサービス側で自動で 1 日ごとにツイートを収集し更新する。 |
 
 <br>
 
-| ツイート一覧ページ（マイページ）                                                                 | ツイート一覧ページ（ユーザーページ）                                  |
-| :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------- |
-| <img src="https://i.gyazo.com/30e89befc5afee6f425363b231d00ea2.png">                             | <img src="https://i.gyazo.com/99d91739e9c979287781ac9af848f53e.png">  |
-| 該当のハッシュタグのツイートが表示される。<br>カレンダーにはツイートした日にマークが付いている。 | 限定公開/非公開設定にしたハッシュタグはユーザーページに表示されない。 |
+| ツイート一覧ページ（マイページ）                                                                 | ツイート一覧ページ（ユーザーページ）                                    |
+| :----------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------- |
+| <img src="https://i.gyazo.com/30e89befc5afee6f425363b231d00ea2.png">                             | <img src="https://i.gyazo.com/99d91739e9c979287781ac9af848f53e.png">    |
+| 該当のハッシュタグのツイートが表示される。<br>カレンダーにはツイートした日にマークが付いている。 | 限定公開 / 非公開設定にしたハッシュタグはユーザーページに表示されない。 |
 
 <br>
 
 | ハッシュタグの設定                                                                                                                    | 日付選択時                                                           |
 | :------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------- |
 | <img src="https://i.gyazo.com/06af34d7b35b912ddb6c95765fc8fd23.png">                                                                  | <img src="https://i.gyazo.com/aa81ebd3412dfd89508b545767924fb1.png"> |
-| 公開設定・リマインダーを設定する。<br>リマインダーで設定した日数ツイートがない場合、Bot から Twitter アカウントにリプライが送られる。 | カレンダーの日付を選択することで、その日のツイートだけを表示する。   |
+| 公開設定・リマインダーを設定する。<br>リマインダーで設定した日数ツイートがない場合、Bot から Twitter アカウントにリプライが送られる。 | カレンダーの日付を選択することで、その日のツイートのみ表示する。     |
+
+<br>
+
+| 継続率ランキング                                                           | 管理画面                                                             |
+| :------------------------------------------------------------------------- | :------------------------------------------------------------------- |
+| <img src="https://i.gyazo.com/677e1c05873a94c687bd092c01b26332.png">       | <img src="https://i.gyazo.com/a21f086fc3dc447a5d54d502fe7c56c5.png"> |
+| 公開設定になっているハッシュタグを継続率・ツイート日数でランキングにする。 | ユーザーなどの情報、定期実行の状況を確認する。                       |
 
 <br>
 
@@ -70,7 +77,8 @@ Twitter 連携型 学習記録サービスです。
 
 #### ER 図
 
-[![Image from Gyazo](https://i.gyazo.com/45f2b59b8d02283fe6a7fa0748578745.png)](https://gyazo.com/45f2b59b8d02283fe6a7fa0748578745)https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
+[![Image from Gyazo](https://i.gyazo.com/f2f05539bb0679ed1e64eac82e9b772b.png)](https://gyazo.com/f2f05539bb0679ed1e64eac82e9b772b)
+https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
 
 ### フロントエンド
 
@@ -85,16 +93,17 @@ Twitter 連携型 学習記録サービスです。
 - Sider
 - CircleCI
 - Nginx 1.12.2
+- puma
 - AWS
   - VPC
   - EC2
     - Amazon Linux 2
   - ALB
-  - CloudWatch
   - RDS
     - MySQL 8.0.19
   - Route53
   - ACM
+  - CloudWatch
 
 #### インフラ構成
 
@@ -129,23 +138,9 @@ $ bin/webpack-dev-server
 $ bundle exec rspec spec
 ```
 
+[テスト項目](/Test.md)
+
 ### Twitter API の設定
-
-See `app/services/twitter_api_client.rb`
-
-```rb
-  def client
-    @client ||= begin
-      Twitter::REST::Client.new do |config|
-        config.consumer_key        = Rails.application.credentials.twitter[:key]
-        config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
-        config.access_token        = Rails.application.credentials.twitter[:access_token]
-        config.access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
-        config.dev_environment     = 'premium'  # Search Tweets: 30-Days / Sandboxの名前
-      end
-    end
-  end
-```
 
 事前に Twitter Developer で API キーとアクセストークンを取得した上で、`$ rails credentials:edit`を実行し、以下のように記述してください。
 

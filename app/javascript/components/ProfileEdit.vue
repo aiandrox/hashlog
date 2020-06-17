@@ -1,19 +1,5 @@
 <template>
   <ValidationObserver ref="observer" v-slot="{ invalid }">
-    <v-list-item>
-      <v-list-item-avatar color="grey" size="60">
-        <v-img :src="user.avatarUrl" />
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="title">
-          {{ user.name }}
-          <v-btn icon color="blue" :href="twitterUrl">
-            <v-icon>mdi-twitter</v-icon>
-          </v-btn>
-        </v-list-item-title>
-        <v-list-item-subtitle>@{{ user.screenName }}</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
     <v-card-text class="my-0">
       <div class="body-1">
         <ValidationProvider
@@ -25,6 +11,7 @@
             v-model="user.description"
             outlined
             :counter="300"
+            messages="この変更はTwitterには反映されません"
             :error-messages="errors"
             rows="5"
             label="プロフィール"

@@ -62,15 +62,16 @@ RSpec.describe 'Currents', type: :request do
           expect(updated_user.privacy).to eq 'closed'
         end
         it 'userのJSONを返す' do
+          updated_user = user.reload
           expect(user_json).to eq({
-            'uuid' => user.uuid,
-            'name' => user.name,
-            'twitterId' => user.twitter_id,
-            'screenName' => user.screen_name,
-            'description' => '新しい詳細',
-            'privacy' => '非公開',
-            'role' => user.role_i18n,
-            'avatarUrl' => user.avatar_url,
+            'uuid' => updated_user.uuid,
+            'name' => updated_user.name,
+            'twitterId' => updated_user.twitter_id,
+            'screenName' => updated_user.screen_name,
+            'description' => updated_user.description,
+            'privacy' => updated_user.privacy_i18n,
+            'role' => updated_user.role_i18n,
+            'avatarUrl' => updated_user.avatar_url,
           } )
         end
       end
@@ -97,7 +98,7 @@ RSpec.describe 'Currents', type: :request do
             patch '/api/v1/users/current', params: {
               user: { description: '新しい詳細', privacy: '非公開' }
             }
-          end.not_to change(user, :name)
+          end.not_to change(user, :description)
         end
       end
     end

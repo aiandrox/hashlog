@@ -12,9 +12,9 @@
       :tweet-dates="tweetDates"
       @input-date="fetchDateTweets"
     />
-    <v-container class="main-content d-flex flex-row-reverse pt-0" row>
+    <v-container class="main-content d-flex flex-row-reverse pa-0" row>
       <!-- ハッシュタグの情報 -->
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="4" class="px-0">
         <v-card flat>
           <tag-status
             ref="tagStatus"
@@ -26,7 +26,7 @@
         </v-card>
       </v-col>
       <!-- ツイート -->
-      <v-col cols="12" md="8" class="pt-0">
+      <v-col cols="12" md="8" class="px-0 pt-0">
         <tweets-view :tweets="tweets" :user="user" />
       </v-col>
     </v-container>
@@ -103,7 +103,7 @@ export default {
       this.fetchTweetDates()
       this.fetchTweetsData()
       await this.fetchTagData()
-      document.title = `#${this.registeredTag.tag.name} | Hashlog`
+      document.title = `#${this.registeredTag.tag.name} - Hashlog`
     },
     async fetchTagData() {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
@@ -143,7 +143,7 @@ export default {
       this.page.requestUrl = response.headers["request-url"]
     },
     async changePaginationPage(val) {
-      this.$toTop(0)
+      this.$toTop()
       const res = await this.$axios.get(this.paginationUrl(val))
       const { tweets } = res.data
       this.tweets = tweets

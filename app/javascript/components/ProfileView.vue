@@ -1,19 +1,5 @@
 <template>
   <div>
-    <v-list-item>
-      <v-list-item-avatar color="grey" size="60">
-        <v-img :src="user.avatarUrl" />
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="title">
-          {{ user.name }}
-          <v-btn icon color="blue" :href="twitterUrl">
-            <v-icon>mdi-twitter</v-icon>
-          </v-btn>
-        </v-list-item-title>
-        <v-list-item-subtitle>@{{ user.screenName }}</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
     <v-card-text>
       <div
         class="body-1"
@@ -33,7 +19,7 @@
         >ユーザーページを見る</v-btn
       >
       <v-btn
-        outlined
+        depressed
         color="primary"
         class="ma-2"
         href="/admin"

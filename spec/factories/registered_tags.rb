@@ -12,6 +12,13 @@ FactoryBot.define do
     end
   end
 
+  trait :with_3_days_tweets do
+    after(:create) do |registered_tag|
+      create_list(:tweet, 3, :tweeted_every_day, registered_tag: registered_tag)
+      registered_tag.fetch_tweets_data!
+    end
+  end
+
   # 3/7日ツイートをする
   trait :with_3_7_days_tweets do
     after(:create) do |registered_tag|

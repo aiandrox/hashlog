@@ -1,31 +1,22 @@
 <template>
   <div>
-    <v-card
-      flat
-      outlined
-      :ripple="false"
-      max-width="500"
-      class="mt-3"
-      :href="tweetUrl"
-    >
-      <v-card-title>
-        <v-list-item class="pl-0">
+    <v-card flat outlined :ripple="false" max-width="550" class="mt-3" :href="tweetUrl">
+      <v-card-title class="py-1">
+        <v-list two-line max-width="530" width="100%">
           <v-list-item :ripple="false" :href="userUrl">
-            <v-list-item-avatar color="grey" size="40">
-              <v-img :src="user.avatarUrl" />
+            <v-list-item-avatar color="grey" size="45">
+              <v-img :src="user.avatarUrl"></v-img>
             </v-list-item-avatar>
+
             <v-list-item-content>
-              <v-list-item-title>{{ user.name }}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light"
-                >@{{ user.screenName }}</v-list-item-subtitle
-              >
+              <v-list-item-title v-text="user.name" />
+              <v-list-item-subtitle class="font-weight-light">@{{user.screenName}}</v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-icon>
+              <v-icon color="blue">mdi-twitter</v-icon>
+            </v-list-item-icon>
           </v-list-item>
-          <v-spacer />
-          <v-list-item-action>
-            <v-icon color="blue">mdi-twitter</v-icon>
-          </v-list-item-action>
-        </v-list-item>
+        </v-list>
       </v-card-title>
 
       <v-card-text class="text--primary" v-html="$sanitize(tweet.oembed)" />
@@ -40,9 +31,7 @@
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
         <v-spacer />
-        <span class="body-2 font-weight-light">
-          {{ $fullDateFormat(tweet.tweetedAt) }}
-        </span>
+        <span class="body-2 font-weight-light">{{ $fullDateFormat(tweet.tweetedAt) }}</span>
       </v-card-actions>
     </v-card>
   </div>
@@ -92,3 +81,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.v-list-item__subtitle {
+  max-width: 100px;
+}
+</style>

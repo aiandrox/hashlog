@@ -1,10 +1,17 @@
 class User < ApplicationRecord
+  PUBLISHED = 0
+  CLOSED = 1
+  ADMIN = 0
+  GENARAL = 1
+  GUEST = 2
+  [PUBLISHED, CLOSED, ADMIN, GENARAL, GUEST].each(&:freeze)
+
   before_create :set_uuid
   before_save :replace_user_data
 
   authenticates_with_sorcery!
-  has_many :authentications, dependent: :destroy
-  accepts_nested_attributes_for :authentications
+  has_one :authentication, dependent: :destroy
+  accepts_nested_attributes_for :authentication
   has_many :registered_tags, dependent: :destroy
   has_many :tags, through: :registered_tags
 
@@ -15,8 +22,8 @@ class User < ApplicationRecord
   validates :privacy, presence: true
   validates :role, presence: true
 
-  enum privacy: { published: 0, closed: 1 }
-  enum role: { admin: 0, general: 1, guest: 2 }
+  enum privacy: { published: PUBLISHED, closed: CLOSED }
+  enum role: { admin: ADMIN, general: GENARAL, guest: GUEST }
 
   # tagからregistered_tagを返す
   def registered_tag(tag)
@@ -28,14 +35,12 @@ class User < ApplicationRecord
     end
   end
 
-  # TODO: サービスクラスにしたい
   def register_tag(tag)
     ActiveRecord::Base.transaction do
       tag.save!
       registered_tag = registered_tags.build(tag_id: tag.id)
       registered_tag.save!
       registered_tag.create_tweets!
-      registered_tag.fetch_tweets_data!
       true
     rescue ActiveRecord::RecordInvalid
       tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?

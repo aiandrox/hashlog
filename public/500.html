@@ -1,66 +1,99 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>We're sorry, but something went wrong (500)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
+  <head>
+    <title>一時的なエラーが発生しました - Hashlog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+    />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      media="screen"
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
 
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
+    <style>
+      .theme--light.v-application {
+        background-color: #e9f1f6;
+      }
 
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+      .theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
+        background-color: #0079b5;
+      }
+      a.link-text {
+        color: #0079b5;
+        text-decoration: underline;
+      }
+      a.link-text:hover {
+        opacity: 0.7;
+      }
+    </style>
+  </head>
 
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
+  <body>
+    <div id="app">
+      <div
+        data-app="true"
+        class="v-application v-application--is-ltr theme--light"
+        id="app"
+      >
+        <div class="v-application--wrap">
+          <main class="v-content" style="padding: 20px 0px;" data-booted="true">
+            <div class="v-content__wrap">
+              <div class="container">
+                <div class="content pt-10 pb-5">
+                  <h1 class="display-3 font-weight-thin">
+                    500 Internal Server Error
+                  </h1>
+                  <div class="mt-10 mb-10">
+                    <p>
+                      一時的なエラーが発生しました。
+                    </p>
+                    <p>
+                      ご不便をおかけして申し訳ございません。<br
+                        class="d-flex d-sm-none"
+                      />正常に表示されるよう、解決に取り組んでおります。
+                    </p>
+                    <p>
+                      しばらく待って再試行しても改善しない場合、<br
+                        class="d-flex d-sm-none"
+                      /><a
+                        class="link-text"
+                        href="https://twitter.com/Hash1og"
+                        target="_blank"
+                        >公式Twitter</a
+                      >までお問い合わせください。
+                    </p>
+                  </div>
 
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-  </style>
-</head>
-
-<body class="rails-default-error-page">
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <div>
-      <h1>We're sorry, but something went wrong.</h1>
+                  <a
+                    href="https://hashlog.work"
+                    class="v-btn--active v-btn v-btn--depressed v-btn--router theme--light v-size--default primary"
+                    ><span class="v-btn__content"
+                      ><i
+                        aria-hidden="true"
+                        class="v-icon notranslate v-icon--left mdi mdi-exit-run theme--light"
+                      ></i
+                      >トップページに戻る
+                    </span></a
+                  >
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
-  </div>
-</body>
+  </body>
 </html>
