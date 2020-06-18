@@ -91,4 +91,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Asset Sync
+  config.action_controller.asset_host   = '//dp0oss8j47wvg.cloudfront.net'
+  config.assets.prefix                  = '/assets'
 end

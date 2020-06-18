@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import theTermsDialog from "../components/TheTermsDialog"
 
 export default {
@@ -94,6 +95,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({ currentUser: "user/currentUser" }),
     descriptions() {
       return [
         {
@@ -126,7 +128,11 @@ export default {
   },
   methods: {
     pushLogin() {
-      this.$refs.termsDialog.open()
+      if (this.currentUser) {
+        this.$router.push({ name: "mypage" })
+      } else {
+        this.$refs.termsDialog.open()
+      }
     },
     async fetchTagsData() {
       const recentTagsRes = await this.$axios.get(

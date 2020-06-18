@@ -55,7 +55,7 @@ export default {
     this.fetchRegisteredTagsData(this.currentUser)
   },
   methods: {
-    async fetchRegisteredTagsData(user) {
+    async fetchRegisteredTagsData() {
       const registeredTagsRes = await this.$axios.get(
         "/api/v1/users/current/registered_tags"
       )

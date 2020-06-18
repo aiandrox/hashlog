@@ -9,11 +9,9 @@
               <v-img :src="user.avatarUrl" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title class="title">
-                {{ user.name }}
-              </v-list-item-title>
-              <v-list-item-subtitle
-                >@{{ user.screenName }}
+              <v-list-item-title class="title">{{ user.name }}</v-list-item-title>
+              <v-list-item-subtitle>
+                @{{ user.screenName }}
                 <v-btn icon color="blue" :href="twitterUrl">
                   <v-icon>mdi-twitter</v-icon>
                 </v-btn>
@@ -21,11 +19,7 @@
             </v-list-item-content>
           </v-list-item>
           <!-- プロフィール詳細部分 -->
-          <profile-view
-            v-if="!isEditing"
-            :user="user"
-            @push-edit="isEditing = true"
-          />
+          <profile-view v-if="!isEditing" :user="user" @push-edit="isEditing = true" />
           <!-- ユーザー編集部分 -->
           <profile-edit
             v-if="isEditing"
@@ -44,6 +38,8 @@
           />
         </v-col>
       </v-container>
+      {{twitterUrl}}
+      {{user}}
     </v-card>
   </div>
 </template>
@@ -74,7 +70,7 @@ export default {
   },
   computed: {
     twitterUrl() {
-      return `https://twitter.com/${this.user.screen_name}`
+      return `https://twitter.com/${this.user.screenName}`
     }
   },
   methods: {
