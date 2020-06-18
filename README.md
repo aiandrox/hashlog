@@ -134,22 +134,6 @@ $ bundle exec rspec spec
 
 ### Twitter API の設定
 
-See `app/services/twitter_api_client.rb`
-
-```rb
-  def client
-    @client ||= begin
-      Twitter::REST::Client.new do |config|
-        config.consumer_key        = Rails.application.credentials.twitter[:key]
-        config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
-        config.access_token        = Rails.application.credentials.twitter[:access_token]
-        config.access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
-        config.dev_environment     = 'premium'  # Search Tweets: 30-Days / Sandboxの名前
-      end
-    end
-  end
-```
-
 事前に Twitter Developer で API キーとアクセストークンを取得した上で、`$ rails credentials:edit`を実行し、以下のように記述してください。
 
 ```
