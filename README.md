@@ -115,7 +115,7 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 
 #### インフラ構成図
 
-[![Image from Gyazo](https://i.gyazo.com/5b48f9006030cb86ac7777bc26f3bd51.png)](https://gyazo.com/5b48f9006030cb86ac7777bc26f3bd51)
+[![Image from Gyazo](https://i.gyazo.com/77d2babccb1468a167c3e362c4d89eff.png)](https://gyazo.com/77d2babccb1468a167c3e362c4d89eff)
 https://drive.google.com/file/d/1lCmn-IeardJ3zwkcgTyybtmjb9wh80Hf/view?usp=sharing
 
 ## 環境構築手順
