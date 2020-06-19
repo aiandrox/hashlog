@@ -111,6 +111,16 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 
 ## 環境構築手順
 
+事前に管理者から`master.key`を取得して`config`配下に置いてください。
+
+- config/database.yml の作成
+
+```shell
+$ cp config/database.yml.default config/database.yml
+```
+
+- ローカル環境構築
+
 ```shell
 $ rbenv local 2.6.6
 $ nodenv local 14.2.0
@@ -118,7 +128,7 @@ $ bundle install --path vendor/bundle
 $ yarn install
 $ rails db:create
 $ rails db:migrate
-$ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーとして設定してください。
+$ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーとして設定してください
 ```
 
 ### サーバー起動
