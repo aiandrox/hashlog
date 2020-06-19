@@ -17,7 +17,12 @@ https://hashlog.work
 ハッシュタグを登録するだけで継続を可視化できる  
 Twitter 連携型 学習記録サービスです。
 
-[プロダクトについて](/Product.md)
+[プロダクトについて](/README_product.md)
+
+### サービスを作った思い
+
+Twitter で学習報告をしている人を見て、「毎日学習記録を付けることはすごいことなのに、ツイートがすぐに流れてしまってあまり評価されていない気がする」と感じたことと、自分が実際に過去の記録をツイートの中から探そうとしたときに日常ツイートに埋もれていて大変だった経験から作りました。  
+きちんと継続して記録したくなる仕組みを作ること、その積み上げをカレンダーの可視化やランキングで評価することで達成感を感じさせることを目的としています。
 
 ## 使用画面と機能紹介
 
@@ -80,6 +85,8 @@ Twitter 連携型 学習記録サービスです。
 [![Image from Gyazo](https://i.gyazo.com/f2f05539bb0679ed1e64eac82e9b772b.png)](https://gyazo.com/f2f05539bb0679ed1e64eac82e9b772b)
 https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
 
+[API エンドポイント一覧](/README_api_endpoint.md)
+
 ### フロントエンド
 
 - Vue 2.6.11
@@ -93,21 +100,23 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 - Sider
 - CircleCI
 - Nginx 1.12.2
-- puma
+- puma 4.3.3
 - AWS
   - VPC
   - EC2
     - Amazon Linux 2
-  - ALB
   - RDS
     - MySQL 8.0.19
+  - S3
+  - Cloud Front
+  - ALB
   - Route53
   - ACM
-  - CloudWatch
 
-#### インフラ構成
+#### インフラ構成図
 
-（画像）
+[![Image from Gyazo](https://i.gyazo.com/5b48f9006030cb86ac7777bc26f3bd51.png)](https://gyazo.com/5b48f9006030cb86ac7777bc26f3bd51)
+https://drive.google.com/file/d/1lCmn-IeardJ3zwkcgTyybtmjb9wh80Hf/view?usp=sharing
 
 ## 環境構築手順
 
@@ -148,19 +157,7 @@ $ bin/webpack-dev-server
 $ bundle exec rspec spec
 ```
 
-[テスト項目](/Test.md)
-
-### Twitter API の設定
-
-事前に Twitter Developer で API キーとアクセストークンを取得した上で、`$ rails credentials:edit`を実行し、以下のように記述してください。
-
-```
-twitter:
-  key: # API key
-  secret_key: # API secret key
-  access_token: # Access token
-  access_token_secret: # Access token secret
-```
+[テスト項目一覧](/spec/rspec-output)
 
 ### 開発者用 自動ログイン
 
