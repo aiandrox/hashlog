@@ -107,6 +107,7 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
     - Amazon Linux 2
   - RDS
     - MySQL 8.0.19
+  - ElastiCache(Redis)
   - S3
   - Cloud Front
   - ALB
