@@ -1,12 +1,11 @@
-version: '2'
+version: '3'
 services:
   db:
-    image: mysql:latest
+    image: mysql:8.0
     environment:
       MYSQL_DATABASE: hashlog_development
-      MYSQL_ROOT_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: root
-      MYSQL_PASSWORD: 
     ports:
       - "3306:3306"
   web:
