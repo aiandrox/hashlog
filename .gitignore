@@ -36,9 +36,14 @@ yarn-debug.log*
 
 # Ignore dump
 dump.rdb
+
+# Ignore local settings
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 
 # Ignore coverage
 coverage/*
+
+# Ignore database.yml for local
+config/database.yml

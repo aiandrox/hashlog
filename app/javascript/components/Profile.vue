@@ -38,8 +38,6 @@
           />
         </v-col>
       </v-container>
-      {{twitterUrl}}
-      {{user}}
     </v-card>
   </div>
 </template>
