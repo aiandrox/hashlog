@@ -1,0 +1,549 @@
+## モデルスペック
+
+Authentication
+  associations
+    belongs_to :user
+  validations
+    uid: presence
+    provider: presence
+
+RegisteredTag
+  associations
+    belongs_to :user
+    belongs_to :tag
+    has_many :tweets, destroy
+  validations
+    privacy: presence
+    remind_day: numericality, only integer, <=30
+    tag_id: uniqueness, scoped user_id
+    user_registered_tags_count_validate
+  default value
+    remind_dayが0である
+    privacyがpublishedである
+  scopes
+    .asc
+      created_atを基準に昇順に並ぶこと
+    .desc
+      created_atを基準に降順に並ぶこと
+    .opened
+      限定公開、非公開のタグを含まない
+      ユーザーが非公開の場合
+        公開、限定公開、非公開のタグを含まない
+    .have_tweets
+      ツイートを持つregistered_tagを含む
+      ツイートを持たないregistered_tagは含まない
+  methods
+    .persistence_sort
+      tweet_rate100%のタグが最初になる
+      tweet_rate42%のタグが二番目になる
+      tweet_rate0%のタグが最後になる
+    #last_tweeted_at
+      ツイートがあるとき
+        最新のツイートのツイート日を返す
+      ツイートがないとき
+        nilを返す
+    #tweeted_day_count
+      計3日分のツイートがあるとき
+        3を返す
+      ツイートがないとき
+        0を返す
+    #day_from_last_tweet
+      最後のツイートが7日前のとき
+        7を返す
+      ツイートを取得していないとき
+        0を返す
+    #day_from_first_tweet
+      最初のツイートが7日前のとき
+        8を返す（今日と最初のツイート日を含めた日数）
+      ツイートを取得していないとき
+        0を返す
+    #tweet_rate
+      最初のツイートが7日前で計3日分のツイートがあるとき
+        3 / 7 * 100 = 42.9(%)を返す（小数第二位）
+      ツイートを取得していないとき
+        0(%)を返す
+      最初のツイートと最後のツイートが今日のとき
+        100(%)を返す
+    #create_tweets!(type="standard")
+      ハッシュタグのツイートがTwitterに存在するとき
+        取得したツイートを保存する
+        fetch_tweets_data!を実行する
+      ハッシュタグのツイートがTwitterに存在しないとき
+        ツイートを取得しないので保存しない
+        fetch_tweets_data!を実行しない
+    #add_tweets(since_id)
+      ハッシュタグのツイートがTwitterに存在するとき
+        取得したツイートを保存する
+      ハッシュタグのツイートがTwitterに存在しないとき
+        ツイートを取得しないので保存しない
+    #fetch_tweets_data!
+      更新後のtweet.first_tweetedが最初のツイート日時になる
+    #filter_remind_day
+      remind_day = nilのとき
+        remind_dayは0として保存される
+
+Tag
+  associations
+    has_many :registered_tags, restrict_with_error
+  validations
+    name: presence
+    name: uniqueness
+    name: length <100
+    name: hashtag_format
+      正常系
+        ひらがな
+        カタカナ
+        漢字
+        Alphabet
+        123半角数字と文字
+        １２３全角数字と文字
+        _゛゜と文字
+      異常系
+        記号混じり
+        数字のみ
+        _゛゜のみ
+        ああ あ（スペース混じり）
+  scope
+    .popular
+      紐付いたregistered_tagが多い順に並ぶ
+  methods
+    #remove_first_hashtag_mark
+      先頭に#が入っているとき
+        #を消した文字列になる
+      先頭に###が入っているとき
+        ###を消した文字列になる
+      aa#aaのように文の途中で#が入っているとき
+        #を消さない
+
+Tweet
+  associations
+    belongs_to registered_tag
+  validations
+    oembed: presence
+    tweet_id: presence
+    tweet_id: uniqueness, scoped registered_tag_id
+    tweeted_at: presence
+  scopes
+    .desc
+      tweeted_atを基準に昇順に並ぶこと
+    .tweeted_day_count
+      tweetが存在する日数を返す
+    .tweeted_at_date(date)
+      指定の日にツイートしたツイートを全て返す
+      違う日にツイートしたツイートは含まない
+  methods
+    .latest
+      tweeted_atを基準に最も新しいツイートを返す
+    .oldest
+      tweeted_atを基準に最も古いツイートを返す
+
+User
+  associations
+    has_one :authentications, destroy
+    has_many :registered_tags, destroy
+    has_many :tags, through :registered_tags
+  validations
+    twitter_id: presence
+    twitter_id: uniqueness
+    screen_name: presence
+    name: presence
+    name: length <50
+    description: length <300
+  default value
+    privacyがpublishedである
+    roleがgeneralである
+    12字のuuidが生成されている
+    avatar_urlがデフォルトのURLである
+  methods
+    #registered_tag(tag)
+      登録しているtagを渡すとき
+        該当するregistered_tagを返す
+      登録していないtagを渡すとき
+        nilを返す
+    #register_tag(tag)
+      tagが有効なとき
+        trueを返す
+        user.registered_tagが作成される
+      tagが無効なとき
+        falseを返す
+        user.registered_tagが作成されない
+        tag.errors.full_messagesの値
+          tag.name = ""のとき
+            "名前を入力してください"を含む
+          registered_tagが重複しているとき
+            "ハッシュタグは既に登録しています"を含む
+          同一ユーザーのregistered_tagとして4つ目のとき
+            "登録できるハッシュタグは3つまでです"を含む
+    #my_object?(object)
+      userのregistered_tagの場合
+        trueを返す
+      userのregistered_tagではない場合
+        falseを返す
+    #replace_user_data
+      保存時にdescriptionの最後の空白文字/改行が削除される
+      avatar_urlの"_normal.拡張子"が".拡張子"に変換される
+
+
+## リクエストスペック
+
+Base
+  #rescue_limited_twitter_requests
+    TwitterAPIのリクエストが上限に達した場合
+      429 TooManyRequestsを返す
+      エラーメッセージのJSONを返す
+  #rescue_not_found
+    定義されていないエンドポイントにアクセスした場合
+      404 Not Foundを返す
+    自分以外のユーザーのリソースにアクセスした場合
+      404 Not Foundを返す
+      エラーメッセージのJSONを返す
+  #not_authenticated
+    ログインしていない場合
+      401 Unauthorizedを返す
+      エラーメッセージのJSONを返す
+
+RegisteredTags
+  GET /api/v1/registered_tags/persistences
+    全般的なこと
+      200 OKを返す
+      RegisteredTag.opened.have_tweets.persistence_sortのJSONを返す
+    ソート
+      ツイートの割合が多くかつツイート日数が多いものが一番になる
+      ツイートがないregistered_tagを含めない
+    公開設定
+      限定公開のタグを返さない
+      非公開のタグを返さない
+    pagy
+      pageクエリがないとき 20件返す
+      page=2のとき 10件返す
+
+RegisteredTags
+  GET /api/v1/registered_tags
+    全般的なこと
+      200 OKを返す
+      RegisteredTag.ascのJSONを返す
+    ソート
+      昇順に並ぶ（最新のregistered_tagが最初になる）
+      昇順に並ぶ（最古のregistered_tagが最後になる）
+    公開設定
+      限定公開のタグを返さない
+      非公開のタグを返さない
+    countクエリがないとき
+      pagy
+        pageクエリがないとき 20件返す
+        page=2のとき 10件返す
+    countクエリがあるとき
+      200 OKを返す
+      countで指定したレコード数を返す
+  GET /api/v1/registered_tags/:id
+    公開されている場合
+      200 OKを返す
+      RegisteredTag.find(params[:id])のJSONを返す
+  POST /api/v1/registered_tags
+    ログインしている場合
+      正常系 タグの名前を入力したとき
+        201 Createdを返す
+        registered_tag.idのJSONを返す
+        current_user.registered_tagsを作成する
+      タグの値が不適なとき
+        422 UnprocessableEntityを返す
+        エラーメッセージのJSONを返す
+        current_user.registered_tagsを作成しない
+    ログインしていない場合
+      401 Unauthorizedを返す
+      current_user.registered_tagsを作成しない
+  PATCH /api/v1/users/:uuid
+    自分の場合
+      正常系 remind_dayが1〜30のいずれかの数字（文字列）のとき
+        200 OKを返す
+        registered_tagのデータが変更される
+        registered_tagのJSONを返す
+      remind_dayが"aaa"（ただの文字列）のとき
+        422 UnprocessableEntityを返す
+        エラーメッセージのJSONを返す
+        registered_tag.remind_dayを変更しない
+      remind_dayが31のとき
+        422 UnprocessableEntityを返す
+        エラーメッセージのJSONを返す
+        registered_tag.remind_dayを変更しない
+    自分以外のregistered_tagの場合
+      404 NotFoundを返す
+    ログインしていない場合
+      401 Unauthorizedを返す
+  DELETE /api/v1/registered_tags/:id
+    自分のregistered_tagsの場合
+      204 NoContentを返す
+      user.registered_tagsを削除する
+    自分以外のregistered_tagの場合
+      404 NotFoundを返す
+      RegisteredTagを削除しない
+    ログインしていない場合
+      401 Unauthorizedを返す
+      RegisteredTagを削除しない
+
+Tags
+  GET /api/v1/tags
+    全般的なこと
+      200 OKを返す
+      Tag.popularのJSONを返す
+      tagsが人気順に並ぶ
+    countクエリがないとき
+      pagy
+        pageクエリがないとき 20件返す
+        page=2のとき 20件返す
+    countクエリがあるとき
+      200 OKを返す
+      countで指定したレコード数を返す
+
+Tweets
+  GET /api/v1/registered_tags/:registered_tag_id/tweets
+    全般的なこと
+      200 OKを返す
+      RegisteredTag.find(params[:registered_tag_id]).tweets.descのJSONを返す
+    date=2020-06-01のとき
+      指定した日のツイートを返す
+      指定した日ではないツイートを含まない
+      date=2000-01-01（ツイートが存在しない）のとき
+        空配列を返す
+    pagy
+      pageクエリがないとき 全件返す
+      page=1のとき 10件返す
+      page=2のとき 10件返す
+    ソート
+      tweetsが昇順に並ぶ（最新のtweetが最初になる）
+      tweetsが昇順に並ぶ（最古のtweetが最後になる）
+
+UserSessions
+  DELETE /api/v1/logout
+    204 NoContentを返す
+    ログアウトする
+  POST /guest_login
+    200 OKを返す
+    ゲストユーザーのJSONを返す
+    ゲストユーザーとしてログインする
+
+RegisteredTags
+  GET /api/v1/users/current/registered_tags
+    全般的なこと
+      200 OKを返す
+      User.find(params[:uuid]).registered_tags.ascのJSONを返す
+    ソート
+      created_atを基準に降順に並ぶ
+
+TwitterData
+  PATCH /api/v1/users/current/twitter_data
+    ログインしていない場合
+      401 Unauthorizedを返す
+    ログインしている場合
+      正常系
+        200 OKを返す
+        userのデータが変更される
+        userのJSONを返す
+      値が不適な場合
+        403 Forbiddenを返す
+        エラーメッセージのJSONを返す
+        user.nameを変更しない
+
+Currents
+  GET /api/v1/users/current
+    ログインしていない場合
+      200 OKを返す
+      response.bodyは"null"を返す
+    ログインしている場合
+      200 OKを返す
+      current_userのJSONを返す
+  PATCH /api/v1/users/current
+    ログインしていない場合
+      401 Unauthorizedを返す
+    ログインしている場合
+      正常系
+        200 OKを返す
+        userのデータが変更される
+        userのJSONを返す
+      値が不適な場合
+        422 UnprocessableEntityを返す
+        エラーメッセージのJSONを返す
+        user.descriptionを変更しない
+  DELETE /api/v1/users/current
+    ログインしていない場合
+      401 Unauthorizedを返す
+      Userを削除しない
+    ログインしている場合
+      204 NoContentを返す
+      Userを削除する
+
+RegisteredTags
+  GET /api/v1/users/:uuid/registered_tags
+    ユーザーのタグがまだ作成されていないとき
+      空の配列を返す
+    ユーザーのタグが作成されているとき
+      全般のこと
+        200 OKを返す
+        User.find(params[:uuid]).registered_tags.ascのJSONを返す
+      ソート
+        created_atを基準に降順に並ぶ
+      データの制限
+        公開設定のタグを含む
+        限定公開/非公開設定のタグを含まない
+
+Users
+  GET /api/v1/users
+    200 OKを返す
+    User.allのJSONを返す
+    非公開ユーザーを返さない
+    pagy
+      pageクエリがないとき 10件返す
+      page=2のとき 10件返す
+  GET /api/v1/users/:uuid
+    200 OKを返す
+    User.find_by!(uuid: params[:uuid])のJSONを返す
+
+
+## シリアライザー
+
+RegisteredTag
+  #remind_day
+    0のとき
+      nilを返す
+
+
+## 認可
+
+RegisteredTagsLoyalty
+  GET /api/v1/registered_tags/:id
+    自分のタグのとき
+      ユーザーの公開設定にかかわらず取得できる
+      タグの公開設定にかかわらず取得できる
+    他人のタグのとき
+      作成ユーザーが公開のとき
+        公開/限定公開のタグを取得できる
+        非公開のタグを取得できない
+      作成ユーザーが非公開のとき
+        タグの公開設定にかかわらずタグを取得できない
+
+TweetsLoyalty
+  GET /api/v1/registered_tags/:id/tweets
+    自分のタグのツイートのとき
+      ユーザーの公開設定にかかわらず取得できる
+      タグの公開設定にかかわらず取得できる
+    他人のタグのツイートのとき
+      作成ユーザーが公開のとき
+        公開/限定公開のタグを取得できる
+        非公開のタグを取得できない
+      作成ユーザーが非公開のとき
+        タグの公開設定にかかわらずタグを取得できない
+
+CurrentsLoyalty
+  PATCH /api/v1/users/current
+    current_userがguestの場合
+      403 Forbiddenを返す
+      user.descriptionを変更しない
+  DELETE /api/v1/users/current
+    current_userがguestの場合
+      403 Forbiddenを返す
+      Userを削除しない
+
+RegisteredTagsLoyalty
+  GET /api/v1/users/:uuid/registered_tags
+    自分のタグのとき
+      ユーザーの公開設定にかかわらず取得できる
+      公開設定のタグを取得できる
+      限定公開設定のタグを取得できない
+      非公開設定のタグを取得できない
+    他人のタグのとき
+      作成ユーザーが公開のとき
+        公開設定のタグを取得できる
+        限定公開設定のタグを取得できない
+        非公開のタグを取得できない
+      作成ユーザーが非公開のとき
+        タグの公開設定にかかわらずタグを取得できない
+
+UsersLoyalty
+  GET /api/v1/users/:uuid
+    自分のデータを取得できる
+    他人のデータの場合
+      公開されている場合 取得できる
+      公開されていない場合 取得できない
+
+
+## Job
+
+AddTweetsJob
+  AddTweetsJob.perform_later
+    ジョブがすぐエンキューされる
+  AddTweetsJob#perform
+    ログを出力する (PENDING: Temporarily skipped with xit)
+    TwitterAPIJob::AddTweets#callを実行する
+    slack_notofyが実行される
+
+RemindReplyJob
+  RemindReplyJob.perform_later
+    ジョブがすぐエンキューされる
+  RemindReplyJob#perform
+    ログを出力する (PENDING: Temporarily skipped with xit)
+    TwitterAPIJob::RemindReply#callを実行する
+    slack_notofyが実行される
+
+
+## サービスクラス
+
+TwitterAPIJob
+  ::RemindReply
+    #call
+      remind_dayが0のtagに対してsend_tweetメソッドを実行しない
+      remind_dayが7で最終ツイートが7日前のtagに対してsend_tweetメソッドを実行しない
+      remind_dayが6で最終ツイートが7日前のtagに対してsend_tweetメソッドを実行する
+  ::AddTweets
+    #call
+      ツイートを既に取得しているとき
+        正常系 前日のツイートを取得したとき
+          取得したツイートを保存する
+          Rails.logger.infoでログを出力する
+        既に前日のツイートを取得しているとき
+          RegisteredTag#add_tweetsを実行しない
+        前日のツイートがなかったとき
+          Rails.logger.infoを実行しない
+      ツイートが1件も保存されていないとき
+        RegisteredTag#create_tweets!を実行する
+
+
+TwitterData
+  ::User
+    #call
+      TwitterのアカウントからユーザーのJSONを取得する
+  ::UserTweets
+    #call
+      該当のツイートがない場合
+        空の配列を返す
+      ツイートを取得できる場合
+        "standard"を引数に渡すとき
+          #standard_searchを実行する
+          behaves like return_value
+            配列を返す
+            配列の中の要素が[tweet_oembed, tweeted_at, tweet_id]である
+        "premium"を引数に渡すとき
+          #premiun_searchを実行する
+          behaves like return_value
+            配列を返す
+            配列の中の要素が[tweet_oembed, tweeted_at, tweet_id]である
+        "everyday"を引数に渡すとき
+          #everyday_searchを実行する
+          behaves like return_value
+            配列を返す
+            配列の中の要素が[tweet_oembed, tweeted_at, tweet_id]である
+
+
+# テストが通らないためpendしている
+Pending: (Failures listed here are expected and do not affect your suite's status)
+
+  1) AddTweetsJob AddTweetsJob#perform ログを出力する
+     # Temporarily skipped with xit
+     # ./spec/jobs/add_tweets_job_spec.rb:18
+
+  2) RemindReplyJob RemindReplyJob#perform ログを出力する
+     # Temporarily skipped with xit
+     # ./spec/jobs/reminder_reply_job_spec.rb:17
+
+
+Finished in 0.10403 seconds (files took 6.23 seconds to load)
+261 examples, 0 failures, 2 pending
