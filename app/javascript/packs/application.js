@@ -5,6 +5,12 @@ import VueRouter from "vue-router"
 import router from "./router"
 Vue.use(VueRouter)
 
+import VueAnalytics from "vue-analytics"
+Vue.use(VueAnalytics, {
+  id: "UA-171536655-1",
+  router
+})
+
 import Vuex from "vuex"
 import store from "../store/index"
 Vue.use(Vuex)
