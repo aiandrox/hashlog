@@ -51,7 +51,8 @@ test:
 #
 production:
   <<: *default
-  database: hashlog_production
-  username: <%= Rails.application.credentials.production[:database][:username] || 'hashlog' %>
-  password: <%= Rails.application.credentials.production[:database][:password] %>
-  host: database-1.cwywibfxqfpp.ap-northeast-1.rds.amazonaws.com
+  database: <%= ENV['DB_NAME'] %>
+  url: <%= ENV['DB_URL'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOSTNAME'] %>
