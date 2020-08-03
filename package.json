@@ -1,6 +1,9 @@
 {
   "name": "hashlog",
   "private": true,
+  "engines": {
+    "node": "14.7.x"
+  },
   "dependencies": {
     "@rails/webpacker": "5.0.1",
     "axios": "^0.19.2",
