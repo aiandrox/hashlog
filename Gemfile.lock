@@ -99,7 +99,6 @@ GEM
     config (2.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
-    connection_pool (2.2.3)
     coveralls (0.8.23)
       json (>= 1.8, < 3)
       simplecov (~> 0.16.1)
@@ -284,8 +283,6 @@ GEM
     public_suffix (4.0.5)
     puma (3.12.6)
     rack (2.2.3)
-    rack-protection (2.0.8.1)
-      rack
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -330,9 +327,6 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.1.4)
-    redis-namespace (1.7.0)
-      redis (>= 3.0.4)
     regexp_parser (1.7.1)
     require_all (3.0.0)
     rexml (3.2.4)
@@ -382,15 +376,6 @@ GEM
     sexp_processor (4.15.0)
     shoulda-matchers (4.3.0)
       activesupport (>= 4.2.0)
-    sidekiq (5.2.9)
-      connection_pool (~> 2.2, >= 2.2.2)
-      rack (~> 2.0)
-      rack-protection (>= 1.5.0)
-      redis (>= 3.3.5, < 4.2)
-    sidekiq-failures (1.0.0)
-      sidekiq (>= 4.0.0)
-    sidekiq-history (0.0.11)
-      sidekiq (>= 3.0.0)
     simple_oauth (0.3.1)
     simplecov (0.16.1)
       docile (~> 1.1)
@@ -489,15 +474,11 @@ DEPENDENCIES
   rails (~> 5.2.4, >= 5.2.4.3)
   rails-i18n
   rails_best_practices (~> 1.20)
-  redis-namespace
   rspec-rails (~> 3.9, >= 3.9.1)
   rspec_junit_formatter
   rubocop (~> 0.80.1)
   seed-fu
   shoulda-matchers
-  sidekiq (~> 5.0)
-  sidekiq-failures
-  sidekiq-history
   slack-notifier
   sorcery (>= 0.15.0)
   spring
