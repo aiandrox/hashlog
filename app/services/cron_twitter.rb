@@ -20,5 +20,6 @@ class CronTwitter
   end
 
   private
+
   attr_accessor :type, :job
 end
