@@ -1,17 +1,9 @@
 <template>
   <div>
     <!-- タブ -->
-    <the-tab
-      :registered-tags="registeredTags"
-      @select-tab="firstRead"
-      @create-tag="firstRead"
-    />
+    <the-tab :registered-tags="registeredTags" @select-tab="firstRead" @create-tag="firstRead" />
     <!-- カレンダー -->
-    <the-calendar
-      ref="calendar"
-      :tweet-dates="tweetDates"
-      @input-date="fetchDateTweets"
-    />
+    <the-calendar ref="calendar" :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
     <v-container class="main-content d-flex flex-row-reverse pa-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col cols="12" md="4" class="px-0">
@@ -24,6 +16,10 @@
             @push-cancel="fetchTagData"
           />
         </v-card>
+        <!-- 広告 -->
+        <a target="_blank" href="https://runteq.jp/r/FKSRkiAh">
+          <v-img class="mt-3 d-none d-sm-block" alt="RUNTEQ" src="/img/runteq/300_50.jpg" />
+        </a>
       </v-col>
       <!-- ツイート -->
       <v-col cols="12" md="8" class="px-0 pt-0">

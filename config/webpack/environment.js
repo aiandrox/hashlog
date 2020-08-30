@@ -4,6 +4,6 @@ const vue = require("./loaders/vue")
 const eslint = require("./loaders/eslint")
 
 environment.plugins.prepend("VueLoaderPlugin", new VueLoaderPlugin())
-environment.loaders.prepend("vue", vue)
-environment.loaders.append("eslint", eslint)
+environment.loaders.prepend("eslint", eslint)
+environment.loaders.append("vue", vue)
 module.exports = environment

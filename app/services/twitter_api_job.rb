@@ -20,7 +20,7 @@ module TwitterAPIJob
 
     def send_tweet(r_tag)
       client.update(remind_message(r_tag))
-      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインドリプライ送信"
+      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインド送信"
       Rails.logger.info(message)
       notify_logs << message
     end
