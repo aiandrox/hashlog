@@ -1,4 +1,2 @@
-sidekiq:
-  url: 'redis://hashlog-redis.fxhyxf.ng.0001.apne1.cache.amazonaws.com:6379'
 sorcery:
-  callback_url: 'https://hashlog.work/api/v1/oauth/callback?provider=twitter'
+  callback_url: "https://hashlog.work/api/v1/oauth/callback?provider=twitter"

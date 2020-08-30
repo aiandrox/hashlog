@@ -18,7 +18,7 @@
           <v-checkbox
             v-model="isRemind"
             class="mt-0"
-            messages="設定した日数ツイートがない場合、公式アカウントよりリプライが送られます"
+            messages="設定した日数ツイートがない場合、公式アカウントよりメンションが送られます"
             label="リマインダーを使用する"
           />
           <validation-provider
@@ -41,9 +41,7 @@
       </v-list-item>
     </v-container>
     <v-list-item>
-      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')"
-        >キャンセル</v-btn
-      >
+      <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')">キャンセル</v-btn>
       <v-btn
         class="ma-2"
         depressed
@@ -69,13 +67,13 @@ export default {
     registeredTag: {
       type: Object,
       default: () => {},
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       privacyChoices: ["公開", "限定公開", "非公開"],
-      isRemind: true
+      isRemind: true,
     }
   },
   methods: {
@@ -100,7 +98,7 @@ export default {
       const stringRemindDay = String(remindDay)
       const deleteDayResult = stringRemindDay.split("日").join("")
       // 全角数字を半角に変換
-      const result = deleteDayResult.replace(/[０-９]/g, s =>
+      const result = deleteDayResult.replace(/[０-９]/g, (s) =>
         String.fromCharCode(s.charCodeAt(0) - 65248)
       )
       // result => "20", "文字列"
@@ -110,7 +108,7 @@ export default {
     pushUpdate() {
       this.fetchRemindDayFromForm()
       this.$emit("push-update")
-    }
-  }
+    },
+  },
 }
 </script>

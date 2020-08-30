@@ -17,9 +17,4 @@ as defined by the routes in the `admin/` namespace
       class: "navigation__link navigation__link--#{nav_link_state(resource)}"
     ) if valid_action? :index, resource  %>
   <% end %>
-  <%= link_to(
-      'Sidekiq',
-      admin_sidekiq_web_path,
-      class: "navigation__link"
-  ) %>
 </nav>
