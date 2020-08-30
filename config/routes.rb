@@ -1,5 +1,3 @@
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
   namespace :admin do
     root 'users#index'
@@ -8,8 +6,6 @@ Rails.application.routes.draw do
     resources :tags
     resources :tweets
     resources :authentications
-    # sidekiq
-    mount Sidekiq::Web, at: '/sidekiq'
   end
 
   root 'static_pages#top'

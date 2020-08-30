@@ -47,10 +47,10 @@ Twitter で学習報告をしている人を見て、「毎日学習記録を付
 
 <br>
 
-| ハッシュタグの設定                                                                                                                    | 日付選択時                                                           |
-| :------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------- |
-| <img src="https://i.gyazo.com/06af34d7b35b912ddb6c95765fc8fd23.png">                                                                  | <img src="https://i.gyazo.com/aa81ebd3412dfd89508b545767924fb1.png"> |
-| 公開設定・リマインダーを設定する。<br>リマインダーで設定した日数ツイートがない場合、Bot から Twitter アカウントにリプライが送られる。 | カレンダーの日付を選択することで、その日のツイートのみ表示する。     |
+| ハッシュタグの設定                                                                                                                      | 日付選択時                                                           |
+| :-------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
+| <img src="https://i.gyazo.com/06af34d7b35b912ddb6c95765fc8fd23.png">                                                                    | <img src="https://i.gyazo.com/aa81ebd3412dfd89508b545767924fb1.png"> |
+| 公開設定・リマインダーを設定する。<br>リマインダーで設定した日数ツイートがない場合、Bot から Twitter アカウントにメンションが送られる。 | カレンダーの日付を選択することで、その日のツイートのみ表示する。     |
 
 <br>
 
@@ -60,7 +60,6 @@ Twitter で学習報告をしている人を見て、「毎日学習記録を付
 | 公開設定になっているハッシュタグを継続率・ツイート日数でランキングにする。 | ユーザーなどの情報、定期実行の状況を確認する。                       |
 
 <br>
-
 
 ## 使用技術
 
@@ -78,7 +77,7 @@ Twitter で学習報告をしている人を見て、「毎日学習記録を付
 - pagy（ページネーション）
 - banken（認可）
 - whenever（定期実行）
-- sidekiq（非同期処理）
+- ~~sidekiq（非同期処理）~~
 - administrate（管理画面）
 
 #### ER 図
@@ -108,7 +107,7 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
     - Amazon Linux 2
   - RDS
     - MySQL 8.0.19
-  - ElastiCache(Redis)
+  - ~~ElastiCache(Redis)~~
   - S3
   - Cloud Front
   - ALB
@@ -117,46 +116,33 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 
 #### インフラ構成図
 
-[![Image from Gyazo](https://i.gyazo.com/77d2babccb1468a167c3e362c4d89eff.png)](https://gyazo.com/77d2babccb1468a167c3e362c4d89eff)
+[![Image from Gyazo](https://i.gyazo.com/90ae7dcad01f69d922f88763fa84fb60.png)](https://gyazo.com/90ae7dcad01f69d922f88763fa84fb60)
 https://drive.google.com/file/d/1lCmn-IeardJ3zwkcgTyybtmjb9wh80Hf/view?usp=sharing
 
 ## 環境構築手順
 
-事前に管理者から`master.key`を取得して`config`配下に置いてください。
-
-- config/database.yml の作成
-
 ```shell
-$ cp config/database.yml.default config/database.yml
+$ git clone git@github.com:aiandrox/hashlog.git
 ```
 
-- ローカル環境構築
+- 事前にしておくこと
+
+管理者から`master.key`を取得して`config`配下に置いてください。  
+自分のアカウントを管理ユーザーとして`db/fixtures/admin_user.rb`に追加してください。
 
 ```shell
-$ rbenv local 2.6.6
-$ nodenv local 14.2.0
-$ bundle install --path vendor/bundle
-$ yarn install
-$ rails db:create
-$ rails db:migrate
-$ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーとして設定してください
+$ docker-compose build
+$ docker-compose up
+$ docker-compose run web rails db:create db:migrate
+$ docker-compose run web rake db:seed_fu
 ```
 
-### サーバー起動
-
-```shell
-$ redis-server
-$ bundle exec sidekiq
-$ rails server
-$ bin/webpack-dev-server
-```
-
-上記のコマンドは`$ bundle exec foreman start`で代替可能。
+`http://127.0.0.1:3000/`にアクセスして開発を行ってください。
 
 ### テスト実行
 
 ```shell
-$ bundle exec rspec spec
+$ docker-compose run web bundle exec rspec
 ```
 
 [テスト項目一覧](/spec/rspec-output)

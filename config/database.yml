@@ -16,8 +16,9 @@ default: &default
   collation: utf8mb4_unicode_ci
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password:
-  host: localhost
+  password: password
+  # ↓dockerのコンテナ名を指定
+  host: db
 
 development:
   <<: *default
