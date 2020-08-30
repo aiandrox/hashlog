@@ -6,7 +6,7 @@ jobs:
   build:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
-      - image: circleci/ruby:2.6.6-node-browsers-legacy
+      - image: circleci/ruby@sha256:108d3b7875c43e4c0ccf45e0f41f0fbb653d7adef136e6dbf2d3d5b8c13fb753
         environment:
           DB_HOST: 127.0.0.1
           RAILS_ENV: test
