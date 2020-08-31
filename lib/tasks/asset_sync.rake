@@ -3,3 +3,4 @@ if defined?(AssetSync)
     Rake::Task['assets:sync'].invoke
   end
 end
+
