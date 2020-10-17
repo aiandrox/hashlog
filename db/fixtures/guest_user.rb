@@ -19,3 +19,14 @@ RegisteredTag.seed(
   user_id: 3,
   tag_id: 1,
 )
+
+30.times do |n|
+  num = n + 1
+  Tweet.seed(
+    id: num,
+    oembed: "#{num}<br>test_text<br>testtest<br>aaaaa",
+    tweet_id: num,
+    tweeted_at: num.days.ago,
+    registered_tag_id: 1,
+  )
+end
