@@ -2,13 +2,13 @@
   <div id="app">
     <v-app>
       <the-header />
-      <v-content>
+      <v-main>
         <v-container v-if="!isTopPage">
           <the-flash-message v-if="isFlash" />
           <router-view />
         </v-container>
         <router-view v-if="isTopPage" />
-      </v-content>
+      </v-main>
       <the-footer />
     </v-app>
   </div>

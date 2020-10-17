@@ -24,12 +24,12 @@ class Api::V1::OauthsController < Api::V1::BaseController
   def fetch_user_data_from(provider)
     user_from_provider = build_from(provider)
     user = User.find_or_initialize_by(twitter_id: user_from_provider.twitter_id)
-    user = User.new(user_from_provider.attributes) if user.new_record?
-    user.build_authentication(user_id: user.id,
-                              uid: @user_hash[:uid],
+    user = user_from_provider if user.new_record?
+    # @user_hash, access_tokenはTwitterから受け取ったデータ
+    user.build_authentication(uid: @user_hash[:uid],
                               provider: provider,
-                              access_token: @access_token.token,
-                              access_token_secret: @access_token.secret)
+                              access_token: access_token.token,
+                              access_token_secret: access_token.secret)
     user.save!
     reset_session
     auto_login(user)
