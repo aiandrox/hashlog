@@ -127,7 +127,7 @@ $ git clone git@github.com:aiandrox/hashlog.git
 
 - 事前にしておくこと
 
-管理者から`master.key`を取得して`config`配下に置いてください。  
+管理者から`master.key`を取得して`config`配下に置いてください。
 自分のアカウントを管理ユーザーとして`db/fixtures/admin_user.rb`に追加してください。
 
 ```shell
@@ -135,6 +135,7 @@ $ docker-compose build
 $ docker-compose up
 $ docker-compose run web rails db:create db:migrate
 $ docker-compose run web rake db:seed_fu
+$ bin/webpack
 ```
 
 `http://127.0.0.1:3000/`にアクセスして開発を行ってください。
