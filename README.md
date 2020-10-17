@@ -147,8 +147,6 @@ $ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーと�
 ### サーバー起動
 
 ```shell
-$ redis-server
-$ bundle exec sidekiq
 $ rails server
 $ bin/webpack-dev-server
 ```
