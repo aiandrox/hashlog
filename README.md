@@ -7,7 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d31e5fff03ec3ea494fa/maintainability)](https://codeclimate.com/github/aiandrox/hashlog/maintainability)
 
-https://hashlog.work
+### **https://hashlog.work**
 
 ## サービス概要
 
@@ -97,6 +97,7 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 
 ### インフラストラクチャー
 
+- ~~Docker~~
 - Sider
 - CircleCI
 - Nginx 1.12.2

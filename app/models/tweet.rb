@@ -11,6 +11,7 @@ class Tweet < ApplicationRecord
     formated_date = "date_format(tweeted_at, '%Y%m%d')"
     select(formated_date).group(formated_date).length
   }
+  scope :tweeted_ats, -> { select(:tweeted_at) }
   scope :tweeted_at_date, ->(date) { where(tweeted_at: date.beginning_of_day..date.end_of_day) }
 
   def self.latest
