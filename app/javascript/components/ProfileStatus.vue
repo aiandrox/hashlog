@@ -44,6 +44,9 @@ export default {
       required: true
     },
     user: {
+      type: Object,
+      default: () => {},
+      required: true,
       role: {
         type: String,
         default: "",

@@ -102,12 +102,12 @@ export default {
           const tooManyRequestsStatus = 429
           switch (error.response.status) {
             case unprocessableEntityStatus: {
-              const errorMessage = error.response.data.error.messages[0]
+              const [errorMessage] = error.response.data.error.messages
               this.$refs.provider.errors.push(errorMessage)
               break
             }
             case tooManyRequestsStatus: {
-              const errorMessage = error.response.data.error.messages[0]
+              const [errorMessage] = error.response.data.error.messages
               this.$refs.provider.errors.push(errorMessage)
               break
             }

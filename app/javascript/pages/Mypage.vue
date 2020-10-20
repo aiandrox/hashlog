@@ -81,7 +81,7 @@ export default {
           message: "ユーザー情報を更新しました"
         })
       } catch (error) {
-        const errorMessage = error.response.data.error.messages[0]
+        const [errorMessage] = error.response.data.error.messages
         this.$store.dispatch("flash/setFlash", {
           type: "error",
           message: errorMessage

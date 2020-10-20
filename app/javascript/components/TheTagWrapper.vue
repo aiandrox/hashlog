@@ -117,7 +117,6 @@ export default {
     // カレンダー用全てのツイート
     async fetchTweetDates() {
       this.tweetDates = []
-      const { tagId } = this.$route.params
       const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweeted_ats`)
       const { tweetedAts } = tweetsRes.data
       tweetedAts.forEach(t => this.tweetDates.push(t.substr(0, 10)))

@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import loading from "./TheLoading"
 export default {
   data() {
     return {

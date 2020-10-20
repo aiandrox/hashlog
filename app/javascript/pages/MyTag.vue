@@ -55,7 +55,6 @@ export default {
         tag: updateRegisteredTag
       })
       this.$refs.tagWrapper.$refs.tagStatus.finishEdit()
-      const { registeredTag } = registeredTagRes.data
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ハッシュタグの設定を更新しました"
