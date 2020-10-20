@@ -32,6 +32,7 @@ RSpec.describe Tweet, type: :model do
         expect(Tweet.desc.last).to eq oldest_tweet
       end
     end
+
     describe '.tweeted_day_count' do
       it 'tweetが存在する日数を返す' do
         create_list(:tweet, 3, tweeted_at: Time.now)
@@ -40,6 +41,15 @@ RSpec.describe Tweet, type: :model do
         expect(Tweet.tweeted_day_count).to eq 3
       end
     end
+
+    describe '.tweeted_ats' do
+      xit 'tweeted_atのみを返す' do
+        create_list(:tweet, 3)
+        # keyを確認したい
+        expect(Tweet.tweeted_ats).not_to include 'aaa'
+      end
+    end
+
     describe '.tweeted_at_date(date)' do
       let(:the_day) { Time.parse('2020-06-01') }
       let!(:prev_day_tweet) { create(:tweet, tweeted_at: the_day.prev_day.end_of_day) }
