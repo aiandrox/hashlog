@@ -118,9 +118,9 @@ export default {
     async fetchTweetDates() {
       this.tweetDates = []
       const { tagId } = this.$route.params
-      const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweets`)
-      const { tweets } = tweetsRes.data
-      tweets.forEach(t => this.tweetDates.push(t.tweetedAt.substr(0, 10)))
+      const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweeted_ats`)
+      const { tweetedAts } = tweetsRes.data
+      tweetedAts.forEach(t => this.tweetDates.push(t.substr(0, 10)))
       this.date = ""
     },
     // カレンダーの日付の変更

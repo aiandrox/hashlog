@@ -7,7 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d31e5fff03ec3ea494fa/maintainability)](https://codeclimate.com/github/aiandrox/hashlog/maintainability)
 
-https://hashlog.work
+### **https://hashlog.work**
 
 ## サービス概要
 
@@ -97,6 +97,7 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 
 ### インフラストラクチャー
 
+- ~~Docker~~
 - Sider
 - CircleCI
 - Nginx 1.12.2
@@ -116,33 +117,47 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 
 #### インフラ構成図
 
-[![Image from Gyazo](https://i.gyazo.com/90ae7dcad01f69d922f88763fa84fb60.png)](https://gyazo.com/90ae7dcad01f69d922f88763fa84fb60)
+[![Image from Gyazo](https://i.gyazo.com/77d2babccb1468a167c3e362c4d89eff.png)](https://gyazo.com/77d2babccb1468a167c3e362c4d89eff)
 https://drive.google.com/file/d/1lCmn-IeardJ3zwkcgTyybtmjb9wh80Hf/view?usp=sharing
 
 ## 環境構築手順
 
+事前に管理者から`master.key`を取得して`config`配下に置いてください。
+
+- config/database.yml の作成
+
 ```shell
-$ git clone git@github.com:aiandrox/hashlog.git
+$ cp config/database.yml.default config/database.yml
 ```
 
-- 事前にしておくこと
+- ローカル環境構築
 
-管理者から`master.key`を取得して`config`配下に置いてください。  
+```shell
+$ rbenv local 2.6.6
+$ nodenv local 14.2.0
+$ bundle install --path vendor/bundle
+$ yarn install
+$ rails db:create
+$ rails db:migrate
+$ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーとして設定してください
+```
+
+管理者から`master.key`を取得して`config`配下に置いてください。
 自分のアカウントを管理ユーザーとして`db/fixtures/admin_user.rb`に追加してください。
 
+### サーバー起動
+
 ```shell
-$ docker-compose build
-$ docker-compose up
-$ docker-compose run web rails db:create db:migrate
-$ docker-compose run web rake db:seed_fu
+$ rails server
+$ bin/webpack-dev-server
 ```
 
-`http://127.0.0.1:3000/`にアクセスして開発を行ってください。
+上記のコマンドは`$ bundle exec foreman start`で代替可能。
 
 ### テスト実行
 
 ```shell
-$ docker-compose run web bundle exec rspec
+$ bundle exec rspec spec
 ```
 
 [テスト項目一覧](/spec/rspec-output)
