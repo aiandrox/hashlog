@@ -98,7 +98,7 @@ export default {
       const stringRemindDay = String(remindDay)
       const deleteDayResult = stringRemindDay.split("日").join("")
       // 全角数字を半角に変換
-      const result = deleteDayResult.replace(/[０-９]/g, (s) =>
+      const result = deleteDayResult.replace(/[０-９]/g, s =>
         String.fromCharCode(s.charCodeAt(0) - 65248)
       )
       // result => "20", "文字列"

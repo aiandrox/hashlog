@@ -3,9 +3,9 @@
     <v-dialog v-model="dialog" max-width="600px">
       <ValidationObserver ref="observer" v-slot="{ invalid }">
         <v-card>
-          <v-system-bar class="pa-5 subtitle-1"
-            >ハッシュタグを登録する</v-system-bar
-          >
+          <v-system-bar
+            class="pa-5 subtitle-1"
+          >ハッシュタグを登録する</v-system-bar>
           <v-card-text class="mt-5">
             <v-container>
               <v-form @submit.prevent="onSubmit">
@@ -28,16 +28,19 @@
                 </ValidationProvider>
               </v-form>
               <p class="ml-md-10 mt-5">
-                登録時に直近1週間のツイートを取得します。<br />ハッシュタグは3つまで登録できます。
+                登録時に直近1週間のツイートを取得します。<br>ハッシュタグは3つまで登録できます。
               </p>
             </v-container>
           </v-card-text>
           <v-card-actions>
             <v-spacer />
             <v-btn text @click="resetForm">キャンセル</v-btn>
-            <v-btn text color="primary" :disabled="invalid" @click="sendTagName"
-              >登録する</v-btn
-            >
+            <v-btn
+              text
+              color="primary"
+              :disabled="invalid"
+              @click="sendTagName"
+            >登録する</v-btn>
           </v-card-actions>
         </v-card>
       </ValidationObserver>

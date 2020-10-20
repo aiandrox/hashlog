@@ -4,13 +4,12 @@
       <v-tabs background-color="#e9f1f5" show-arrows>
         <v-tab :to="homePositionRoute">{{ homePositionName }}</v-tab>
         <v-tab
-          class="custom-transform-class text-none"
           v-for="registeredTag in registeredTags"
           :key="registeredTag.id"
+          class="custom-transform-class text-none"
           :to="registeredTagRoute(registeredTag)"
           @click="$emit('select-tab')"
-          >#{{ registeredTag.tag.name }}</v-tab
-        >
+        >#{{ registeredTag.tag.name }}</v-tab>
       </v-tabs>
     </div>
     <v-spacer />
