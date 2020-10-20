@@ -5,8 +5,7 @@ class Api::V1::TweetedAtsLoyalty < ApplicationLoyalty
   end
 
   def index?
-    registered_tag.user == current_user ||
-      (registered_tag.user.published? && !registered_tag.closed?)
+    Api::V1::RegisteredTagsLoyalty.new(current_user, registered_tag).show?
   end
 
   private

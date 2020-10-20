@@ -31,8 +31,8 @@ RSpec.describe 'TweetedAtsLoyalty', type: :request do
       end
     end
     context '他人のタグのとき' do
+      subject { get "/api/v1/registered_tags/#{other_registered_tag.id}/tweeted_ats" }
       context '作成ユーザーが公開のとき' do
-        subject { get "/api/v1/registered_tags/#{other_registered_tag.id}/tweeted_ats" }
         it '公開/限定公開のタグを取得できる' do
           other_registered_tag.published!
           subject
