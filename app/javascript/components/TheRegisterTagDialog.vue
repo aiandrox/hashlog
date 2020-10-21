@@ -116,7 +116,6 @@ export default {
           }
         } finally {
           this.isLoading = false
-          this.$emit("create-tag")
         }
       }
     }
