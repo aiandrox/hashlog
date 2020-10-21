@@ -8,7 +8,6 @@
           :key="registeredTag.id"
           class="custom-transform-class text-none"
           :to="registeredTagRoute(registeredTag)"
-          @click="$emit('select-tab')"
         >#{{ registeredTag.tag.name }}</v-tab>
       </v-tabs>
     </div>
@@ -25,7 +24,6 @@
       <!-- ダイアログ -->
       <register-tag-dialog
         ref="registerDialog"
-        @create-tag="$emit('create-tag')"
       />
     </div>
   </v-container>

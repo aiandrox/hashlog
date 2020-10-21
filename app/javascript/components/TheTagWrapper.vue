@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- タブ -->
-    <the-tab :registered-tags="registeredTags" @select-tab="firstRead" @create-tag="firstRead" />
+    <the-tab :registered-tags="registeredTags" />
     <!-- カレンダー -->
     <the-calendar ref="calendar" :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
     <v-container class="main-content d-flex flex-row-reverse pa-0" row>
@@ -59,11 +59,6 @@ export default {
       default: () => {},
       required: true
     },
-    registeredTags: {
-      type: Array,
-      default: () => [],
-      required: true
-    }
   },
   data() {
     return {
@@ -83,6 +78,7 @@ export default {
           name: ""
         }
       },
+      registeredTags: [],
       tweets: [],
       tweetDates: []
     }
@@ -93,11 +89,17 @@ export default {
       return `/api/v1/registered_tags/${tagId}`
     }
   },
+  watch: {
+    $route() {
+      this.firstRead()
+    }
+  },
   mounted() {
     this.firstRead()
   },
   methods: {
     async firstRead() {
+      this.fetchRegisteredTagsData()
       this.fetchTweetDates()
       this.fetchTweetsData()
       await this.fetchTagData()
@@ -115,6 +117,14 @@ export default {
       this.setPaginationData(tweetsRes)
       const { tweets } = tweetsRes.data
       this.tweets = tweets
+    },
+    // タブ用ユーザーの全てのタグ
+    async fetchRegisteredTagsData() {
+      const registeredTagsRes = await this.$axios.get(
+        "/api/v1/users/current/registered_tags"
+      )
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
     },
     // カレンダー用全てのツイート
     async fetchTweetDates() {

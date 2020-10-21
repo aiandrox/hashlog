@@ -71,7 +71,7 @@ export default {
       await this.$store.dispatch("user/updateCurrentUser", this.currentUser)
       this.$refs.profile.finishEdit()
     },
-    async cancelEdit() {
+    cancelEdit() {
       this.$store.dispatch("user/getCurrentUserFromAPI")
     },
     async fetchTwitterData() {

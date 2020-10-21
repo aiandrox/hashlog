@@ -25,11 +25,6 @@ export default {
     theTagWrapper,
     deleteDialog
   },
-  data() {
-    return {
-      registeredTags: []
-    }
-  },
   computed: {
     ...mapGetters({ currentUser: "user/currentUser" }),
     registeredTagUrl() {
@@ -37,21 +32,10 @@ export default {
       return `/api/v1/registered_tags/${tagId}`
     }
   },
-  mounted() {
-    this.fetchRegisteredTagsData()
-  },
   methods: {
-    // タブ用ユーザーの全てのタグ
-    async fetchRegisteredTagsData() {
-      const registeredTagsRes = await this.$axios.get(
-        "/api/v1/users/current/registered_tags"
-      )
-      const { registeredTags } = registeredTagsRes.data
-      this.registeredTags = registeredTags
-    },
     // データ更新
     async updateTagData(updateRegisteredTag) {
-      const registeredTagRes = await this.$axios.patch(this.registeredTagUrl, {
+      await this.$axios.patch(this.registeredTagUrl, {
         tag: updateRegisteredTag
       })
       this.$refs.tagWrapper.$refs.tagStatus.finishEdit()
