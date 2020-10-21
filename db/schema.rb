@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_13_022618) do
+ActiveRecord::Schema.define(version: 2020_10_21_135324) do
 
   create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -32,7 +32,9 @@ ActiveRecord::Schema.define(version: 2020_06_13_022618) do
     t.integer "privacy", default: 0, null: false
     t.integer "remind_day", default: 0, null: false
     t.datetime "first_tweeted_at"
+    t.index ["created_at"], name: "index_registered_tags_on_created_at"
     t.index ["tag_id"], name: "index_registered_tags_on_tag_id"
+    t.index ["user_id", "tag_id"], name: "index_registered_tags_on_user_id_and_tag_id", unique: true
     t.index ["user_id"], name: "index_registered_tags_on_user_id"
   end
 
@@ -51,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_06_13_022618) do
     t.string "tweet_id", null: false
     t.index ["registered_tag_id"], name: "index_tweets_on_registered_tag_id"
     t.index ["tweet_id", "registered_tag_id"], name: "index_tweets_on_tweet_id_and_registered_tag_id", unique: true
+    t.index ["tweeted_at"], name: "index_tweets_on_tweeted_at"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
