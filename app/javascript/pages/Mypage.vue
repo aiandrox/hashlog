@@ -6,6 +6,7 @@
     <profile
       ref="profile"
       :user="currentUser"
+      @input-privacy="togglePrivacy"
       @push-update="updateUserData"
       @push-delete="$refs.deleteDialog.open()"
       @push-cancel="cancelEdit"
@@ -97,6 +98,14 @@ export default {
         type: "success",
         message: "ユーザーを削除しました"
       })
+    },
+    // v-modelの代わり
+    togglePrivacy() {
+      if (this.user.privacy === "公開") {
+        this.user.privacy = "非公開"
+      } else {
+        this.user.privacy = "公開"
+      }
     }
   }
 }

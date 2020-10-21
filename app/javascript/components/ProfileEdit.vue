@@ -8,13 +8,14 @@
           rules="max:300"
         >
           <v-textarea
-            v-model="user.description"
+            :value.sync="user.description"
             outlined
             :counter="300"
             messages="この変更はTwitterには反映されません"
             :error-messages="errors"
             rows="5"
             label="プロフィール"
+            @input="inputDescription"
           />
         </ValidationProvider>
       </div>
@@ -67,6 +68,10 @@ export default {
         this.$refs.observer.reset()
       })
       this.$emit("push-cencel")
+    },
+    // バケツリレー用
+    inputDescription(v) {
+      this.$emit("input-desctiption", v)
     }
   }
 }

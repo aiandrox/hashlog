@@ -5,6 +5,8 @@
       v-if="isEditing"
       ref="editArea"
       :registered-tag="registeredTag"
+      @input-privacy="inputPrivacy"
+      @input-remind-day="inputRemindDay"
       @push-update="$emit('push-update')"
       @push-cancel="pushCancel"
       @push-delete="$emit('push-delete')"
@@ -66,6 +68,13 @@ export default {
     },
     finishEdit() {
       this.isEditing = false
+    },
+    // regsiteredTagの設定変更を反映
+    inputPrivacy(v) {
+      this.$emit("input-privacy", v)
+    },
+    inputRemindDay(v) {
+      this.$emit("input-remind-day", v)
     }
   }
 }

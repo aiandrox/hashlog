@@ -10,10 +10,11 @@
       <v-list-item>
         <v-form class="pt-0">
           <v-select
-            v-model="registeredTag.privacy"
+            :value.sync="registeredTag.privacy"
             :items="privacyChoices"
             prepend-icon="mdi-earth"
             required
+            @input="inputPrivacy"
           />
           <v-checkbox
             v-model="isRemind"
@@ -29,12 +30,13 @@
           >
             <v-text-field
               v-show="isRemind"
-              v-model="registeredTag.remindDay"
+              :value.sync="registeredTag.remindDay"
               :error-messages="errors"
               placeholder="リマインダー"
               suffix="日"
               hint="1〜30日で設定できます"
               persistent-hint
+              @input="inputRemindDay"
             />
           </validation-provider>
         </v-form>
@@ -108,6 +110,13 @@ export default {
     pushUpdate() {
       this.fetchRemindDayFromForm()
       this.$emit("push-update")
+    },
+    // バケツリレー用
+    inputPrivacy(v) {
+      this.$emit("input-privacy", v)
+    },
+    inputRemindDay(v) {
+      this.$emit("input-remind-day", v)
     },
   },
 }

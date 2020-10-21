@@ -11,6 +11,8 @@
           <tag-status
             ref="tagStatus"
             :registered-tag="registeredTag"
+            @input-privacy="reflectPrivacy"
+            @input-remind-day="reflectRemindDay"
             @push-delete="$emit('push-delete')"
             @push-update="$emit('push-update', registeredTag)"
             @push-cancel="fetchTagData"
@@ -148,6 +150,13 @@ export default {
         return `${this.page.requestUrl}?date=${this.$refs.calendar.date}&page=${page}`
       }
       return `${this.page.requestUrl}?page=${page}`
+    },
+    // v-modelの代わり 更新
+    reflectPrivacy(v) {
+      this.registeredTag.privacy = v
+    },
+    reflectRemindDay(v) {
+      this.registeredTag.remindDay = v
     }
   }
 }
