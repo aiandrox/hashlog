@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#top'
   get 'mypage/dashboard', to: 'static_pages#top'
-  get 'mypage/tags/:id', to: 'static_pages#top'
+  get 'mypage/tags/:id', to: 'static_pages#mypage'
   get 'users/:uuid', to: 'static_pages#top'
   get 'users/:uuid/tags/:id', to: 'static_pages#top'
   get 'ranking/persistence', to: 'static_pages#top'
