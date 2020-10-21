@@ -11,6 +11,8 @@
           <tag-status
             ref="tagStatus"
             :registered-tag="registeredTag"
+            @input-privacy="reflectPrivacy"
+            @input-remind-day="reflectRemindDay"
             @push-delete="$emit('push-delete')"
             @push-update="$emit('push-update', registeredTag)"
             @push-cancel="fetchTagData"
@@ -117,7 +119,6 @@ export default {
     // カレンダー用全てのツイート
     async fetchTweetDates() {
       this.tweetDates = []
-      const { tagId } = this.$route.params
       const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweeted_ats`)
       const { tweetedAts } = tweetsRes.data
       tweetedAts.forEach(t => this.tweetDates.push(t.substr(0, 10)))
@@ -149,6 +150,13 @@ export default {
         return `${this.page.requestUrl}?date=${this.$refs.calendar.date}&page=${page}`
       }
       return `${this.page.requestUrl}?page=${page}`
+    },
+    // v-modelの代わり 更新
+    reflectPrivacy(v) {
+      this.registeredTag.privacy = v
+    },
+    reflectRemindDay(v) {
+      this.registeredTag.remindDay = v
     }
   }
 }

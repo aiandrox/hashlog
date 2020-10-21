@@ -8,20 +8,24 @@
           rules="max:300"
         >
           <v-textarea
-            v-model="user.description"
+            :value.sync="user.description"
             outlined
             :counter="300"
             messages="この変更はTwitterには反映されません"
             :error-messages="errors"
             rows="5"
             label="プロフィール"
+            @input="inputDescription"
           />
         </ValidationProvider>
       </div>
     </v-card-text>
-    <v-btn class="ma-2" outlined color="primary" @click="pushCancel"
-      >キャンセル</v-btn
-    >
+    <v-btn
+      class="ma-2"
+      outlined
+      color="primary"
+      @click="pushCancel"
+    >キャンセル</v-btn>
     <v-btn
       class="ma-2"
       depressed
@@ -29,8 +33,7 @@
       color="depressedButton"
       :disabled="invalid"
       @click="pushUpdate"
-      >保存する</v-btn
-    >
+    >保存する</v-btn>
     <v-spacer />
     <v-btn class="ma-2" color="error" outlined @click="$emit('push-delete')">
       <v-icon left>mdi-account-off</v-icon>ユーザー削除
@@ -65,6 +68,10 @@ export default {
         this.$refs.observer.reset()
       })
       this.$emit("push-cencel")
+    },
+    // バケツリレー用
+    inputDescription(v) {
+      this.$emit("input-desctiption", v)
     }
   }
 }

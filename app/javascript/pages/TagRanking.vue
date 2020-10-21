@@ -26,12 +26,12 @@
             <v-list-item-subtitle class="mt-1" v-text="'by ' + tag.user.name" />
           </v-list-item-content>
 
-          <v-list-item-action class="ml-2"
-            >{{ tag.tweetRate }}%</v-list-item-action
-          >
-          <v-list-item-action class="d-none d-sm-flex"
-            >（{{ tag.tweetedDayCount }}日）</v-list-item-action
-          >
+          <v-list-item-action
+            class="ml-2"
+          >{{ tag.tweetRate }}%</v-list-item-action>
+          <v-list-item-action
+            class="d-none d-sm-flex"
+          >（{{ tag.tweetedDayCount }}日）</v-list-item-action>
         </v-list-item>
       </v-list>
     </v-card>

@@ -11,20 +11,20 @@
         text
         color="#ffffb5"
         :to="{ name: 'tagRanking' }"
-        ><v-icon left class="d-none d-sm-flex">mdi-crown</v-icon
-        >継続率ランキング</v-btn
-      >
+      ><v-icon left class="d-none d-sm-flex">mdi-crown</v-icon>継続率ランキング</v-btn>
       <v-btn v-if="!currentUser" text @click="pushLogin">ログイン</v-btn>
       <v-btn
         v-if="currentUser"
         class="px-3 px-sm-4"
         text
         :to="{ name: 'mypage' }"
-        >マイページ</v-btn
-      >
-      <v-btn v-if="currentUser" class="px-3 px-sm-4" text @click="logout"
-        >ログアウト</v-btn
-      >
+      >マイページ</v-btn>
+      <v-btn
+        v-if="currentUser"
+        class="px-3 px-sm-4"
+        text
+        @click="logout"
+      >ログアウト</v-btn>
     </v-toolbar-items>
     <!-- 利用規約ダイアログ -->
     <the-terms-dialog ref="termsDialog" />

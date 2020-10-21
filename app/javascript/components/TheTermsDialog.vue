@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-dialog scrollable v-model="isDialog" max-width="600px">
+      <v-dialog v-model="isDialog" scrollable max-width="600px">
         <v-card>
           <v-card-text />
           <v-card-text style="height: 90%;"><the-terms /></v-card-text>
 
-          <v-divider></v-divider>
+          <v-divider />
           <v-card-actions>
             <v-spacer />
             <ValidationObserver ref="observer" v-slot="{ invalid }">
@@ -17,7 +17,7 @@
                   label="利用規約に同意する"
                   type="checkbox"
                   required
-                ></v-checkbox>
+                />
               </ValidationProvider>
               <v-btn text @click="cancel">キャンセル</v-btn>
               <v-btn
@@ -26,8 +26,7 @@
                 :disabled="invalid"
                 href="/api/v1/oauth/twitter"
                 @click="isDialog = false"
-                >登録する</v-btn
-              >
+              >登録する</v-btn>
             </ValidationObserver>
           </v-card-actions>
         </v-card>

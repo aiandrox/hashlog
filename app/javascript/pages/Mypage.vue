@@ -6,6 +6,7 @@
     <profile
       ref="profile"
       :user="currentUser"
+      @input-privacy="togglePrivacy"
       @push-update="updateUserData"
       @push-delete="$refs.deleteDialog.open()"
       @push-cancel="cancelEdit"
@@ -14,7 +15,7 @@
     <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteUser">
       ツイートを含む全てのデータが消えて
-      <br />復活できなくなります。
+      <br>復活できなくなります。
     </delete-dialog>
     <!-- Twitterデータ更新ダイアログ -->
     <update-dialog ref="updateDialog" @push-update="fetchTwitterData" />
@@ -81,7 +82,7 @@ export default {
           message: "ユーザー情報を更新しました"
         })
       } catch (error) {
-        const errorMessage = error.response.data.error.messages[0]
+        const [errorMessage] = error.response.data.error.messages
         this.$store.dispatch("flash/setFlash", {
           type: "error",
           message: errorMessage
@@ -97,6 +98,14 @@ export default {
         type: "success",
         message: "ユーザーを削除しました"
       })
+    },
+    // v-modelの代わり
+    togglePrivacy() {
+      if (this.user.privacy === "公開") {
+        this.user.privacy = "非公開"
+      } else {
+        this.user.privacy = "公開"
+      }
     }
   }
 }

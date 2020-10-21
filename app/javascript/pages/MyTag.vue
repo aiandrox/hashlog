@@ -10,7 +10,7 @@
     <!-- 削除ダイアログ -->
     <delete-dialog ref="deleteDialog" @push-delete="deleteTag">
       保存されていたツイートのデータが
-      <br />全て消えてしまいます。
+      <br>全て消えてしまいます。
     </delete-dialog>
   </div>
 </template>
@@ -55,7 +55,6 @@ export default {
         tag: updateRegisteredTag
       })
       this.$refs.tagWrapper.$refs.tagStatus.finishEdit()
-      const { registeredTag } = registeredTagRes.data
       this.$store.dispatch("flash/setFlash", {
         type: "success",
         message: "ハッシュタグの設定を更新しました"

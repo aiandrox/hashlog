@@ -31,7 +31,7 @@ const actions = {
       return null
     }
   },
-  async updateCurrentUser({ commit, state }, userData) {
+  async updateCurrentUser({ commit }, userData) {
     try {
       const response = await axios.patch("/api/v1/users/current", {
         user: userData
