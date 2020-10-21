@@ -1,16 +1,23 @@
 <template>
   <div>
-    <v-card flat outlined :ripple="false" max-width="550" class="mt-3" :href="tweetUrl">
+    <v-card
+      flat
+      outlined
+      :ripple="false"
+      max-width="550"
+      class="mt-3"
+      :href="tweetUrl"
+    >
       <v-card-title class="py-1">
         <v-list two-line max-width="530" width="100%">
           <v-list-item :ripple="false" :href="userUrl">
             <v-list-item-avatar color="grey" size="45">
-              <v-img :src="user.avatarUrl"></v-img>
+              <v-img :src="user.avatarUrl" />
             </v-list-item-avatar>
 
             <v-list-item-content>
               <v-list-item-title v-text="user.name" />
-              <v-list-item-subtitle class="font-weight-light">@{{user.screenName}}</v-list-item-subtitle>
+              <v-list-item-subtitle class="font-weight-light">@{{ user.screenName }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-icon>
               <v-icon color="blue">mdi-twitter</v-icon>

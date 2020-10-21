@@ -29,13 +29,13 @@ export default {
       registeredTags: []
     }
   },
-  mounted() {
-    this.firstRead()
-  },
   watch: {
     $route() {
       this.firstRead()
     }
+  },
+  mounted() {
+    this.firstRead()
   },
   methods: {
     async firstRead() {

@@ -10,9 +10,9 @@
       :weekday-format="weekdayFormat"
       :allowed-dates="allowedDates"
       :events="tweetDates"
-      @input="inputDate"
       class="mt-4"
-    ></v-date-picker>
+      @input="inputDate"
+    />
   </div>
 </template>
 
@@ -32,6 +32,12 @@ export default {
       date: ""
     }
   },
+  watch: {
+    $route() {
+      this.date = ""
+      this.$refs.picker.activePicker = "DATE"
+    }
+  },
   methods: {
     allowedDates(val) {
       return this.tweetDates.includes(val)
@@ -41,12 +47,6 @@ export default {
     },
     inputDate(date) {
       this.$emit("input-date", date)
-    }
-  },
-  watch: {
-    $route() {
-      this.date = ""
-      this.$refs.picker.activePicker = "DATE"
     }
   }
 }

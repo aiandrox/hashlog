@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- タブ -->
-    <the-tab :registered-tags="registeredTags" @select-tab="firstRead" @create-tag="firstRead" />
+    <the-tab :registered-tags="registeredTags" />
     <!-- カレンダー -->
     <the-calendar ref="calendar" :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
     <v-container class="main-content d-flex flex-row-reverse pa-0" row>
@@ -11,6 +11,8 @@
           <tag-status
             ref="tagStatus"
             :registered-tag="registeredTag"
+            @input-privacy="reflectPrivacy"
+            @input-remind-day="reflectRemindDay"
             @push-delete="$emit('push-delete')"
             @push-update="$emit('push-update', registeredTag)"
             @push-cancel="fetchTagData"
@@ -57,11 +59,6 @@ export default {
       default: () => {},
       required: true
     },
-    registeredTags: {
-      type: Array,
-      default: () => [],
-      required: true
-    }
   },
   data() {
     return {
@@ -81,6 +78,7 @@ export default {
           name: ""
         }
       },
+      registeredTags: [],
       tweets: [],
       tweetDates: []
     }
@@ -91,11 +89,17 @@ export default {
       return `/api/v1/registered_tags/${tagId}`
     }
   },
+  watch: {
+    $route() {
+      this.firstRead()
+    }
+  },
   mounted() {
     this.firstRead()
   },
   methods: {
     async firstRead() {
+      this.fetchRegisteredTagsData()
       this.fetchTweetDates()
       this.fetchTweetsData()
       await this.fetchTagData()
@@ -114,10 +118,17 @@ export default {
       const { tweets } = tweetsRes.data
       this.tweets = tweets
     },
+    // タブ用ユーザーの全てのタグ
+    async fetchRegisteredTagsData() {
+      const registeredTagsRes = await this.$axios.get(
+        "/api/v1/users/current/registered_tags"
+      )
+      const { registeredTags } = registeredTagsRes.data
+      this.registeredTags = registeredTags
+    },
     // カレンダー用全てのツイート
     async fetchTweetDates() {
       this.tweetDates = []
-      const { tagId } = this.$route.params
       const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweeted_ats`)
       const { tweetedAts } = tweetsRes.data
       tweetedAts.forEach(t => this.tweetDates.push(t.substr(0, 10)))
@@ -149,6 +160,13 @@ export default {
         return `${this.page.requestUrl}?date=${this.$refs.calendar.date}&page=${page}`
       }
       return `${this.page.requestUrl}?page=${page}`
+    },
+    // v-modelの代わり 更新
+    reflectPrivacy(v) {
+      this.registeredTag.privacy = v
+    },
+    reflectRemindDay(v) {
+      this.registeredTag.remindDay = v
     }
   }
 }
