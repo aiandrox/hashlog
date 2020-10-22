@@ -37,6 +37,9 @@
               hint="1〜30日で設定できます"
               persistent-hint
             />
+          </validation-provider>
+        </v-form>
+      </v-list-item>
     </v-container>
     <v-list-item>
       <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')">キャンセル</v-btn>
