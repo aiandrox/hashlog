@@ -10,9 +10,7 @@
         <v-card flat>
           <tag-status
             ref="tagStatus"
-            :registered-tag="registeredTag"
-            @input-privacy="reflectPrivacy"
-            @input-remind-day="reflectRemindDay"
+            :registered-tag.sync="registeredTag"
             @push-delete="$emit('push-delete')"
             @push-update="$emit('push-update', registeredTag)"
             @push-cancel="fetchTagData"
@@ -54,14 +52,16 @@ export default {
     tweetsView
   },
   props: {
-    user: {
-      type: Object,
-      default: () => {},
-      required: true
-    },
   },
   data() {
     return {
+      user: {
+        tweetId: "",
+        screenName: "",
+        name: "",
+        description: "",
+        privacy: "",
+      },
       page: {
         currentPage: 1,
         totalPages: 1,
@@ -97,12 +97,13 @@ export default {
       this.firstRead()
     }
   },
-  mounted() {
+  created() {
     this.firstRead()
   },
   methods: {
     async firstRead() {
       this.fetchRegisteredTagsData()
+      this.fetchUserData()
       this.fetchTweetDates()
       this.fetchTweetsData()
       await this.fetchTagData()
@@ -123,19 +124,37 @@ export default {
     },
     // タブ用ユーザーの全てのタグ
     async fetchRegisteredTagsData() {
-      const registeredTagsRes = () => {
-        if (this.isMypage) {
-          return this.$axios.get(
-            "/api/v1/users/current/registered_tags"
-          )
-        }
-        const { userUuid } = this.$route.params
-        return this.$axios.get(
-          `/api/v1/users/${userUuid}/registered_tags`
+      if (this.isMypage) {
+        const registeredTagsRes = await this.$axios.get(
+          "/api/v1/users/current/registered_tags"
         )
+        const { registeredTags } = registeredTagsRes.data
+        this.registeredTags = registeredTags
+        return
       }
+      const { userUuid } = await this.$route.params
+      const registeredTagsRes = await this.$axios.get(
+        `/api/v1/users/${userUuid}/registered_tags`
+      )
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
+    },
+    // ユーザー
+    async fetchUserData() {
+      if (this.isMypage) {
+        const userRes = await this.$axios.get(
+          "/api/v1/users/current"
+        )
+        const { user } = userRes.data
+        this.user = user
+        return
+      }
+      const { userUuid } = this.$route.params
+      const userRes = await this.$axios.get(
+        `/api/v1/users/${userUuid}`
+      )
+      const { user } = userRes.data
+      this.user = user
     },
     // カレンダー用全てのツイート
     async fetchTweetDates() {
