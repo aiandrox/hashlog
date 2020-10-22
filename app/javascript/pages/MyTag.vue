@@ -3,7 +3,6 @@
     <the-tag-wrapper
       ref="tagWrapper"
       :user="currentUser"
-      :registered-tags="registeredTags"
       @push-delete="showDeleteDialog"
       @push-update="updateTagData"
     />

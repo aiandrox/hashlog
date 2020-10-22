@@ -1,5 +1,5 @@
 <template>
-  <the-tag-wrapper :user="user" :registered-tags="registeredTags" />
+  <the-tag-wrapper :user="user" />
 </template>
 
 <script>
@@ -20,29 +20,22 @@ export default {
         role: "",
         privacy: ""
       },
-      registeredTags: []
     }
   },
   watch: {
     $route() {
-      this.fetchData()
+      this.fetchUserData()
     }
   },
   mounted() {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
+    async fetchUserData() {
       const { userUuid } = this.$route.params
       const userRes = await this.$axios.get(`/api/v1/users/${userUuid}`)
       const { user } = userRes.data
       this.user = user
-
-      const registeredTagsRes = await this.$axios.get(
-        `/api/v1/users/${userUuid}/registered_tags`
-      )
-      const { registeredTags } = registeredTagsRes.data
-      this.registeredTags = registeredTags
     }
   }
 }
