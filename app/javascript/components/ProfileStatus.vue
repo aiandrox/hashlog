@@ -2,7 +2,7 @@
   <v-card flat>
     <v-list :class="{ 'v-list-item--disabled': !isEditing }">
       <v-subheader>STATUS</v-subheader>
-      <v-list-item @click="togglePrivacy">
+      <v-list-item @click="$emit('click-privacy')">
         <v-list-item-icon>
           <v-icon>mdi-earth</v-icon>
         </v-list-item-icon>
@@ -73,14 +73,5 @@ export default {
       return this.$route.path.includes("/mypage/")
     }
   },
-  methods: {
-    togglePrivacy() {
-      if (this.user.privacy === "公開") {
-        this.user.privacy = "非公開"
-      } else {
-        this.user.privacy = "公開"
-      }
-    }
-  }
 }
 </script>
