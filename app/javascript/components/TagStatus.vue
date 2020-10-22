@@ -4,9 +4,7 @@
     <status-edit
       v-if="isEditing"
       ref="editArea"
-      :registered-tag="registeredTag"
-      @input-privacy="inputPrivacy"
-      @input-remind-day="inputRemindDay"
+      v-bind.sync="registeredTag"
       @push-update="$emit('push-update')"
       @push-cancel="pushCancel"
       @push-delete="$emit('push-delete')"

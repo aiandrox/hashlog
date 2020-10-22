@@ -84,6 +84,9 @@ export default {
     }
   },
   computed: {
+    isMypage() {
+      return this.$route.path.includes("/mypage/")
+    },
     registeredTagUrl() {
       const { tagId } = this.$route.params
       return `/api/v1/registered_tags/${tagId}`
@@ -120,9 +123,17 @@ export default {
     },
     // タブ用ユーザーの全てのタグ
     async fetchRegisteredTagsData() {
-      const registeredTagsRes = await this.$axios.get(
-        "/api/v1/users/current/registered_tags"
-      )
+      const registeredTagsRes = () => {
+        if (this.isMypage) {
+          return this.$axios.get(
+            "/api/v1/users/current/registered_tags"
+          )
+        }
+        const { userUuid } = this.$route.params
+        return this.$axios.get(
+          `/api/v1/users/${userUuid}/registered_tags`
+        )
+      }
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
     },
@@ -160,13 +171,6 @@ export default {
         return `${this.page.requestUrl}?date=${this.$refs.calendar.date}&page=${page}`
       }
       return `${this.page.requestUrl}?page=${page}`
-    },
-    // v-modelの代わり 更新
-    reflectPrivacy(v) {
-      this.registeredTag.privacy = v
-    },
-    reflectRemindDay(v) {
-      this.registeredTag.remindDay = v
     }
   }
 }
