@@ -4,17 +4,17 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-subtitle>ハッシュタグ</v-list-item-subtitle>
-          <v-list-item-title>#{{ registeredTag.tag.name }}</v-list-item-title>
+          <v-list-item-title>#{{ tag.name }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
         <v-form class="pt-0">
           <v-select
-            :value.sync="registeredTag.privacy"
+            :value="privacy"
             :items="privacyChoices"
             prepend-icon="mdi-earth"
             required
-            @input="inputPrivacy"
+            @input="$emit('update:privacy', $event)"
           />
           <v-checkbox
             v-model="isRemind"
@@ -30,17 +30,13 @@
           >
             <v-text-field
               v-show="isRemind"
-              :value.sync="registeredTag.remindDay"
+              :value="remindDay"
               :error-messages="errors"
               placeholder="リマインダー"
               suffix="日"
               hint="1〜30日で設定できます"
               persistent-hint
-              @input="inputRemindDay"
             />
-          </validation-provider>
-        </v-form>
-      </v-list-item>
     </v-container>
     <v-list-item>
       <v-btn class="ma-2" outlined color="primary" @click="$emit('push-cancel')">キャンセル</v-btn>
@@ -66,11 +62,21 @@
 <script>
 export default {
   props: {
-    registeredTag: {
+    privacy: {
+      type: String,
+      default: "非公開",
+      required: true
+    },
+    remindDay: {
+      type: [Number, String],
+      default: 0,
+      require: true
+    },
+    tag: {
       type: Object,
       default: () => {},
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -80,16 +86,16 @@ export default {
   },
   methods: {
     fetchSelectFromRemindDay() {
-      if (!!this.registeredTag.remindDay === false) {
+      if (!!this.remindDay === false) {
         this.isRemind = false
       } else {
         this.isRemind = true
       }
     },
     fetchRemindDayFromForm() {
-      this.registeredTag.remindDay = this.filter(this.registeredTag.remindDay)
+      this.$emit("update:remindDay", this.filter(this.remindDay))
       if (this.isRemind === false) {
-        this.registeredTag.remindDay = 0
+        this.$emit("update:remindDay", 0)
       }
     },
     // TODO: vee-validate.jsと同じメソッドになっている

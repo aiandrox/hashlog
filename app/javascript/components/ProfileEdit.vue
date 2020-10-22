@@ -8,14 +8,14 @@
           rules="max:300"
         >
           <v-textarea
-            :value.sync="user.description"
+            :value="description"
             outlined
             :counter="300"
             messages="この変更はTwitterには反映されません"
             :error-messages="errors"
             rows="5"
             label="プロフィール"
-            @input="inputDescription"
+            @input="$emit('update:description', $event)"
           />
         </ValidationProvider>
       </div>
@@ -44,11 +44,11 @@
 <script>
 export default {
   props: {
-    user: {
-      type: Object,
-      default: () => {},
+    description: {
+      type: String,
+      default: "",
       required: true
-    }
+    },
   },
   computed: {
     twitterUrl() {

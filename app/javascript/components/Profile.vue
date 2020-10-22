@@ -23,7 +23,7 @@
           <!-- ユーザー編集部分 -->
           <profile-edit
             v-if="isEditing"
-            :user="user"
+            v-bind.sync="user"
             @push-update="$emit('push-update')"
             @push-delete="$emit('push-delete')"
             @push-cencel="pushCancel"
