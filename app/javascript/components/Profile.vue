@@ -34,6 +34,7 @@
           <profile-status
             :is-editing="isEditing"
             :user="user"
+            @click-privacy="$emit('click-privacy')"
             @push-twitter-update="$emit('push-twitter-update')"
           />
         </v-col>
@@ -82,7 +83,7 @@ export default {
     },
     finishEdit() {
       this.isEditing = false
-    }
+    },
   }
 }
 </script>
