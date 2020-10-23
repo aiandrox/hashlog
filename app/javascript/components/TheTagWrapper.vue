@@ -14,7 +14,7 @@
             @push-delete="$emit('push-delete')"
             @push-update="$emit('push-update', registeredTag)"
             @push-cancel="fetchTagData"
-            @push-tweet="isTweetDialog = true"
+            @push-tweet="$refs.tweetDialog.open()"
           />
         </v-card>
         <!-- 広告 -->
@@ -22,7 +22,14 @@
           <v-img class="mt-3 d-none d-sm-block" alt="RUNTEQ" src="/img/runteq/300_50.jpg" />
         </a>
       </v-col>
-      <!-- ツイートダイアログ v-if="isTweetDialog" :registered-tag="registeredTag" :isOpenedでシェアボタンを表示 -->
+      <!-- ツイートダイアログ :registered-tag="registeredTag" :isOpenedでシェアボタンを表示 -->
+      <tweet-dialog
+        ref="tweetDialog"
+        :tweeted-day-count="registeredTag.tweetedDayCount"
+        :last-tweeted-at="registeredTag.lastTweetedAt"
+        :tag-name="registeredTag.tag.name"
+        @create-tag="$emit('finish-tweet')"
+      />
       <!-- ツイート -->
       <v-col cols="12" md="8" class="px-0 pt-0">
         <tweets-view :tweets="tweets" :user="user" />
@@ -45,13 +52,15 @@ import theCalendar from "./TheCalendar"
 import tagStatus from "./TagStatus"
 import theTab from "./TagsTab"
 import tweetsView from "./TagsTweets"
+import tweetDialog from "./TheTweetDialog"
 
 export default {
   components: {
     theCalendar,
     tagStatus,
     theTab,
-    tweetsView
+    tweetsView,
+    tweetDialog
   },
   props: {
   },
@@ -71,9 +80,9 @@ export default {
       },
       registeredTag: {
         id: "",
-        tweetedDayCount: "",
+        tweetedDayCount: 0,
         privacy: "",
-        remindDay: "",
+        remindDay: 0,
         firstTweetedAt: "",
         lastTweetedAt: "",
         tag: {
@@ -83,7 +92,6 @@ export default {
       registeredTags: [],
       tweets: [],
       tweetDates: [],
-      isTweetDialog: false,
     }
   },
   computed: {

@@ -25,10 +25,11 @@
 <script>
 import statusView from "./TagStatusView"
 import statusEdit from "./TagStatusEdit"
+
 export default {
   components: {
     statusView,
-    statusEdit
+    statusEdit,
   },
   props: {
     registeredTag: {
@@ -70,13 +71,6 @@ export default {
     finishEdit() {
       this.isEditing = false
     },
-    // regsiteredTagの設定変更を反映
-    inputPrivacy(v) {
-      this.$emit("input-privacy", v)
-    },
-    inputRemindDay(v) {
-      this.$emit("input-remind-day", v)
-    }
   }
 }
 </script>
