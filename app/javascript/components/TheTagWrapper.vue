@@ -4,7 +4,7 @@
     <the-tab :registered-tags="registeredTags" />
     <!-- カレンダー -->
     <the-calendar ref="calendar" :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
-    <v-container class="main-content d-flex flex-row-reverse pa-0" row>
+    <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col cols="12" md="4" class="px-0">
         <v-card flat>
@@ -14,6 +14,7 @@
             @push-delete="$emit('push-delete')"
             @push-update="$emit('push-update', registeredTag)"
             @push-cancel="fetchTagData"
+            @push-tweet="isTweetDialog = true"
           />
         </v-card>
         <!-- 広告 -->
@@ -21,6 +22,7 @@
           <v-img class="mt-3 d-none d-sm-block" alt="RUNTEQ" src="/img/runteq/300_50.jpg" />
         </a>
       </v-col>
+      <!-- ツイートダイアログ v-if="isTweetDialog" :registered-tag="registeredTag" :isOpenedでシェアボタンを表示 -->
       <!-- ツイート -->
       <v-col cols="12" md="8" class="px-0 pt-0">
         <tweets-view :tweets="tweets" :user="user" />
@@ -80,7 +82,8 @@ export default {
       },
       registeredTags: [],
       tweets: [],
-      tweetDates: []
+      tweetDates: [],
+      isTweetDialog: false,
     }
   },
   computed: {
@@ -90,6 +93,11 @@ export default {
     registeredTagUrl() {
       const { tagId } = this.$route.params
       return `/api/v1/registered_tags/${tagId}`
+    },
+    isOpened() {
+      return (
+        this.user.privacy === "公開" && this.registeredTag.privacy !== "非公開"
+      )
     }
   },
   watch: {
