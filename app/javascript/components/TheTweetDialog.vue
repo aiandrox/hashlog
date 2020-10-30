@@ -79,8 +79,11 @@ export default {
   },
   computed: {
     todayCount() {
-      // 最終ツイート日による日付の出し分け
-      // this.registeredTag.lastTweetedAt
+      const lastTweetedAt = Date.parse(this.lastTweetedAt)
+      const today = new Date().setHours(0, 0, 0, 0)
+      if (today <= lastTweetedAt) {
+        return `${this.tweetedDayCount}日目`
+      }
       return `${this.tweetedDayCount + 1}日目`
     },
   },
