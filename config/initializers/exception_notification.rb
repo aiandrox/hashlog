@@ -45,4 +45,8 @@ ExceptionNotification.configure do |config|
   config.add_notifier :slack,
                       webhook_url: Rails.application.credentials.slack_notifier[:webhook_url],
                       channel: '#hashlog通知'
+
+  config.ignore_if do
+    Rails.env.development?
+  end
 end

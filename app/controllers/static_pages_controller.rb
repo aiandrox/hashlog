@@ -1,8 +1,10 @@
 class StaticPagesController < ApplicationController
+  before_action :require_login, only: :mypage
+
   def top; end
 
   def mypage
-    current_user.tags.find(params[:id])
+    current_user.registered_tags.find(params[:id])
     render :top, formats: :html
   end
 

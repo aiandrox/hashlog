@@ -106,4 +106,32 @@ RSpec.describe 'Tweets', type: :request do
       end
     end
   end
+
+  describe 'POST /api/v1/registered_tags/:registered_tag_id/tweets' do
+    let(:user) { create(:user) }
+    let(:registered_tag) { create(:registered_tag, user: user, tag: create(:tag, name: 'test')) }
+    let(:tweet_json) { json['tweet'] }
+    subject { post "/api/v1/registered_tags/#{registered_tag.id}/tweets", params: { tweet: { body: body } } }
+    before { login_as(user) }
+
+    xcontext 'with valid', vcr: { cassette_name: 'twitter_api/update' } do
+      let(:body) { "#test 本文" }
+      it do
+        subject
+        expect(response.status).to eq 200
+      end
+      it { expect{ subject }.to change { Tweet.count }.by(1) }
+    end
+    context 'bodyがblankのとき' do
+      let(:body) { '' }
+      it do
+        subject
+        expect(response.status).to eq 422
+      end
+      it { expect{ subject }.not_to change { Tweet.count } }
+      it do
+        
+      end
+    end
+  end
 end

@@ -226,25 +226,18 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
-    describe '#add_tweets(since_id)' do
-      let(:user) { create(:user, :real_value) }
-      let(:since_id) { '1255854602626330624' }
-      context 'ハッシュタグのツイートがTwitterに存在するとき',
-        vcr: { cassette_name: 'twitter_api/everyday_search' } do
-        let(:present_tag) do
-          create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
-        end
+    describe '#add_tweets(tweet_data_array)' do
+      let(:registered_tag) { create(:registered_tag) }
+      context 'ツイートデータが存在するとき' do
+        let(:tweet_data_array) { [['text', Date.current, '1255854602626330624']] }
         it '取得したツイートを保存する' do
-          expect { present_tag.add_tweets(since_id) }.to change(Tweet, :count).by(1)
+          expect { registered_tag.add_tweets(tweet_data_array) }.to change(Tweet, :count).by(1)
         end
       end
-      context 'ハッシュタグのツイートがTwitterに存在しないとき',
-        vcr: { cassette_name: 'twitter_api/everyday_search/該当のツイートがない場合' } do
-        let(:absent_tag) do
-          create(:registered_tag, user: user, tag: create(:tag, name: 'absent_tag'))
-        end
+      context 'ツイートデータが存在しないとき' do
+        let(:tweet_data_array) { [] }
         it 'ツイートを取得しないので保存しない' do
-          expect { absent_tag.add_tweets(since_id) }.not_to change(Tweet, :count)
+          expect { registered_tag.add_tweets(tweet_data_array) }.not_to change(Tweet, :count)
         end
       end
     end
