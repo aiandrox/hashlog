@@ -9,7 +9,7 @@ class Api::V1::TweetsLoyalty < ApplicationLoyalty
   end
 
   def create?
-    !user.guest?
+    !current_user.guest?
   end
 
   private

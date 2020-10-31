@@ -12,6 +12,7 @@ class Api::V1::TweetsController < Api::V1::BaseController
   end
 
   def create
+    authorize!
     registered_tag = current_user.registered_tags.find(params[:registered_tag_id])
     update_client = TwitterAPI::Update.new(
       user: current_user,
