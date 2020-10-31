@@ -13,7 +13,7 @@
                   ref="provider"
                   v-slot="{ errors }"
                   name="本文"
-                  rules="required|max:140"
+                  :rules="`max:140|requiredTagName:${tagName}`"
                 >
                   <v-textarea
                     v-model="tweetBody"

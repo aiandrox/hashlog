@@ -66,6 +66,14 @@ extend("minRemindDay", {
   message: "{day}日以上で設定してください"
 })
 
+extend("requiredTagName", {
+  params: ["tagName"],
+  validate(value, { tagName }) {
+    return !!value.match(`#${tagName}`)
+  },
+  message: "ハッシュタグを入れてください"
+})
+
 export default {
   components: {
     ValidationProvider,
