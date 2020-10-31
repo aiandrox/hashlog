@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       end
       resources :registered_tags, only: %i[index show create update destroy] do
         resources :tweeted_ats, only: %i[index]
-        resources :tweets, only: %i[index]
+        resources :tweets, only: %i[index create]
       end
       resources :tags, only: %i[index]
       # ログイン、ログアウト
