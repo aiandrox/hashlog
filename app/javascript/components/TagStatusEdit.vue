@@ -36,6 +36,7 @@
               suffix="日"
               hint="1〜30日で設定できます"
               persistent-hint
+              @input="$emit('update:remindDay', $event)"
             />
           </validation-provider>
         </v-form>
