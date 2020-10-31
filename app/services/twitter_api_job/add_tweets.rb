@@ -20,7 +20,8 @@ module TwitterAPIJob
 
         since_id = last_tweet.tweet_id.to_i
         message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にツイートを追加"
-        r_tag.add_tweets(since_id).any? && notify_logs << message && Rails.logger.info(message)
+        tweet_data = TwitterAPI::UserTweets.new(r_tag.user, r_tag.tag.name, since_id).call('everyday')
+        r_tag.add_tweets(tweet_data).any? && notify_logs << message && Rails.logger.info(message)
       end
     end
 
