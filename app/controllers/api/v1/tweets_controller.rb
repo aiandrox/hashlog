@@ -13,8 +13,12 @@ class Api::V1::TweetsController < Api::V1::BaseController
 
   def create
     registered_tag = current_user.registered_tags.find(params[:registered_tag_id])
-    update_client = TwitterAPI::Update.new(user: current_user, tag: registered_tag.tag, body: tweet_params[:body])
-    if tweet_data = update_client.call
+    update_client = TwitterAPI::Update.new(
+      user: current_user,
+      tag: registered_tag.tag,
+      body: tweet_params[:body]
+    )
+    if (tweet_data = update_client.call)
       registered_tag.add_tweets([tweet_data])
       tweet = registered_tag.tweets.desc.first
       render json: tweet, status: :created

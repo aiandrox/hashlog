@@ -3,8 +3,8 @@ module TwitterAPI
     include TwitterAPIClient
     include ActiveModel::Validations
 
-    attr_accessor :tweet_id, :tweeted_at
     attr_reader :user, :tag, :body
+    attr_writer :tweet_id, :tweeted_at
 
     validates :body, presence: true, length: { maximum: 140 }
     validate :include_hashtag
@@ -15,7 +15,7 @@ module TwitterAPI
       @body = body
     end
 
-    #return ["<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-13 07:13:39 UTC, 1249596597479956481]
+    # return ["<a href=\"https://twitter.com/hashtag/%E3%83%86%E3%82%B9%E3%83%88?src=hash&amp;ref_src=twsrc%5Etfw\">#テスト</a>", 2020-04-13 07:13:39 UTC, 1249596597479956481]
     def call
       return false if invalid?
 
@@ -42,7 +42,7 @@ module TwitterAPI
     end
 
     def tweet_id
-      tweet_id = tweet_data.id
+      tweet_data.id
     end
 
     def tweeted_at
