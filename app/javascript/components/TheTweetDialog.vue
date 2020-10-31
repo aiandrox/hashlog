@@ -106,7 +106,7 @@ export default {
         try {
           this.isLoading = true
           const { tagId } = this.$route.params
-          const registeredTagRes = await this.$axios.post(
+          await this.$axios.post(
             `/api/v1/registered_tags/${tagId}/tweets`,
             {
               tweet: {
@@ -114,7 +114,8 @@ export default {
               }
             }
           )
-          this.$router.go({ path: this.$router.currentRoute.path, force: true })
+          this.$emit("create-tweet")
+          this.$toTop()
           this.$store.dispatch("flash/setFlash", {
             type: "success",
             message: "ツイートしました"

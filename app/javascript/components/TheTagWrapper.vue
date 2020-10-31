@@ -22,13 +22,13 @@
           <v-img class="mt-3 d-none d-sm-block" alt="RUNTEQ" src="/img/runteq/300_50.jpg" />
         </a>
       </v-col>
-      <!-- ツイートダイアログ :registered-tag="registeredTag" :isOpenedでシェアボタンを表示 -->
+      <!-- ツイートダイアログ -->
       <tweet-dialog
         ref="tweetDialog"
         :tweeted-day-count="registeredTag.tweetedDayCount"
         :last-tweeted-at="registeredTag.lastTweetedAt"
         :tag-name="registeredTag.tag.name"
-        @create-tag="$emit('finish-tweet')"
+        @create-tweet="updateTweetsData"
       />
       <!-- ツイート -->
       <v-col cols="12" md="8" class="px-0 pt-0">
@@ -125,6 +125,10 @@ export default {
       await this.fetchTagData()
       document.title = `#${this.registeredTag.tag.name} - Hashlog`
     },
+    updateTweetsData() {
+      this.fetchTweetDates()
+      this.fetchTweetsData()
+    },
     async fetchTagData() {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
       const { registeredTag } = registeredTagRes.data
@@ -172,7 +176,7 @@ export default {
       const { user } = userRes.data
       this.user = user
     },
-    // カレンダー用全てのツイート
+    // カレンダー用日付データ
     async fetchTweetDates() {
       this.tweetDates = []
       const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweeted_ats`)
