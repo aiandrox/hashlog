@@ -43,25 +43,35 @@ extend("remindDayFormat", {
 })
 
 extend("maxRemindDay", {
-  validate(value) {
-    const maxDayCount = 30
+  params: ["day"],
+  validate(value, { day }) {
+    const maxDayCount = day
     if (filterRemindDay(value) > maxDayCount) {
       return false
     }
     return true
   },
-  message: "30日以下で設定してください"
+  message: "{day}日以下で設定してください"
 })
 
 extend("minRemindDay", {
-  validate(value) {
-    const minDayCount = 1
+  params: ["day"],
+  validate(value, { day }) {
+    const minDayCount = day
     if (filterRemindDay(value) < minDayCount) {
       return false
     }
     return true
   },
-  message: "1日以上で設定してください"
+  message: "{day}日以上で設定してください"
+})
+
+extend("requiredTagName", {
+  params: ["tagName"],
+  validate(value, { tagName }) {
+    return !!value.match(`#${tagName}`)
+  },
+  message: "ハッシュタグを入れてください"
 })
 
 export default {

@@ -25,7 +25,7 @@
           <validation-provider
             v-slot="{ errors }"
             :rules="
-              `${isRemind ? 'remindDayFormat|maxRemindDay|minRemindDay' : ''}`
+              `${isRemind ? 'remindDayFormat|maxRemindDay:30|minRemindDay:1' : ''}`
             "
           >
             <v-text-field
@@ -36,6 +36,7 @@
               suffix="日"
               hint="1〜30日で設定できます"
               persistent-hint
+              @input="$emit('update:remindDay', $event)"
             />
           </validation-provider>
         </v-form>
@@ -98,7 +99,7 @@ export default {
     fetchRemindDayFromForm() {
       this.$emit("update:remindDay", this.filter(this.remindDay))
       if (this.isRemind === false) {
-        this.$emit("update:remindDay", 0)
+        this.$emit("update:remindDay", "")
       }
     },
     // TODO: vee-validate.jsと同じメソッドになっている
@@ -119,13 +120,6 @@ export default {
     pushUpdate() {
       this.fetchRemindDayFromForm()
       this.$emit("push-update")
-    },
-    // バケツリレー用
-    inputPrivacy(v) {
-      this.$emit("input-privacy", v)
-    },
-    inputRemindDay(v) {
-      this.$emit("input-remind-day", v)
     },
   },
 }

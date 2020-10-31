@@ -60,15 +60,14 @@ class RegisteredTag < ApplicationRecord
 
   # ここのtypeを変更することでプランが変わる。standard / premium
   def create_tweets!(type = 'standard')
-    tweets_data = TwitterData::UserTweets.new(user, tag.name)
-    tweets_data.call(type).each do |oembed, tweeted_at, tweet_id|
+    tweets_data = TwitterAPI::UserTweets.new(user, tag.name).call(type)
+    tweets_data.each do |oembed, tweeted_at, tweet_id|
       tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end.any? && fetch_tweets_data!
   end
 
-  def add_tweets(since_id)
-    tweets_data = TwitterData::UserTweets.new(user, tag.name, since_id)
-    tweets_data.call('everyday').each do |oembed, tweeted_at, tweet_id|
+  def add_tweets(tweets_data_array)
+    tweets_data_array.each do |oembed, tweeted_at, tweet_id|
       tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
     end
   end

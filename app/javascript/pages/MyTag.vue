@@ -2,7 +2,6 @@
   <div>
     <the-tag-wrapper
       ref="tagWrapper"
-      :user="currentUser"
       @push-delete="showDeleteDialog"
       @push-update="updateTagData"
     />

@@ -20,8 +20,10 @@ Rails.application.routes.draw do
       resources :users, param: :uuid, only: %i[index show] do
         collection do
           resource :current, only: %i[show update destroy], module: :users do
-            resource :twitter_data, only: %i[update], module: :current
-            resources :registered_tags, only: %i[index], module: :current
+            scope module: :current do
+              resource :twitter_data, only: %i[update]
+              resources :registered_tags, only: %i[index]
+            end
           end
         end
         resources :registered_tags, only: %i[index], module: :users
@@ -32,7 +34,7 @@ Rails.application.routes.draw do
       end
       resources :registered_tags, only: %i[index show create update destroy] do
         resources :tweeted_ats, only: %i[index]
-        resources :tweets, only: %i[index]
+        resources :tweets, only: %i[index create]
       end
       resources :tags, only: %i[index]
       # ログイン、ログアウト

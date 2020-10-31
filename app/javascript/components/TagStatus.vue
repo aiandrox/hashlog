@@ -15,6 +15,9 @@
       <v-btn class="ml-2 mb-2" outlined color="primary" @click="pushEdit">
         <v-icon left>mdi-cog</v-icon>設定
       </v-btn>
+      <v-btn depressed dark color="#74accc" class="ml-2 mb-2" @click="$emit('push-tweet')">
+        <v-icon left>mdi-twitter</v-icon>ツイート
+      </v-btn>
     </v-list-item>
   </v-list>
 </template>
@@ -22,10 +25,11 @@
 <script>
 import statusView from "./TagStatusView"
 import statusEdit from "./TagStatusEdit"
+
 export default {
   components: {
     statusView,
-    statusEdit
+    statusEdit,
   },
   props: {
     registeredTag: {
@@ -67,13 +71,6 @@ export default {
     finishEdit() {
       this.isEditing = false
     },
-    // regsiteredTagの設定変更を反映
-    inputPrivacy(v) {
-      this.$emit("input-privacy", v)
-    },
-    inputRemindDay(v) {
-      this.$emit("input-remind-day", v)
-    }
   }
 }
 </script>

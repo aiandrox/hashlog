@@ -4,18 +4,17 @@
     <the-tab :registered-tags="registeredTags" />
     <!-- カレンダー -->
     <the-calendar ref="calendar" :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
-    <v-container class="main-content d-flex flex-row-reverse pa-0" row>
+    <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col cols="12" md="4" class="px-0">
         <v-card flat>
           <tag-status
             ref="tagStatus"
-            :registered-tag="registeredTag"
-            @input-privacy="reflectPrivacy"
-            @input-remind-day="reflectRemindDay"
+            :registered-tag.sync="registeredTag"
             @push-delete="$emit('push-delete')"
             @push-update="$emit('push-update', registeredTag)"
             @push-cancel="fetchTagData"
+            @push-tweet="$refs.tweetDialog.open()"
           />
         </v-card>
         <!-- 広告 -->
@@ -23,6 +22,14 @@
           <v-img class="mt-3 d-none d-sm-block" alt="RUNTEQ" src="/img/runteq/300_50.jpg" />
         </a>
       </v-col>
+      <!-- ツイートダイアログ -->
+      <tweet-dialog
+        ref="tweetDialog"
+        :tweeted-day-count="registeredTag.tweetedDayCount"
+        :last-tweeted-at="registeredTag.lastTweetedAt"
+        :tag-name="registeredTag.tag.name"
+        @create-tweet="updateTweetsData"
+      />
       <!-- ツイート -->
       <v-col cols="12" md="8" class="px-0 pt-0">
         <tweets-view :tweets="tweets" :user="user" />
@@ -45,23 +52,27 @@ import theCalendar from "./TheCalendar"
 import tagStatus from "./TagStatus"
 import theTab from "./TagsTab"
 import tweetsView from "./TagsTweets"
+import tweetDialog from "./TheTweetDialog"
 
 export default {
   components: {
     theCalendar,
     tagStatus,
     theTab,
-    tweetsView
+    tweetsView,
+    tweetDialog
   },
   props: {
-    user: {
-      type: Object,
-      default: () => {},
-      required: true
-    },
   },
   data() {
     return {
+      user: {
+        tweetId: "",
+        screenName: "",
+        name: "",
+        description: "",
+        privacy: "",
+      },
       page: {
         currentPage: 1,
         totalPages: 1,
@@ -69,9 +80,9 @@ export default {
       },
       registeredTag: {
         id: "",
-        tweetedDayCount: "",
+        tweetedDayCount: 0,
         privacy: "",
-        remindDay: "",
+        remindDay: 0,
         firstTweetedAt: "",
         lastTweetedAt: "",
         tag: {
@@ -80,7 +91,7 @@ export default {
       },
       registeredTags: [],
       tweets: [],
-      tweetDates: []
+      tweetDates: [],
     }
   },
   computed: {
@@ -90,6 +101,11 @@ export default {
     registeredTagUrl() {
       const { tagId } = this.$route.params
       return `/api/v1/registered_tags/${tagId}`
+    },
+    isOpened() {
+      return (
+        this.user.privacy === "公開" && this.registeredTag.privacy !== "非公開"
+      )
     }
   },
   watch: {
@@ -97,16 +113,21 @@ export default {
       this.firstRead()
     }
   },
-  mounted() {
+  created() {
     this.firstRead()
   },
   methods: {
     async firstRead() {
       this.fetchRegisteredTagsData()
+      this.fetchUserData()
       this.fetchTweetDates()
       this.fetchTweetsData()
       await this.fetchTagData()
       document.title = `#${this.registeredTag.tag.name} - Hashlog`
+    },
+    updateTweetsData() {
+      this.fetchTweetDates()
+      this.fetchTweetsData()
     },
     async fetchTagData() {
       const registeredTagRes = await this.$axios.get(this.registeredTagUrl)
@@ -123,21 +144,39 @@ export default {
     },
     // タブ用ユーザーの全てのタグ
     async fetchRegisteredTagsData() {
-      const registeredTagsRes = () => {
-        if (this.isMypage) {
-          return this.$axios.get(
-            "/api/v1/users/current/registered_tags"
-          )
-        }
-        const { userUuid } = this.$route.params
-        return this.$axios.get(
-          `/api/v1/users/${userUuid}/registered_tags`
+      if (this.isMypage) {
+        const registeredTagsRes = await this.$axios.get(
+          "/api/v1/users/current/registered_tags"
         )
+        const { registeredTags } = registeredTagsRes.data
+        this.registeredTags = registeredTags
+        return
       }
+      const { userUuid } = await this.$route.params
+      const registeredTagsRes = await this.$axios.get(
+        `/api/v1/users/${userUuid}/registered_tags`
+      )
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
     },
-    // カレンダー用全てのツイート
+    // ユーザー
+    async fetchUserData() {
+      if (this.isMypage) {
+        const userRes = await this.$axios.get(
+          "/api/v1/users/current"
+        )
+        const { user } = userRes.data
+        this.user = user
+        return
+      }
+      const { userUuid } = this.$route.params
+      const userRes = await this.$axios.get(
+        `/api/v1/users/${userUuid}`
+      )
+      const { user } = userRes.data
+      this.user = user
+    },
+    // カレンダー用日付データ
     async fetchTweetDates() {
       this.tweetDates = []
       const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweeted_ats`)
