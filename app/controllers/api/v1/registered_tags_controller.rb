@@ -24,7 +24,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
       render status: :created, json: { registeredTag: { id: registered_tag.id } }
     else
       error_json = {
-        'code' => '422',
+        'code' => 422,
         'title' => '登録内容が適切ではありません',
         'detail' => '登録内容を確認してください',
         'messages' => tag.errors.full_messages
@@ -42,7 +42,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
       render json: registered_tag
     else
       error_json = {
-        'code' => '422',
+        'code' => 422,
         'title' => '登録内容が適切ではありません',
         'detail' => '登録内容を確認してください',
         'messages' => registered_tag.errors.full_messages

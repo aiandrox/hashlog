@@ -10,6 +10,7 @@ class Api::V1::BaseController < ApplicationController
   rescue_from Banken::NotAuthorizedError, with: :not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_not_found
   rescue_from Twitter::Error::TooManyRequests, with: :rescue_limited_twitter_requests
+  rescue_from TwitterAPIClient::NotFoundAuthenticationError, with: :rescue_not_found_authentication
 
   protected
 

@@ -12,6 +12,7 @@ class Api::V1::TweetsController < Api::V1::BaseController
   end
 
   def create
+    authorize!
     registered_tag = current_user.registered_tags.find(params[:registered_tag_id])
     update_client = TwitterAPI::Update.new(
       user: current_user,
@@ -24,7 +25,7 @@ class Api::V1::TweetsController < Api::V1::BaseController
       render json: tweet, status: :created
     else
       error_json = {
-        'code' => '422',
+        'code' => 422,
         'title' => '登録内容が適切ではありません',
         'detail' => '登録内容を確認してください',
         'messages' => update_client.errors.full_messages

@@ -87,7 +87,7 @@ RSpec.describe 'Currents', type: :request do
             user: { description: '新しい詳細', privacy: '不適な値' }
           }
           expect(json['error']).to eq({
-            'code' => '422',
+            'code' => 422,
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
             'messages' => ['公開設定を入力してください']

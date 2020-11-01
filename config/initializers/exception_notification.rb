@@ -47,6 +47,6 @@ ExceptionNotification.configure do |config|
                       channel: '#hashlog通知'
 
   config.ignore_if do
-    Rails.env.development?
+    !Rails.env.production?
   end
 end

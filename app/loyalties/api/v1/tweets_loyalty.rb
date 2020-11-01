@@ -8,6 +8,10 @@ class Api::V1::TweetsLoyalty < ApplicationLoyalty
     Api::V1::RegisteredTagsLoyalty.new(current_user, registered_tag).show?
   end
 
+  def create?
+    !current_user.guest?
+  end
+
   private
 
   attr_reader :current_user, :registered_tag

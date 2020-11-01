@@ -12,9 +12,9 @@ RSpec.describe 'Base', type: :request do
       end
       it 'エラーメッセージのJSONを返す' do
         expect(json['error']).to eq({
-          'code' => '429',
-          'title' => 'Twitter APIが制限されています。',
-          'messages' => ['現在リクエストが集中しています。15分後に再度試してください。']
+          'code' => 429,
+          'title' => 'Twitter APIが制限されています',
+          'messages' => ['現在リクエストが集中しています。15分後に再度試してください']
         })
       end
     end
@@ -39,9 +39,9 @@ RSpec.describe 'Base', type: :request do
       end
       it 'エラーメッセージのJSONを返す' do
         expect(json['error']).to eq({
-          'code' => '404',
-          'title' => 'リソースが見つかりませんでした。',
-          'messages' => ['データが見つかりませんでした。アドレスを確認してください。']
+          'code' => 404,
+          'title' => 'リソースが見つかりませんでした',
+          'messages' => ['データが見つかりませんでした。アドレスを確認してください']
         })
       end
     end
@@ -55,9 +55,9 @@ RSpec.describe 'Base', type: :request do
       end
       it 'エラーメッセージのJSONを返す' do
         expect(json['error']).to eq({
-          'code' => '401',
-          'title' => '認証されていません。',
-          'messages' => ['ログインしてください。']
+          'code' => 401,
+          'title' => '認証されていません',
+          'messages' => ['ログインしてください']
         })
       end
     end

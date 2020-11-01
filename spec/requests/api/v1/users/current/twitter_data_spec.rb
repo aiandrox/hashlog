@@ -35,25 +35,6 @@ RSpec.describe 'TwitterData', type: :request do
           } )
         end
       end
-      context '値が不適な場合', vcr: { cassette_name: 'twitter_api/user_show/invalid' } do
-        let(:user) { create(:user, twitter_id: 'invalid') }
-        it '403 Forbiddenを返す' do
-          patch '/api/v1/users/current/twitter_data'
-          expect(response.status).to eq 403
-        end
-        it 'エラーメッセージのJSONを返す' do
-          patch '/api/v1/users/current/twitter_data'
-          expect(json['error']).to eq({
-            'code' => '403',
-            'title' => 'アクセスが許可されていません',
-            'detail' => 'ユーザー情報を確認してください',
-            'messages' => ['再度ログインして試してください']
-          })
-        end
-        it 'user.nameを変更しない' do
-          expect{ patch '/api/v1/users/current/twitter_data' }.not_to change(user, :name)
-        end
-      end
     end
   end
 end
