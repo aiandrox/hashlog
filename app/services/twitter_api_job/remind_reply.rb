@@ -23,6 +23,9 @@ module TwitterAPIJob
       message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインド送信"
       Rails.logger.info(message)
       notify_logs << message
+    rescue StandardError => e
+      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name}: #{e}"
+      notify_logs << message && Rails.logger.error(message)
     end
 
     def remind_message(r_tag)

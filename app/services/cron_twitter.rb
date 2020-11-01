@@ -6,7 +6,5 @@ class CronTwitter
     twitter_api_job.call
     message = twitter_api_job.notify_logs.join("\n")
     slack_notify(message)
-  rescue StandardError => e
-    slack_notify(e)
   end
 end
