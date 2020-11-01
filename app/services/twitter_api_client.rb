@@ -30,7 +30,7 @@ module TwitterAPIClient
   end
 
   def access_token_secret
-    return @access_token_secret = Rails.application.credentials.twitter[:access_token_secret]
+    return @access_token_secret = Rails.application.credentials.twitter[:access_token_secret] unless user
 
     raise NotFoundAuthenticationError unless user.authentication
 
