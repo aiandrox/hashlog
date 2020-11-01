@@ -147,7 +147,7 @@ RSpec.describe 'RegisteredTags', type: :request do
         it 'エラーメッセージのJSONを返す' do
           post '/api/v1/registered_tags', params: { tag: { name: '' } }
           expect(json['error']).to eq({
-            'code' => '422',
+            'code' => 422,
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
             'messages' => %w[名前の入力形式が不適です 名前を入力してください]
@@ -228,7 +228,7 @@ RSpec.describe 'RegisteredTags', type: :request do
             tag: { privacy: '非公開', remindDay: remind_day }
           }
           expect(json['error']).to eq({
-            'code' => '422',
+            'code' => 422,
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
             'messages' => ['リマインダー日数は数値で入力してください']
@@ -255,7 +255,7 @@ RSpec.describe 'RegisteredTags', type: :request do
             tag: { privacy: '非公開', remindDay: remind_day }
           }
           expect(json['error']).to eq({
-            'code' => '422',
+            'code' => 422,
             'title' => '登録内容が適切ではありません',
             'detail' => '登録内容を確認してください',
             'messages' => ['リマインダー日数は30以下の値にしてください']

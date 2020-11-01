@@ -1,6 +1,9 @@
 require 'twitter'
 
 module TwitterAPIClient
+  class NotFoundAuthenticationError < StandardError
+  end
+
   def client(user = nil)
     @user = user
     @client ||= begin
@@ -19,19 +22,19 @@ module TwitterAPIClient
   attr_reader :user
 
   def access_token
-    @access_token = if user.authentication&.access_token
-                      crypt.decrypt_and_verify(user.authentication.access_token)
-                    else
-                      Rails.application.credentials.twitter[:access_token]
-                    end
+    return @access_token = Rails.application.credentials.twitter[:access_token] unless user
+
+    raise NotFoundAuthenticationError unless user.authentication
+
+    @access_token = crypt.decrypt_and_verify(user.authentication.access_token)
   end
 
   def access_token_secret
-    @access_token_secret = if user.authentication&.access_token
-                             crypt.decrypt_and_verify(user.authentication.access_token_secret)
-                           else
-                             Rails.application.credentials.twitter[:access_token_secret]
-                           end
+    return @access_token_secret = Rails.application.credentials.twitter[:access_token_secret] unless user
+
+    raise NotFoundAuthenticationError unless user.authentication
+
+    @access_token_secret = crypt.decrypt_and_verify(user.authentication.access_token_secret)
   end
 
   def crypt
