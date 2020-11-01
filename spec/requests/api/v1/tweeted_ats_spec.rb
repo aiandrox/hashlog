@@ -1,5 +1,5 @@
 RSpec.describe 'TweetedAts', type: :request do
-  describe 'GET /api/v1/registered_tags/:regsitered_tag_id/tweeted_ats' do
+  describe 'GET /api/v1/registered_tags/:registered_tag_id/tweeted_ats' do
     let(:registered_tag) { create(:registered_tag) }
     let(:tweeted_ats_json) { json['tweetedAts'] }
     let(:tweets) { registered_tag.tweets }

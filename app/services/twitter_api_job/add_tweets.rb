@@ -43,7 +43,7 @@ module TwitterAPIJob
       notify_logs << message && Rails.logger.error(message)
     end
 
-    def user(regsitered_tag)
+    def user(registered_tag)
       @user ||= if not_found_authentication_flag
                   User.find_by!(twitter_id: '1242379749650907137')
                 else
