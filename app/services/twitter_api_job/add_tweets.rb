@@ -21,17 +21,20 @@ module TwitterAPIJob
     def collect_tweets(r_tag)
       last_tweet = r_tag.tweets.latest
       unless last_tweet
-        r_tag.create_tweets!
+        tweets_data = TwitterAPI::UserTweets.new(r_tag.user, r_tag.tag.name).call
+        r_tag.create_tweets(tweets_data)
         return
       end
 
       return if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
 
       since_id = last_tweet.tweet_id.to_i
-      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にツイートを追加"
       tweet_data = TwitterAPI::UserTweets.new(r_tag.user, r_tag.tag.name, since_id)
                                          .call('everyday')
+      message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にツイートを追加"
       r_tag.add_tweets(tweet_data).any? && notify_logs << message && Rails.logger.info(message)
+    rescue TwitterAPIClient::NotFoundAuthenticationError
+      
     rescue StandardError => e
       message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name}: #{e}"
       notify_logs << message && Rails.logger.error(message)
