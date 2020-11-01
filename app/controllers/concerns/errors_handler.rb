@@ -46,4 +46,13 @@ module ErrorsHandler
     }
     render json: { 'error': error_json }, status: :too_many_requests
   end
+
+  def rescue_not_found_authentication
+    error_json = {
+      'code' => 400,
+      'title' => 'Twitter認証情報が無効です',
+      'messages' => ['再度ログインして試してください']
+    }
+    render json: { 'error': error_json }, status: :bad_request
+  end
 end
