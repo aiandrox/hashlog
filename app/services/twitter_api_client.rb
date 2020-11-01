@@ -19,7 +19,7 @@ module TwitterAPIClient
   attr_reader :user
 
   def access_token
-    @access_token = if user.authentication.access_token
+    @access_token = if user.authentication&.access_token
                       crypt.decrypt_and_verify(user.authentication.access_token)
                     else
                       Rails.application.credentials.twitter[:access_token]
@@ -27,7 +27,7 @@ module TwitterAPIClient
   end
 
   def access_token_secret
-    @access_token_secret = if user.authentication.access_token
+    @access_token_secret = if user.authentication&.access_token
                              crypt.decrypt_and_verify(user.authentication.access_token_secret)
                            else
                              Rails.application.credentials.twitter[:access_token_secret]
