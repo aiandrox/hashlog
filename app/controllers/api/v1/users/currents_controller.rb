@@ -14,7 +14,7 @@ class Api::V1::Users::CurrentsController < Api::V1::BaseController
       render json: current_user
     else
       error_json = {
-        'code' => '422',
+        'code' => 422,
         'title' => '登録内容が適切ではありません',
         'detail' => '登録内容を確認してください',
         'messages' => current_user.errors.full_messages

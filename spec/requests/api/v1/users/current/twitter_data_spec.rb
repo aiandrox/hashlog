@@ -44,7 +44,7 @@ RSpec.describe 'TwitterData', type: :request do
         it 'エラーメッセージのJSONを返す' do
           patch '/api/v1/users/current/twitter_data'
           expect(json['error']).to eq({
-            'code' => '403',
+            'code' => 403,
             'title' => 'アクセスが許可されていません',
             'detail' => 'ユーザー情報を確認してください',
             'messages' => ['再度ログインして試してください']

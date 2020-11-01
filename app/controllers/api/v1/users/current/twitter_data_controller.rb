@@ -9,7 +9,7 @@ class Api::V1::Users::Current::TwitterDataController < Api::V1::BaseController
     render json: current_user, status: :ok
   rescue Twitter::Error::Forbidden, Twitter::Error::BadRequest
     error_json = {
-      'code' => '403',
+      'code' => 403,
       'title' => 'アクセスが許可されていません',
       'detail' => 'ユーザー情報を確認してください',
       'messages' => ['再度ログインして試してください']
