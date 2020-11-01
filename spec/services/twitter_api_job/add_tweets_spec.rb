@@ -45,8 +45,8 @@ describe TwitterAPIJob::AddTweets do
         create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
       }
       let(:add_tweets) { TwitterAPIJob::AddTweets.new([registered_tag]) }
-      it 'RegisteredTag#create_tweets!を実行する' do
-        expect(registered_tag).to receive(:create_tweets!)
+      it 'RegisteredTag#create_tweetsを実行する' do
+        expect(registered_tag).to receive(:create_tweets)
         add_tweets.call
       end
     end
