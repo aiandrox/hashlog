@@ -58,12 +58,8 @@ class RegisteredTag < ApplicationRecord
     (tweeted_day_count.to_f / denominator * FULL_PER).round(1)
   end
 
-  # ここのtypeを変更することでプランが変わる。standard / premium
-  def create_tweets!(type = 'standard')
-    tweets_data = TwitterAPI::UserTweets.new(user, tag.name).call(type)
-    tweets_data.each do |oembed, tweeted_at, tweet_id|
-      tweets.create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
-    end.any? && fetch_tweets_data!
+  def create_tweets(tweets_data_array)
+    add_tweets(tweets_data_array).any? && fetch_tweets_data!
   end
 
   def add_tweets(tweets_data_array)

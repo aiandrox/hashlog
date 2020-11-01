@@ -196,32 +196,27 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
-    describe '#create_tweets!(type="standard")' do
-      let(:user) { create(:user, :real_value) }
-      context 'ハッシュタグのツイートがTwitterに存在するとき',
-        vcr: { cassette_name: 'twitter_api/standard_search' } do
-        let(:present_tag) do
-          create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
-        end
+    describe '#create_tweets(tweet_data_array)' do
+      let(:registered_tag) { create(:registered_tag) }
+      subject { registered_tag.create_tweets(tweet_data_array) }
+      context 'ハッシュタグのツイートがTwitterに存在するとき' do
+        let(:tweet_data_array) { [['text', Date.current, '1255854602626330624']] }
         it '取得したツイートを保存する' do
-          expect { present_tag.create_tweets! }.to change(Tweet, :count).by(3)
+          expect { subject }.to change(Tweet, :count).by(1)
         end
         it 'fetch_tweets_data!を実行する' do
-          expect(present_tag).to receive(:fetch_tweets_data!).once
-          present_tag.create_tweets!
+          expect(registered_tag).to receive(:fetch_tweets_data!).once
+          subject
         end
       end
-      context 'ハッシュタグのツイートがTwitterに存在しないとき',
-        vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
-        let(:absent_tag) do
-          create(:registered_tag, user: user, tag: create(:tag, name: 'absent_tag'))
-        end
+      context 'ハッシュタグのツイートがTwitterに存在しないとき' do
+        let(:tweet_data_array) { [] }
         it 'ツイートを取得しないので保存しない' do
-          expect { absent_tag.create_tweets! }.not_to change(Tweet, :count)
+          expect { subject }.not_to change(Tweet, :count)
         end
         it 'fetch_tweets_data!を実行しない' do
-          expect(absent_tag).not_to receive(:fetch_tweets_data!)
-          absent_tag.create_tweets!
+          expect(registered_tag).not_to receive(:fetch_tweets_data!)
+          subject
         end
       end
     end
