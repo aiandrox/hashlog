@@ -16,14 +16,16 @@
         color="primary"
         class="ma-2"
         :to="{ name: 'user', params: { userUuid: user.uuid } }"
-      >ユーザーページを見る</v-btn>
+        >ユーザーページを見る</v-btn
+      >
       <v-btn
         v-if="user.role === '管理ユーザー'"
         depressed
         color="primary"
         class="ma-2"
         href="/admin"
-      >管理ページ</v-btn>
+        >管理ページ</v-btn
+      >
     </div>
   </div>
 </template>
@@ -44,7 +46,7 @@ export default {
     replacedDescription() {
       const replaced = this.user.description.replace(
         /(https?:\/\/[\w!-/:-@¥[-`{-~]*)/g,
-        "<a href='$1' target='_blank'>$1</a>"
+        "<a href='$1' target='_blank' rel='noopener'>$1</a>"
       )
       return replaced
     },

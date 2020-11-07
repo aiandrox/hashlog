@@ -3,7 +3,11 @@
     <!-- タブ -->
     <the-tab :registered-tags="registeredTags" />
     <!-- カレンダー -->
-    <the-calendar ref="calendar" :tweet-dates="tweetDates" @input-date="fetchDateTweets" />
+    <the-calendar
+      ref="calendar"
+      :tweet-dates="tweetDates"
+      @input-date="fetchDateTweets"
+    />
     <v-container class="main-content d-flex flex-row-reverse pt-0" row>
       <!-- ハッシュタグの情報 -->
       <v-col cols="12" md="4" class="px-0">
@@ -18,8 +22,12 @@
           />
         </v-card>
         <!-- 広告 -->
-        <a target="_blank" href="https://runteq.jp/r/FKSRkiAh">
-          <v-img class="mt-3 d-none d-sm-block" alt="RUNTEQ" src="/img/runteq/300_50.jpg" />
+        <a target="_blank" rel="noopener" href="https://runteq.jp/r/FKSRkiAh">
+          <v-img
+            class="mt-3 d-none d-sm-block"
+            alt="RUNTEQ"
+            src="/img/runteq/300_50.jpg"
+          />
         </a>
       </v-col>
       <!-- ツイートダイアログ -->
@@ -62,8 +70,7 @@ export default {
     tweetsView,
     tweetDialog
   },
-  props: {
-  },
+  props: {},
   data() {
     return {
       user: {
@@ -71,7 +78,7 @@ export default {
         screenName: "",
         name: "",
         description: "",
-        privacy: "",
+        privacy: ""
       },
       page: {
         currentPage: 1,
@@ -91,7 +98,7 @@ export default {
       },
       registeredTags: [],
       tweets: [],
-      tweetDates: [],
+      tweetDates: []
     }
   },
   computed: {
@@ -162,24 +169,22 @@ export default {
     // ユーザー
     async fetchUserData() {
       if (this.isMypage) {
-        const userRes = await this.$axios.get(
-          "/api/v1/users/current"
-        )
+        const userRes = await this.$axios.get("/api/v1/users/current")
         const { user } = userRes.data
         this.user = user
         return
       }
       const { userUuid } = this.$route.params
-      const userRes = await this.$axios.get(
-        `/api/v1/users/${userUuid}`
-      )
+      const userRes = await this.$axios.get(`/api/v1/users/${userUuid}`)
       const { user } = userRes.data
       this.user = user
     },
     // カレンダー用日付データ
     async fetchTweetDates() {
       this.tweetDates = []
-      const tweetsRes = await this.$axios.get(`${this.registeredTagUrl}/tweeted_ats`)
+      const tweetsRes = await this.$axios.get(
+        `${this.registeredTagUrl}/tweeted_ats`
+      )
       const { tweetedAts } = tweetsRes.data
       tweetedAts.forEach(t => this.tweetDates.push(t.substr(0, 10)))
       this.date = ""
