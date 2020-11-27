@@ -26,10 +26,10 @@ RSpec.describe RegisteredTag, type: :model do
     end
     it :user_registered_tags_count_validate do
       user = create(:user)
-      create_list(:registered_tag, 3, user: user)
+      create_list(:registered_tag, 10, user: user)
       registered_tag = build(:registered_tag, user: user)
       expect(registered_tag).to be_invalid
-      expect(registered_tag.errors.full_messages).to include '登録できるハッシュタグは3つまでです'
+      expect(registered_tag.errors.full_messages).to include '登録できるハッシュタグは10個までです'
     end
   end
 
