@@ -1,14 +1,10 @@
 class RegisteredTag < ApplicationRecord
   DAY_COUNT_MONTH = 30
-  PUBLISDED = 0
-  CLOSED = 1
-  LIMITED = 2
   NONE = 0
   FULL = 1
   FULL_PER = 100
-  USER_REGISTERED_TAGS_COUNT = 3
-  [DAY_COUNT_MONTH, PUBLISDED, CLOSED, LIMITED,
-   NONE, FULL, FULL_PER, USER_REGISTERED_TAGS_COUNT].each(&:freeze)
+  USER_REGISTERED_TAGS_COUNT = 10
+  [DAY_COUNT_MONTH, NONE, FULL, FULL_PER, USER_REGISTERED_TAGS_COUNT].each(&:freeze)
 
   before_validation :filter_remind_day
 
@@ -22,11 +18,11 @@ class RegisteredTag < ApplicationRecord
   validates :tag_id, uniqueness: { scope: :user_id, message: 'は既に登録しています' }
   validate :user_registered_tags_count_validate, on: :create
 
-  enum privacy: { published: PUBLISDED, closed: CLOSED, limited: LIMITED }
+  enum privacy: { published: 0, closed: 1, limited: 2 }
 
   scope :asc, -> { order(created_at: :asc) }
   scope :desc, -> { order(created_at: :desc) }
-  scope :opened, -> { published.joins(:user).where('users.privacy = ?', PUBLISDED) }
+  scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
   scope :have_tweets, -> { where('first_tweeted_at < ?', Time.now) }
 
   def self.persistence_sort
@@ -81,6 +77,6 @@ class RegisteredTag < ApplicationRecord
   def user_registered_tags_count_validate
     return unless user&.registered_tags&.count.to_d >= USER_REGISTERED_TAGS_COUNT
 
-    errors.add(:base, '登録できるハッシュタグは3つまでです')
+    errors.add(:base, "登録できるハッシュタグは#{USER_REGISTERED_TAGS_COUNT}個までです")
   end
 end

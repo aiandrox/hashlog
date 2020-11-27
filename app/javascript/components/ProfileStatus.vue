@@ -30,7 +30,7 @@
       outlined
       @click="$emit('push-twitter-update')"
     >
-      <v-icon left>mdi-twitter</v-icon>ユーザー情報更新
+      <v-icon left>mdi-twitter</v-icon>ユーザーを更新
     </v-btn>
   </v-card>
 </template>
@@ -72,6 +72,6 @@ export default {
     isMypage() {
       return this.$route.path.includes("/mypage/")
     }
-  },
+  }
 }
 </script>

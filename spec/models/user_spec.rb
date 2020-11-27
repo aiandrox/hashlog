@@ -105,9 +105,9 @@ RSpec.describe User, type: :model do
           context '同一ユーザーのregistered_tagとして4つ目のとき' do
             let(:tag) { create(:tag) }
             it '"登録できるハッシュタグは3つまでです"を含む' do
-              create_list(:registered_tag, 3, user: user)
+              create_list(:registered_tag, 10, user: user)
               user.register_tag(tag)
-              expect(tag.errors.full_messages).to include '登録できるハッシュタグは3つまでです'
+              expect(tag.errors.full_messages).to include '登録できるハッシュタグは10個までです'
             end
           end
         end
