@@ -4,6 +4,8 @@ class Api::V1::BaseController < ApplicationController
   include Banken
   include ErrorsHandler
   include Pagy::Backend
+
+  before_action :prepare_exception_notifier
   after_action :set_pagy_header, if: -> { @pagy }
 
   rescue_from Exception, with: :notify_500
@@ -17,5 +19,15 @@ class Api::V1::BaseController < ApplicationController
   def set_pagy_header
     pagy_headers_merge(@pagy)
     response.headers.merge!({ 'Request-Url' => request.path_info })
+  end
+
+  private
+
+  def prepare_exception_notifier
+    return unless current_user
+
+    request.env['exception_notifier.exception_data'] = {
+      current_user: current_user.to_json
+    }
   end
 end
