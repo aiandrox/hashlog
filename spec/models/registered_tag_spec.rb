@@ -174,6 +174,33 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
+    describe '#remind_reply?' do
+      subject { registered_tag.remind_reply? }
+      context 'remind_dayが0のとき' do
+        let(:registered_tag) { build(:registered_tag, remind_day: 0) }
+        it { is_expected.to eq false }
+      end
+      context 'remind_dayが5のとき' do
+        let(:registered_tag) { build(:registered_tag, remind_day: 5) }
+        context '最後のツイートが5日前のとき' do
+          before { create(:tweet, tweeted_at: Time.zone.today.ago(5.days), registered_tag: registered_tag) }
+          it { is_expected.to eq false }
+        end
+        context '最後のツイートが6日前のとき' do
+          before { create(:tweet, tweeted_at: Time.zone.today.ago(6.days), registered_tag: registered_tag) }
+          it { is_expected.to eq true }
+        end
+        context '最後のツイートが9日前のとき' do
+          before { create(:tweet, tweeted_at: Time.zone.today.ago(9.days), registered_tag: registered_tag) }
+          it { is_expected.to eq true }
+        end
+        context '最後のツイートが10日前のとき' do
+          before { create(:tweet, tweeted_at: Time.zone.today.ago(10.days), registered_tag: registered_tag) }
+          it { is_expected.to eq false }
+        end
+      end
+    end
+
     describe '#tweet_rate' do
       context '最初のツイートが7日前で計3日分のツイートがあるとき' do
         let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
