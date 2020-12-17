@@ -10,7 +10,7 @@ module TwitterAPIJob
 
     def call
       registered_tags.each do |tag|
-        send_tweet(tag) if tag.remind_day.positive? && tag.remind_day < tag.day_from_last_tweet < tag.remind_day + 5
+        send_tweet(tag) if tag.remind_reply?
       end
     end
 

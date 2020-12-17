@@ -45,6 +45,10 @@ class RegisteredTag < ApplicationRecord
     first_tweeted_at.nil? ? NONE : (Date.today - first_tweeted_at.to_date).to_i + 1
   end
 
+  def remind_reply?
+    remind_day.positive? && remind_day < day_from_last_tweet && day_from_last_tweet < remind_day + 5
+  end
+
   def tweet_rate
     return NONE if first_tweeted_at.nil?
     return FULL if (day_from_first_tweet - day_from_last_tweet).zero?
