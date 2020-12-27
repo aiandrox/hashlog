@@ -9,7 +9,6 @@
     "vee-validate": "^3.3.0",
     "vue": "^2.6.11",
     "vue-analytics": "^5.22.1",
-    "vue-eslint-parser": "^7.0.0",
     "vue-loader": "^15.9.1",
     "vue-router": "^3.1.6",
     "vue-template-compiler": "^2.6.11",
@@ -29,6 +28,10 @@
     "eslint-loader": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "eslint-plugin-vue-libs": "^4.0.0",
+    "vue-eslint-parser": "^7.0.0",
     "webpack-dev-server": "^3.10.3"
+  },
+  "scripts": {
+    "lint": "yarn run eslint --ext .vue --ext .js app/javascript"
   }
 }
