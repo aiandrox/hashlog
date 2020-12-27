@@ -30,8 +30,5 @@
     "eslint-plugin-vue": "^6.2.2",
     "eslint-plugin-vue-libs": "^4.0.0",
     "webpack-dev-server": "^3.10.3"
-  },
-  "scripts": {
-    "lint": "yarn run eslint --ext .vue --ext .js app/javascript"
   }
 }
