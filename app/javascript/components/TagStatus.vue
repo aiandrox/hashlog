@@ -15,7 +15,13 @@
       <v-btn class="ml-2 mb-2" outlined color="primary" @click="pushEdit">
         <v-icon left>mdi-cog</v-icon>設定
       </v-btn>
-      <v-btn depressed dark color="#74accc" class="ml-2 mb-2" @click="$emit('push-tweet')">
+      <v-btn
+        depressed
+        dark
+        color="#74accc"
+        class="ml-2 mb-2"
+        @click="$emit('push-tweet')"
+      >
         <v-icon left>mdi-twitter</v-icon>ツイート
       </v-btn>
     </v-list-item>
