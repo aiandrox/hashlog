@@ -8,7 +8,7 @@ module TwitterAPI
 
     def call(tweet)
       @user = tweet.registered_tag.user
-      create_photos(tweet)
+      create_images(tweet)
     end
 
     private
@@ -19,9 +19,13 @@ module TwitterAPI
       @twitter_medias ||= client(user).status(tweet.tweet_id).media.filter { |media| media.type == 'photo' }
     end
 
-    def create_photos(tweet)
+    def create_images(tweet)
       twitter_medias(tweet).each do |media|
-        tweet.images.find_or_create_by!(alt: tweet.registered_tag.tag.name, src: media.media_url.to_s)
+        begin
+          tweet.images.find_or_create_by!(alt: tweet.registered_tag.tag.name, src: media.media_url.to_s)
+        rescue => e
+          puts "ID: #{tweet.id} 追加失敗\n#{e}"
+        end
       end
     end
   end
