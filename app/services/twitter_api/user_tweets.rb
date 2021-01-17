@@ -37,8 +37,7 @@ module TwitterAPI
       @standard_search ||= begin
         client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
                             result_type: 'recent', count: 100).take(100).each do |result|
-          tweeted_ats << result.created_at
-          tweet_ids << result.id
+          push_tweet_data(result)
         end
       end
     end
@@ -50,8 +49,7 @@ module TwitterAPI
                                     { product: '30day' }).take(100).each do |result|
           next if result.retweeted_status.present?
 
-          tweeted_ats << result.created_at
-          tweet_ids << result.id
+          push_tweet_data(result)
         end
       end
     end
@@ -60,10 +58,14 @@ module TwitterAPI
       @everyday_search ||= begin
         client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
                             result_type: 'recent', since_id: since_id).take(100).each do |result|
-          tweeted_ats << result.created_at
-          tweet_ids << result.id
+          push_tweet_data(result)
         end
       end
+    end
+
+    def push_tweet_data(result)
+      tweeted_ats << result.created_at
+      tweet_ids << result.id
     end
   end
 end
