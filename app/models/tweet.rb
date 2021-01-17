@@ -1,5 +1,6 @@
 class Tweet < ApplicationRecord
   belongs_to :registered_tag
+  has_many :images, dependent: :destroy
 
   validates :oembed, presence: true
   validates :tweet_id, presence: true

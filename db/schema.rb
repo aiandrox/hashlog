@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_135324) do
+ActiveRecord::Schema.define(version: 2021_01_17_145753) do
 
   create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 2020_10_21_135324) do
     t.string "access_token_secret", default: "", null: false
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid"
     t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "alt", null: false
+    t.string "src", null: false
+    t.bigint "tweet_id", null: false
+    t.index ["tweet_id"], name: "index_images_on_tweet_id"
   end
 
   create_table "registered_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -70,6 +77,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_135324) do
     t.index ["twitter_id"], name: "index_users_on_twitter_id", unique: true
   end
 
+  add_foreign_key "images", "tweets"
   add_foreign_key "registered_tags", "tags"
   add_foreign_key "registered_tags", "users"
   add_foreign_key "tweets", "registered_tags"
