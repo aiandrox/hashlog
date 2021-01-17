@@ -29,6 +29,13 @@
       </v-card-title>
 
       <v-card-text class="text--primary" v-html="$sanitize(tweet.oembed)" />
+      <v-container fluid>
+        <v-row dense>
+          <v-col v-for="image in tweet.images" :key="image.id">
+            <v-img :src="image.src" />
+          </v-col>
+        </v-row>
+      </v-container>
       <v-card-actions>
         <v-btn
           v-for="button in buttons"
