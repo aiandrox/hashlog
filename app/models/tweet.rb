@@ -27,7 +27,7 @@ class Tweet < ApplicationRecord
     ActiveRecord::Base.transaction do
       tweet = create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
       medias.each do |media|
-        tweet.images.create!(alt: tweet.registered_tag.tag.name, src: media.media_url)
+        tweet.images.find_or_create_by!(alt: tweet.registered_tag.tag.name, src: media.media_url.to_s)
       end
     end
   end
