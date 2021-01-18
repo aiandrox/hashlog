@@ -26,7 +26,8 @@ describe TwitterAPI::UserTweets do
                   end.sample
           expect(array).to(match([be_kind_of(String),
                                   be_kind_of(Time),
-                                  be_kind_of(Integer)]))
+                                  be_kind_of(Integer),
+                                  be_kind_of(Array)]))
         end
       end
       context '"standard"を引数に渡すとき' do

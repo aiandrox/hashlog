@@ -18,6 +18,7 @@ RSpec.describe 'Tweets', type: :request do
             'tweetId' => tweet.tweet_id,
             'oembed' => tweet.oembed,
             'tweetedAt' => tweet.tweeted_at.as_json,
+            'images' => []
           })
         end
       end
@@ -44,12 +45,14 @@ RSpec.describe 'Tweets', type: :request do
           'tweetId' => beginning_of_day_tweet.tweet_id,
           'oembed' => beginning_of_day_tweet.oembed,
           'tweetedAt' => beginning_of_day_tweet.tweeted_at.as_json,
+          'images' => []
         })
         expect(tweets_json).to include({
           'id' => end_of_day_tweet.id,
           'tweetId' => end_of_day_tweet.tweet_id,
           'oembed' => end_of_day_tweet.oembed,
           'tweetedAt' => end_of_day_tweet.tweeted_at.as_json,
+          'images' => []
         })
       end
       it '指定した日ではないツイートを含まない' do
@@ -58,12 +61,14 @@ RSpec.describe 'Tweets', type: :request do
           'tweetId' => prev_day_tweet.tweet_id,
           'oembed' => prev_day_tweet.oembed,
           'tweetedAt' => prev_day_tweet.tweeted_at.as_json,
+          'images' => []
         })
         expect(tweets_json).not_to include({
           'id' => next_day_tweet.id,
           'tweetId' => next_day_tweet.tweet_id,
           'oembed' => next_day_tweet.oembed,
           'tweetedAt' => next_day_tweet.tweeted_at.as_json,
+          'images' => []
         })
       end
       context 'date=2000-01-01（ツイートが存在しない）のとき' do
@@ -130,7 +135,7 @@ RSpec.describe 'Tweets', type: :request do
       end
       it { expect{ subject }.not_to change { Tweet.count } }
       it do
-        
+
       end
     end
   end
