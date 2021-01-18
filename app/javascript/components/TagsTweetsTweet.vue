@@ -17,7 +17,9 @@
 
             <v-list-item-content>
               <v-list-item-title v-text="user.name" />
-              <v-list-item-subtitle class="font-weight-light">@{{ user.screenName }}</v-list-item-subtitle>
+              <v-list-item-subtitle
+                class="font-weight-light"
+              >@{{ user.screenName }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-icon>
               <v-icon color="blue">mdi-twitter</v-icon>
@@ -27,6 +29,13 @@
       </v-card-title>
 
       <v-card-text class="text--primary" v-html="$sanitize(tweet.oembed)" />
+      <v-container fluid>
+        <v-row dense>
+          <v-col v-for="image in tweet.images" :key="image.id">
+            <v-img :src="image.src" />
+          </v-col>
+        </v-row>
+      </v-container>
       <v-card-actions>
         <v-btn
           v-for="button in buttons"
@@ -38,7 +47,9 @@
           <v-icon>{{ button.icon }}</v-icon>
         </v-btn>
         <v-spacer />
-        <span class="body-2 font-weight-light">{{ $fullDateFormat(tweet.tweetedAt) }}</span>
+        <span class="body-2 font-weight-light">{{
+          $fullDateFormat(tweet.tweetedAt)
+        }}</span>
       </v-card-actions>
     </v-card>
   </div>

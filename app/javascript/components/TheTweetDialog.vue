@@ -53,13 +53,6 @@ export default {
   components: {
     loadingCircle
   },
-  data() {
-    return {
-      dialog: false,
-      isLoading: false,
-      tweetBody: ""
-    }
-  },
   props: {
     tweetedDayCount: {
       type: Number,
@@ -75,6 +68,13 @@ export default {
       type: String,
       default: "",
       required: true
+    }
+  },
+  data() {
+    return {
+      dialog: false,
+      isLoading: false,
+      tweetBody: ""
     }
   },
   computed: {

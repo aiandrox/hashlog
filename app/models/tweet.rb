@@ -1,5 +1,6 @@
 class Tweet < ApplicationRecord
   belongs_to :registered_tag
+  has_many :images, dependent: :destroy
 
   validates :oembed, presence: true
   validates :tweet_id, presence: true
@@ -20,5 +21,17 @@ class Tweet < ApplicationRecord
 
   def self.oldest
     desc.last
+  end
+
+  def self.create_with_images!(oembed:, tweeted_at:, tweet_id:, medias:)
+    ActiveRecord::Base.transaction do
+      tweet = create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
+      medias.each do |media|
+        tweet.images.find_or_create_by!(
+          alt: tweet.registered_tag.tag.name,
+          src: media.media_url.to_s
+        )
+      end
+    end
   end
 end

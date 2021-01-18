@@ -227,7 +227,7 @@ RSpec.describe RegisteredTag, type: :model do
       let(:registered_tag) { create(:registered_tag) }
       subject { registered_tag.create_tweets(tweet_data_array) }
       context 'ハッシュタグのツイートがTwitterに存在するとき' do
-        let(:tweet_data_array) { [['text', Date.current, '1255854602626330624']] }
+        let(:tweet_data_array) { [['text', Date.current, '1255854602626330624', []]] }
         it '取得したツイートを保存する' do
           expect { subject }.to change(Tweet, :count).by(1)
         end
@@ -251,7 +251,7 @@ RSpec.describe RegisteredTag, type: :model do
     describe '#add_tweets(tweet_data_array)' do
       let(:registered_tag) { create(:registered_tag) }
       context 'ツイートデータが存在するとき' do
-        let(:tweet_data_array) { [['text', Date.current, '1255854602626330624']] }
+        let(:tweet_data_array) { [['text', Date.current, '1255854602626330624', []]] }
         it '取得したツイートを保存する' do
           expect { registered_tag.add_tweets(tweet_data_array) }.to change(Tweet, :count).by(1)
         end

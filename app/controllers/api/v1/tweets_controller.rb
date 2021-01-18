@@ -8,7 +8,7 @@ class Api::V1::TweetsController < Api::V1::BaseController
       tweets = tweets.tweeted_at_date(date)
     end
     @pagy, tweets = pagy(tweets, items: 10) if params[:page]
-    render json: tweets
+    render json: tweets.includes([:images])
   end
 
   def create

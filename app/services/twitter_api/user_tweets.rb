@@ -5,6 +5,7 @@ module TwitterAPI
     def initialize(user, tag_name, since_id = nil)
       @tweet_ids = []
       @tweeted_ats = []
+      @medias_list = []
       @user = user
       @tag_name = tag_name
       @since_id = since_id
@@ -26,19 +27,18 @@ module TwitterAPI
                   .map do |oembed|
         oembed.html =~ %r{\" dir=\"ltr\">(.+)</p>}
         $+
-      end.zip(tweeted_ats, tweet_ids)
+      end.zip(tweeted_ats, tweet_ids, medias_list)
     end
 
     private
 
-    attr_reader :user, :tag_name, :since_id, :tweet_ids, :tweeted_ats
+    attr_reader :user, :tag_name, :since_id, :tweet_ids, :tweeted_ats, :medias_list
 
     def standard_search
       @standard_search ||= begin
         client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
                             result_type: 'recent', count: 100).take(100).each do |result|
-          tweeted_ats << result.created_at
-          tweet_ids << result.id
+          push_tweet_data(result)
         end
       end
     end
@@ -50,8 +50,7 @@ module TwitterAPI
                                     { product: '30day' }).take(100).each do |result|
           next if result.retweeted_status.present?
 
-          tweeted_ats << result.created_at
-          tweet_ids << result.id
+          push_tweet_data(result)
         end
       end
     end
@@ -60,10 +59,15 @@ module TwitterAPI
       @everyday_search ||= begin
         client(user).search("##{tag_name} from:#{user.screen_name} exclude:retweets",
                             result_type: 'recent', since_id: since_id).take(100).each do |result|
-          tweeted_ats << result.created_at
-          tweet_ids << result.id
+          push_tweet_data(result)
         end
       end
+    end
+
+    def push_tweet_data(result)
+      tweeted_ats << result.created_at
+      tweet_ids << result.id
+      medias_list << result.media
     end
   end
 end

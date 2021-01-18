@@ -63,8 +63,12 @@ class RegisteredTag < ApplicationRecord
   end
 
   def add_tweets(tweets_data_array)
-    tweets_data_array.each do |oembed, tweeted_at, tweet_id|
-      tweets.create(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
+    tweets_data_array.each do |oembed, tweeted_at, tweet_id, medias|
+      tweets.create_with_images!(
+        oembed: oembed,
+        tweeted_at: tweeted_at,
+        tweet_id: tweet_id, medias: medias
+      )
     end
   end
 
