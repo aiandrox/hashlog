@@ -51,6 +51,7 @@ ja:
         admin: 管理ユーザー
         general: 一般ユーザー
         guest: ゲストユーザー
+        deleted: Twitter退会済
     registered_tag:
       privacy:
         published: 公開
