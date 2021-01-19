@@ -14,7 +14,7 @@ class RegisteredTagDashboard < Administrate::BaseDashboard
     id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    privacy: Field::Select.with_options(collection: %i[published limited closed]),
+    privacy: Field::Select.with_options(collection: RegisteredTag.privacies_i18n.invert),
     remind_day: Field::Number,
     first_tweeted_at: Field::DateTime
   }.freeze

@@ -16,7 +16,7 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   enum privacy: { published: 0, closed: 1 }
-  enum role: { admin: 0, general: 1, guest: 2 }
+  enum role: { admin: 0, general: 1, guest: 2, deleted: 10 }
 
   # tagからregistered_tagを返す
   def registered_tag(tag)
