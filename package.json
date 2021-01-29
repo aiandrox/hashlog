@@ -14,7 +14,8 @@
     "vue-template-compiler": "^2.6.11",
     "vuetify": "^2.2.21",
     "vuex": "^3.1.3",
-    "yarn": "^1.22.5"
+    "yarn": "^1.22.5",
+    "eslint-loader": "^4.0.0"
   },
   "version": "1.0.0",
   "description": "Hashlogは、ハッシュタグを登録するだけであなたの継続を可視化する、Twitter連携型 学習記録サービスです。学習の振り返り、頑張りの可視化、ツイートのポートフォリオ化ができます。",
@@ -25,7 +26,6 @@
   "devDependencies": {
     "@mdi/font": "^5.0.45",
     "eslint": "^7.11.0",
-    "eslint-loader": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "eslint-plugin-vue-libs": "^4.0.0",
     "vue-eslint-parser": "^7.0.0",
