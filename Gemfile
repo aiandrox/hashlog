@@ -31,11 +31,6 @@ gem 'seed-fu'
 gem 'exception_notification'
 gem 'slack-notifier'
 
-group :production do
-  gem 'asset_sync'
-  gem 'fog-aws'
-end
-
 group :development, :test do
   gem 'bullet', '~> 6.1'
   gem 'foreman'
