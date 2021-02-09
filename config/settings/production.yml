@@ -1,2 +1,2 @@
 sorcery:
-  callback_url: "https://hashlog.herokuapp.com/api/v1/oauth/callback?provider=twitter"
+  callback_url: "https://hashlog.work/api/v1/oauth/callback?provider=twitter"
