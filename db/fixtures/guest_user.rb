@@ -2,10 +2,10 @@ User.seed(
   id: 3,
   twitter_id: 'none',
   screen_name: 'hash1og',
-  name: 'ゲストユーザー',
-  description: "ゲストユーザーです。ユーザー情報の編集はできません。\n#Hashlog を登録するとツイートを取得できます。",
+  name: 'テストユーザー',
+  description: "テスト",
   privacy: :published,
-  role: :guest,
+  role: :general,
   avatar_url: 'https://pbs.twimg.com/profile_images/1267362108703817728/bSK1Ux-E.jpg'
 )
 

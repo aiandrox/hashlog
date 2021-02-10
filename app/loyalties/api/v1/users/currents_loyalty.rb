@@ -5,11 +5,11 @@ class Api::V1::Users::CurrentsLoyalty < ApplicationLoyalty
   end
 
   def update?
-    !current_user.guest?
+    true
   end
 
   def destroy?
-    !current_user.guest?
+    true
   end
 
   private
