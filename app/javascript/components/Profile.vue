@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     twitterUrl() {
-      return `https://twitter.com/${this.user.screenName}`
+      return `https://twitter.com/intent/user?user_id=${this.user.twitterId}`
     }
   },
   methods: {
