@@ -17,10 +17,14 @@
 ハッシュタグを登録するだけで継続を可視化できる
 Twitter 連携型 学習記録サービスです。
 
-[以前のREADME](/README_old.md)<br>
 [プロダクトについて](/README_product.md)
 
-## 使用画面と機能
+### サービスを作った思い
+
+Twitter で学習報告をしている人を見て、「毎日学習記録を付けることはすごいことなのに、ツイートがすぐに流れてしまってあまり評価されていない気がする」と感じたことと、自分が実際に過去の記録をツイートの中から探そうとしたときに日常ツイートに埋もれていて大変だった経験から作りました。
+きちんと継続して記録したくなる仕組みを作ること、その積み上げをカレンダーの可視化やランキングで評価することで達成感を感じさせることを目的としています。
+
+## 使用画面と機能紹介
 
 | トップページ                                                         | 利用規約                                                                                               |
 | :------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
@@ -55,11 +59,110 @@ Twitter 連携型 学習記録サービスです。
 | <img src="https://i.gyazo.com/33d4427f0b70ef6c42074eb87135cc05.png">       | <img src="https://i.gyazo.com/a21f086fc3dc447a5d54d502fe7c56c5.png"> |
 | 公開設定になっているハッシュタグを継続率・ツイート日数でランキングにする。 | ユーザーなどの情報、定期実行の状況を確認する。                       |
 
+<br>
 
-## 関連記事
+## 使用技術
 
-- [ポートフォリオレビュー会 vol\.1 イベントレポート \| RUNTEQ \- 公式ブログ](https://blog.runteq.jp/programming-career/portfolio/3060/)
+### バックエンド
 
-- [ポートフォリオレビュー会の感想｜aiandrox｜note](https://note.com/aiandrox/n/n18598a9c0c9d)
+- Ruby 2.6.6
+- Rails 5.2.4.4
+- RSpec 3.9
+- Twitter API（外部 API）
 
-- [【Rails】未経験者がポートフォリオを作って感じたこと、指摘されたこと \- Qiita](https://qiita.com/aiandrox/items/cd0eaac79bd1d313f76d)
+#### 機能における主要な Gem
+
+- sorcery（ログイン）
+- twitter（TwitterAPI OAuth）
+- pagy（ページネーション）
+- banken（認可）
+- whenever（定期実行）
+- ~~sidekiq（非同期処理）~~
+- administrate（管理画面）
+
+#### ER 図
+
+[![Image from Gyazo](https://i.gyazo.com/f2f05539bb0679ed1e64eac82e9b772b.png)](https://gyazo.com/f2f05539bb0679ed1e64eac82e9b772b)
+https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=sharing
+
+[API エンドポイント一覧](/README_api_endpoint.md)
+
+### フロントエンド
+
+- Vue 2.6.11
+- axios 0.19.2
+- Vuex 3.1.3
+- Vee-Validate 3.3.0
+- Vuetify 2.2.21
+
+### インフラストラクチャー
+
+- ~~Docker~~
+- Sider
+- CircleCI
+- Nginx 1.12.2
+- puma 4.3.3
+- AWS
+  - VPC
+  - EC2
+    - Amazon Linux 2
+  - RDS
+    - MySQL 8.0.19
+  - ~~ElastiCache(Redis)~~
+  - S3
+  - Cloud Front
+  - ALB
+  - Route53
+  - ACM
+
+#### インフラ構成図
+
+[![Image from Gyazo](https://i.gyazo.com/77d2babccb1468a167c3e362c4d89eff.png)](https://gyazo.com/77d2babccb1468a167c3e362c4d89eff)
+https://drive.google.com/file/d/1lCmn-IeardJ3zwkcgTyybtmjb9wh80Hf/view?usp=sharing
+
+## 環境構築手順
+
+事前に管理者から`master.key`を取得して`config`配下に置いてください。
+
+- config/database.yml の作成
+
+```shell
+$ cp config/database.yml.default config/database.yml
+```
+
+- ローカル環境構築
+
+```shell
+$ rbenv local 2.6.6
+$ nodenv local 14.2.0
+$ bundle install --path vendor/bundle
+$ yarn install
+$ rails db:create
+$ rails db:migrate
+$ rake db:seed_fu  # 事前に自分のアカウントを管理ユーザーとして設定してください
+```
+
+### サーバー起動
+
+```shell
+$ rails server
+$ bin/webpack-dev-server
+```
+
+上記のコマンドは`$ bundle exec foreman start`で代替可能。
+
+### テスト実行
+
+```shell
+$ bundle exec rspec spec
+```
+
+[テスト項目一覧](/spec/rspec-output)
+
+### 開発者用 自動ログイン
+
+See `app/controllers/development/sessions_controller.rb`
+
+```
+/login_as/[user_id]
+```
