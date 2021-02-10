@@ -7,7 +7,6 @@ class Api::V1::Users::CurrentsController < Api::V1::BaseController
   end
 
   def update
-    authorize!
     current_user.assign_attributes(user_params)
     current_user.privacy = User.privacies_i18n.invert[params[:user][:privacy]]
     if current_user.save
@@ -24,7 +23,6 @@ class Api::V1::Users::CurrentsController < Api::V1::BaseController
   end
 
   def destroy
-    authorize!
     current_user.destroy!
   end
 
