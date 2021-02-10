@@ -9,7 +9,7 @@
             <v-img class="mb-8" alt="Hashlog" src="/img/logo.png" />
             <p class="title">
               ハッシュタグで
-              <br class="d-block d-sm-none">あなたの学びをキチンとする
+              <br class="d-block d-sm-none" />あなたの学びをキチンとする
             </p>
             <v-btn
               class="mb-5"
@@ -17,15 +17,14 @@
               x-large
               depressed
               @click="pushLogin"
-            >今すぐ始める</v-btn>
-            <br class="d-block d-sm-none">
+              >今すぐ始める</v-btn
+            >
+            <br class="d-block d-sm-none" />
             <p class="mb-5 d-none d-sm-block features">
               ハッシュタグを登録するだけで
-              <br>あなたの継続を可視化できる
-              <br>Twitter連携型
+              <br />あなたの継続を可視化できる <br />Twitter連携型
               学習記録サービス
             </p>
-            <v-btn color="#74accc" dark depressed @click="guestLogin">ゲストとして試してみる</v-btn>
           </v-col>
           <v-col cols="12" md="6">
             <v-img max-width="600" src="/img/main-image.png" />
@@ -40,17 +39,26 @@
         <h2 class="text-center my-5">最近登録されたハッシュタグ</h2>
         <v-row>
           <v-col v-for="tag in recentTags" :key="tag.id" cols="12" md="4">
-            <v-card flat hover color="rgba(255, 255, 255, 0.8)" @click="pushTagCard(tag)">
+            <v-card
+              flat
+              hover
+              color="rgba(255, 255, 255, 0.8)"
+              @click="pushTagCard(tag)"
+            >
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title class="mb-1 mt-3">#{{ tag.tag.name }}</v-list-item-title>
+                  <v-list-item-title class="mb-1 mt-3"
+                    >#{{ tag.tag.name }}</v-list-item-title
+                  >
 
-                  <v-list-item-subtitle class="mb-3 text-right">by {{ tag.user.name }}</v-list-item-subtitle>
+                  <v-list-item-subtitle class="mb-3 text-right"
+                    >by {{ tag.user.name }}</v-list-item-subtitle
+                  >
 
                   <v-card-text class="body-1 my-0">
                     <p>
                       最新のツイート：
-                      <br>
+                      <br />
                       {{ date(tag.lastTweetedAt) }}
                     </p>
                     <p class="mb-0">
@@ -146,14 +154,6 @@ export default {
       )
       const recentTags = recentTagsRes.data.registeredTags
       this.recentTags = recentTags
-    },
-    async guestLogin() {
-      await this.$store.dispatch("user/guestLogin")
-      this.$store.dispatch("flash/setFlash", {
-        type: "success",
-        message: "ゲストユーザーとしてログインしました"
-      })
-      this.$router.push({ name: "mypage" })
     },
     pushTagCard(tag) {
       this.$toTop()

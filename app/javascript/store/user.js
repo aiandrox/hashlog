@@ -53,12 +53,6 @@ const actions = {
     await axios.delete("/api/v1/users/current")
     commit("setCurrentUser", null)
   },
-  async guestLogin({ commit }) {
-    const response = await axios.post("/api/v1/guest_login")
-    const { user } = response.data
-    commit("setCurrentUser", user)
-    return user
-  },
   async logout({ commit }) {
     await axios.delete("/api/v1/logout")
     commit("setCurrentUser", null)
