@@ -21,11 +21,6 @@ FactoryBot.define do
     end
   end
 
-  trait :guest do
-    name { 'ゲストユーザー' }
-    role { :guest }
-  end
-
   trait :admin do
     name { '管理ユーザー' }
     role { :admin }

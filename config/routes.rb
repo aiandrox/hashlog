@@ -42,8 +42,6 @@ Rails.application.routes.draw do
       get 'oauth/callback', to: 'oauths#callback'
       get 'oauth/:provider', to: 'oauths#oauth'
       delete 'logout', to: 'user_sessions#destroy'
-      # ゲストユーザーログイン
-      post 'guest_login', to: 'user_sessions#guest_login'
     end
   end
 

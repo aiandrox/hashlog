@@ -5,7 +5,7 @@ class Api::V1::Users::Current::TwitterDataLoyalty < ApplicationLoyalty
   end
 
   def update?
-    !current_user.guest?
+    true
   end
 
   private
