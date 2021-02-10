@@ -25,6 +25,13 @@
               <br />あなたの継続を可視化できる <br />Twitter連携型
               学習記録サービス
             </p>
+            <v-btn
+              color="#74accc"
+              dark
+              depressed
+              href="https://hashlog.work/users/eXlMWq--Uh5r/tags/196"
+              >お知らせ</v-btn
+            >
           </v-col>
           <v-col cols="12" md="6">
             <v-img max-width="600" src="/img/main-image.png" />
