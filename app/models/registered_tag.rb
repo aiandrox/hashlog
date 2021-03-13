@@ -67,7 +67,8 @@ class RegisteredTag < ApplicationRecord
       tweets.create_with_images!(
         oembed: oembed,
         tweeted_at: tweeted_at,
-        tweet_id: tweet_id, medias: medias
+        tweet_id: tweet_id,
+        medias: medias
       )
     end
   end
