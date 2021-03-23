@@ -144,7 +144,8 @@ export default {
     }
   },
   mounted() {
-    document.title = "Hashlog"
+    document.title =
+      "Hashlog（ハッシュログ） - あなたの継続を可視化できる Twitter連携型 学習記録サービス"
     this.fetchTagsData()
   },
   methods: {
