@@ -22,7 +22,7 @@ const routes = [
     component: Terms
   },
   {
-    path: "/ranking/persistence",
+    path: "/ranking/:type",
     name: "tagRanking",
     component: TagRanking
   },

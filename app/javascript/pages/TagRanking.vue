@@ -34,15 +34,24 @@ export default {
       registeredTags: []
     }
   },
+  computed: {
+    registeredTagUrl() {
+      const { type } = this.$route.params
+      return `/api/v1/registered_tags/${type}`
+    }
+  },
+  watch: {
+    $route() {
+      this.firstRead()
+    }
+  },
   mounted() {
     this.fetchRegisteredTagsData()
     document.title = "継続率ランキング - Hashlog"
   },
   methods: {
     async fetchRegisteredTagsData() {
-      const registeredTagsRes = await this.$axios.get(
-        "/api/v1/registered_tags/persistences"
-      )
+      const registeredTagsRes = await this.$axios.get(this.registeredTagUrl)
       this.setPaginationData(registeredTagsRes)
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
