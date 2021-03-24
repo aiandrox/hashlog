@@ -95,6 +95,24 @@ RSpec.describe RegisteredTag, type: :model do
   end
 
   describe 'methods' do
+    describe '.day_count_sort' do
+      let(:tag_with_5_tweets) { create(:registered_tag) }
+      let(:tag_with_10_tweets) { create(:registered_tag) }
+      before do
+        create_list(:tweet, 5, registered_tag: tag_with_5_tweets)
+        create_list(:tweet, 10, registered_tag: tag_with_10_tweets)
+      end
+      specify do
+        expect(RegisteredTag.day_count_sort.first).to eq tag_with_10_tweets
+      end
+      specify do
+        expect(RegisteredTag.day_count_sort.last).to eq tag_with_5_tweets
+      end
+      specify do
+        expect(RegisteredTag.day_count_sort).to be_a Array
+      end
+    end
+
     describe '.persistence_sort' do
       let!(:tag_with_42_per) { create(:registered_tag, :with_3_7_days_tweets) }
       let(:today_tweet) { create(:tweet) }
@@ -109,6 +127,9 @@ RSpec.describe RegisteredTag, type: :model do
       end
       it 'tweet_rate0%のタグが最後になる' do
         expect(RegisteredTag.persistence_sort[-1]).to eq tag_with_0_per
+      end
+      specify do
+        expect(RegisteredTag.persistence_sort).to be_a Array
       end
     end
 
