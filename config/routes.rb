@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'mypage/tags/:id', to: 'static_pages#mypage'
   get 'users/:uuid', to: 'static_pages#top'
   get 'users/:uuid/tags/:id', to: 'static_pages#top'
-  get 'ranking/persistence', to: 'static_pages#top'
+  get 'ranking/:type', to: 'static_pages#top'
 
   namespace :api do
     namespace :v1 do
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       # resources :registered_tagsより上に書く
       namespace :registered_tags do
         resources :persistences, only: %i[index]
+        resources :day_counts, only: %i[index]
       end
       resources :registered_tags, only: %i[index show create update destroy] do
         resources :tweeted_ats, only: %i[index]

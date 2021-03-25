@@ -92,6 +92,24 @@ RSpec.describe RegisteredTag, type: :model do
         expect(RegisteredTag.have_tweets).not_to include registered_tag_has_no_tweets
       end
     end
+
+    describe '.day_count_sort' do
+      let(:tag_with_5_tweets) { create(:registered_tag) }
+      let(:tag_with_10_tweets) { create(:registered_tag) }
+      before do
+        create_list(:tweet, 5, registered_tag: tag_with_5_tweets)
+        create_list(:tweet, 10, registered_tag: tag_with_10_tweets)
+      end
+      specify do
+        expect(RegisteredTag.day_count_sort.first).to eq tag_with_10_tweets
+      end
+      specify do
+        expect(RegisteredTag.day_count_sort.last).to eq tag_with_5_tweets
+      end
+      specify do
+        expect(RegisteredTag.day_count_sort).to be_a ActiveRecord::Relation
+      end
+    end
   end
 
   describe 'methods' do
@@ -109,6 +127,9 @@ RSpec.describe RegisteredTag, type: :model do
       end
       it 'tweet_rate0%のタグが最後になる' do
         expect(RegisteredTag.persistence_sort[-1]).to eq tag_with_0_per
+      end
+      specify do
+        expect(RegisteredTag.persistence_sort).to be_a Array
       end
     end
 

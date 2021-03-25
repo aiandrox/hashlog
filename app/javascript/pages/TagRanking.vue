@@ -1,40 +1,18 @@
 <template>
-  <div>
-    <h2 class="text-center my-7">継続率ランキング</h2>
-    <!-- ランキング -->
-    <v-card max-width="700" class="mx-auto mb-7">
-      <v-list two-line subheader>
-        <v-list-item
-          v-for="(tag, index) in registeredTags"
-          :key="tag.id"
-          :to="{
-            name: 'userTag',
-            params: { tagId: tag.id, userUuid: tag.user.uuid }
-          }"
-          class="pl-0 px-sm-4"
-        >
-          <v-list-item-avatar size="40" class="mr-sm-7 mr-2">
-            <v-icon>{{ rank(index) }}</v-icon>
-          </v-list-item-avatar>
-
-          <v-list-item-avatar color="grey" size="50" class="mr-sm-7 mr-2">
-            <v-img :src="tag.user.avatarUrl" />
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title v-text="'#' + tag.tag.name" />
-            <v-list-item-subtitle class="mt-1" v-text="'by ' + tag.user.name" />
-          </v-list-item-content>
-
-          <v-list-item-action
-            class="ml-2"
-          >{{ tag.tweetRate }}%</v-list-item-action>
-          <v-list-item-action
-            class="d-none d-sm-flex"
-          >（{{ tag.tweetedDayCount }}日）</v-list-item-action>
-        </v-list-item>
-      </v-list>
-    </v-card>
+  <div style="max-width: 700px" class="mx-auto mt-3">
+    <v-tabs background-color="#e9f1f5" grow>
+      <v-tab
+        v-for="rank in ranks"
+        :key="rank.symbol"
+        class="custom-transform-class text-none"
+        :to="{ name: 'tagRanking', params: { type: rank.symbol } }"
+        >{{ rank.name }}</v-tab
+      >
+    </v-tabs>
+    <ranking
+      :registered-tags="registeredTags"
+      :current-page="page.currentPage"
+    />
     <!-- ページネーション -->
     <div class="text-center">
       <v-pagination
@@ -48,9 +26,18 @@
 </template>
 
 <script>
+import ranking from "../components/Ranking"
+
 export default {
+  components: {
+    ranking
+  },
   data() {
     return {
+      ranks: [
+        { name: "継続率ランキング", symbol: "persistences" },
+        { name: "日数ランキング", symbol: "day_counts" }
+      ],
       page: {
         currentPage: 1,
         totalPages: 1,
@@ -59,21 +46,20 @@ export default {
       registeredTags: []
     }
   },
+  watch: {
+    $route() {
+      this.fetchRegisteredTagsData()
+    }
+  },
   mounted() {
     this.fetchRegisteredTagsData()
-    document.title = "継続率ランキング - Hashlog"
+    document.title = "ランキング - Hashlog"
   },
   methods: {
-    rank(index) {
-      const tagCountPerPage = 20
-      const increase = (this.page.currentPage - 1) * tagCountPerPage
-      const rank = increase + index + 1
-      return rank
-    },
     async fetchRegisteredTagsData() {
-      const registeredTagsRes = await this.$axios.get(
-        "/api/v1/registered_tags/persistences"
-      )
+      const { type } = this.$route.params
+      const registeredTagUrl = `/api/v1/registered_tags/${type}`
+      const registeredTagsRes = await this.$axios.get(registeredTagUrl)
       this.setPaginationData(registeredTagsRes)
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
@@ -92,9 +78,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-h2 {
-  color: #3b394d;
-}
-</style>
