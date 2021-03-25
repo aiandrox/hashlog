@@ -11,7 +11,7 @@
         text
         color="#ffffb5"
         :to="{ name: 'tagRanking', params: { type: 'persistences' } }"
-      ><v-icon left class="d-none d-sm-flex">mdi-crown</v-icon>継続率ランキング</v-btn>
+      ><v-icon left class="d-none d-sm-flex">mdi-crown</v-icon>ランキング</v-btn>
       <v-btn v-if="!currentUser" text @click="pushLogin">ログイン</v-btn>
       <v-btn
         v-if="currentUser"

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'mypage/tags/:id', to: 'static_pages#mypage'
   get 'users/:uuid', to: 'static_pages#top'
   get 'users/:uuid/tags/:id', to: 'static_pages#top'
-  get 'ranking/persistence', to: 'static_pages#top'
+  get 'ranking/:type', to: 'static_pages#top'
 
   namespace :api do
     namespace :v1 do

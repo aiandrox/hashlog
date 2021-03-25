@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="700" class="mx-auto mb-7">
+  <v-card class="mb-7">
     <v-list two-line subheader>
       <v-list-item
         v-for="(tag, index) in registeredTags"

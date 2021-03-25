@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <h2 class="text-center my-7">継続率ランキング</h2>
+  <div style="max-width: 700px" class="mx-auto">
+    <v-tabs background-color="#e9f1f5" grow>
+      <v-tab
+        v-for="rank in ranks"
+        :key="rank.symbol"
+        class="custom-transform-class text-none"
+        :to="{ name: 'tagRanking', params: { type: rank.symbol } }"
+      >{{ rank.name }}</v-tab>
+    </v-tabs>
     <ranking
       :registered-tags="registeredTags"
       :current-page="page.currentPage"
@@ -26,6 +33,10 @@ export default {
   },
   data() {
     return {
+      ranks: [
+        { name: "継続率ランキング", symbol: "persistences" },
+        { name: "日数ランキング", symbol: "day_counts" }
+      ],
       page: {
         currentPage: 1,
         totalPages: 1,
@@ -34,15 +45,9 @@ export default {
       registeredTags: []
     }
   },
-  computed: {
-    registeredTagUrl() {
-      const { type } = this.$route.params
-      return `/api/v1/registered_tags/${type}`
-    }
-  },
   watch: {
     $route() {
-      this.firstRead()
+      this.fetchRegisteredTagsData()
     }
   },
   mounted() {
@@ -51,7 +56,9 @@ export default {
   },
   methods: {
     async fetchRegisteredTagsData() {
-      const registeredTagsRes = await this.$axios.get(this.registeredTagUrl)
+      const { type } = this.$route.params
+      const registeredTagUrl = `/api/v1/registered_tags/${type}`
+      const registeredTagsRes = await this.$axios.get(registeredTagUrl)
       this.setPaginationData(registeredTagsRes)
       const { registeredTags } = registeredTagsRes.data
       this.registeredTags = registeredTags
@@ -70,9 +77,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-h2 {
-  color: #3b394d;
-}
-</style>
