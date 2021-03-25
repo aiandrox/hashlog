@@ -24,11 +24,11 @@
         </v-list-item-content>
 
         <v-list-item-action
-          class="ml-2"
+          :class="isPersistence ? 'sm-1' : 'd-none d-sm-flex'"
         >{{ tag.tweetRate }}%</v-list-item-action>
-        <v-list-item-action
-          class="d-none d-sm-flex"
-        >（{{ tag.tweetedDayCount }}日）</v-list-item-action>
+        <v-list-item-action-text
+          :class="isPersistence ? 'd-none d-sm-flex' : 'sm-1'"
+        >（{{ tag.tweetedDayCount }}日）</v-list-item-action-text>
       </v-list-item>
     </v-list>
   </v-card>
@@ -46,6 +46,15 @@ export default {
       type: Number,
       default: 1,
       required: true
+    }
+  },
+  computed: {
+    isPersistence() {
+      const { type } = this.$route.params
+      if (type === "persistences") {
+        return true
+      }
+      return false
     }
   },
   methods: {

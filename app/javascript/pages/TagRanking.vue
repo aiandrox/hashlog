@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 700px" class="mx-auto">
+  <div style="max-width: 700px" class="mx-auto mt-3">
     <v-tabs background-color="#e9f1f5" grow>
       <v-tab
         v-for="rank in ranks"
