@@ -24,10 +24,7 @@ class RegisteredTag < ApplicationRecord
   scope :desc, -> { order(created_at: :desc) }
   scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
   scope :have_tweets, -> { where('first_tweeted_at < ?', Time.now) }
-
-  def self.day_count_sort
-    joins(:tweets).group(:registered_tag_id).order('count(registered_tag_id) desc').to_a
-  end
+  scope :day_count_sort, -> { joins(:tweets).group(:registered_tag_id).order(Arel.sql('count(registered_tag_id) desc')) }
 
   def self.persistence_sort
     all.sort_by { |tag| [tag.tweet_rate, tag.tweeted_day_count] }.reverse

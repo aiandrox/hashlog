@@ -92,9 +92,7 @@ RSpec.describe RegisteredTag, type: :model do
         expect(RegisteredTag.have_tweets).not_to include registered_tag_has_no_tweets
       end
     end
-  end
 
-  describe 'methods' do
     describe '.day_count_sort' do
       let(:tag_with_5_tweets) { create(:registered_tag) }
       let(:tag_with_10_tweets) { create(:registered_tag) }
@@ -109,10 +107,12 @@ RSpec.describe RegisteredTag, type: :model do
         expect(RegisteredTag.day_count_sort.last).to eq tag_with_5_tweets
       end
       specify do
-        expect(RegisteredTag.day_count_sort).to be_a Array
+        expect(RegisteredTag.day_count_sort).to be_a ActiveRecord::Relation
       end
     end
+  end
 
+  describe 'methods' do
     describe '.persistence_sort' do
       let!(:tag_with_42_per) { create(:registered_tag, :with_3_7_days_tweets) }
       let(:today_tweet) { create(:tweet) }
