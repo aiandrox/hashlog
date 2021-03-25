@@ -28,10 +28,18 @@ const errorMessage = error => {
 http.interceptors.response.use(
   response => response,
   error => {
-    store.dispatch("flash/setFlash", {
-      type: "error",
-      message: errorMessage(error)
-    })
+    const { status } = error.response
+    const notFound = 404
+    if (status === notFound) {
+      store.dispatch("isNotFound/setIsNotFound", {
+        boolean: true
+      })
+    } else {
+      store.dispatch("flash/setFlash", {
+        type: "error",
+        message: errorMessage(error)
+      })
+    }
     return Promise.reject(error)
   }
 )
