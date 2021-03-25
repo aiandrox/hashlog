@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       # resources :registered_tagsより上に書く
       namespace :registered_tags do
         resources :persistences, only: %i[index]
+        resources :day_counts, only: %i[index]
       end
       resources :registered_tags, only: %i[index show create update destroy] do
         resources :tweeted_ats, only: %i[index]
