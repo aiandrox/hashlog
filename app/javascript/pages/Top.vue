@@ -9,7 +9,7 @@
             <v-img class="mb-8" alt="Hashlog" src="/img/logo.png" />
             <p class="title">
               ハッシュタグで
-              <br class="d-block d-sm-none" />あなたの学びをキチンとする
+              <br class="d-block d-sm-none">あなたの学びをキチンとする
             </p>
             <v-btn
               class="mb-5"
@@ -17,12 +17,11 @@
               x-large
               depressed
               @click="pushLogin"
-              >今すぐ始める</v-btn
-            >
-            <br class="d-block d-sm-none" />
+            >今すぐ始める</v-btn>
+            <br class="d-block d-sm-none">
             <p class="mb-5 d-none d-sm-block features">
               ハッシュタグを登録するだけで
-              <br />あなたの継続を可視化できる <br />Twitter連携型
+              <br>あなたの継続を可視化できる <br>Twitter連携型
               学習記録サービス
             </p>
             <v-btn
@@ -30,8 +29,7 @@
               dark
               depressed
               href="https://hashlog.work/users/eXlMWq--Uh5r/tags/196"
-              >お知らせ</v-btn
-            >
+            >お知らせ</v-btn>
           </v-col>
           <v-col cols="12" md="6">
             <v-img max-width="600" src="/img/main-image.png" />
@@ -54,18 +52,18 @@
             >
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title class="mb-1 mt-3"
-                    >#{{ tag.tag.name }}</v-list-item-title
-                  >
+                  <v-list-item-title
+                    class="mb-1 mt-3"
+                  >#{{ tag.tag.name }}</v-list-item-title>
 
-                  <v-list-item-subtitle class="mb-3 text-right"
-                    >by {{ tag.user.name }}</v-list-item-subtitle
-                  >
+                  <v-list-item-subtitle
+                    class="mb-3 text-right"
+                  >by {{ tag.user.name }}</v-list-item-subtitle>
 
                   <v-card-text class="body-1 my-0">
                     <p>
                       最新のツイート：
-                      <br />
+                      <br>
                       {{ date(tag.lastTweetedAt) }}
                     </p>
                     <p class="mb-0">
@@ -144,8 +142,8 @@ export default {
     }
   },
   mounted() {
-    document.title =
-      "Hashlog（ハッシュログ） - あなたの継続を可視化できる Twitter連携型 学習記録サービス"
+    document.title
+      = "Hashlog（ハッシュログ） - あなたの継続を可視化できる Twitter連携型 学習記録サービス"
     this.fetchTagsData()
   },
   methods: {

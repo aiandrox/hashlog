@@ -5,7 +5,8 @@
       <v-main>
         <v-container v-if="!isTopPage">
           <the-flash-message v-if="isFlash" />
-          <router-view />
+          <the-not-found v-if="isNotFound" />
+          <router-view v-else />
         </v-container>
         <router-view v-if="isTopPage" />
       </v-main>
@@ -19,18 +20,30 @@ import { mapGetters } from "vuex"
 import theHeader from "./components/shared/TheHeader"
 import theFooter from "./components/shared/TheFooter"
 import theFlashMessage from "./components/shared/TheFlashMessage"
+import theNotFound from "./pages/NotFound"
 
 export default {
   name: "MyApp",
   components: {
     theHeader,
     theFooter,
-    theFlashMessage
+    theFlashMessage,
+    theNotFound
   },
   computed: {
-    ...mapGetters({ isFlash: "flash/isFlash" }),
+    ...mapGetters({
+      isFlash: "flash/isFlash",
+      isNotFound: "isNotFound/isNotFound"
+    }),
     isTopPage() {
       return this.$route.path === "/"
+    }
+  },
+  watch: {
+    $route() {
+      this.$store.dispatch("isNotFound/setIsNotFound", {
+        boolean: false
+      })
     }
   }
 }
