@@ -29,7 +29,8 @@ http.interceptors.response.use(
   response => response,
   error => {
     const { status } = error.response
-    if (status === 404) {
+    const notFound = 404
+    if (status === notFound) {
       store.dispatch("isNotFound/setIsNotFound", {
         boolean: true
       })
