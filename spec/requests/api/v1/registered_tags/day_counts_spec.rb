@@ -1,5 +1,5 @@
 RSpec.describe 'RegisteredTags', type: :request do
-  fdescribe 'GET /api/v1/registered_tags/day_counts' do
+  describe 'GET /api/v1/registered_tags/day_counts' do
     let(:registered_tags) { RegisteredTag.includes(:user, :tag).opened.have_tweets.day_count_sort }
     let(:tags_json) { json['registeredTags'] }
     before do
@@ -36,30 +36,30 @@ RSpec.describe 'RegisteredTags', type: :request do
     end
     describe 'ソート' do
       let!(:tag_with_no_tweets) { create(:registered_tag) }
-      let!(:tag_with_3_tweets) { create(:registered_tag) }
-      let!(:tag_with_5_tweets) { create(:registered_tag) }
+      let!(:tag_with_5_tweets) { create(:registered_tag, :with_tweets, count: 5) }
+      let!(:tag_with_3_tweets) { create(:registered_tag, :with_tweets, count: 3) }
       before { get '/api/v1/registered_tags/day_counts' }
 
-      it 'ツイートの割合が多くかつツイート日数が多いものが一番になる' do
+      it 'ツイート日数が多いものが一番になる' do
         expect(tags_json.first['id']).to eq tag_with_5_tweets.id
         expect(tags_json.second['id']).to eq tag_with_3_tweets.id
       end
       it 'ツイートがないregistered_tagを含めない' do
         expect(tags_json).not_to include({
-          'id' => registered_tag_with_no_tweets.id,
-          'tweetedDayCount' => registered_tag_with_no_tweets.tweeted_day_count,
-          'privacy' => registered_tag_with_no_tweets.privacy_i18n,
+          'id' => tag_with_no_tweets.id,
+          'tweetedDayCount' => tag_with_no_tweets.tweeted_day_count,
+          'privacy' => tag_with_no_tweets.privacy_i18n,
           'remindDay' => nil,
           'tweetRate' => 0,
-          'firstTweetedAt' => registered_tag_with_no_tweets.first_tweeted_at,
-          'lastTweetedAt' => registered_tag_with_no_tweets.last_tweeted_at,
+          'firstTweetedAt' => tag_with_no_tweets.first_tweeted_at,
+          'lastTweetedAt' => tag_with_no_tweets.last_tweeted_at,
           'tag' => {
-            'id' => registered_tag_with_no_tweets.tag.id,
-            'name' => registered_tag_with_no_tweets.tag.name,
+            'id' => tag_with_no_tweets.tag.id,
+            'name' => tag_with_no_tweets.tag.name,
           },
           'user' => {
-            'name' => registered_tag_with_no_tweets.user.name,
-            'uuid' => registered_tag_with_no_tweets.user.uuid,
+            'name' => tag_with_no_tweets.user.name,
+            'uuid' => tag_with_no_tweets.user.uuid,
             'avatarUrl' => 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png'
           }
         })
