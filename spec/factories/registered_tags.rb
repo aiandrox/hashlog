@@ -4,6 +4,13 @@ FactoryBot.define do
     tag
     sequence(:created_at) { |n| Time.current + n.minute }
 
+    trait :tweeted do
+      first_tweeted_at { Time.parse('2020-01-01') }
+      after(:build) do |registered_tag|
+        create(:tweet, tweeted_at: registered_tag.first_tweeted_at, registered_tag: registered_tag)
+      end
+    end
+
     trait :with_tweets do
       transient do
         count { 3 }

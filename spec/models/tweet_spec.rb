@@ -68,8 +68,8 @@ RSpec.describe Tweet, type: :model do
   end
 
   describe 'methods' do
-    let!(:latest_tweet) { create(:tweet) }
-    let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago) }
+    let!(:latest_tweet) { create(:tweet, tweeted_at: Time.zone.now) }
+    let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.zone.now.yesterday) }
     describe '.latest' do
       it 'tweeted_atを基準に最も新しいツイートを返す' do
         expect(Tweet.latest).to eq latest_tweet

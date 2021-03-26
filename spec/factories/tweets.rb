@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :tweet do
     sequence(:oembed, 'HTML 1')
-    tweeted_at { Time.now }
+    sequence(:tweeted_at) { |n| Time.now - n.day }
     tweet_id { rand(10 ** 19).to_s }
     registered_tag
   end

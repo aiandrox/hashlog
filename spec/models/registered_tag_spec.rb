@@ -99,8 +99,8 @@ RSpec.describe RegisteredTag, type: :model do
       let(:tag_with_5_tweets) { create(:registered_tag) }
       let(:tag_with_10_tweets) { create(:registered_tag) }
       before do
-        create_list(:tweet, 5, registered_tag: tag_with_5_tweets)
         create_list(:tweet, 10, registered_tag: tag_with_10_tweets)
+        create_list(:tweet, 5, registered_tag: tag_with_5_tweets)
       end
       specify do
         expect(RegisteredTag.day_count_sort.first).to eq tag_with_10_tweets
@@ -114,19 +114,24 @@ RSpec.describe RegisteredTag, type: :model do
     end
 
     describe '.persistence_sort' do
-      let!(:tag_with_42_per) { create(:registered_tag, :with_3_7_days_tweets) }
-      let(:today_tweet) { create(:tweet) }
-      let!(:tag_with_100_per) { today_tweet.registered_tag }
-      before { tag_with_100_per.fetch_tweets_data! }
-      let!(:tag_with_0_per) { create(:registered_tag) }
-      it 'tweet_rate100%のタグが最初になる' do
-        expect(RegisteredTag.persistence_sort[0]).to eq tag_with_100_per
+      let!(:tag_with_3_days_tweets) { create(:registered_tag) }
+      let!(:tag_with_1_day_tweet) { create(:registered_tag) }
+      let!(:tag_with_0_day) { create(:registered_tag) }
+      before do
+        now = Time.zone.now
+        create(:tweet, tweeted_at: now, registered_tag: tag_with_3_days_tweets)
+        create(:tweet, tweeted_at: now.yesterday, registered_tag: tag_with_3_days_tweets)
+        create(:tweet, tweeted_at: now.tomorrow, registered_tag: tag_with_3_days_tweets)
+        create(:tweet, tweeted_at: now, registered_tag: tag_with_1_day_tweet)
       end
-      it 'tweet_rate42%のタグが二番目になる' do
-        expect(RegisteredTag.persistence_sort[1]).to eq tag_with_42_per
+      it 'ツイート日数が3日のタグが最初になる' do
+        expect(RegisteredTag.persistence_sort[0]).to eq tag_with_3_days_tweets
+      end
+      it 'ツイート日数が1日のタグが二番目になる' do
+        expect(RegisteredTag.persistence_sort[1]).to eq tag_with_1_day_tweet
       end
       it 'tweet_rate0%のタグが最後になる' do
-        expect(RegisteredTag.persistence_sort[-1]).to eq tag_with_0_per
+        expect(RegisteredTag.persistence_sort[-1]).to eq tag_with_0_day
       end
       specify do
         expect(RegisteredTag.persistence_sort).to be_a Array
@@ -236,7 +241,7 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
       context '最初のツイートと最後のツイートが今日のとき' do
-        let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet)]) }
+        let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet, tweeted_at: Time.zone.now)]) }
         before { registered_tag.fetch_tweets_data! }
         it '100(%)を返す' do
           expect(registered_tag.tweet_rate).to eq 100
@@ -286,8 +291,11 @@ RSpec.describe RegisteredTag, type: :model do
     end
 
     describe '#fetch_tweets_data!' do
-      let!(:registered_tag) { create(:registered_tag, :with_tweets) }
+      let!(:registered_tag) { create(:registered_tag) }
       let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
+      before do
+        create(:tweet, tweeted_at: Time.zone.now, registered_tag: registered_tag)
+      end
       it '更新後のtweet.first_tweetedが最初のツイート日時になる' do
         expect do
           registered_tag.fetch_tweets_data!
