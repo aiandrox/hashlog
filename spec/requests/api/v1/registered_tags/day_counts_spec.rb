@@ -2,12 +2,12 @@ RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags/day_counts' do
     let(:registered_tags) { RegisteredTag.includes(:user, :tag).opened.have_tweets.day_count_sort }
     let(:tags_json) { json['registeredTags'] }
-    before do
-      create_list(:registered_tag, 3)
-      create_list(:tweet, 5, registered_tag: RegisteredTag.first)
-      get '/api/v1/registered_tags/day_counts'
-    end
     describe '全般的なこと' do
+      before do
+        create_list(:registered_tag, 3, :tweeted)
+        create_list(:tweet, 5, registered_tag: RegisteredTag.first)
+        get '/api/v1/registered_tags/day_counts'
+      end
       it '200 OKを返す' do
         expect(response.status).to eq 200
       end
@@ -36,13 +36,17 @@ RSpec.describe 'RegisteredTags', type: :request do
     end
     describe 'ソート' do
       let!(:tag_with_no_tweets) { create(:registered_tag) }
-      let!(:tag_with_5_tweets) { create(:registered_tag, :with_tweets, count: 5) }
-      let!(:tag_with_3_tweets) { create(:registered_tag, :with_tweets, count: 3) }
-      before { get '/api/v1/registered_tags/day_counts' }
+      let!(:tag_with_3_tweets) { create(:registered_tag, :tweeted) }
+      let!(:tag_with_1_tweets) { create(:registered_tag, :tweeted) }
+      before do
+        create(:tweet, tweeted_at: Time.zone.now, registered_tag: tag_with_3_tweets)
+        create(:tweet, tweeted_at: Time.zone.now.yesterday, registered_tag: tag_with_3_tweets)
+        get '/api/v1/registered_tags/day_counts'
+      end
 
       it 'ツイート日数が多いものが一番になる' do
-        expect(tags_json.first['id']).to eq tag_with_5_tweets.id
-        expect(tags_json.second['id']).to eq tag_with_3_tweets.id
+        expect(tags_json.first['id']).to eq tag_with_3_tweets.id
+        expect(tags_json.second['id']).to eq tag_with_1_tweets.id
       end
       it 'ツイートがないregistered_tagを含めない' do
         expect(tags_json).not_to include({
@@ -66,8 +70,13 @@ RSpec.describe 'RegisteredTags', type: :request do
       end
     end
     describe '公開設定' do
-      let!(:limited_registered_tag) { create(:registered_tag, :limited) }
-      let!(:closed_registered_tag) { create(:registered_tag, :closed) }
+      let!(:limited_registered_tag) { create(:registered_tag, :limited, :tweeted) }
+      let!(:closed_registered_tag) { create(:registered_tag, :closed, :tweeted) }
+      before do
+        create_list(:registered_tag, 3, :tweeted)
+        create_list(:tweet, 5, registered_tag: RegisteredTag.first)
+        get '/api/v1/registered_tags/day_counts'
+      end
       it '限定公開のタグを返さない' do
         expect(tags_json).not_to include 'id' => limited_registered_tag.id
       end
@@ -76,7 +85,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       end
     end
     describe 'pagy' do
-      before { create_list(:registered_tag, 50, :with_3_7_days_tweets) }
+      before { create_list(:registered_tag, 50, :with_3_7_days_tweets, :tweeted) }
       it 'pageクエリがないとき 20件返す' do
         get '/api/v1/registered_tags/day_counts'
         expect(tags_json.length).to eq 20

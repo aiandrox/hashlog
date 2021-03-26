@@ -98,7 +98,7 @@ RSpec.describe 'Tweets', type: :request do
         create(:tweet, registered_tag: registered_tag, tweeted_at: Date.tomorrow)
       }
       let!(:oldest_registered_tweet) {
-        create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
+        create(:tweet, tweeted_at: Time.parse('2020-01-01'), registered_tag: registered_tag)
       }
       before { create_list(:tweet, 30, registered_tag: registered_tag) }
       it 'tweetsが昇順に並ぶ（最新のtweetが最初になる）' do
