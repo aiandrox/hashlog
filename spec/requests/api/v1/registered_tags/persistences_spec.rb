@@ -38,7 +38,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       let!(:tag_100_per_3_days) { create(:registered_tag, :with_3_days_tweets) }
       let!(:tag_100_per_1_day) { create(:registered_tag, :with_tweets, count: 1) }
       before { get '/api/v1/registered_tags/persistences' }
-      it 'ツイートの割合が多くかつツイート日数が多いものが一番になる' do
+      xit 'ツイートの割合が多くかつツイート日数が多いものが一番になる' do
         expect(tags_json.first['id']).to eq tag_100_per_3_days.id
         expect(tags_json.second['id']).to eq tag_100_per_1_day.id
       end
