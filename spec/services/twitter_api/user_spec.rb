@@ -18,5 +18,13 @@ describe TwitterAPI::User do
     it { expect { subject }.to change { user.reload.screen_name }.to('Hash1og').from('古いID') }
     it { expect { subject }.to change { user.reload.avatar_url }.to('https://pbs.twimg.com/profile_images/1270548562221215744/_lvOIniK.jpg').from('old_image') }
     it { expect { subject }.not_to change { user.reload.description }.from('古い詳細') }
+
+    context 'Twitter::Error::NotFoundのとき' do
+      before do
+        allow_any_instance_of(Twitter::REST::Client).to receive(:user).and_raise(Twitter::Error::NotFound)
+      end
+      it { expect { subject }.not_to change { user.reload.name }.from('古い名前') }
+      it { expect { subject }.to change { user.reload.role }.to('deleted').from('general') }
+    end
   end
 end

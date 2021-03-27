@@ -15,6 +15,8 @@ module TwitterAPI
         screen_name: twitter_data.screen_name,
         avatar_url: avatar_url
       )
+    rescue Twitter::Error::NotFound
+      user.deleted!
     end
 
     private
