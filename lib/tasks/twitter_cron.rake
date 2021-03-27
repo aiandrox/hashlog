@@ -1,4 +1,9 @@
 namespace :twitter_cron do
+  desc 'Twitterアカウントプロフィールの反映'
+  task fetch_user_data: :environment do
+    CronTwitter.new.call(Job::UpdateUserTwitterData.new)
+  end
+
   desc 'TwitterAPIによる自動検索'
   task add_tweets: :environment do
     CronTwitter.new.call(Job::AddTweets.new)
