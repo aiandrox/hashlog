@@ -1,4 +1,4 @@
-module TwitterAPIJob
+module Job
   class AddTweets
     include TwitterAPIClient
     attr_reader :notify_logs

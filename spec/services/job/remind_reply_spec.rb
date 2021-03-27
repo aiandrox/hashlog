@@ -1,7 +1,7 @@
-RSpec.describe TwitterAPIJob::RemindReply do
+RSpec.describe Job::RemindReply do
   let(:user) { create(:user, :real_value) }
   let(:registered_tag) { create(:registered_tag, user: user) }
-  let(:remind_reply) { TwitterAPIJob::RemindReply.new }
+  let(:remind_reply) { Job::RemindReply.new }
   before { create_list(:registered_tag, 3) }
   describe '#call' do
     it 'remind_dayが0のtagに対してsend_tweetメソッドを実行しない' do

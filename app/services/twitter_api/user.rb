@@ -9,8 +9,14 @@ module TwitterAPI
     def call
       avatar = twitter_data.profile_image_url_https
       avatar_url = avatar.scheme + '://' + avatar.host + avatar.path
-      { name: twitter_data.name, screen_name: twitter_data.screen_name,
-        description: twitter_data.description, avatar_url: avatar_url }
+
+      user.update!(
+        name: twitter_data.name,
+        screen_name: twitter_data.screen_name,
+        avatar_url: avatar_url
+      )
+    rescue Twitter::Error::NotFound
+      user.deleted!
     end
 
     private

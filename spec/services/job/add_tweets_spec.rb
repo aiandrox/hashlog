@@ -1,8 +1,8 @@
-describe TwitterAPIJob::AddTweets do
+describe Job::AddTweets do
   let(:user) { create(:user, :real_value) }
   let(:registered_tag) { user.registered_tags.first }
   let(:tag) { create(:tag, name: 'ポートフォリオ進捗') }
-  let(:add_tweets) { TwitterAPIJob::AddTweets.new }
+  let(:add_tweets) { Job::AddTweets.new }
   describe '#call' do
     context 'ツイートを既に取得しているとき' do
       before 'タグ登録時にツイートを取得' do
@@ -23,7 +23,7 @@ describe TwitterAPIJob::AddTweets do
         end
       end
       context '既に前日のツイートを取得しているとき' do
-        let(:add_tweets) { TwitterAPIJob::AddTweets.new([registered_tag]) }
+        let(:add_tweets) { Job::AddTweets.new([registered_tag]) }
         it 'RegisteredTag#add_tweetsを実行しない' do
           create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
           registered_tag.fetch_tweets_data!
@@ -44,7 +44,7 @@ describe TwitterAPIJob::AddTweets do
       let!(:registered_tag) {
         create(:registered_tag, user: user, tag: create(:tag, name: 'ポートフォリオ進捗'))
       }
-      let(:add_tweets) { TwitterAPIJob::AddTweets.new([registered_tag]) }
+      let(:add_tweets) { Job::AddTweets.new([registered_tag]) }
       it 'RegisteredTag#create_tweetsを実行する' do
         expect(registered_tag).to receive(:create_tweets)
         add_tweets.call

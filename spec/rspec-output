@@ -473,7 +473,7 @@ AddTweetsJob
     ジョブがすぐエンキューされる
   AddTweetsJob#perform
     ログを出力する (PENDING: Temporarily skipped with xit)
-    TwitterAPIJob::AddTweets#callを実行する
+    Job::AddTweets#callを実行する
     slack_notofyが実行される
 
 RemindReplyJob
@@ -481,13 +481,13 @@ RemindReplyJob
     ジョブがすぐエンキューされる
   RemindReplyJob#perform
     ログを出力する (PENDING: Temporarily skipped with xit)
-    TwitterAPIJob::RemindReply#callを実行する
+    Job::RemindReply#callを実行する
     slack_notofyが実行される
 
 
 ## サービスクラス
 
-TwitterAPIJob
+Job
   ::RemindReply
     #call
       remind_dayが0のtagに対してsend_tweetメソッドを実行しない
