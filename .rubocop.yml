@@ -2,12 +2,12 @@
 
 AllCops:
   Exclude:
-    - 'tmp/**/*'
-    - 'vendor/**/*'
-    - 'db/**/*'
-    - 'bin/**/*'
-    - 'spec/**/*'
-    - 'node_modules/**/*'
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "db/**/*"
+    - "bin/**/*"
+    - "spec/**/*"
+    - "node_modules/**/*"
   DisplayCopNames: true
 
 # 日本語でのコメントを許可
@@ -34,17 +34,25 @@ Style/HashTransformValues:
 Style/Documentation:
   Enabled: false
 
+Lint/MissingSuper:
+  Enabled: false
+
 # コントローラのメソッド名に「set_」「get_」を許可
 Naming/AccessorMethodName:
   Exclude:
     - "app/controllers/**/*"
 
+Metrics/BlockLength:
+  Exclude:
+    - "config/**/*"
+
 # 一行の長さは100字まで。コメントは制限しない
 Metrics/LineLength:
-  Max: 100
-  IgnoredPatterns: ['\A#']
+  Max: 120
+  IgnoredPatterns: ["^ *# "]
   Exclude:
     - "db/migrate/*.rb"
+    - "config/**/*"
 
 # メソッドの行数を20行までにする
 Metrics/MethodLength:
