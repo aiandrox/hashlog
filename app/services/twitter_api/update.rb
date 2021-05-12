@@ -21,8 +21,8 @@ module TwitterAPI
 
       # 叙述的に書かないとTwitter::Error::NotFoundになる
       oembed = client(user).oembeds(tweet_id, omit_script: true, hide_thread: true, lang: :ja)
-      oembed.first.html =~ %r{\" dir=\"ltr\">(.+)</p>}
-      tweet_oembed = $+
+      oembed.first.html =~ %r{" dir="ltr">(.+)</p>}
+      tweet_oembed = Regexp.last_match(-1)
       [tweet_oembed, tweeted_at, tweet_id]
     rescue Twitter::Error::DuplicateStatus
       errors.add(:base, '同一内容の投稿はできません')

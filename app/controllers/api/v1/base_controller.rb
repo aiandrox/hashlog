@@ -8,7 +8,7 @@ class Api::V1::BaseController < ApplicationController
   before_action :prepare_exception_notifier
   after_action :set_pagy_header, if: -> { @pagy }
 
-  rescue_from Exception, with: :notify_500
+  rescue_from Exception, with: :notify500
   rescue_from Banken::NotAuthorizedError, with: :not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_not_found
   rescue_from Twitter::Error::TooManyRequests, with: :rescue_limited_twitter_requests

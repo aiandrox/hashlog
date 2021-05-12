@@ -3,7 +3,7 @@ module ErrorsHandler
 
   protected
 
-  def notify_500(exception)
+  def notify500(exception)
     logger.error "500 error: #{exception.message}\n#{exception.backtrace}" if Rails.env.production?
     raise exception
   end
