@@ -8,7 +8,7 @@ module TwitterAPI
 
     def call
       avatar = twitter_data.profile_image_url_https
-      avatar_url = avatar.scheme + '://' + avatar.host + avatar.path
+      avatar_url = "#{avatar.scheme}://#{avatar.host}#{avatar.path}"
 
       user.update!(
         name: twitter_data.name,

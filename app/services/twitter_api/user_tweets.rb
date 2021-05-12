@@ -25,8 +25,8 @@ module TwitterAPI
       client(user).oembeds(tweet_ids, omit_script: true, hide_thread: true, lang: :ja)
                   .take(100)
                   .map do |oembed|
-        oembed.html =~ %r{\" dir=\"ltr\">(.+)</p>}
-        $+
+        oembed.html =~ %r{" dir="ltr">(.+)</p>}
+        Regexp.last_match(-1)
       end.zip(tweeted_ats, tweet_ids, medias_list)
     end
 
