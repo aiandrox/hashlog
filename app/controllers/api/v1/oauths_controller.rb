@@ -9,7 +9,14 @@ class Api::V1::OauthsController < Api::V1::BaseController
       redirect_to root_path
       return
     end
-    fetch_user_data_from(provider) unless login_from(provider)
+    if (user = login_from(provider))
+      user.authentication.update!(
+        access_token: access_token.token,
+        access_token_secret: access_token.secret
+      )
+    else
+      fetch_user_data_from(provider)
+    end
     # ログイン判定用。JSでフラッシュメッセージが表示されたら削除する
     cookies[:logged_in] = { value: 1, expires: 3.minute.from_now }
     redirect_to mypage_dashboard_path
