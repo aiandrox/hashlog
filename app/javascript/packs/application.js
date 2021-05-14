@@ -10,6 +10,11 @@ Vue.use(VueAnalytics, {
   id: "UA-171536655-1",
   router
 })
+import Ads from "vue-google-adsense"
+Vue.use(require("vue-script2"))
+Vue.use(Ads.Adsense) // 広告ユニット
+Vue.use(Ads.InArticleAdsense) // 記事内広告
+Vue.use(Ads.InFeedAdsense) // フィード内広告
 
 import Vuex from "vuex"
 import store from "../store/index"

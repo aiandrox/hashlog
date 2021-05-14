@@ -52,6 +52,7 @@
         @input="changePaginationPage"
       />
     </div>
+    <Adsense data-ad-client="ca-pub-1391068561417780" data-ad-slot="7022358050" />
   </div>
 </template>
 
