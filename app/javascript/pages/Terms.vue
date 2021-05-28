@@ -10,6 +10,7 @@ export default {
     theTerms
   },
   mounted() {
+    this.$toTop()
     document.title = "利用規約 - Hashlog"
   }
 }

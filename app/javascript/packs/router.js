@@ -4,6 +4,7 @@ import store from "../store"
 import Top from "../pages/Top"
 import TagRanking from "../pages/TagRanking"
 import Terms from "../pages/Terms"
+import PrivacyPolicy from "../pages/PrivacyPolicy"
 import Mypage from "../pages/Mypage"
 import MyTag from "../pages/MyTag"
 import User from "../pages/User"
@@ -20,6 +21,11 @@ const routes = [
     path: "/terms",
     name: "terms",
     component: Terms
+  },
+  {
+    path: "/privacy_policy",
+    name: "privacyPolicy",
+    component: PrivacyPolicy
   },
   {
     path: "/ranking/:type",
