@@ -6,13 +6,13 @@ jobs:
   build:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
-      - image: circleci/ruby:2.6.6-node-browsers-legacy
+      - image: cimg/ruby:2.6.9-node # https://circleci.com/developer/ja/images/image/cimg/ruby
         environment:
           DB_HOST: 127.0.0.1
           RAILS_ENV: test
           BUNDLER_VERSION: 2.1.4
           TZ: "Japan"
-      - image: circleci/mysql:8.0.19-ram
+      - image: cimg/mysql:8.0.27
         command: [--default-authentication-plugin=mysql_native_password]
         environment:
           MYSQL_USER: root

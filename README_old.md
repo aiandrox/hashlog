@@ -65,7 +65,7 @@ Twitter で学習報告をしている人を見て、「毎日学習記録を付
 
 ### バックエンド
 
-- Ruby 2.6.6
+- Ruby 2.6.9
 - Rails 5.2.4.4
 - RSpec 3.9
 - Twitter API（外部 API）
@@ -133,7 +133,7 @@ $ cp config/database.yml.default config/database.yml
 - ローカル環境構築
 
 ```shell
-$ rbenv local 2.6.6
+$ rbenv local 2.6.9
 $ nodenv local 14.2.0
 $ bundle install --path vendor/bundle
 $ yarn install
