@@ -1,6 +1,5 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 const environment = require('./environment')
-// const eslint = require("./loaders/eslint")
-// environment.loaders.prepend("eslint", eslint)
-module.exports = environment.toWebpackConfig()
+environment.config.set('output.filename', 'js/[name]-[hash].js')
+module.exports = environment.toWebpackConfig();
