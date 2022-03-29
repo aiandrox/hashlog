@@ -4,5 +4,5 @@ const vue = require("./loaders/vue")
 
 environment.plugins.prepend("VueLoaderPlugin", new VueLoaderPlugin())
 environment.loaders.append("vue", vue)
-environment.loaders.delete('nodeModules')
+environment.loaders.delete("nodeModules")
 module.exports = environment
