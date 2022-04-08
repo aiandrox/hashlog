@@ -6,7 +6,7 @@ jobs:
   build:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
-      - image: cimg/ruby:2.6.9-node # https://circleci.com/developer/ja/images/image/cimg/ruby
+      - image: cimg/ruby:2.7.5-node # https://circleci.com/developer/ja/images/image/cimg/ruby
         environment:
           DB_HOST: 127.0.0.1
           RAILS_ENV: test
