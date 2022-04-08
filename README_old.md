@@ -98,7 +98,7 @@ https://drive.google.com/file/d/1xGTZvsnf1Tqezl44daZW8v8j_zwY8kEK/view?usp=shari
 ### インフラストラクチャー
 
 - ~~Docker~~
-- Sider
+- ~~Sider~~
 - CircleCI
 - Nginx 1.12.2
 - puma 4.3.3
