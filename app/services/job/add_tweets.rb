@@ -1,6 +1,6 @@
 module Job
   class AddTweets
-    include TwitterAPIClient
+    include TwitterApiClient
     attr_reader :notify_logs
 
     def initialize(registered_tags = RegisteredTag.all.includes(:user, :tag))
@@ -20,7 +20,7 @@ module Job
 
     def collect_tweets(registered_tag)
       collect(registered_tag, registered_tag.user)
-    rescue TwitterAPIClient::NotFoundAuthenticationError
+    rescue TwitterApiClient::NotFoundAuthenticationError
       user = User.admin.first
       collect(registered_tag, user)
     rescue StandardError => e
@@ -31,7 +31,7 @@ module Job
     def collect(registered_tag, user)
       last_tweet = registered_tag.tweets.latest
       unless last_tweet
-        tweets_data = TwitterAPI::UserTweets.new(user, registered_tag.tag.name).call
+        tweets_data = TwitterApi::UserTweets.new(user, registered_tag.tag.name).call
         registered_tag.create_tweets(tweets_data)
         return
       end
@@ -39,7 +39,7 @@ module Job
       return if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
 
       since_id = last_tweet.tweet_id.to_i
-      tweet_data = TwitterAPI::UserTweets.new(user, registered_tag.tag.name, since_id)
+      tweet_data = TwitterApi::UserTweets.new(user, registered_tag.tag.name, since_id)
                                          .call('everyday')
       message = "@#{registered_tag.user.screen_name} の ##{registered_tag.tag.name} にツイートを追加"
       registered_tag.add_tweets(tweet_data).any? && notify_logs << message && Rails.logger.info(message)

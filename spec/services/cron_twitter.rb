@@ -3,7 +3,7 @@ RSpec.describe CronTwitter do
 
   describe 'CronTwitter#call' do
     context '引数に Job::AddTweets.new を渡すとき',
-      vcr: { cassette_name: 'add_tweets_job TwitterAPIとWebhooks' } do
+      vcr: { cassette_name: 'add_tweets_job TwitterApiとWebhooks' } do
       let(:add_tweets) { Job::AddTweets.new }
       xit 'ログを出力する' do
         expect(Rails.logger).to receive(:info)

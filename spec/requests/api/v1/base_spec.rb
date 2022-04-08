@@ -1,7 +1,7 @@
 RSpec.describe 'Base', type: :request do
   let(:user) { create(:user, screen_name: 'user') }
   describe '#rescue_limited_twitter_requests' do
-    context 'TwitterAPIのリクエストが上限に達した場合',
+    context 'TwitterApiのリクエストが上限に達した場合',
       vcr: { cassette_name: 'twitter_api/standard_search/Twitter::Error::TooManyRequests' } do
       before do
         login_as(user)

@@ -1,6 +1,6 @@
-module TwitterAPI
+module TwitterApi
   class Update
-    include TwitterAPIClient
+    include TwitterApiClient
     include ActiveModel::Validations
 
     attr_reader :user, :tag, :body

@@ -1,6 +1,6 @@
-module TwitterAPI
+module TwitterApi
   class User
-    include TwitterAPIClient
+    include TwitterApiClient
 
     def initialize(user)
       @user = user

@@ -1,6 +1,6 @@
 require 'twitter'
 
-module TwitterAPIClient
+module TwitterApiClient
   class NotFoundAuthenticationError < StandardError
   end
 

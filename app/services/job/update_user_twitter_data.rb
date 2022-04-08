@@ -1,6 +1,6 @@
 module Job
   class UpdateUserTwitterData
-    include TwitterAPIClient
+    include TwitterApiClient
     attr_reader :notify_logs
 
     def initialize(users = User.not_deleted)
@@ -17,7 +17,7 @@ module Job
     private
 
     def fetch(user)
-      TwitterAPI::User.new(user).call
+      TwitterApi::User.new(user).call
     rescue StandardError => e
       message = "@#{user.screen_name}: #{e}"
       notify_logs << message && Rails.logger.error(message)
