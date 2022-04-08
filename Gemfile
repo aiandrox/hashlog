@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.6'
+ruby '2.6.9'
 
 gem 'bootsnap', require: false
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'

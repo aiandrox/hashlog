@@ -3,9 +3,11 @@
     <v-spacer />
     <div>
       <v-btn dense text @click="push('terms')">利用規約</v-btn>
-      <v-btn dense text @click="push('privacyPolicy')"
-        >プライバシーポリシー</v-btn
-      >
+      <v-btn
+        dense
+        text
+        @click="push('privacyPolicy')"
+      >プライバシーポリシー</v-btn>
       <v-btn icon href="https://twitter.com/Hash1og">
         <v-icon>mdi-twitter</v-icon>
       </v-btn>

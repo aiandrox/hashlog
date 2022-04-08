@@ -230,15 +230,6 @@
         "properties": "always"
       }
     ],
-    "comma-dangle": [
-      "error",
-      "only-multiline",
-      {
-        "functions": "never",
-        "imports": "never",
-        "exports": "never"
-      }
-    ],
     "comma-spacing": [
       "error",
       {

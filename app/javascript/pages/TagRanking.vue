@@ -6,8 +6,7 @@
         :key="rank.symbol"
         class="custom-transform-class text-none"
         :to="{ name: 'tagRanking', params: { type: rank.symbol } }"
-        >{{ rank.name }}</v-tab
-      >
+      >{{ rank.name }}</v-tab>
     </v-tabs>
     <ranking
       :registered-tags="registeredTags"
