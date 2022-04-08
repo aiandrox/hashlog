@@ -1,4 +1,4 @@
-module TwitterAPI
+module TwitterApi
   class Update
     include TwitterApiClient
     include ActiveModel::Validations

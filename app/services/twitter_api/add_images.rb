@@ -1,4 +1,4 @@
-module TwitterAPI
+module TwitterApi
   class AddImages
     include TwitterApiClient
 

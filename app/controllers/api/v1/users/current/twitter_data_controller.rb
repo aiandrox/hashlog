@@ -3,7 +3,7 @@ class Api::V1::Users::Current::TwitterDataController < Api::V1::BaseController
 
   def update
     authorize!
-    TwitterAPI::User.new(current_user).call
+    TwitterApi::User.new(current_user).call
     render json: current_user, status: :ok
   end
 end

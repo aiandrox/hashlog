@@ -1,4 +1,4 @@
-module TwitterAPI
+module TwitterApi
   class User
     include TwitterApiClient
 

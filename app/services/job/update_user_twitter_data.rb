@@ -17,7 +17,7 @@ module Job
     private
 
     def fetch(user)
-      TwitterAPI::User.new(user).call
+      TwitterApi::User.new(user).call
     rescue StandardError => e
       message = "@#{user.screen_name}: #{e}"
       notify_logs << message && Rails.logger.error(message)

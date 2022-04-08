@@ -1,4 +1,4 @@
-describe TwitterAPI::User do
+describe TwitterApi::User do
   let(:user) do
     create(
       :user,
@@ -10,7 +10,7 @@ describe TwitterAPI::User do
     )
   end
   describe '#call', vcr: { cassette_name: 'twitter_api/user_show/hashlog' } do
-    let(:user_data) { TwitterAPI::User.new(user) }
+    let(:user_data) { TwitterApi::User.new(user) }
     subject { user_data.call }
     it 'Twitterのアカウントから取得したユーザーのデータを更新する' do
       expect { subject }.to change { user.reload.name }.to('Hashlog').from('古い名前')
