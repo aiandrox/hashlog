@@ -1,6 +1,6 @@
 module TwitterAPI
   class UserTweets
-    include TwitterAPIClient
+    include TwitterApiClient
 
     def initialize(user, tag_name, since_id = nil)
       @tweet_ids = []

@@ -1,6 +1,6 @@
 module TwitterAPI
   class AddImages
-    include TwitterAPIClient
+    include TwitterApiClient
 
     def self.call(tweet)
       new.call(tweet)

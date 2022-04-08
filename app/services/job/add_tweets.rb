@@ -1,6 +1,6 @@
 module Job
   class AddTweets
-    include TwitterAPIClient
+    include TwitterApiClient
     attr_reader :notify_logs
 
     def initialize(registered_tags = RegisteredTag.all.includes(:user, :tag))
@@ -20,7 +20,7 @@ module Job
 
     def collect_tweets(registered_tag)
       collect(registered_tag, registered_tag.user)
-    rescue TwitterAPIClient::NotFoundAuthenticationError
+    rescue TwitterApiClient::NotFoundAuthenticationError
       user = User.admin.first
       collect(registered_tag, user)
     rescue StandardError => e

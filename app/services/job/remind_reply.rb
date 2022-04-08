@@ -1,6 +1,6 @@
 module Job
   class RemindReply
-    include TwitterAPIClient
+    include TwitterApiClient
     attr_reader :notify_logs
 
     def initialize(registered_tags = RegisteredTag.all.includes(:user, :tag))
