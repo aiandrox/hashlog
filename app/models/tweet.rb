@@ -4,7 +4,7 @@ class Tweet < ApplicationRecord
 
   validates :oembed, presence: true
   validates :tweet_id, presence: true
-  validates :tweet_id, uniqueness: { scope: :registered_tag_id }
+  validates :tweet_id, uniqueness: { case_sensitive: false, scope: :registered_tag_id }
   validates :tweeted_at, presence: true
 
   scope :desc, -> { order(tweeted_at: :desc) }

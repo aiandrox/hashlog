@@ -6,7 +6,7 @@ class Tag < ApplicationRecord
 
   validates :name, format: { with: /\A[Ａ-Ｚａ-ｚA-Za-z一-龠々0-9０-９ぁ-ヶｦ-ﾟー゛゜_]+\Z/,
                              message: 'の入力形式が不適です' }
-  validates :name, presence: true, uniqueness: true, length: { maximum: 100 }
+  validates :name, presence: true, uniqueness: { case_sensitive: true }, length: { maximum: 100 }
 
   scope :popular, -> { joins(:registered_tags).group(:tag_id).order(Arel.sql('count(user_id) DESC')) }
 
