@@ -9,6 +9,7 @@ AllCops:
     - "spec/**/*"
     - "node_modules/**/*"
   DisplayCopNames: true
+  NewCops: enable
 
 # 日本語でのコメントを許可
 Style/AsciiComments:

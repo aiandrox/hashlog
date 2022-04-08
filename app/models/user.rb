@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :registered_tags, dependent: :destroy
   has_many :tags, through: :registered_tags
 
-  validates :twitter_id, presence: true, uniqueness: true
+  validates :twitter_id, presence: true, uniqueness: { case_sensitive: false }
   validates :screen_name, presence: true
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, length: { maximum: 300 }
