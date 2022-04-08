@@ -66,8 +66,8 @@ Twitter で学習報告をしている人を見て、「毎日学習記録を付
 ### バックエンド
 
 - Ruby 2.7.5
-- Rails 5.2.4.4
-- RSpec 3.9
+- Rails 6.0.4.7
+- RSpec 3.11.0
 - Twitter API（外部 API）
 
 #### 機能における主要な Gem
