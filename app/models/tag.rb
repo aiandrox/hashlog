@@ -8,8 +8,7 @@ class Tag < ApplicationRecord
                              message: 'の入力形式が不適です' }
   validates :name, presence: true, uniqueness: true, length: { maximum: 100 }
 
-  # TODO: 警告を直す
-  scope :popular, -> { joins(:registered_tags).group(:tag_id).order('count(user_id) DESC') }
+  scope :popular, -> { joins(:registered_tags).group(:tag_id).order(Arel.sql('count(user_id) DESC')) }
 
   private
 
