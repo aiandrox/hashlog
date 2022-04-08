@@ -18,8 +18,6 @@ class User < ApplicationRecord
   enum privacy: { published: 0, closed: 1 }
   enum role: { admin: 0, general: 1, deleted: 10 }
 
-  scope :not_deleted, -> { where.not(role: :deleted) }
-
   # tagからregistered_tagを返す
   def registered_tag(tag)
     @registered_tag ||= begin
