@@ -39,7 +39,7 @@ class User < ApplicationRecord
       registered_tag.create_tweets(tweets_data)
       true
     rescue ActiveRecord::RecordInvalid
-      tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?
+      tag.errors.errors.concat(registered_tag.errors.errors) if tag.valid?
       false
     end
   end
