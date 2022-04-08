@@ -1,8 +1,8 @@
 # Hashlog（ハッシュログ）
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/aiandrox/hashlog)](https://github.com/aiandrox/hashlog/releases)
-[![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-%23a72332)](https://rubygems.org/gems/rails/versions/5.2.4.4)
-[![Vue](https://img.shields.io/badge/Vue-v2.6.11-%2342b77c)](https://www.npmjs.com/package/vue/v/2.6.11)
+[![Rails](https://img.shields.io/badge/Rails-v6.1.5-%23a72332)](https://rubygems.org/gems/rails/versions/6.1.5)
+[![Vue](https://img.shields.io/badge/Vue-v2.6.14-%2342b77c)](https://www.npmjs.com/package/vue/v/2.6.14)
 [![CircleCI](https://circleci.com/gh/aiandrox/hashlog.svg?style=shield)](https://circleci.com/gh/aiandrox/hashlog)
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d31e5fff03ec3ea494fa/maintainability)](https://codeclimate.com/github/aiandrox/hashlog/maintainability)

@@ -18,8 +18,6 @@ class User < ApplicationRecord
   enum privacy: { published: 0, closed: 1 }
   enum role: { admin: 0, general: 1, deleted: 10 }
 
-  scope :not_deleted, -> { where.not(role: :deleted) }
-
   # tagからregistered_tagを返す
   def registered_tag(tag)
     @registered_tag ||= begin
@@ -39,7 +37,7 @@ class User < ApplicationRecord
       registered_tag.create_tweets(tweets_data)
       true
     rescue ActiveRecord::RecordInvalid
-      tag.errors.messages.merge!(registered_tag.errors.messages) if tag.valid?
+      tag.errors.errors.concat(registered_tag.errors.errors) if tag.valid?
       false
     end
   end
