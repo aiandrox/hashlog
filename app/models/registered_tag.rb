@@ -50,7 +50,6 @@ class RegisteredTag < ApplicationRecord
   scope :asc, -> { order(created_at: :asc) }
   scope :desc, -> { order(created_at: :desc) }
   scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
-  scope :have_tweets, -> { where('first_tweeted_at < ?', Time.current) }
   scope :day_count_sort, -> {
     joins(:tweets).group(:id).order(Arel.sql("count(distinct date_format(tweets.tweeted_at, '%Y%m%d')) desc, registered_tags.tweet_rate desc"))
   }

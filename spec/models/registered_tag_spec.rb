@@ -108,35 +108,25 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
     end
-
-    describe '.have_tweets' do
-      let(:registered_tag_with_tweets) { create(:registered_tag, :with_tweets) }
-      let(:registered_tag_has_no_tweets) { create(:registered_tag) }
-      it 'ツイートを持つregistered_tagを含む' do
-        expect(RegisteredTag.have_tweets).to include registered_tag_with_tweets
-      end
-      it 'ツイートを持たないregistered_tagは含まない' do
-        expect(RegisteredTag.have_tweets).not_to include registered_tag_has_no_tweets
-      end
-    end
   end
 
   describe 'methods' do
     describe '.day_count_sort' do
-      let(:tag_with_5_tweets) { create(:registered_tag) }
-      let(:tag_with_10_tweets) { create(:registered_tag) }
+      let!(:tag_with_5_tweets) { create(:registered_tag) }
+      let!(:tag_with_10_tweets) { create(:registered_tag) }
+      let!(:tag_with_0_tweets) { create(:registered_tag) }
       before do
         create_list(:tweet, 10, registered_tag: tag_with_10_tweets)
         create_list(:tweet, 5, registered_tag: tag_with_5_tweets)
       end
       specify do
-        expect(RegisteredTag.day_count_sort.first).to eq tag_with_10_tweets
+        expect(RegisteredTag.day_count_sort[0]).to eq tag_with_10_tweets
       end
       specify do
-        expect(RegisteredTag.day_count_sort.last).to eq tag_with_5_tweets
+        expect(RegisteredTag.day_count_sort[-1]).to eq tag_with_5_tweets
       end
-      specify do
-        expect(RegisteredTag.day_count_sort).to be_a Array
+      it 'ツイートがないタグは含まない' do
+        expect(RegisteredTag.persistence_sort).not_to include tag_with_0_tweets
       end
     end
 
@@ -148,7 +138,7 @@ RSpec.describe RegisteredTag, type: :model do
         now = Time.current
         create(:tweet, tweeted_at: now, registered_tag: tag_with_3_days_tweets)
         create(:tweet, tweeted_at: now.yesterday, registered_tag: tag_with_3_days_tweets)
-        create(:tweet, tweeted_at: now.tomorrow, registered_tag: tag_with_3_days_tweets)
+        create(:tweet, tweeted_at: 2.days.ago(now), registered_tag: tag_with_3_days_tweets)
         create(:tweet, tweeted_at: now, registered_tag: tag_with_1_day_tweet)
       end
       it 'ツイート日数が3日のタグが最初になる' do
@@ -157,11 +147,8 @@ RSpec.describe RegisteredTag, type: :model do
       it 'ツイート日数が1日のタグが二番目になる' do
         expect(RegisteredTag.persistence_sort[1]).to eq tag_with_1_day_tweet
       end
-      it 'tweet_rate0%のタグが最後になる' do
-        expect(RegisteredTag.persistence_sort[-1]).to eq tag_with_0_day
-      end
-      specify do
-        expect(RegisteredTag.persistence_sort).to be_a Array
+      it 'ツイートがないタグは含まない' do
+        expect(RegisteredTag.persistence_sort).not_to include tag_with_0_day
       end
     end
 

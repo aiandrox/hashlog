@@ -1,6 +1,6 @@
 RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags/persistences' do
-    let(:registered_tags) { RegisteredTag.includes(:user, :tag).opened.have_tweets.persistence_sort }
+    let(:registered_tags) { RegisteredTag.includes(:user, :tag).opened.persistence_sort }
     let(:tags_json) { json['registeredTags'] }
     before do
       create_list(:registered_tag, 3, :with_3_7_days_tweets)
@@ -10,7 +10,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       it '200 OKを返す' do
         expect(response.status).to eq 200
       end
-      it 'RegisteredTag.opened.have_tweets.persistence_sortのJSONを返す' do
+      it 'RegisteredTag.opened.persistence_sortのJSONを返す' do
         tags_json.zip(registered_tags).each do |tag_json, registered_tag|
           expect(tag_json).to eq({
             'id' => registered_tag.id,
@@ -35,10 +35,17 @@ RSpec.describe 'RegisteredTags', type: :request do
     end
     describe 'ソート' do
       let!(:registered_tag_with_no_tweets) { create(:registered_tag) }
-      let!(:tag_100_per_3_days) { create(:registered_tag, :with_3_days_tweets) }
-      let!(:tag_100_per_1_day) { create(:registered_tag, :with_tweets, count: 1) }
+      let!(:tag_100_per_3_days) { create(:registered_tag, tweet_rate: 100) }
+      let!(:tag_100_per_1_day) { create(:registered_tag, tweet_rate: 100) }
       before { get '/api/v1/registered_tags/persistences' }
-      xit 'ツイートの割合が多くかつツイート日数が多いものが一番になる' do
+
+      it 'ツイートの割合が多くかつツイート日数が多いものが一番になる' do
+        create(:tweet, registered_tag: tag_100_per_3_days, tweeted_at: Time.current)
+        create(:tweet, registered_tag: tag_100_per_3_days, tweeted_at: 1.day.ago(Time.current))
+        create(:tweet, registered_tag: tag_100_per_3_days, tweeted_at: 2.days.ago(Time.current))
+        create(:tweet, registered_tag: tag_100_per_1_day, tweeted_at: Time.current)
+
+        get '/api/v1/registered_tags/persistences'
         expect(tags_json.first['id']).to eq tag_100_per_3_days.id
         expect(tags_json.second['id']).to eq tag_100_per_1_day.id
       end
