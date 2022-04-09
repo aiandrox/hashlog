@@ -32,12 +32,13 @@ class Tweet < ApplicationRecord
   after_create :set_tweets_date_to_registered_tag
 
   scope :desc, -> { order(tweeted_at: :desc) }
-  scope :tweeted_day_count, lambda {
-    formated_date = "date_format(tweeted_at, '%Y%m%d')"
-    select(formated_date).group(formated_date).length
-  }
   scope :tweeted_ats, -> { select(:tweeted_at) }
   scope :tweeted_at_date, ->(date) { where(tweeted_at: date.beginning_of_day..date.end_of_day) }
+
+  def self.tweeted_day_count
+    formated_date = "date_format(tweeted_at, '%Y%m%d')"
+    select(formated_date).group(formated_date).length
+  end
 
   def self.latest
     desc.first
