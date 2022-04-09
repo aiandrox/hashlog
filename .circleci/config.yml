@@ -10,7 +10,7 @@ jobs:
         environment:
           DB_HOST: 127.0.0.1
           RAILS_ENV: test
-          BUNDLER_VERSION: 2.2.32
+          BUNDLER_VERSION: 2.3.7
           TZ: "Japan"
       - image: cimg/mysql:8.0.27
         command: [--default-authentication-plugin=mysql_native_password]
