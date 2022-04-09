@@ -38,9 +38,8 @@ class Tweet < ApplicationRecord
   def self.create_with_images!(oembed:, tweeted_at:, tweet_id:, medias:)
     ActiveRecord::Base.transaction do
       tweet = create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
-      return unless medias # ツイート取得時は画像はないのでreturn
 
-      medias.each do |media|
+      medias&.each do |media|
         tweet.images.find_or_create_by!(
           alt: tweet.registered_tag.tag.name,
           src: media.media_url.to_s
