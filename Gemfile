@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.3'
+ruby '3.1.1'
 
 gem 'bootsnap', require: false
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
@@ -21,6 +21,7 @@ gem 'banken'
 gem 'config'
 gem 'pagy'
 gem 'sorcery'
+gem 'oauth2'
 # 定期実行
 gem 'whenever', require: false
 # 外部API

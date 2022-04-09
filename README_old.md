@@ -65,7 +65,7 @@ Twitter で学習報告をしている人を見て、「毎日学習記録を付
 
 ### バックエンド
 
-- Ruby 3.0.3
+- Ruby 3.1.1
 - Rails 6.1.5
 - RSpec 3.11.0
 - Twitter API（外部 API）
