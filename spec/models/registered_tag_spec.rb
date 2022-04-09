@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: registered_tags
+#
+#  id               :bigint           not null, primary key
+#  user_id          :bigint
+#  tag_id           :bigint
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  privacy          :integer          default("published"), not null
+#  remind_day       :integer          default(0), not null
+#  first_tweeted_at :datetime
+#
 RSpec.describe RegisteredTag, type: :model do
   describe 'associations' do
     it 'belongs_to :user' do
