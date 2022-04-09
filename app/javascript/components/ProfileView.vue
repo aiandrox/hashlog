@@ -1,11 +1,13 @@
 <template>
   <div>
     <v-card-text>
+      <!-- eslint-disable -->
       <div
         class="body-1"
         style="white-space: pre-line;word-wrap: break-word"
         v-html="$sanitize(replacedDescription)"
       />
+      <!-- eslint-enable -->
     </v-card-text>
     <div v-if="isMypage">
       <v-btn class="ma-2" outlined color="primary" @click="$emit('push-edit')">

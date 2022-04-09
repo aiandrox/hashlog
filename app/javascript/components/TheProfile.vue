@@ -21,13 +21,15 @@
           <!-- プロフィール詳細部分 -->
           <profile-view v-if="!isEditing" :user="user" @push-edit="isEditing = true" />
           <!-- ユーザー編集部分 -->
+          <!-- eslint-disable -->
           <profile-edit
             v-if="isEditing"
-            v-bind.sync="user"
+            v-model="user"
             @push-update="$emit('push-update')"
             @push-delete="$emit('push-delete')"
             @push-cencel="pushCancel"
           />
+          <!-- eslint-enable -->
         </v-col>
         <v-col cols="9" md="3">
           <!-- ステータス -->

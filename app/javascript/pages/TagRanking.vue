@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import ranking from "../components/Ranking"
+import ranking from "../components/TheRanking"
 
 export default {
   components: {

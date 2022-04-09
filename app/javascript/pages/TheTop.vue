@@ -88,7 +88,9 @@
       >
         <v-col class="align-self-center" :md="7">
           <h2 class="mb-5">{{ description.title }}</h2>
+          <!-- eslint-disable -->
           <div v-html="description.text" />
+          <!-- eslint-enable -->
         </v-col>
         <v-col :md="5">
           <v-img :alt="description.title" :src="description.imgSrc" />

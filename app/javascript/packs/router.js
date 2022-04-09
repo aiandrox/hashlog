@@ -1,13 +1,13 @@
 import VueRouter from "vue-router"
 
 import store from "../store"
-import Top from "../pages/Top"
+import Top from "../pages/TheTop"
 import TagRanking from "../pages/TagRanking"
-import Terms from "../pages/Terms"
+import Terms from "../pages/TheTerms"
 import PrivacyPolicy from "../pages/PrivacyPolicy"
-import Mypage from "../pages/Mypage"
+import Mypage from "../pages/TheMypage"
 import MyTag from "../pages/MyTag"
-import User from "../pages/User"
+import User from "../pages/TheUser"
 import UserTag from "../pages/UserTag"
 import NotFound from "../pages/NotFound"
 

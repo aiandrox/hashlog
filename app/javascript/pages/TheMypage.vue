@@ -23,7 +23,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex"
-import profile from "../components/Profile"
+import profile from "../components/TheProfile"
 import tagsTab from "../components/TagsTab"
 import deleteDialog from "../components/shared/TheDeleteDialog"
 import updateDialog from "../components/TheProfileUpdateDialog"
