@@ -3,7 +3,7 @@ orbs:
   ruby: circleci/ruby@0.1.2
 
 jobs:
-  build:
+  check_lint_and_test:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
       - image: cimg/ruby:3.1.1-node # https://circleci.com/developer/ja/images/image/cimg/ruby
@@ -60,6 +60,10 @@ jobs:
             - ./vendor/bundle
             - ./node_modules
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+
+      # lint check
+      - run: bundle exec rubocop
+      - run: yarn lint
 
       - run:
           name: setup database
