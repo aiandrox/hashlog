@@ -4,8 +4,10 @@
 #
 #  id               :bigint           not null, primary key
 #  first_tweeted_at :datetime
+#  last_tweeted_at  :datetime
 #  privacy          :integer          default("published"), not null
 #  remind_day       :integer          default(0), not null
+#  tweet_rate       :float(24)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  tag_id           :bigint
@@ -28,6 +30,7 @@ FactoryBot.define do
     user
     tag
     sequence(:created_at) { |n| Time.current + n.minute }
+    tweet_rate { 0 }
 
     trait :tweeted do
       first_tweeted_at { Time.parse('2020-01-01') }
