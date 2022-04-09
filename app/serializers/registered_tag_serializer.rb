@@ -3,13 +3,25 @@
 # Table name: registered_tags
 #
 #  id               :bigint           not null, primary key
-#  user_id          :bigint
-#  tag_id           :bigint
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  first_tweeted_at :datetime
 #  privacy          :integer          default("published"), not null
 #  remind_day       :integer          default(0), not null
-#  first_tweeted_at :datetime
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  tag_id           :bigint
+#  user_id          :bigint
+#
+# Indexes
+#
+#  index_registered_tags_on_created_at          (created_at)
+#  index_registered_tags_on_tag_id              (tag_id)
+#  index_registered_tags_on_user_id             (user_id)
+#  index_registered_tags_on_user_id_and_tag_id  (user_id,tag_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (tag_id => tags.id)
+#  fk_rails_...  (user_id => users.id)
 #
 class RegisteredTagSerializer < ActiveModel::Serializer
   attributes :id, :tweeted_day_count, :privacy, :remind_day,
