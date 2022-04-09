@@ -228,6 +228,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (1.0.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.0)
     minitest (5.15.0)
     momentjs-rails (2.29.1.1)
       railties (>= 3.1)
@@ -238,7 +239,12 @@ GEM
     mysql2 (0.5.3)
     naught (1.1.0)
     nio4r (2.5.8)
+    nokogiri (1.13.3)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     nokogiri (1.13.3-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.3-x86_64-linux)
       racc (~> 1.4)
     oauth (0.5.8)
     oauth2 (1.4.9)
@@ -435,8 +441,8 @@ GEM
     zeitwerk (2.5.4)
 
 PLATFORMS
-  ruby
   arm64-darwin-21
+  ruby
   x86_64-linux
 
 DEPENDENCIES
@@ -481,7 +487,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 3.0.3p157
+   ruby 3.1.1p18
 
 BUNDLED WITH
    2.3.7
