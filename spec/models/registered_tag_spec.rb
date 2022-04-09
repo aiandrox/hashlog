@@ -143,7 +143,7 @@ RSpec.describe RegisteredTag, type: :model do
       let!(:tag_with_1_day_tweet) { create(:registered_tag) }
       let!(:tag_with_0_day) { create(:registered_tag) }
       before do
-        now = Time.zone.now
+        now = Time.current
         create(:tweet, tweeted_at: now, registered_tag: tag_with_3_days_tweets)
         create(:tweet, tweeted_at: now.yesterday, registered_tag: tag_with_3_days_tweets)
         create(:tweet, tweeted_at: now.tomorrow, registered_tag: tag_with_3_days_tweets)
@@ -266,7 +266,7 @@ RSpec.describe RegisteredTag, type: :model do
         end
       end
       context '最初のツイートと最後のツイートが今日のとき' do
-        let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet, tweeted_at: Time.zone.now)]) }
+        let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet, tweeted_at: Time.current)]) }
         it '100(%)を返す' do
           registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
           expect(registered_tag.tweet_rate).to eq 100

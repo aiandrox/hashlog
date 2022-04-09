@@ -58,7 +58,7 @@ FactoryBot.define do
     trait :with_3_7_days_tweets do
       after(:create) do |registered_tag|
         create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
-        create(:tweet, tweeted_at: Time.now.ago(3.day), registered_tag: registered_tag)
+        create(:tweet, tweeted_at: Time.current.ago(3.day), registered_tag: registered_tag)
         create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag)
 
         registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
@@ -74,7 +74,7 @@ FactoryBot.define do
     end
 
     trait :created_yesterday do
-      created_at { Time.now.prev_day }
+      created_at { Time.current.prev_day }
     end
   end
 end

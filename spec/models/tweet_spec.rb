@@ -47,8 +47,8 @@ RSpec.describe Tweet, type: :model do
 
   describe 'scopes' do
     describe '.desc' do
-      let!(:latest_tweet) { create(:tweet, tweeted_at: Time.now) }
-      let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.now.prev_day) }
+      let!(:latest_tweet) { create(:tweet, tweeted_at: Time.current) }
+      let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.current.prev_day) }
       it 'tweeted_atを基準に昇順に並ぶこと' do
         expect(Tweet.desc.first).to eq latest_tweet
         expect(Tweet.desc.last).to eq oldest_tweet
@@ -57,8 +57,8 @@ RSpec.describe Tweet, type: :model do
 
     describe '.tweeted_day_count' do
       it 'tweetが存在する日数を返す' do
-        create_list(:tweet, 3, tweeted_at: Time.now)
-        create(:tweet, tweeted_at: Time.now.prev_day)
+        create_list(:tweet, 3, tweeted_at: Time.current)
+        create(:tweet, tweeted_at: Time.current.prev_day)
         create(:tweet, :tweeted_7days_ago)
         expect(Tweet.tweeted_day_count).to eq 3
       end
@@ -90,8 +90,8 @@ RSpec.describe Tweet, type: :model do
   end
 
   describe 'methods' do
-    let!(:latest_tweet) { create(:tweet, tweeted_at: Time.zone.now) }
-    let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.zone.now.yesterday) }
+    let!(:latest_tweet) { create(:tweet, tweeted_at: Time.current) }
+    let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.current.yesterday) }
     describe '.latest' do
       it 'tweeted_atを基準に最も新しいツイートを返す' do
         expect(Tweet.latest).to eq latest_tweet

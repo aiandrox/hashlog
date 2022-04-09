@@ -39,8 +39,8 @@ RSpec.describe 'RegisteredTags', type: :request do
       let!(:tag_with_3_tweets) { create(:registered_tag, :tweeted) }
       let!(:tag_with_1_tweets) { create(:registered_tag, :tweeted) }
       before do
-        create(:tweet, tweeted_at: Time.zone.now, registered_tag: tag_with_3_tweets)
-        create(:tweet, tweeted_at: Time.zone.now.yesterday, registered_tag: tag_with_3_tweets)
+        create(:tweet, tweeted_at: Time.current, registered_tag: tag_with_3_tweets)
+        create(:tweet, tweeted_at: Time.current.yesterday, registered_tag: tag_with_3_tweets)
         get '/api/v1/registered_tags/day_counts'
       end
 
