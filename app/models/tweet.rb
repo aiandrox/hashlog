@@ -29,6 +29,8 @@ class Tweet < ApplicationRecord
   validates :tweet_id, uniqueness: { case_sensitive: false, scope: :registered_tag_id }
   validates :tweeted_at, presence: true
 
+  after_create :set_tweets_date_to_registered_tag
+
   scope :desc, -> { order(tweeted_at: :desc) }
   scope :tweeted_day_count, lambda {
     formated_date = "date_format(tweeted_at, '%Y%m%d')"
@@ -56,5 +58,14 @@ class Tweet < ApplicationRecord
         )
       end
     end
+  end
+
+  private
+
+  def set_tweets_date_to_registered_tag
+    registered_tag.update!(
+      first_tweeted_at: registered_tag.tweets.oldest&.tweeted_at,
+      last_tweeted_at: registered_tag.tweets.latest&.tweeted_at
+    )
   end
 end

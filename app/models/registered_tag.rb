@@ -90,14 +90,10 @@ class RegisteredTag < ApplicationRecord
   end
 
   def create_tweets(tweets_data_array)
-    add_tweets(tweets_data_array).any? && fetch_tweets_data!
+    add_tweets(tweets_data_array)
   end
 
   private
-
-  def fetch_tweets_data!
-    update!(first_tweeted_at: tweets.oldest.tweeted_at) if tweets.any?
-  end
 
   def add_tweets(tweets_data_array)
     tweets_data_array.each do |oembed, tweeted_at, tweet_id, medias|

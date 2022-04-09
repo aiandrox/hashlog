@@ -103,4 +103,16 @@ RSpec.describe Tweet, type: :model do
       end
     end
   end
+
+  describe 'callback' do
+    describe '#set_registered_tag_data' do
+      let!(:registered_tag) { create(:registered_tag) }
+      let!(:latest_tweet) { create(:tweet, registered_tag: registered_tag, tweeted_at: Time.current) }
+      let!(:oldest_tweet) { create(:tweet, registered_tag: registered_tag, tweeted_at: Time.current.yesterday) }
+      it 'registered_tagの情報をupdateする' do
+        expect(registered_tag.first_tweeted_at).to eq oldest_tweet.tweeted_at
+        expect(registered_tag.last_tweeted_at).to eq latest_tweet.tweeted_at
+      end
+    end
+  end
 end
