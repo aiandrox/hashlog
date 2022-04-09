@@ -61,10 +61,6 @@ jobs:
             - ./node_modules
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
 
-      # lint check
-      - run: bundle exec rubocop
-      - run: yarn lint
-
       - run:
           name: setup database
           command: |
