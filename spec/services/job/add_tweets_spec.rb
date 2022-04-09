@@ -25,8 +25,6 @@ describe Job::AddTweets do
         let(:add_tweets) { Job::AddTweets.new([registered_tag]) }
         it 'RegisteredTag#add_tweetsを実行しない' do
           tweet = create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
-          registered_tag.update!(first_tweeted_at: tweet.tweeted_at)
-
           expect(registered_tag).not_to receive(:create_tweets)
           subject
         end

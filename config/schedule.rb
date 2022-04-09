@@ -15,4 +15,5 @@ end
 
 every 1.day, at: '7:00 am' do
   rake 'twitter_cron:remind_reply'
+  rake 'ranking_cron:fetch_tweet_rate'
 end

@@ -3,12 +3,22 @@
 # Table name: tweets
 #
 #  id                :bigint           not null, primary key
-#  registered_tag_id :bigint
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
 #  oembed            :text(65535)      not null
 #  tweeted_at        :datetime         not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  registered_tag_id :bigint
 #  tweet_id          :string(255)      not null
+#
+# Indexes
+#
+#  index_tweets_on_registered_tag_id               (registered_tag_id)
+#  index_tweets_on_tweet_id_and_registered_tag_id  (tweet_id,registered_tag_id) UNIQUE
+#  index_tweets_on_tweeted_at                      (tweeted_at)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (registered_tag_id => registered_tags.id)
 #
 RSpec.describe Tweet, type: :model do
   describe 'associations' do
@@ -37,8 +47,8 @@ RSpec.describe Tweet, type: :model do
 
   describe 'scopes' do
     describe '.desc' do
-      let!(:latest_tweet) { create(:tweet, tweeted_at: Time.now) }
-      let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.now.prev_day) }
+      let!(:latest_tweet) { create(:tweet, tweeted_at: Time.current) }
+      let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.current.prev_day) }
       it 'tweeted_atを基準に昇順に並ぶこと' do
         expect(Tweet.desc.first).to eq latest_tweet
         expect(Tweet.desc.last).to eq oldest_tweet
@@ -47,8 +57,8 @@ RSpec.describe Tweet, type: :model do
 
     describe '.tweeted_day_count' do
       it 'tweetが存在する日数を返す' do
-        create_list(:tweet, 3, tweeted_at: Time.now)
-        create(:tweet, tweeted_at: Time.now.prev_day)
+        create_list(:tweet, 3, tweeted_at: Time.current)
+        create(:tweet, tweeted_at: Time.current.prev_day)
         create(:tweet, :tweeted_7days_ago)
         expect(Tweet.tweeted_day_count).to eq 3
       end
@@ -80,8 +90,8 @@ RSpec.describe Tweet, type: :model do
   end
 
   describe 'methods' do
-    let!(:latest_tweet) { create(:tweet, tweeted_at: Time.zone.now) }
-    let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.zone.now.yesterday) }
+    let!(:latest_tweet) { create(:tweet, tweeted_at: Time.current) }
+    let!(:oldest_tweet) { create(:tweet, tweeted_at: Time.current.yesterday) }
     describe '.latest' do
       it 'tweeted_atを基準に最も新しいツイートを返す' do
         expect(Tweet.latest).to eq latest_tweet
@@ -90,6 +100,18 @@ RSpec.describe Tweet, type: :model do
     describe '.oldest' do
       it 'tweeted_atを基準に最も古いツイートを返す' do
         expect(Tweet.oldest).to eq oldest_tweet
+      end
+    end
+  end
+
+  describe 'callback' do
+    describe '#set_registered_tag_data' do
+      let!(:registered_tag) { create(:registered_tag) }
+      let!(:latest_tweet) { create(:tweet, registered_tag: registered_tag, tweeted_at: Time.current) }
+      let!(:oldest_tweet) { create(:tweet, registered_tag: registered_tag, tweeted_at: Time.current.yesterday) }
+      it 'registered_tagの情報をupdateする' do
+        expect(registered_tag.first_tweeted_at).to eq oldest_tweet.tweeted_at
+        expect(registered_tag.last_tweeted_at).to eq latest_tweet.tweeted_at
       end
     end
   end
