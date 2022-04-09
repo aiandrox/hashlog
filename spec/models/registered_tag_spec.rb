@@ -165,6 +165,40 @@ RSpec.describe RegisteredTag, type: :model do
       end
     end
 
+    describe '.tweet_rate' do
+      subject { RegisteredTag.tweet_rate(registered_tag) }
+
+      context 'ツイートを取得していないとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        it '0(%)を返す' do
+          expect(subject).to eq 0
+        end
+      end
+
+      context '最初のツイートと最後のツイートが今日のとき' do
+        let(:registered_tag) { create(:registered_tag) }
+        it '100(%)を返す' do
+          create(:tweet, registered_tag: registered_tag, tweeted_at: Time.current)
+          expect(subject).to eq 100
+        end
+      end
+
+      context '最初のツイートが7日前で計3日分のツイートがあるとき（今日含まず）' do
+        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
+        it '3 / 7 * 100 = 42.9(%)を返す（小数第一位）' do
+          expect(subject).to eq 42.9
+        end
+      end
+
+      context '最初のツイートが7日前で計4日分のツイートがあるとき（今日含む）' do
+        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
+        it '4 / 8 * 100 = 50.0(%)を返す' do
+          create(:tweet, registered_tag: registered_tag, tweeted_at: Time.current)
+          expect(subject).to eq 50.0
+        end
+      end
+    end
+
     describe '#last_tweeted_at' do
       let(:registered_tag) { create(:registered_tag) }
       context 'ツイートがあるとき' do
@@ -215,7 +249,6 @@ RSpec.describe RegisteredTag, type: :model do
       context '最初のツイートが7日前のとき' do
         let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
         it '8を返す（今日と最初のツイート日を含めた日数）' do
-          registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
           expect(registered_tag.day_from_first_tweet).to eq 8
         end
       end
@@ -250,28 +283,6 @@ RSpec.describe RegisteredTag, type: :model do
         context '最後のツイートが10日前のとき' do
           before { create(:tweet, tweeted_at: Time.zone.today.ago(10.days), registered_tag: registered_tag) }
           it { is_expected.to eq false }
-        end
-      end
-    end
-
-    describe '#tweet_rate' do
-      context '最初のツイートが7日前で計3日分のツイートがあるとき' do
-        let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
-        it '3 / 7 * 100 = 42.9(%)を返す（小数第二位）' do
-          expect(registered_tag.tweet_rate).to eq 42.9
-        end
-      end
-      context 'ツイートを取得していないとき' do
-        let(:registered_tag) { create(:registered_tag) }
-        it '0(%)を返す' do
-          expect(registered_tag.tweet_rate).to eq 0
-        end
-      end
-      context '最初のツイートと最後のツイートが今日のとき' do
-        let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet, tweeted_at: Time.current)]) }
-        it '100(%)を返す' do
-          registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
-          expect(registered_tag.tweet_rate).to eq 100
         end
       end
     end

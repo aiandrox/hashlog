@@ -60,12 +60,19 @@ class RegisteredTag < ApplicationRecord
     all.sort_by { |tag| [tag.tweet_rate, tag.tweeted_day_count] }.reverse
   end
 
-  def last_tweeted_at
-    @last_tweeted_at ||= tweets.latest&.tweeted_at
+  def self.tweet_rate(registered_tag)
+    # ツイートがない場合は0%
+    return NONE if registered_tag.first_tweeted_at.nil?
+    # 最初のツイートと最後のツイートが今日の場合は100%にする
+    return FULL if (registered_tag.day_from_first_tweet - registered_tag.day_from_last_tweet).zero?
+
+    # 今日のデータがない場合は昨日時点までのデータで計算する
+    denominator = registered_tag.day_from_last_tweet.zero? ? registered_tag.day_from_first_tweet : registered_tag.day_from_first_tweet - 1
+    (registered_tag.tweeted_day_count.to_f / denominator * FULL_PER).round(1)
   end
 
   def tweeted_day_count
-    @tweeted_day_count ||= tweets&.tweeted_day_count
+    tweets.tweeted_day_count
   end
 
   def day_from_last_tweet
@@ -78,15 +85,6 @@ class RegisteredTag < ApplicationRecord
 
   def remind_reply?
     remind_day.positive? && remind_day < day_from_last_tweet && day_from_last_tweet < remind_day + 5
-  end
-
-  def tweet_rate
-    return NONE if first_tweeted_at.nil?
-    return FULL if (day_from_first_tweet - day_from_last_tweet).zero?
-
-    # 今日のデータがない場合は昨日時点までのデータで計算する
-    denominator = day_from_last_tweet.zero? ? day_from_first_tweet : day_from_first_tweet - 1
-    (tweeted_day_count.to_f / denominator * FULL_PER).round(1)
   end
 
   def create_tweets(tweets_data_array)
