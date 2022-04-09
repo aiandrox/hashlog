@@ -125,7 +125,12 @@ RSpec.describe 'Tweets', type: :request do
         subject
         expect(response.status).to eq 201
       end
-      it { expect{ subject }.to change { Tweet.count }.by(1) }
+      it 'ツイートを追加する' do
+        expect { subject }.to change { Tweet.count }.by(1)
+      end
+      it '最初のツイート日時に反映する' do
+        expect { subject }.to change { registered_tag.reload.first_tweeted_at }.from(nil)
+      end
     end
     context 'bodyがblankのとき' do
       let(:body) { '' }
@@ -133,7 +138,9 @@ RSpec.describe 'Tweets', type: :request do
         subject
         expect(response.status).to eq 422
       end
-      it { expect{ subject }.not_to change { Tweet.count } }
+      it 'ツイートを追加しない' do
+        expect { subject }.not_to change { Tweet.count }
+      end
     end
   end
 end
