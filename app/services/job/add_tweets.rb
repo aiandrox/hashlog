@@ -36,7 +36,7 @@ module Job
       if last_tweet
         since_id = last_tweet.tweet_id.to_i
         tweets_data = TwitterApi::UserTweets.new(user, registered_tag.tag.name, since_id)
-                                           .call('everyday')
+                                            .call('everyday')
       else
         tweets_data = TwitterApi::UserTweets.new(user, registered_tag.tag.name).call
       end
