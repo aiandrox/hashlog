@@ -79,6 +79,12 @@ class RegisteredTag < ApplicationRecord
     add_tweets(tweets_data_array).any? && fetch_tweets_data!
   end
 
+  private
+
+  def fetch_tweets_data!
+    update!(first_tweeted_at: tweets.oldest.tweeted_at) if tweets.any?
+  end
+
   def add_tweets(tweets_data_array)
     tweets_data_array.each do |oembed, tweeted_at, tweet_id, medias|
       tweets.create_with_images!(
@@ -89,12 +95,6 @@ class RegisteredTag < ApplicationRecord
       )
     end
   end
-
-  def fetch_tweets_data!
-    update!(first_tweeted_at: tweets.oldest.tweeted_at) if tweets.any?
-  end
-
-  private
 
   def filter_remind_day
     self.remind_day = NONE if remind_day.nil?

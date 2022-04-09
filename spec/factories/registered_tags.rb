@@ -31,14 +31,14 @@ FactoryBot.define do
 
       after(:create) do |registered_tag, evaluator|
         create_list(:tweet, evaluator.count, registered_tag: registered_tag)
-        registered_tag.fetch_tweets_data!
+        registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
       end
     end
 
     trait :with_3_days_tweets do
       after(:create) do |registered_tag|
-        create_list(:tweet, 3, :tweeted_every_day, registered_tag: registered_tag)
-        registered_tag.fetch_tweets_data!
+        tweets = create_list(:tweet, 3, :tweeted_every_day, registered_tag: registered_tag)
+        registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
       end
     end
 
@@ -48,7 +48,8 @@ FactoryBot.define do
         create(:tweet, :tweeted_yesterday, registered_tag: registered_tag)
         create(:tweet, tweeted_at: Time.now.ago(3.day), registered_tag: registered_tag)
         create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag)
-        registered_tag.fetch_tweets_data!
+
+        registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
       end
     end
 

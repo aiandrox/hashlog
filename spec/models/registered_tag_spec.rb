@@ -201,7 +201,7 @@ RSpec.describe RegisteredTag, type: :model do
       context '最初のツイートが7日前のとき' do
         let(:registered_tag) { create(:registered_tag, :with_3_7_days_tweets) }
         it '8を返す（今日と最初のツイート日を含めた日数）' do
-          registered_tag.fetch_tweets_data!
+          registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
           expect(registered_tag.day_from_first_tweet).to eq 8
         end
       end
@@ -255,8 +255,8 @@ RSpec.describe RegisteredTag, type: :model do
       end
       context '最初のツイートと最後のツイートが今日のとき' do
         let(:registered_tag) { create(:registered_tag, tweets: [create(:tweet, tweeted_at: Time.zone.now)]) }
-        before { registered_tag.fetch_tweets_data! }
         it '100(%)を返す' do
+          registered_tag.update!(first_tweeted_at: registered_tag.tweets.oldest.tweeted_at)
           expect(registered_tag.tweet_rate).to eq 100
         end
       end
@@ -270,9 +270,9 @@ RSpec.describe RegisteredTag, type: :model do
         it '取得したツイートを保存する' do
           expect { subject }.to change(Tweet, :count).by(1)
         end
-        it 'fetch_tweets_data!を実行する' do
-          expect(registered_tag).to receive(:fetch_tweets_data!).once
+        it '更新後のtweet.first_tweetedが最初のツイート日時になる' do
           subject
+          expect(registered_tag.reload.first_tweeted_at).to eq Tweet.last.tweeted_at
         end
       end
       context 'ハッシュタグのツイートがTwitterに存在しないとき' do
@@ -280,39 +280,10 @@ RSpec.describe RegisteredTag, type: :model do
         it 'ツイートを取得しないので保存しない' do
           expect { subject }.not_to change(Tweet, :count)
         end
-        it 'fetch_tweets_data!を実行しない' do
-          expect(registered_tag).not_to receive(:fetch_tweets_data!)
+        it '最初のツイート日時はnilのまま' do
           subject
+          expect(registered_tag.reload.first_tweeted_at).to eq nil
         end
-      end
-    end
-
-    describe '#add_tweets(tweet_data_array)' do
-      let(:registered_tag) { create(:registered_tag) }
-      context 'ツイートデータが存在するとき' do
-        let(:tweet_data_array) { [['text', Date.current, '1255854602626330624', []]] }
-        it '取得したツイートを保存する' do
-          expect { registered_tag.add_tweets(tweet_data_array) }.to change(Tweet, :count).by(1)
-        end
-      end
-      context 'ツイートデータが存在しないとき' do
-        let(:tweet_data_array) { [] }
-        it 'ツイートを取得しないので保存しない' do
-          expect { registered_tag.add_tweets(tweet_data_array) }.not_to change(Tweet, :count)
-        end
-      end
-    end
-
-    describe '#fetch_tweets_data!' do
-      let!(:registered_tag) { create(:registered_tag) }
-      let!(:oldest_tweet) { create(:tweet, :tweeted_7days_ago, registered_tag: registered_tag) }
-      before do
-        create(:tweet, tweeted_at: Time.zone.now, registered_tag: registered_tag)
-      end
-      it '更新後のtweet.first_tweetedが最初のツイート日時になる' do
-        expect do
-          registered_tag.fetch_tweets_data!
-        end.to change { registered_tag.reload.first_tweeted_at }.to(oldest_tweet.tweeted_at)
       end
     end
 
