@@ -30,19 +30,23 @@ module Job
 
     def collect(registered_tag, user)
       last_tweet = registered_tag.tweets.latest
-      unless last_tweet
+      # 今日既にツイートしている場合はスルー
+      return if last_tweet && last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
+
+      if last_tweet
+        since_id = last_tweet.tweet_id.to_i
+        tweets_data = TwitterApi::UserTweets.new(user, registered_tag.tag.name, since_id)
+                                           .call('everyday')
+      else
         tweets_data = TwitterApi::UserTweets.new(user, registered_tag.tag.name).call
-        registered_tag.create_tweets(tweets_data)
-        return
       end
 
-      return if last_tweet.tweeted_at > Time.current.prev_day.beginning_of_day
+      return if tweets_data.empty?
 
-      since_id = last_tweet.tweet_id.to_i
-      tweet_data = TwitterApi::UserTweets.new(user, registered_tag.tag.name, since_id)
-                                         .call('everyday')
+      registered_tag.create_tweets(tweets_data)
       message = "@#{registered_tag.user.screen_name} の ##{registered_tag.tag.name} にツイートを追加"
-      registered_tag.add_tweets(tweet_data).any? && notify_logs << message && Rails.logger.info(message)
+      notify_logs << message
+      Rails.logger.info(message)
     end
   end
 end

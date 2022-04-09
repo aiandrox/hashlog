@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: registered_tags
+#
+#  id               :bigint           not null, primary key
+#  user_id          :bigint
+#  tag_id           :bigint
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  privacy          :integer          default("published"), not null
+#  remind_day       :integer          default(0), not null
+#  first_tweeted_at :datetime
+#
 class RegisteredTag < ApplicationRecord
   DAY_COUNT_MONTH = 30
   NONE = 0
@@ -66,6 +79,12 @@ class RegisteredTag < ApplicationRecord
     add_tweets(tweets_data_array).any? && fetch_tweets_data!
   end
 
+  private
+
+  def fetch_tweets_data!
+    update!(first_tweeted_at: tweets.oldest.tweeted_at) if tweets.any?
+  end
+
   def add_tweets(tweets_data_array)
     tweets_data_array.each do |oembed, tweeted_at, tweet_id, medias|
       tweets.create_with_images!(
@@ -76,12 +95,6 @@ class RegisteredTag < ApplicationRecord
       )
     end
   end
-
-  def fetch_tweets_data!
-    update!(first_tweeted_at: tweets.oldest.tweeted_at) if tweets.any?
-  end
-
-  private
 
   def filter_remind_day
     self.remind_day = NONE if remind_day.nil?

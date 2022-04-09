@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: tags
+#
+#  id         :bigint           not null, primary key
+#  name       :string(255)      not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 RSpec.describe Tag, type: :model do
   describe 'associations' do
     it 'has_many :registered_tags, restrict_with_error' do
