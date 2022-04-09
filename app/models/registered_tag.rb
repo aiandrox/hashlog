@@ -7,7 +7,7 @@
 #  last_tweeted_at  :datetime
 #  privacy          :integer          default("published"), not null
 #  remind_day       :integer          default(0), not null
-#  tweet_rate       :float(24)
+#  tweet_rate       :float(24)        default(0.0), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  tag_id           :bigint

@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2022_04_09_060859) do
     t.integer "remind_day", default: 0, null: false
     t.datetime "first_tweeted_at"
     t.datetime "last_tweeted_at"
-    t.float "tweet_rate"
+    t.float "tweet_rate", default: 0.0, null: false
     t.index ["created_at"], name: "index_registered_tags_on_created_at"
     t.index ["tag_id"], name: "index_registered_tags_on_tag_id"
     t.index ["user_id", "tag_id"], name: "index_registered_tags_on_user_id_and_tag_id", unique: true
