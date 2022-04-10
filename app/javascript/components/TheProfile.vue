@@ -24,10 +24,10 @@
           <!-- eslint-disable -->
           <profile-edit
             v-if="isEditing"
-            v-model="user"
+            v-bind.sync="user"
             @push-update="$emit('push-update')"
             @push-delete="$emit('push-delete')"
-            @push-cencel="pushCancel"
+            @push-cancel="pushCancel"
           />
           <!-- eslint-enable -->
         </v-col>

@@ -67,7 +67,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.observer.reset()
       })
-      this.$emit("push-cencel")
+      this.$emit("push-cancel")
     },
     // バケツリレー用
     inputDescription(v) {

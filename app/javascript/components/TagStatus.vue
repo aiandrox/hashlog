@@ -5,7 +5,7 @@
     <status-edit
       v-if="isEditing"
       ref="editArea"
-      v-model="registeredTag"
+      v-bind.sync="registeredTag"
       @push-update="$emit('push-update')"
       @push-cancel="pushCancel"
       @push-delete="$emit('push-delete')"
