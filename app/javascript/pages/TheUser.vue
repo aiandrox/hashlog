@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import profile from "../components/Profile"
+import profile from "../components/TheProfile"
 import tagsTab from "../components/TagsTab"
 
 export default {

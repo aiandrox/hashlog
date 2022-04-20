@@ -28,7 +28,9 @@
         </v-list>
       </v-card-title>
 
+      <!-- eslint-disable -->
       <v-card-text class="text--primary" v-html="$sanitize(tweet.oembed)" />
+      <!-- eslint-enable -->
       <v-container fluid>
         <v-row dense>
           <v-col v-for="image in tweet.images" :key="image.id">

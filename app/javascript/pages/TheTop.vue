@@ -88,7 +88,9 @@
       >
         <v-col class="align-self-center" :md="7">
           <h2 class="mb-5">{{ description.title }}</h2>
+          <!-- eslint-disable -->
           <div v-html="description.text" />
+          <!-- eslint-enable -->
         </v-col>
         <v-col :md="5">
           <v-img :alt="description.title" :src="description.imgSrc" />
@@ -121,7 +123,7 @@ export default {
           title: "あなたはハッシュタグを付けて呟くだけ",
           imgSrc: "/img/hashtag.png",
           text:
-            "<p>ハッシュタグを登録した後は、あなたは今までと同じように、Twitterでハッシュタグを付けてツイートするだけです。</p><p>Hashlogがあなたのツイートを自動で収集します。</p><small>※ 毎日午前6時にツイートを取得しています。</small>",
+            "<p>ハッシュタグを登録した後は、あなたは今までと同じように、Twitterでハッシュタグを付けてツイートするだけです。</p><p>Hashlogがあなたのツイートを自動で収集します。</p>",
           line: ""
         },
         {

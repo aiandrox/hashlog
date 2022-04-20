@@ -1,6 +1,6 @@
 RSpec.describe 'RegisteredTags', type: :request do
   describe 'GET /api/v1/registered_tags/day_counts' do
-    let(:registered_tags) { RegisteredTag.includes(:user, :tag).opened.have_tweets.day_count_sort }
+    let(:registered_tags) { RegisteredTag.includes(:user, :tag).opened.day_count_sort }
     let(:tags_json) { json['registeredTags'] }
     describe '全般的なこと' do
       before do
@@ -11,7 +11,7 @@ RSpec.describe 'RegisteredTags', type: :request do
       it '200 OKを返す' do
         expect(response.status).to eq 200
       end
-      it 'RegisteredTag.opened.have_tweets.persistence_sortのJSONを返す' do
+      it 'RegisteredTag.opened.persistence_sortのJSONを返す' do
         tags_json.zip(registered_tags).each do |tag_json, registered_tag|
           expect(tag_json).to eq({
             'id' => registered_tag.id,

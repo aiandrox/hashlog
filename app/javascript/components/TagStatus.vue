@@ -1,6 +1,7 @@
 <template>
   <!-- 編集部分 -->
   <v-list>
+    <!-- eslint-disable -->
     <status-edit
       v-if="isEditing"
       ref="editArea"
@@ -9,6 +10,7 @@
       @push-cancel="pushCancel"
       @push-delete="$emit('push-delete')"
     />
+    <!-- eslint-enable -->
     <!-- ビュー部分 -->
     <status-view v-if="!isEditing" :registered-tag="registeredTag" />
     <v-list-item v-if="isMypage && !isEditing">
