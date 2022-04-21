@@ -10,6 +10,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
       return
     end
     if (user = login_from(provider))
+      user.general! # deletedになっているアカウントを有効化
       user.authentication.update!(
         access_token: access_token.token,
         access_token_secret: access_token.secret

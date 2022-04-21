@@ -120,22 +120,31 @@ RSpec.describe 'RegisteredTags', type: :request do
   end
 
   describe 'POST /api/v1/registered_tags' do
-    let!(:user) { create(:user, :real_value) }
-    context 'ログインしている場合', vcr: { cassette_name: 'twitter_api/standard_search/該当のツイートがない場合' } do
+    let!(:user) { create(:user) }
+    let!(:tag) { create(:tag) }
+    context 'ログインしている場合' do
       before { login_as(user) }
       context '正常系 タグの名前を入力したとき' do
+        before do
+          double = instance_double(TwitterApi::UserTweets)
+          expect(TwitterApi::UserTweets).to receive(:new).with(user, tag.name).and_return(double)
+          allow(double).to receive(:call).and_return(
+            [['テキスト', Date.parse('2022-01-01'), rand(1..100), []]]
+          )
+        end
+
         it '201 Createdを返す' do
-          post '/api/v1/registered_tags', params: { tag: { name: 'absent_tag' } }
+          post '/api/v1/registered_tags', params: { tag: { name: tag.name } }
           expect(response.status).to eq 201
         end
         it 'registered_tag.idのJSONを返す' do
           prev_registered_tag = create(:registered_tag)
-          post '/api/v1/registered_tags', params: { tag: { name: 'absent_tag' } }
+          post '/api/v1/registered_tags', params: { tag: { name: tag.name } }
           expect(json['registeredTag']).to eq({ 'id' => prev_registered_tag.id + 1 } )
         end
         it 'current_user.registered_tagsを作成する' do
           expect do
-            post '/api/v1/registered_tags', params: { tag: { name: 'absent_tag' } }
+            post '/api/v1/registered_tags', params: { tag: { name: tag.name } }
           end.to change(current_user.registered_tags, :count).by(1)
         end
       end

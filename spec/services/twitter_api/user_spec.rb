@@ -23,8 +23,14 @@ describe TwitterApi::User do
       before do
         allow_any_instance_of(Twitter::REST::Client).to receive(:user).and_raise(Twitter::Error::NotFound)
       end
-      it { expect { subject }.not_to change { user.reload.name }.from('古い名前') }
-      it { expect { subject }.to change { user.reload.role }.to('deleted').from('general') }
+      it '値を更新しない' do
+        expect { subject }.to raise_error(Twitter::Error::NotFound)
+                          .and not_change { user.reload.name }.from('古い名前')
+      end
+      it 'roleをdeletedにする' do
+        expect { subject }.to raise_error(Twitter::Error::NotFound)
+                          .and change { user.reload.role }.to('deleted').from('general')
+      end
     end
   end
 end
