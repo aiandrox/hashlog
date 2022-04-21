@@ -53,7 +53,7 @@ class User < ApplicationRecord
       tag.save!
       registered_tag = registered_tags.build(tag_id: tag.id)
       registered_tag.save!
-      tweets_data = TwitterApi::UserTweets.new(self, registered_tag.tag.name).call # ('premium')
+      tweets_data = TwitterApi::UserTweets.new(self, registered_tag.tag.name).call
       registered_tag.create_tweets(tweets_data)
       true
     rescue ActiveRecord::RecordInvalid

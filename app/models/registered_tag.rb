@@ -57,15 +57,17 @@ class RegisteredTag < ApplicationRecord
     joins(:tweets).group(:id).order(Arel.sql("registered_tags.tweet_rate desc, count(distinct date_format(tweets.tweeted_at, '%Y%m%d')) desc"))
   }
 
-  def self.tweet_rate(registered_tag)
-    # ツイートがない場合は0%
-    return NONE if registered_tag.first_tweeted_at.nil?
-    # 最初のツイートと最後のツイートが今日の場合は100%にする
-    return FULL if (registered_tag.day_from_first_tweet - registered_tag.day_from_last_tweet).zero?
+  class << self
+    def tweet_rate(registered_tag)
+      # ツイートがない場合は0%
+      return NONE if registered_tag.first_tweeted_at.nil?
+      # 最初のツイートと最後のツイートが今日の場合は100%にする
+      return FULL if (registered_tag.day_from_first_tweet - registered_tag.day_from_last_tweet).zero?
 
-    # 今日のデータがない場合は昨日時点までのデータで計算する
-    denominator = registered_tag.day_from_last_tweet.zero? ? registered_tag.day_from_first_tweet : registered_tag.day_from_first_tweet - 1
-    (registered_tag.tweeted_day_count.to_f / denominator * FULL_PER).round(1)
+      # 今日のデータがない場合は昨日時点までのデータで計算する
+      denominator = registered_tag.day_from_last_tweet.zero? ? registered_tag.day_from_first_tweet : registered_tag.day_from_first_tweet - 1
+      (registered_tag.tweeted_day_count.to_f / denominator * FULL_PER).round(1)
+    end
   end
 
   def tweeted_day_count
@@ -85,12 +87,6 @@ class RegisteredTag < ApplicationRecord
   end
 
   def create_tweets(tweets_data_array)
-    add_tweets(tweets_data_array)
-  end
-
-  private
-
-  def add_tweets(tweets_data_array)
     tweets_data_array.each do |oembed, tweeted_at, tweet_id, medias|
       tweets.create_with_images!(
         oembed: oembed,
@@ -100,6 +96,8 @@ class RegisteredTag < ApplicationRecord
       )
     end
   end
+
+  private
 
   def filter_remind_day
     self.remind_day = NONE if remind_day.nil?
