@@ -35,7 +35,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
     user = user_from_provider if user.new_record?
     # @user_hash, access_tokenはTwitterから受け取ったデータ
     user.build_authentication(uid: @user_hash[:uid],
-                              provider: provider,
+                              provider:,
                               access_token: access_token.token,
                               access_token_secret: access_token.secret)
     user.save!

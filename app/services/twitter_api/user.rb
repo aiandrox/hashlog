@@ -11,9 +11,8 @@ module TwitterApi
       user.update!(
         name: twitter_data.name,
         screen_name: twitter_data.screen_name,
-        avatar_url: avatar_url
+        avatar_url:
       )
-
     rescue Twitter::Error::NotFound, Twitter::Error::Unauthorized => e
       user.deleted!
       raise e

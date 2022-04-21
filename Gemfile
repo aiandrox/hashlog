@@ -19,9 +19,9 @@ gem 'active_model_serializers'
 gem 'administrate'
 gem 'banken'
 gem 'config'
+gem 'oauth2'
 gem 'pagy'
 gem 'sorcery'
-gem 'oauth2'
 # 定期実行
 gem 'whenever', require: false
 # 外部API

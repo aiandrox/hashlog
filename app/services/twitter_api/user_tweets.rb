@@ -14,8 +14,8 @@ module TwitterApi
     def call
       push_tweet_result
       client.oembeds(tweet_ids, omit_script: true, hide_thread: true, lang: :ja)
-                  .take(100)
-                  .map do |oembed|
+            .take(100)
+            .map do |oembed|
         oembed.html =~ %r{" dir="ltr">(.+)</p>}
         Regexp.last_match(-1)
       end.zip(tweeted_ats, tweet_ids, medias_list)
@@ -26,13 +26,11 @@ module TwitterApi
     attr_reader :user, :tag_name, :since_id, :tweet_ids, :tweeted_ats, :medias_list
 
     def all_tweets
-      @all_tweets ||= begin
-        if since_id
-          client.user_timeline(user_id: user.twitter_id, count: 200, since_id: since_id)
-        else
-          client.user_timeline(user_id: user.twitter_id, count: 200)
-        end
-      end
+      @all_tweets ||= if since_id
+                        client.user_timeline(user_id: user.twitter_id, count: 200, since_id:)
+                      else
+                        client.user_timeline(user_id: user.twitter_id, count: 200)
+                      end
     end
 
     def client

@@ -29,7 +29,7 @@ class Api::V1::TweetsController < Api::V1::BaseController
         'detail' => '登録内容を確認してください',
         'messages' => update_client.errors.full_messages
       }
-      render json: { 'error': error_json }, status: :unprocessable_entity
+      render json: { error: error_json }, status: :unprocessable_entity
     end
   end
 

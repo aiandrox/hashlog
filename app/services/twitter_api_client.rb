@@ -13,14 +13,12 @@ class TwitterApiClient
   end
 
   def client
-    @client ||= begin
-      Twitter::REST::Client.new do |config|
-        config.consumer_key        = Rails.application.credentials.twitter[:key]
-        config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
-        config.access_token        = access_token
-        config.access_token_secret = access_token_secret
-        config.dev_environment     = 'premium' # sandboxの名前
-      end
+    @client ||= Twitter::REST::Client.new do |config|
+      config.consumer_key = Rails.application.credentials.twitter[:key]
+      config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
+      config.access_token        = access_token
+      config.access_token_secret = access_token_secret
+      config.dev_environment     = 'premium' # sandboxの名前
     end
   end
 

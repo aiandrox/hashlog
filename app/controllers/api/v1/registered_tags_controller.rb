@@ -29,7 +29,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
         'detail' => '登録内容を確認してください',
         'messages' => tag.errors.full_messages
       }
-      render json: { 'error': error_json }, status: :unprocessable_entity
+      render json: { error: error_json }, status: :unprocessable_entity
     end
   end
 
@@ -47,7 +47,7 @@ class Api::V1::RegisteredTagsController < Api::V1::BaseController
         'detail' => '登録内容を確認してください',
         'messages' => registered_tag.errors.full_messages
       }
-      render json: { 'error': error_json }, status: :unprocessable_entity
+      render json: { error: error_json }, status: :unprocessable_entity
     end
   end
 

@@ -24,7 +24,7 @@ module Job
       registered_tag.user.deleted!
     rescue StandardError => e
       message = "@#{registered_tag.user.screen_name} の ##{registered_tag.tag.name}: #{e}"
-      notify_logs << message && Rails.logger.error(message)
+      (notify_logs << message) && Rails.logger.error(message)
     end
 
     def collect(registered_tag, user)
