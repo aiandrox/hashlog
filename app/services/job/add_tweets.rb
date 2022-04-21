@@ -1,6 +1,5 @@
 module Job
   class AddTweets
-    include TwitterApiClient
     attr_reader :notify_logs
 
     def initialize(registered_tags)

@@ -1,6 +1,5 @@
 module TwitterApi
   class Update
-    include TwitterApiClient
     include ActiveModel::Validations
 
     attr_reader :user, :tag, :body
@@ -20,7 +19,7 @@ module TwitterApi
       return false if invalid?
 
       # 叙述的に書かないとTwitter::Error::NotFoundになる
-      oembed = client(user).oembeds(tweet_id, omit_script: true, hide_thread: true, lang: :ja)
+      oembed = TwitterApiClient.client(user).oembeds(tweet_id, omit_script: true, hide_thread: true, lang: :ja)
       oembed.first.html =~ %r{" dir="ltr">(.+)</p>}
       tweet_oembed = Regexp.last_match(-1)
       [tweet_oembed, tweeted_at, tweet_id]
@@ -29,13 +28,13 @@ module TwitterApi
       false
     end
 
+    private
+
     def include_hashtag
       return if body.blank?
 
       errors.add(:base, 'ツイートにハッシュタグを含んでいません') unless body.include?("##{tag.name}")
     end
-
-    private
 
     def tweet_data
       @tweet_data ||= client(user).update!(body)

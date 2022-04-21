@@ -1,6 +1,5 @@
 module Job
   class RemindReply
-    include TwitterApiClient
     attr_reader :notify_logs
 
     def initialize(registered_tags = RegisteredTag.all.includes(:user, :tag))
@@ -19,7 +18,7 @@ module Job
     attr_reader :registered_tags
 
     def send_tweet(r_tag)
-      client.update(remind_message(r_tag))
+      TwitterApiClient.client.update(remind_message(r_tag))
       message = "@#{r_tag.user.screen_name} の ##{r_tag.tag.name} にリマインド送信"
       Rails.logger.info(message)
       notify_logs << message

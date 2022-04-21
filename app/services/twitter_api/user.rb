@@ -1,7 +1,5 @@
 module TwitterApi
   class User
-    include TwitterApiClient
-
     def initialize(user)
       @user = user
     end
@@ -24,7 +22,7 @@ module TwitterApi
     attr_reader :user
 
     def twitter_data
-      @twitter_data ||= client(user).user(user_id: user.twitter_id)
+      @twitter_data ||= TwitterApiClient.client(user).user(user_id: user.twitter_id)
     end
   end
 end

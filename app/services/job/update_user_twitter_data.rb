@@ -1,6 +1,5 @@
 module Job
   class UpdateUserTwitterData
-    include TwitterApiClient
     attr_reader :notify_logs
 
     def initialize(users = User.not_deleted)
