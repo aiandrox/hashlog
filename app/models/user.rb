@@ -40,12 +40,12 @@ class User < ApplicationRecord
 
   # tagからregistered_tagを返す
   def registered_tag(tag)
-    @registered_tag ||= begin
-      return nil if tag.invalid?
-
-      # 存在しない場合はnilを返すので!は付けない
-      registered_tags.find_by(tag_id: tag.id)
-    end
+    @registered_tag ||= if tag.invalid?
+                          nil
+                        else
+                          # 存在しない場合はnilを返すので!は付けない
+                          registered_tags.find_by(tag_id: tag.id)
+                        end
   end
 
   def register_tag(tag)
@@ -53,7 +53,7 @@ class User < ApplicationRecord
       tag.save!
       registered_tag = registered_tags.build(tag_id: tag.id)
       registered_tag.save!
-      tweets_data = TwitterApi::UserTweets.new(self, registered_tag.tag.name).call # ('premium')
+      tweets_data = TwitterApi::UserTweets.new(self, registered_tag.tag.name).call
       registered_tag.create_tweets(tweets_data)
       true
     rescue ActiveRecord::RecordInvalid

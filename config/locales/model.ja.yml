@@ -50,7 +50,7 @@ ja:
       role:
         admin: 管理ユーザー
         general: 一般ユーザー
-        deleted: Twitter退会済
+        deleted: Twitter無効
     registered_tag:
       privacy:
         published: 公開

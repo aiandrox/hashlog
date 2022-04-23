@@ -88,16 +88,28 @@ RSpec.describe User, type: :model do
     end
 
     describe '#register_tag(tag)' do
-      let(:user) { create(:user, :real_value) }
-      context 'tagが有効なとき', vcr: { cassette_name: 'twitter_api/standard_search' } do
-        let(:valid_tag) { build(:tag, name: 'ポートフォリオ進捗') }
+      let(:user) { create(:user) }
+      context 'tagが有効なとき' do
+        let(:valid_tag) { build(:tag) }
+        before do
+          double = instance_double(TwitterApi::UserTweets)
+          expect(TwitterApi::UserTweets).to receive(:new).with(user, valid_tag.name).and_return(double)
+          allow(double).to receive(:call).and_return([
+            ['テキスト', Date.parse('2022-01-01'), rand(1..100), []]
+          ])
+        end
+
         it 'trueを返す' do
           expect(user.register_tag(valid_tag)).to eq true
         end
         it 'user.registered_tagが作成される' do
           expect { user.register_tag(valid_tag) }.to change(RegisteredTag, :count).by(1)
         end
+        it 'ツイートが作成される' do
+          expect { user.register_tag(valid_tag) }.to change(Tweet, :count).by(1)
+        end
       end
+
       context 'tagが無効なとき' do
         let(:invalid_tag) { build(:tag, :invalid) }
         it 'falseを返す' do
@@ -122,9 +134,9 @@ RSpec.describe User, type: :model do
               expect(tag.errors.full_messages).to include 'ハッシュタグは既に登録しています'
             end
           end
-          context '同一ユーザーのregistered_tagとして4つ目のとき' do
+          context '同一ユーザーのregistered_tagとして11個目のとき' do
             let(:tag) { create(:tag) }
-            it '"登録できるハッシュタグは3つまでです"を含む' do
+            it '"登録できるハッシュタグは10個までです"を含む' do
               create_list(:registered_tag, 10, user: user)
               user.register_tag(tag)
               expect(tag.errors.full_messages).to include '登録できるハッシュタグは10個までです'
@@ -149,7 +161,7 @@ RSpec.describe User, type: :model do
           expect(user.my_object?(other_registered_tag)).to be_falsey
         end
       end
-      
+
     end
 
     describe '#replace_user_data' do

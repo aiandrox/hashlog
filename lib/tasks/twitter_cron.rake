@@ -6,7 +6,8 @@ namespace :twitter_cron do
 
   desc 'TwitterAPIによる自動検索'
   task add_tweets: :environment do
-    CronTwitter.new.call(Job::AddTweets.new)
+    registered_tags = RegisteredTag.joins(:user, :tag).merge(User.not_deleted)
+    CronTwitter.new.call(Job::AddTweets.new(registered_tags))
   end
 
   desc 'TwitterAPIによる自動ツイート'

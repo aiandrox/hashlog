@@ -1,9 +1,12 @@
 RSpec.describe 'Base', type: :request do
-  let(:user) { create(:user, screen_name: 'user') }
+  let(:user) { create(:user) }
   describe '#rescue_limited_twitter_requests' do
-    context 'TwitterApiのリクエストが上限に達した場合',
-      vcr: { cassette_name: 'twitter_api/standard_search/Twitter::Error::TooManyRequests' } do
+    context 'TwitterApiのリクエストが上限に達した場合' do
       before do
+        double = instance_double(TwitterApi::UserTweets)
+        expect(TwitterApi::UserTweets).to receive(:new).and_return(double)
+        allow(double).to receive(:call).and_raise(Twitter::Error::TooManyRequests)
+
         login_as(user)
         post '/api/v1/registered_tags', params: { tag: { name: 'ハッシュタグ' } }
       end

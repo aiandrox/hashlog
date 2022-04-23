@@ -18,7 +18,7 @@ class Api::V1::Users::CurrentsController < Api::V1::BaseController
         'detail' => '登録内容を確認してください',
         'messages' => current_user.errors.full_messages
       }
-      render json: { 'error': error_json }, status: :unprocessable_entity
+      render json: { error: error_json }, status: :unprocessable_entity
     end
   end
 

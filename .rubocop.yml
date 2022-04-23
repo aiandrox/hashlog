@@ -46,6 +46,7 @@ Naming/AccessorMethodName:
 Metrics/BlockLength:
   Exclude:
     - "config/**/*"
+    - "lib/tasks/auto_annotate_models.rake"
 
 # 一行の長さは100字まで。コメントは制限しない
 Metrics/LineLength:

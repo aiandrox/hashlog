@@ -1,7 +1,5 @@
 module TwitterApi
   class User
-    include TwitterApiClient
-
     def initialize(user)
       @user = user
     end
@@ -13,10 +11,11 @@ module TwitterApi
       user.update!(
         name: twitter_data.name,
         screen_name: twitter_data.screen_name,
-        avatar_url: avatar_url
+        avatar_url:
       )
-    rescue Twitter::Error::NotFound
+    rescue Twitter::Error::NotFound, Twitter::Error::Unauthorized => e
       user.deleted!
+      raise e
     end
 
     private
@@ -24,7 +23,7 @@ module TwitterApi
     attr_reader :user
 
     def twitter_data
-      @twitter_data ||= client(user).user(user_id: user.twitter_id)
+      @twitter_data ||= TwitterApiClient.client(user).user(user_id: user.twitter_id)
     end
   end
 end

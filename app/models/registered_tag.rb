@@ -50,22 +50,32 @@ class RegisteredTag < ApplicationRecord
   scope :asc, -> { order(created_at: :asc) }
   scope :desc, -> { order(created_at: :desc) }
   scope :opened, -> { published.joins(:user).where('users.privacy = ?', 0) }
-  scope :day_count_sort, -> {
-    joins(:tweets).group(:id).order(Arel.sql("count(distinct date_format(tweets.tweeted_at, '%Y%m%d')) desc, registered_tags.tweet_rate desc"))
+  scope :day_count_sort, lambda {
+    joins(:tweets).group(:id).order(
+      Arel.sql("count(distinct date_format(tweets.tweeted_at, '%Y%m%d')) desc, registered_tags.tweet_rate desc")
+    )
   }
-  scope :persistence_sort, -> {
-    joins(:tweets).group(:id).order(Arel.sql("registered_tags.tweet_rate desc, count(distinct date_format(tweets.tweeted_at, '%Y%m%d')) desc"))
+  scope :persistence_sort, lambda {
+    joins(:tweets).group(:id).order(
+      Arel.sql("registered_tags.tweet_rate desc, count(distinct date_format(tweets.tweeted_at, '%Y%m%d')) desc")
+    )
   }
 
-  def self.tweet_rate(registered_tag)
-    # ツイートがない場合は0%
-    return NONE if registered_tag.first_tweeted_at.nil?
-    # 最初のツイートと最後のツイートが今日の場合は100%にする
-    return FULL if (registered_tag.day_from_first_tweet - registered_tag.day_from_last_tweet).zero?
+  class << self
+    def tweet_rate(registered_tag)
+      # ツイートがない場合は0%
+      return NONE if registered_tag.first_tweeted_at.nil?
+      # 最初のツイートと最後のツイートが今日の場合は100%にする
+      return FULL if (registered_tag.day_from_first_tweet - registered_tag.day_from_last_tweet).zero?
 
-    # 今日のデータがない場合は昨日時点までのデータで計算する
-    denominator = registered_tag.day_from_last_tweet.zero? ? registered_tag.day_from_first_tweet : registered_tag.day_from_first_tweet - 1
-    (registered_tag.tweeted_day_count.to_f / denominator * FULL_PER).round(1)
+      # 今日のデータがない場合は昨日時点までのデータで計算する
+      denominator = if registered_tag.day_from_last_tweet.zero?
+                      registered_tag.day_from_first_tweet
+                    else
+                      registered_tag.day_from_first_tweet - 1
+                    end
+      (registered_tag.tweeted_day_count.to_f / denominator * FULL_PER).round(1)
+    end
   end
 
   def tweeted_day_count
@@ -85,21 +95,17 @@ class RegisteredTag < ApplicationRecord
   end
 
   def create_tweets(tweets_data_array)
-    add_tweets(tweets_data_array)
-  end
-
-  private
-
-  def add_tweets(tweets_data_array)
     tweets_data_array.each do |oembed, tweeted_at, tweet_id, medias|
       tweets.create_with_images!(
-        oembed: oembed,
-        tweeted_at: tweeted_at,
-        tweet_id: tweet_id,
-        medias: medias
+        oembed:,
+        tweeted_at:,
+        tweet_id:,
+        medias:
       )
     end
   end
+
+  private
 
   def filter_remind_day
     self.remind_day = NONE if remind_day.nil?

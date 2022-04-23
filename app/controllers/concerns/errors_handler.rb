@@ -14,7 +14,7 @@ module ErrorsHandler
       'title' => '認証されていません',
       'messages' => ['ログインしてください']
     }
-    render json: { 'error': error_json }, status: :unauthorized
+    render json: { error: error_json }, status: :unauthorized
   end
 
   def not_authorized
@@ -23,7 +23,7 @@ module ErrorsHandler
       'title' => '閲覧できません',
       'messages' => ['アクセスが許可されていません']
     }
-    render json: { 'error': error_json }, status: :forbidden
+    render json: { error: error_json }, status: :forbidden
   end
 
   def rescue_not_found
@@ -32,7 +32,7 @@ module ErrorsHandler
       'title' => 'リソースが見つかりませんでした',
       'messages' => ['データが見つかりませんでした。アドレスを確認してください']
     }
-    render json: { 'error': error_json }, status: :not_found
+    render json: { error: error_json }, status: :not_found
   end
 
   def rescue_limited_twitter_requests
@@ -41,7 +41,7 @@ module ErrorsHandler
       'title' => 'Twitter APIが制限されています',
       'messages' => ['現在リクエストが集中しています。15分後に再度試してください']
     }
-    render json: { 'error': error_json }, status: :too_many_requests
+    render json: { error: error_json }, status: :too_many_requests
   end
 
   def rescue_not_found_authentication
@@ -50,6 +50,6 @@ module ErrorsHandler
       'title' => 'Twitter認証情報が無効です',
       'messages' => ['再度ログインして試してください']
     }
-    render json: { 'error': error_json }, status: :bad_request
+    render json: { error: error_json }, status: :bad_request
   end
 end

@@ -50,7 +50,7 @@ class Tweet < ApplicationRecord
 
   def self.create_with_images!(oembed:, tweeted_at:, tweet_id:, medias:)
     ActiveRecord::Base.transaction do
-      tweet = create!(oembed: oembed, tweeted_at: tweeted_at, tweet_id: tweet_id)
+      tweet = create!(oembed:, tweeted_at:, tweet_id:)
 
       medias&.each do |media|
         tweet.images.find_or_create_by!(

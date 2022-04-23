@@ -1,7 +1,5 @@
 module TwitterApi
   class AddImages
-    include TwitterApiClient
-
     def self.call(tweet)
       new.call(tweet)
     end
@@ -17,7 +15,7 @@ module TwitterApi
 
     def twitter_medias(tweet)
       @twitter_medias ||=
-        client(user).status(tweet.tweet_id).media.filter { |media| media.type == 'photo' }
+        TwitterApiClient.client(user).status(tweet.tweet_id).media.filter { |media| media.type == 'photo' }
     end
 
     def create_images(tweet)

@@ -1,19 +1,24 @@
 require 'twitter'
 
-module TwitterApiClient
+class TwitterApiClient
   class NotFoundAuthenticationError < StandardError
   end
 
-  def client(user = nil)
+  def initialize(user)
     @user = user
-    @client ||= begin
-      Twitter::REST::Client.new do |config|
-        config.consumer_key        = Rails.application.credentials.twitter[:key]
-        config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
-        config.access_token        = access_token
-        config.access_token_secret = access_token_secret
-        config.dev_environment     = 'premium' # sandboxの名前
-      end
+  end
+
+  def self.client(user = nil)
+    new(user).client
+  end
+
+  def client
+    @client ||= Twitter::REST::Client.new do |config|
+      config.consumer_key = Rails.application.credentials.twitter[:key]
+      config.consumer_secret     = Rails.application.credentials.twitter[:secret_key]
+      config.access_token        = access_token
+      config.access_token_secret = access_token_secret
+      config.dev_environment     = 'premium' # sandboxの名前
     end
   end
 
