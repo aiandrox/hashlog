@@ -45,6 +45,7 @@ module ErrorsHandler
   end
 
   def rescue_not_found_authentication
+    current_user.deleted!
     error_json = {
       'code' => 400,
       'title' => 'Twitter認証情報が無効です',
