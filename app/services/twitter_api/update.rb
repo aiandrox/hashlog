@@ -37,7 +37,7 @@ module TwitterApi
     end
 
     def tweet_data
-      @tweet_data ||= client(user).update!(body)
+      @tweet_data ||= TwitterApiClient.client(user).update!(body)
     end
 
     def tweet_id
