@@ -3,6 +3,8 @@ changelog:
     - title: Dependency update
       authors:
         - dependabot
+      labels:
+        - dependencies
     - title: Other Changes
       labels:
         - "*"
