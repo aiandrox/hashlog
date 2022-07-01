@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.12.12 # 秘匿鍵を預けるため、バージョンを固定しておく
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: hashlog #Must be unique in Heroku
