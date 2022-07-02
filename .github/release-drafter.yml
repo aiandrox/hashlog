@@ -1,60 +1,39 @@
-name-template: "v$NEXT_MAJOR_VERSION"
-tag-template: "v$NEXT_MAJOR_VERSION"
-prerelease: true
+name-template: "v$RESOLVED_VERSION 🌈"
+tag-template: "v$RESOLVED_VERSION"
 exclude-labels:
-  - "skip-changelog"
+  - "release"
 categories:
-  - title: "❗ Breaking Changes"
-    labels:
-      - "breaking-change"
-  - title: "🚀 Highlights"
-    labels:
-      - "release-highlight"
   - title: "🚀 Features"
     labels:
-      - "new-feature"
       - "feature"
       - "enhancement"
-  - title: "🐛 Bug fixes"
+  - title: "🐛 Bug Fixes"
     labels:
       - "fix"
       - "bugfix"
       - "bug"
-  - title: "⚡ Performance improvements"
+  - title: "🧰 Maintenance"
     labels:
-      - "performance"
-  - title: "🎨 CSS"
-    labels:
-      - "css"
-  - title: "☕️ JavaScript"
-    labels:
-      - "js"
-  - title: "📖 Docs"
-    labels:
-      - "docs"
-  - title: "🛠 Examples"
-    labels:
-      - "examples"
-  - title: "🌎 Accessibility"
-    labels:
-      - "accessibility"
-  - title: "🔧 Utility API"
-    labels:
-      - "utility API"
-      - "utilities"
-  - title: "🏭 Tests"
-    labels:
-      - "tests"
-  - title: "🧰 Misc"
-    labels:
-      - "build"
-      - "meta"
       - "chore"
-      - "CI"
+  - title: "⚡ Improvements"
+    labels:
+      - "refactoring"
   - title: "📦 Dependencies"
     labels:
       - "dependencies"
-change-template: "- #$NUMBER: $TITLE"
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+version-resolver:
+  major:
+    labels:
+      - "major"
+  minor:
+    labels:
+      - "minor"
+  patch:
+    labels:
+      - "patch"
+  default: patch
 template: |
   ## Changes
 
