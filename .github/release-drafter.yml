@@ -1,30 +1,60 @@
-name-template: "v$RESOLVED_VERSION 🌈"
-tag-template: "v$RESOLVED_VERSION"
+name-template: "v$NEXT_MAJOR_VERSION"
+tag-template: "v$NEXT_MAJOR_VERSION"
+prerelease: true
+exclude-labels:
+  - "skip-changelog"
 categories:
+  - title: "❗ Breaking Changes"
+    labels:
+      - "breaking-change"
+  - title: "🚀 Highlights"
+    labels:
+      - "release-highlight"
   - title: "🚀 Features"
     labels:
+      - "new-feature"
       - "feature"
       - "enhancement"
-  - title: "🐛 Bug Fixes"
+  - title: "🐛 Bug fixes"
     labels:
       - "fix"
       - "bugfix"
       - "bug"
-  - title: "🧰 Maintenance"
-    label: "chore"
-change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
-change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
-version-resolver:
-  major:
+  - title: "⚡ Performance improvements"
     labels:
-      - "major"
-  minor:
+      - "performance"
+  - title: "🎨 CSS"
     labels:
-      - "minor"
-  patch:
+      - "css"
+  - title: "☕️ JavaScript"
     labels:
-      - "patch"
-  default: patch
+      - "js"
+  - title: "📖 Docs"
+    labels:
+      - "docs"
+  - title: "🛠 Examples"
+    labels:
+      - "examples"
+  - title: "🌎 Accessibility"
+    labels:
+      - "accessibility"
+  - title: "🔧 Utility API"
+    labels:
+      - "utility API"
+      - "utilities"
+  - title: "🏭 Tests"
+    labels:
+      - "tests"
+  - title: "🧰 Misc"
+    labels:
+      - "build"
+      - "meta"
+      - "chore"
+      - "CI"
+  - title: "📦 Dependencies"
+    labels:
+      - "dependencies"
+change-template: "- #$NUMBER: $TITLE"
 template: |
   ## Changes
 
