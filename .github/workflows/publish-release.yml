@@ -1,6 +1,6 @@
-name: Create Release
+name: Publish Release
 on:
-  dispatch_workflow:
+  workflow_dispatch:
 
 jobs:
   release:
