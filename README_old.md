@@ -1,7 +1,7 @@
 # Hashlog（ハッシュログ）
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/aiandrox/hashlog)](https://github.com/aiandrox/hashlog/releases)
-[![Rails](https://img.shields.io/badge/Rails-v5.2.4.3-%23a72332)](https://rubygems.org/gems/rails/versions/5.2.4.4)
+[![Rails](https://img.shields.io/badge/Rails-v6.1.6-%23a72332)](https://rubygems.org/gems/rails/versions/6.1.6)
 [![Vue](https://img.shields.io/badge/Vue-v2.6.11-%2342b77c)](https://www.npmjs.com/package/vue/v/2.6.11)
 [![CircleCI](https://circleci.com/gh/aiandrox/hashlog.svg?style=shield)](https://circleci.com/gh/aiandrox/hashlog)
 [![Coverage Status](https://coveralls.io/repos/github/aiandrox/hashlog/badge.svg?branch=develop)](https://coveralls.io/github/aiandrox/hashlog?branch=develop)
@@ -65,8 +65,8 @@ Twitter で学習報告をしている人を見て、「毎日学習記録を付
 
 ### バックエンド
 
-- Ruby 3.1.1
-- Rails 6.1.5
+- Ruby 3.1.2
+- Rails 6.1.6
 - RSpec 3.11.0
 - Twitter API（外部 API）
 
