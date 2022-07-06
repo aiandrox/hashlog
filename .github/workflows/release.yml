@@ -2,7 +2,6 @@ name: Release Drafter
 
 on:
   push:
-    # branches to consider in the event; optional, defaults to all
     branches:
       - main
   workflow_dispatch:
@@ -11,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  update_release_draft:
+  publish_release:
     permissions:
       contents: write # for release-drafter/release-drafter to create a github release
     runs-on: ubuntu-latest
@@ -22,10 +21,29 @@ jobs:
       #    echo "GHE_HOST=${GITHUB_SERVER_URL##https:\/\/}" >> $GITHUB_ENV
 
       # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: release-drafter/release-drafter@v5
+      - name: Create Draft Release
+        id: create_draft_release
+        uses: release-drafter/release-drafter@v5
         # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
         with:
           #   config-name: my-config.yml
           disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Release
+        uses: eregon/publish-release@v1
+        with:
+          release_id: ${{ steps.create_draft_release.outputs.id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  heroku_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.12.12 # 秘匿鍵を預けるため、バージョンを固定しておく
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: hashlog #Must be unique in Heroku
+          heroku_email: aiandrox7@gmail.com
