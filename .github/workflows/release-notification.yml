@@ -26,7 +26,7 @@ jobs:
         with:
           payload: |
             {
-              "text": ":rocket: ${{ github.event.release.published_at }} released!\n${{ github.event.release.html_url }}\n${{ steps.get_release_note.outputs.body }}",
+              "text": ":rocket: ${{ github.event.release.published_at }} ${{ github.event.release.name }} released!\n${{ github.event.release.html_url }}\n${{ steps.get_release_note.outputs.body }}",
               "unfurl_links": false
             }
         env:
