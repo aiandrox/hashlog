@@ -1,20 +1,25 @@
-name: Release Drafter
+name: Release
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  publish_release:
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
     permissions:
       contents: write # for release-drafter/release-drafter to create a github release
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       #- name: Set GHE_HOST
       #  run: |
@@ -28,22 +33,15 @@ jobs:
         with:
           #   config-name: my-config.yml
           disable-autolabeler: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: heroku_deploy
+        uses: akhileshns/heroku-deploy@v3.12.12 # 秘匿鍵を預けるため、バージョンを固定しておく
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: hashlog # Must be unique in Heroku
+          heroku_email: aiandrox7@gmail.com
 
       - name: Publish Release
         uses: eregon/publish-release@v1
         with:
           release_id: ${{ steps.create_draft_release.outputs.id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  heroku_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: akhileshns/heroku-deploy@v3.12.12 # 秘匿鍵を預けるため、バージョンを固定しておく
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: hashlog #Must be unique in Heroku
-          heroku_email: aiandrox7@gmail.com
