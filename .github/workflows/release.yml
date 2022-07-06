@@ -8,9 +8,10 @@ on:
 permissions:
   contents: read
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release:
     permissions:
       contents: write # for release-drafter/release-drafter to create a github release
