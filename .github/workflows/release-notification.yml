@@ -1,0 +1,32 @@
+name: Release Notification
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo release note
+        id: get_release_note
+        run: |
+          # 改行コードをエスケープする
+          release_body='${{ github.event.release.body }}'
+          release_body=${release_body//$'\r\n'/\\n}
+          release_body=${release_body//$'\n'/\\n}
+          echo "::set-output name=body::$release_body"
+
+      - name: Send Release Note
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "text": ":rocket: ${{ github.event.release.published_at }} released!\n${{ github.event.release.html_url }}\n${{ steps.get_release_note.outputs.body }}",
+              "unfurl_links": false
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

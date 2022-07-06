@@ -5,7 +5,7 @@ on:
     branches:
       - develop
 jobs:
-  gitPrRelease:
+  git_pr_release:
     name: git-pr-release
     runs-on: ubuntu-latest
     steps:
@@ -19,3 +19,4 @@ jobs:
           GIT_PR_RELEASE_BRANCH_PRODUCTION: main
           GIT_PR_RELEASE_BRANCH_STAGING: develop
           GIT_PR_RELEASE_LABELS: release
+          GIT_PR_RELEASE_TEMPLATE: .github/RELEASE_PULL_REQUEST_TEMPLATE.md
