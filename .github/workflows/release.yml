@@ -17,10 +17,6 @@ jobs:
       contents: write # for release-drafter/release-drafter to create a github release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: main
-
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       #- name: Set GHE_HOST
       #  run: |
@@ -35,6 +31,9 @@ jobs:
           #   config-name: my-config.yml
           disable-autolabeler: true
 
+      - uses: actions/checkout@v3
+        with:
+          ref: main
       - name: heroku_deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # 秘匿鍵を預けるため、バージョンを固定しておく
         with:
@@ -42,6 +41,9 @@ jobs:
           heroku_app_name: hashlog # Must be unique in Heroku
           heroku_email: aiandrox7@gmail.com
 
+      - uses: actions/checkout@v3 # default branch で実行されたイベントでないとトリガーしないので
+        with:
+          ref: develop
       - name: Publish Release
         uses: eregon/publish-release@v1
         with:
