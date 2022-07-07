@@ -28,14 +28,31 @@ jobs:
           heroku_app_name: hashlog # Must be unique in Heroku
           heroku_email: aiandrox7@gmail.com
 
-      - name: Create Draft Release
-        id: create_draft_release
+      - name: Create Release
+        id: create_release
         uses: release-drafter/release-drafter@v5
         # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
         with:
           #   config-name: my-config.yml
           disable-autolabeler: true
           publish: true
-          # release の出力値
-          id: true
-          body: true
+
+      - name: echo release note
+        id: get_release_note
+        run: |
+          # 改行コードをエスケープする
+          release_body='${{ steps.create_release.outputs.body }}'
+          release_body=${release_body//$'\r\n'/\\n}
+          release_body=${release_body//$'\n'/\\n}
+          echo "::set-output name=body::$release_body"
+
+      - name: Send Release Note
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "text": ":rocket: ${{ steps.create_release.outputs.published_at }} ${{ steps.create_release.outputs.name }} released!\n${{ steps.create_release.outputs.html_url }}\n${{ steps.get_release_note.outputs.body }}",
+              "unfurl_links": false
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
