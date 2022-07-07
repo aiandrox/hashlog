@@ -15,6 +15,7 @@ jobs:
       - name: git-pr-release
         uses: bakunyo/git-pr-release-action@master
         env:
+          TZ: "Asia/Tokyo" # リリース日時を +9 にするため
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_PR_RELEASE_BRANCH_PRODUCTION: main
           GIT_PR_RELEASE_BRANCH_STAGING: develop
