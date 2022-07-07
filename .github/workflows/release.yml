@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,20 +18,6 @@ jobs:
       contents: write # for release-drafter/release-drafter to create a github release
     runs-on: ubuntu-latest
     steps:
-      # (Optional) GitHub Enterprise requires GHE_HOST variable set
-      #- name: Set GHE_HOST
-      #  run: |
-      #    echo "GHE_HOST=${GITHUB_SERVER_URL##https:\/\/}" >> $GITHUB_ENV
-
-      # Drafts your next Release notes as Pull Requests are merged into "master"
-      - name: Create Draft Release
-        id: create_draft_release
-        uses: release-drafter/release-drafter@v5
-        # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
-        with:
-          #   config-name: my-config.yml
-          disable-autolabeler: true
-
       - uses: actions/checkout@v3
         with:
           ref: main
@@ -41,10 +28,14 @@ jobs:
           heroku_app_name: hashlog # Must be unique in Heroku
           heroku_email: aiandrox7@gmail.com
 
-      - uses: actions/checkout@v3 # default branch で実行されたイベントでないとトリガーしないので
+      - name: Create Draft Release
+        id: create_draft_release
+        uses: release-drafter/release-drafter@v5
+        # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
         with:
-          ref: develop
-      - name: Publish Release
-        uses: eregon/publish-release@v1
-        with:
-          release_id: ${{ steps.create_draft_release.outputs.id }}
+          #   config-name: my-config.yml
+          disable-autolabeler: true
+          publish: true
+          # release の出力値
+          id: true
+          body: true
