@@ -41,6 +41,7 @@ jobs:
         id: get_release_note
         run: |
           # 改行コードをエスケープする
+          echo "${{ steps.create_release.outputs }}"
           release_body='${{ steps.create_release.outputs.body }}'
           release_body=${release_body//$'\r\n'/\\n}
           release_body=${release_body//$'\n'/\\n}
@@ -51,9 +52,25 @@ jobs:
         with:
           payload: |
             {
-              "text": ":rocket: ${{ steps.create_release.outputs.published_at }} ${{ steps.create_release.outputs.name }} released!\n${{ steps.create_release.outputs.html_url }}\n${{ steps.get_release_note.outputs.body }}",
+              "text": ":rocket: ${{ steps.create_release.outputs.published_at }} ${{ steps.create_release.outputs.name }} Released!\n${{ steps.create_release.outputs.html_url }}\n```${{ steps.get_release_note.outputs.body }}```",
               "unfurl_links": false
             }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  failure-notify:
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: ${{ failure() }}
+    timeout-minutes: 5
+    steps:
+      - name: Send Failure
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          payload: |
+            {
+              "url": ":cry: Release Job Failure...\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
+        env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
