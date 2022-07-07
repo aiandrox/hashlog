@@ -51,8 +51,9 @@ jobs:
         with:
           payload: |
             {
-              "text": ":rocket: ${{ steps.create_release.outputs.published_at }} ${{ steps.create_release.outputs.name }} released!\n${{ steps.create_release.outputs.html_url }}\n```${{ steps.get_release_note.outputs.body }}```",
+              "text": ":rocket: ${{ steps.create_release.outputs.published_at }} ${{ steps.create_release.outputs.name }} released!\n${{ steps.create_release.outputs.html_url }}\n${{ steps.get_release_note.outputs.body }}",
               "unfurl_links": false
             }
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
