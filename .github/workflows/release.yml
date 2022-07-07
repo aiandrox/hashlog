@@ -69,7 +69,7 @@ jobs:
         with:
           payload: |
             {
-              "url": ":cry: Release Job Failure...\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              "text": ":cry: Release Job Failure...\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
