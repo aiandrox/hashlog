@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: write # for release-drafter/release-drafter to create a github release
     steps:
-      - uses: aiandrox/hogehoge@master
+      - uses: actions/checkout@v3
         with:
           ref: main
 
